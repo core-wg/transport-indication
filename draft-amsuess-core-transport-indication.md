@@ -27,8 +27,16 @@ author:
   email: christian@amsuess.com
 normative:
 informative:
-- aliases: https://www.w3.org/TR/webarch/#uri-aliases
-- cooluris: https://www.w3.org/Provider/Style/URI
+  aliases:
+    title: Architecture of the World Wide Web, Section 2.3.1 URI aliases
+    author:
+      org: W3C
+    target: https://www.w3.org/TR/webarch/#uri-aliases
+  cooluris:
+    title: Cool URIs don't change
+    author:
+      name: Tim BL
+    target: https://www.w3.org/Provider/Style/URI
 
 --- abstract
 
