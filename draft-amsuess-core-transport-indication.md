@@ -61,7 +61,8 @@ This document is being developed at <https://gitlab.com/chrysn/transport-indicat
 
 Same-host proxy
 
-: \[ TBD \]
+: A CoAP server that accepts forward proxy requests (i.e., requests carrying the Proxy-Scheme option)
+  exclusively for URIs that it is the authoritative server for is defined as a "same-host proxy".
 
 hosts
 
@@ -82,11 +83,19 @@ hosts
   with one transport from use with another transport unless explicitly cleared.
   \]
 
+When talking of proxy requests,
+this document only talks of the Proxy-Scheme option.
+Given that all URIs this is usable with can be expressed in decomposed CoAP URIs,
+the need for using the Proxy-URI option should never arise.
+
 ## Goals
+
+This document introduces provisions for the seamless use of different transport mechanisms for CoAP.
+Combined, these provide:
 
 * Enablement: Inform clients of the availability of other transports of servers.
 
-* No Aliasing: Any URI aliasing must be opt-in by the server; they *may* declare URIs as equivalent but are not forced by the mechanisms.
+* No Aliasing: Any URI aliasing must be opt-in by the server. Any defined mechanisms must allow applications to keep working on the canonical URIs given by the server.
 
 * Optimization: Do not incur per-request overhead from switching protocls. This may depend on the server's willingness to create aliased URIs.
 
@@ -139,8 +148,7 @@ Note that generating this discovery file needs to be dynamic based on its availa
 only if queried using a link-local source address, it may also respond with a link-local address in the authority component of the proxy URI.
 
 Unless the device makes resources discoverable at `coap+tcp://[2001:db1::1]/.well-known/core` or another discovery mechanism,
-clients may not assume any relation between `coap://[2001:db1::1]/sensors/temp` and `coap+tcp://[2001:db1::1]/sensors/temp`
-(or whether the latter is a valid resource at all).
+clients may not assume that `coap+tcp://[2001:db1::1]/sensors/temp` is a valid resource (let alone has any relation to the other resource on the same path).
 The server advertising itself like this may reject any request on CoAP-over-TCP unless they contain a Proxy-Scheme option.
 
 Clients that want to access the device using CoAP-over-TCP would send a request
@@ -173,7 +181,20 @@ A client MAY use a unique-proxy like a proxy and still send the Proxy-Scheme and
 such a client needs to recognize both relation types, as relations of the has-unique-proxy type
 are a specialization of has-proxy and typically don't carry the latter (redundant) annotation.
 
-# Proxy interactions
+# Third party proxy services
+
+A server that is aware of a suitable cross proxy may use the has-proxy relation to advertise that proxy.
+This is particularly interesting when the advertisements are made available across transports,
+for example in a Resource Directory.
+
+How the server can discover such a proxy
+(or, for the rare cases where this is possible, discover that it is suitable as a unique proxy)
+is out of scope for this document.
+
+A third party proxy may advertise its availability to act as a proxy for arbitrary CoAP requests.
+\[ TBD: Specify a mechanism for this; `<coap+ws://myself>;rel=has-proxy;anchor="coap://*"` for all supported protocols appears to be an obvious but wrong solution. \]
+
+# Client picked proxies
 
 When a resource is accessed through an "actual" proxy (i.e., a host between the client and the server that may also have a same-host proxy),
 the proxy's choice of the upstream server is originally (i.e., without the mechanisms of this document)
@@ -210,6 +231,8 @@ to satisfy requests for coap://h1.example.com/res.
 * Without E2E (ie. (D)TLS):
   Advertised proxy must either present credentials that are good enough for you to use as a general forward proxy,
   or present credentials good enough to be the actual origin server (like Alt-Svc does).
+
+* TBD: Protecting the indicated proxy (rather than the client)
 
 # IANA considerations
 
