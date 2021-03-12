@@ -1,4 +1,4 @@
 # License
 
 See the
-[guidelines for contributions](https://github.com/{GITHUB_USER}/{GITHUB_REPO}/blob/{GITHUB_BRANCH}/CONTRIBUTING.md).
+[guidelines for contributions](https://github.com/git@gitlab.com:chrysn/transport-indication/blob/master/CONTRIBUTING.md).
