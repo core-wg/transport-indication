@@ -137,22 +137,22 @@ Future protocols for which CoAP proxying is defined may have expressible path co
 
 ## Example
 
-A constrained device at the address 2001:db1::1 that supports CoAP over TCP in addition to CoAP can self-describe like this:
+A constrained device at the address 2001:db8::1 that supports CoAP over TCP in addition to CoAP can self-describe like this:
 
 ~~~~~
 </sensors/temp>;if="tag:example.com,sensor",
-<coap+tcp://[2001:db1::1]>;rel=has-proxy;anchor="/"
+<coap+tcp://[2001:db8::1]>;rel=has-proxy;anchor="/"
 ~~~~~
 
 Note that generating this discovery file needs to be dynamic based on its available addresses;
 only if queried using a link-local source address, it may also respond with a link-local address in the authority component of the proxy URI.
 
-Unless the device makes resources discoverable at `coap+tcp://[2001:db1::1]/.well-known/core` or another discovery mechanism,
-clients may not assume that `coap+tcp://[2001:db1::1]/sensors/temp` is a valid resource (let alone has any relation to the other resource on the same path).
+Unless the device makes resources discoverable at `coap+tcp://[2001:db8::1]/.well-known/core` or another discovery mechanism,
+clients may not assume that `coap+tcp://[2001:db8::1]/sensors/temp` is a valid resource (let alone has any relation to the other resource on the same path).
 The server advertising itself like this may reject any request on CoAP-over-TCP unless they contain a Proxy-Scheme option.
 
 Clients that want to access the device using CoAP-over-TCP would send a request
-by connecting to 2001:db1::1 TCP port 5683
+by connecting to 2001:db8::1 TCP port 5683
 and sending a GET with the options Proxy-Scheme: coap, no Uri-Host or -Port options (utilizing their default values),
 and the Uri-Paths "sensors" and "temp".
 
