@@ -140,7 +140,7 @@ Future protocols for which CoAP proxying is defined may have expressible path co
 A constrained device at the address 2001:db1::1 that supports CoAP over TCP in addition to CoAP can self-describe like this:
 
 ~~~~~
-</sensors/temp>;if="sensor",
+</sensors/temp>;if="tag:example.com,sensor",
 <coap+tcp://[2001:db1::1]>;rel=has-proxy;anchor="/"
 ~~~~~
 
