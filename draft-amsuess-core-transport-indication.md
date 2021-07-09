@@ -324,7 +324,14 @@ to satisfy requests for coap://h1.example.com/res.
 
 # IANA considerations
 
-\[ TBD: Request registration of the defined rel types \]
+## Link Relation Types
+
+IANA is asked to add two entries into the Link Relation Type Registry last updated in {{!RFC8288}}:
+
+| Relation Name     | Description                                                                 | Reference   |
+| has-proxy         | The link target can be used as a proxy to reach the link context.           | RFCthis     |
+| has-unique-proxy  | Like has-proxy, and using this proxy implies scheme and host of the target. | RFCthis     |
+{: #tab-iana title='New Link Relation types' }
 
 
 --- back
