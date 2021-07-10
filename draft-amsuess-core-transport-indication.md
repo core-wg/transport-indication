@@ -570,11 +570,19 @@ IANA is asked to add two entries into the Link Relation Type Registry last updat
 
 --- back
 
-<!--
 # Change log
 
+Since -00:
 
--->
+* Added introduction
+* Added examples
+* Added SCHC analogy
+* Expanded security considerations
+* Added guidance on choice of transport, and canonical addresses
+* Added subsection on interaction with a Resource Directory
+* Added comparisons with related work, including rdlink and DNS-SD sketches
+* Added IANA considerations
+* Added section on open questions
 
 # Open Questions / further ideas
 
