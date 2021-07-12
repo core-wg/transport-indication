@@ -217,7 +217,7 @@ Credentials are usable if either:
 
 * The credentials are suitable as a general trusted proxy for the system.
 
-  This applies only to security mechsnisms that are terminated in proxies (i.e. (D)TLS and not OSCORE).
+  This applies only to security mechanisms that are terminated in proxies (i.e. (D)TLS and not OSCORE).
 
   For a client to trust a proxy to this extent,
   it must have configured knowledge which proxies it may trust.
@@ -277,7 +277,7 @@ for example when it accepts requests on different IP addresses that do not carry
 or when it accepts requests both with and without the Uri-Host option carrying a registered name.
 Likewise, the server may serve the same resources on different transports.
 This makes for efficient requests (with no Proxy-Scheme or Uri-Host option),
-but In general is discouraged {{aliases}}.
+but in general is discouraged {{aliases}}.
 
 To make efficient requests possible without creating URI aliases that propagate,
 the "has-unique-proxy" specialization of the has-proxy relation is defined.
@@ -425,7 +425,7 @@ and accounting for the differences between HTTP headers and CoAP options,
 information is delivered once at discovery time.
 
 Using the has-proxy and has-unique-proxy with HTTP URIs as the context is NOT RECOMMENDED;
-the HTTP provisions the Alt-Svc header and ALPN are preferred.
+the HTTP provisions of the Alt-Svc header and ALPN are preferred.
 
 ## Using DNS
 
@@ -436,7 +436,7 @@ but not different ports or protocols.
 
 While not specified for CoAP yet (and neither being specified here),
 
-\[ which is an open discussion point for CoRE -- should we? Here? In a separte DNS-SD document? \]
+\[ which is an open discussion point for CoRE -- should we? Here? In a separate DNS-SD document? \]
 
 DNS SRV records (possibly in combination with DNS Service Discovery {{?RFC6763}}) can provide records that could be considered equivalent to has-unique-proxy relations.
 If `_coap._tcp`, `_coaps._tcp`, `_coap._udp`, `_coap+ws._tcp` etc. were defined with suitable semantics,
