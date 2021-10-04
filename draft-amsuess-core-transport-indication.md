@@ -488,6 +488,26 @@ Payload:
 ~~~~
 {: #fig-rdlink title='Obtaining a sensor value from a local device with a global name'}
 
+## Multipath TCP
+
+When CoAP-over-TCP is used over Multipath TCP
+and no Uri-Host option is sent,
+the implicit assumption is that there is aliasing between URIs containing any of the endpoints' addresses.
+
+As these are negotiated within MPTCP,
+this works independently of this document's mechanisms.
+As long as all the server's addresses are equally reachable,
+there is no need to advertise multiple addresses that can later be discovered through MPTCP anyway.
+When advertisements are long-lived and there is no single more stable address,
+several available addresses can be advertised (indepependently of whether MPTCP is involved or not).
+If a client uses an address that is merely a proxy address (and not a unique proxy address),
+but during MPTCP finds out that the network location being accessed is actually an MPTCP alternative address of the used one,
+the client MAY forego sending of the Proxy-Scheme and Uri-Path option.
+
+\[ This follows from multiple addresses being valid for that TCP connection;
+at some point we may want to say something about what that means for the default value of the Uri-Host option --
+maybe something like "has the default value of any of the associated addresses, but the server may only enable MPTCP if there is implicit aliasing between all of them" (similar to OSCORE's statement)?  \]
+
 # Security considerations
 
 ## Security context propagation
