@@ -624,6 +624,17 @@ Notes: The schemes for which the proxy is usable may be indicated using the prox
 
 # Change log
 
+Since -01:
+
+* Removed suggestion for generally trusted proxies;
+  now stating that with (D)TLS,
+  "a third party proxy can usually not satisfy [the security context propagation requirement]".
+* State more clearly that valid cache entries for resources aliased through has-unique-proxy can be used.
+* Added considerations for Multipath TCP.
+* Added concrete suggestion and example for advertisement of general proxies.
+* Added concrete suggestion for RD lookup extension that provides proxies.
+* Minor editorial and example changes.
+
 Since -00:
 
 * Added introduction
