@@ -153,7 +153,7 @@ are that for any resource R hosted on C ("C hosts R"), T is can be used as a pro
 
 Note that HTTP and CoAP proxies are not located at a particular resource,
 but at a host in general.
-Thus, a proxy URI `T` in these protocols can not carry a path, query component, or fragment identifier.
+Thus, a proxy URI `T` in these protocols has the path "/", and no query component or fragment identifier.
 This is true even for CoAP over WebSockets (which uses the concrete resource `/.well-known/coap`, but that is not expressed in "coap+ws" URI).
 Future protocols for which CoAP proxying is defined may use more components.
 
