@@ -205,26 +205,10 @@ If the originally requested URI R or the application requirements demand a secur
 the client MUST only use the proxy T if the proxy can provide suitable credentials.
 (The hosting URI C is immaterial to these considerations).
 
-Credentials are usable if either:
-
-* The credentials are good for the intended use of R.
-
-  For example, if the application uses the host name and a public key infrastructure and R is `coap://example.com/`
-  the proxy accessed as `coap+tcp://[2001:db8::1]` still needs to provide a certificate chain for the name example.com to one of the system's trust anchors.
-  If, on the other hand, the application is doing a firmware update and requires any certificate from its configured firmware update issuer,
-  the proxy needs to provide such a firmware update certificate.
-
-* The credentials are suitable as a general trusted proxy for the system.
-
-  This applies only to security mechanisms that are terminated in proxies (i.e. (D)TLS and not OSCORE).
-
-  For a client to trust a proxy to this extent,
-  it must have configured knowledge which proxies it may trust.
-  Such configuration is generally only possible if the application's security selection is based on the host name
-  (as the client's intention to, as in the above example, obtain a firmware update, can not be transported to the proxy).
-
-  This option is unlikely to be useful in same-host proxies,
-  but convenient in scenarios like in {{thirdparty}}.
+For example, if the application uses the host name and a public key infrastructure and R is `coap://example.com/`
+the proxy accessed as `coap+tcp://[2001:db8::1]` still needs to provide a certificate chain for the name example.com to one of the system's trust anchors.
+If, on the other hand, the application is doing a firmware update and requires any certificate from its configured firmware update issuer,
+the proxy needs to provide such a firmware update certificate.
 
 ## Choice of transports
 
@@ -521,11 +505,9 @@ Failure to do so,
 in particular using a thusly announced proxy based on a certificate that attests the proxy's name,
 would allow attackers to circumvent the client's security expectation.
 
-The option to accept credentials suitable for a general trusted proxy
-is in place for (D)TLS protected scenarios,
-in which cross-protocol end-to-end protection is not available.
-Whether a client will recognize certificates for general trusted proxies at all
-depends on the original proxy setup's security considerations (of {{!RFC7252}} Section 11.2 and {{?RFC2616}} Section 15.7).
+When security is terminated at proxies (as is in DTLS and TLS),
+a third party proxy can usually not satisfy this requirement;
+these transports are limited to same-host proxies.
 
 ## Traffic misdirection {#proxy-foreign-advertisement}
 
@@ -570,15 +552,6 @@ Operators can further limit ill-effects
 by ensuring that their client systems do not needlessly use proxies advertised in an unsecured way,
 and by providing own proxies when their clients need them<!-- in a sense, avoid having starving clients that grab any straw at connectivity -->.
 
-## Implementing proxies
-
-Proxies that are trusted
-(i.e., that terminate (D)TLS connections and have an own server certificate)
-need to consider the same aspects as clients for their client-side interface as all other clients.
-
-Proxies can often process data from different security contexts.
-When they do, care needs to be taken to not apply has-proxy statements across security contexts.
-(This consideration is not specific to proxies, but comes up more frequently there).
 
 # IANA considerations
 
