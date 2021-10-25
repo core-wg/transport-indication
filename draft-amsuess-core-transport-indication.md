@@ -75,7 +75,7 @@ and advertise other transports in addition.
 
 ## Terminology
 
-Same-host proxy
+Same-host proxy:
 
 : A CoAP server that accepts forward proxy requests (i.e., requests carrying the Proxy-Scheme option)
   exclusively for URIs that it is also the authoritative server for is defined as a "same-host proxy".
@@ -84,7 +84,7 @@ Same-host proxy
   this specification does not use the distinction in normative requirements,
   and clients need not make the distinction at all.
 
-hosts
+hosts:
 
 : The verb "to host" is used here in the sense of the link relation of the same name defined in {{?RFC6690}}.
 
