@@ -285,6 +285,13 @@ They use the proxy for as long as they have fresh knowledge of the has-(unique-)
 In a way, advertising `has-unique-proxy` can be viewed as a description of the link target in terms of SCHC {{?I-D.ietf-lpwan-coap-static-context-hc}}:
 In requests to that target, the link source's scheme and host are implicitly present.
 
+While applications retain knowledge of the originally requested URI
+(even if it is not expressed in full on the wire),
+the original URI is not accessible to caches both within the host and on the network
+(the latter see {{actualproxies}}).
+Thus, cached responses to the canonical and any aliased URI are mutually interchangable
+as long as both the response and the proxy statement are fresh.
+
 A client MAY use a unique-proxy like a proxy and still send the Proxy-Scheme and Uri-Host option;
 such a client needs to recognize both relation types, as relations of the has-unique-proxy type
 are a specialization of has-proxy and typically don't carry the latter (redundant) annotation.
@@ -406,7 +413,7 @@ The use of a generic proxy can be limited to a set of devices that have permissi
 Clients can be allowed by their network address if they can be verified,
 or by using explicit client authentication using the methods of {{?I-D.tiloca-core-oscore-capable-proxies}}.
 
-# Client picked proxies
+# Client picked proxies {#actualproxies}
 
 When a resource is accessed through an "actual" proxy (i.e., a host between the client and the server, which itself may have a same-host proxy in addition to that),
 the proxy's choice of the upstream server is originally (i.e., without the mechanisms of this document)
@@ -415,7 +422,7 @@ or determined by the request URI (where a proxy picks CoAP over TCP for a reques
 
 A proxy that has learned,
 by active solicitation of the information or by consulting links in its cache,
-that the requested URI is available through a same-host proxy,
+that the requested URI is available through a (possibly same-host) proxy,
 or that has learned of advertised URI aliasings,
 may use that information
 in choosing the upstream transport,
