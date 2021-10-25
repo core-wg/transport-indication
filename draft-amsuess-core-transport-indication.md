@@ -155,7 +155,12 @@ Note that HTTP and CoAP proxies are not located at a particular resource,
 but at a host in general.
 Thus, a proxy URI `T` in these protocols has the path "/", and no query component or fragment identifier.
 This is true even for CoAP over WebSockets (which uses the concrete resource `/.well-known/coap`, but that is not expressed in "coap+ws" URI).
+
 Future protocols for which CoAP proxying is defined may use more components.
+As this is designed primarily for CoAP,
+proxies that perform URI mapping
+(as described in Section 5 of {{?RFC8075}}, especially using URI templates)
+are not supported in this document.
 
 ## Example
 
