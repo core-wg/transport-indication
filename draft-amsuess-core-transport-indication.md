@@ -477,12 +477,12 @@ DNS SRV records (possibly in combination with DNS Service Discovery {{?RFC6763}}
 If `_coap._tcp`, `_coaps._tcp`, `_coap._udp`, `_coap+ws._tcp` etc. were defined with suitable semantics,
 these can be equivalent:
 
-```
+~~~~
 _coap._udp.device.example.com SRV 0 0 device.example.com 61616
 device.example.com AAAA 2001:db8::1
 
 <coap://[2001:db8::1]>;rel=has-unique-proxy;anchor="coap://device.example.com"
-```
+~~~~
 
 It would be up to such a specification to give details on what the link's context is;
 unlike the link based discovery of this document,
