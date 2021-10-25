@@ -190,7 +190,7 @@ Observe: 0
 Payload:
 39.1°C
 ~~~~~
-{: #fig-has-proxy title='Follow-up request through a has-proxy relation'}
+{: #fig-has-proxy title='Discovery and follow-up request through a has-proxy relation'}
 
 Note that generating this discovery file needs to be dynamic based on its available addresses;
 only if queried using a link-local source address, it may also respond with a link-local address in the authority component of the proxy URI.
