@@ -20,10 +20,7 @@ kw: CoRE, Web Linking, Proxy, URI, aliasing
 author:
 - ins: C. Amsüss
   name: Christian Amsüss
-  street: Hollandstr. 12/4
-  code: '1020'
   country: Austria
-  phone: "+43-664-9790639"
   email: christian@amsuess.com
 normative:
 informative:
