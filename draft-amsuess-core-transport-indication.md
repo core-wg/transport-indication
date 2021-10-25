@@ -316,10 +316,10 @@ Res: from [2001:db8::1]:5683
 Content-Format: application/link-format
 Payload:
 </sensors/>;if="tag:example.com,collection",
-<coap+tcp://[2001:db8::1]>;rel=has-proxy;anchor="/"
+<coaps+ws://[2001:db8::1]>;rel=has-unique-proxy;anchor="/"
 
 
-Req: to [2001:db8::1]:5683 on TCP
+Req: to [2001:db8::1] via WebSockets over HTTPS
 Code: GET
 Uri-Path: /sensors/
 
@@ -331,13 +331,14 @@ Payload:
 {: #fig-has-unique-proxy title='Follow-up request through a has-unique-proxy relation. Compared to the last example, 5 bytes of scheme indication are saved during the follow-up request.'}
 
 It is noteworthy that when the URI reference `/sensors/temperature` is resolved,
-the base URI is `coap://device0815.example.com` and not its coap+ws counterpart --
-as the request is implicitly forwarded there, which both the client and the server are aware of.
+the base URI is `coap://device0815.example.com` and not its coaps+ws counterpart --
+as the request is still for that URI, which both the client and the server are aware of.
 However, this detail is of little practical importance:
-A simplistic client that uses `coap+ws://device0815.proxy.rd.example.com` as a base URI will still arrive at an identical follow-up request with no ill effect,
+A simplistic client that uses `coaps+ws://device0815.proxy.rd.example.com` as a base URI will still arrive at an identical follow-up request with no ill effect,
 as long as it only uses the wrongly assembled URI for dereferencing resources,
 the security context is the same,
-and it does not (for example) pass it on to other devices.
+the state is kept no longer than the has-unique-proxy statement is fresh,
+and it does not (for example) pass the URI on to other devices.
 
 # Third party proxy services {#thirdparty}
 
@@ -474,7 +475,7 @@ Uri-Query: rel=has-proxy&anchor=coap://nbswy3dpo5xxe3denbswy3dpo5xxe3de.ab.rdlin
 Res: from [2001:db8::1]:5683
 Content-Format: application/link-format
 Payload:
-<coap://[2001:db8::1]>;rel=has-unique-proxy;anchor="coap://nbswy3dpo5xxe3denbswy3dpo5xxe3de.ab.rdlink.arpa"
+<coap+tcp://[2001:db8::1]>;rel=has-unique-proxy;anchor="coap://nbswy3dpo5xxe3denbswy3dpo5xxe3de.ab.rdlink.arpa"
 
 
 Req: to [2001:db8::1]:5683 on TCP
