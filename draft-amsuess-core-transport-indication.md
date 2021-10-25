@@ -70,7 +70,7 @@ to negate any per-request overhead that would otherwise be introduced in the cou
 CoAP also lacks a unified scheme to label a resource in a transport-indepenent way.
 This document does *not* attempt to introduce any new scheme here,
 or raise a scheme to be the canonical one.
-Instead, each host can pick a canonical address for its resources,
+Instead, each host or application can pick a canonical address for its resources,
 and advertise other transports in addition.
 
 ## Terminology
@@ -78,7 +78,7 @@ and advertise other transports in addition.
 Same-host proxy
 
 : A CoAP server that accepts forward proxy requests (i.e., requests carrying the Proxy-Scheme option)
-  exclusively for URIs that it is the authoritative server for is defined as a "same-host proxy".
+  exclusively for URIs that it is also the authoritative server for is defined as a "same-host proxy".
 
 : The distinction between a same-host and any other proxy is only relevant on a practical, server-implementation and illustrative level;
   this specification does not use the distinction in normative requirements,
@@ -107,6 +107,8 @@ When talking of proxy requests,
 this document only talks of the Proxy-Scheme option.
 Given that all URIs this is usable with can be expressed in decomposed CoAP URIs,
 the need for using the Proxy-URI option should never arise.
+The Proxy-URI option is still equivalent to the decomposed options,
+and can be used if the server supports it.
 
 ## Goals
 
@@ -117,7 +119,7 @@ Combined, these provide:
 
 * No Aliasing: Any URI aliasing must be opt-in by the server. Any defined mechanisms must allow applications to keep working on the canonical URIs given by the server.
 
-* Optimization: Do not incur per-request overhead from switching protocls. This may depend on the server's willingness to create aliased URIs.
+* Optimization: Do not incur per-request overhead from switching protocols. This may depend on the server's willingness to create aliased URIs.
 
 * Proxy usability: All information provided must be usable by aware proxies to reduce the need for duplicate cache entries.
 
@@ -138,7 +140,7 @@ Any device can serve as a proxy for itself (a "same-host proxy")
 by accepting requests that carry the Proxy-Scheme option.
 If it is to be a well-behaved as a proxy,
 the device should then check whether it recognizes the name indicated in Uri-Host as one of its own
-\[ TBD: Check whether 7252 makes this a stricter requirement \],
+(as it should if no Proxy-Scheme option accompanied it), <!-- without 7252 explicitly mandating that -->
 reject the request with 5.05 when it is not recognized,
 and otherwise process it as it would process a request coming in on that protocol
 (which, for many hosts, is the same as if the option were absent completely).
@@ -151,9 +153,9 @@ are that for any resource R hosted on C ("C hosts R"), T is can be used as a pro
 
 Note that HTTP and CoAP proxies are not located at a particular resource,
 but at a host in general.
-Thus, a proxy URI `T` in these protocols can not carry a path or query component.
-This is true even for CoAP over WebSockets (which uses the concrete resource `/.well-known/coap`, but that can not expressed in "coap+ws" URI).
-Future protocols for which CoAP proxying is defined may have expressible path components.
+Thus, a proxy URI `T` in these protocols can not carry a path, query component, or fragment identifier.
+This is true even for CoAP over WebSockets (which uses the concrete resource `/.well-known/coap`, but that is not expressed in "coap+ws" URI).
+Future protocols for which CoAP proxying is defined may use more components.
 
 ## Example
 
@@ -189,7 +191,7 @@ Note that generating this discovery file needs to be dynamic based on its availa
 only if queried using a link-local source address, it may also respond with a link-local address in the authority component of the proxy URI.
 
 Unless the device makes resources discoverable at `coap+tcp://[2001:db8::1]/.well-known/core` or another discovery mechanism,
-clients may not assume that `coap+tcp://[2001:db8::1]/sensors/temp` is a valid resource (let alone has any relation to the other resource on the same path).
+clients may not assume that `coap+tcp://[2001:db8::1]/sensors/temp` is a valid resource (let alone is equivalent to the other resource on the same path).
 The server advertising itself like this may reject any request on CoAP-over-TCP unless they contain a Proxy-Scheme option.
 
 Clients that want to access the device using CoAP-over-TCP would send a request
@@ -236,6 +238,8 @@ Clients MAY switch between advertised transports as long as the document describ
 they may even do so per request.
 (For example, they may perform individual requests using CoAP-over-UDP,
 but choose CoAP-over-TCP for requests with large expected responses).
+When the describing document approaches expiry,
+the client can use the representation's ETag renew their justification for using the alternative transport.
 
 ## Selection of a canonical origin
 
@@ -262,7 +266,8 @@ as it would incur heavy URI aliasing.
 Instead, devices can submit their has-proxy links to the Resource Directory like all their other metadata.
 
 A client performing resource lookup can ask the RD to provide available (same-host-)proxies in a follow-up request
-by asking for `?anchor=the-discovered-host&rel=has-proxy`.
+by asking for `?anchor=<the-discovered-host>&rel=has-proxy`.
+<!-- We don't say that the RD can not do that, right? -->
 The RD may also volunteer that information during resource lookups even though the has-proxy link itself does not match the search criteria.
 
 \[ It may be useful to define RD parameters for use with lookup here, which'd guide which available proxies to include. \]
@@ -346,6 +351,7 @@ for example in a Resource Directory.
 How the server can discover and trust such a proxy
 is out of scope for this document,
 but generally involves the same kind of links.
+In particular, a server may obtain a link to a third party proxy from an administrator as part of its configuration.
 
 The proxy may advertise itself without the origin server's involvement;
 in that case, the client needs to take additional care (see {{proxy-foreign-advertisement}}).
@@ -648,6 +654,8 @@ Since -00:
 
   (Not that it'd need to happen in software in that sequence,
   but that's the sequence needed to understand how the `/foo` here is really `coap://myhostname/foo`).
+
+  If CoRAL is used during discovery, a base directive or reverse relation to has-unique-proxy would make this easier.
 
 # Acknowledgements
 
