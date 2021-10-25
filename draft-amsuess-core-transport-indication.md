@@ -366,13 +366,45 @@ Payload:
 ~~~~~
 {: #fig-external-proxy title='HTTP based discovery and CoAP-over-WS request to a CoAP resource through a has-unique-proxy relation'}
 
-## Generic proxy advertisements
+## Generic proxy advertisements {#generic-advertisements}
 
 A third party proxy may advertise its availability to act as a proxy for arbitrary CoAP requests.
+This use is not directly related to the protocol indication in other parts of this document,
+but sufficiently similar to warrant being described in the same document.
 
-\[ TBD: Specify a mechanism for this; `<coap+ws://myself>;rel=has-proxy;anchor="coap://*"` for all supported protocols appears to be an obvious but wrong solution. \]
+The resource type "TBDcore.proxy" can be used to describe such a proxy.
+The link target attribute "proxy-schemes" can be used to indicate the scheme(s) supported by the proxy, separated by the space character.
+
+~~~~~
+Req: GET coap://[fe80::1]/.well-known/core?rt=TBDcore.proxy
+
+Res:
+Content-Format: application/link-format
+Payload:
+<>;rt=TBDcore.proxy;proxy-schemes="coap coap+tcp coap+ws http"
+
+Req: to [fe80::1] via CoAP
+Code: GET
+Proxy-Scheme: http
+Uri-Host: example.com
+Uri-Path: /motd
+Accept: text/plain
+
+Res: 2.05 Content
+Content-Format: text/plain
+Payload:
+On Monday, October 25th 2021, there is no special message of the day.
+~~~~~
+{: #fig-6lbr-proxy title='A CoAP client discovers that its border router can also serve as a proxy, and uses that to access a resource on an HTTP server.'}
 
 The considerations of {{proxy-foreign-advertisement}} apply here.
+
+A generic advertised proxy is always a forward proxy,
+and can not be advertised as a "unique" proxy as it would lack information about where to forward.
+
+The use of a generic proxy can be limited to a set of devices that have permission to use it.
+Clients can be allowed by their network address if they can be verified,
+or by using explicit client authentication using the methods of {{?I-D.tiloca-core-oscore-capable-proxies}}.
 
 # Client picked proxies
 
@@ -567,6 +599,19 @@ IANA is asked to add two entries into the Link Relation Type Registry last updat
 | has-unique-proxy  | Like has-proxy, and using this proxy implies scheme and host of the target. | RFCthis     |
 {: #tab-iana title='New Link Relation types' }
 
+## Resource Types
+
+IANA is asked to add an entry into the "Resource Type (rt=) Link Target Attribute Values" registry under the Constrained RESTful Environments (CoRE) Parameters:
+
+\[ The RFC Editor is asked to replace any occurrence of TBDcore.proxy with the actually registered attribute value. \]
+
+Attribute Value: core.proxy
+
+Description: Forward proxying services
+
+Reference: \[ this document \]
+
+Notes: The schemes for which the proxy is usable may be indicated using the proxy-schemes target attribute as per {{generic-advertisements}} of \[ this document \].
 
 --- back
 
