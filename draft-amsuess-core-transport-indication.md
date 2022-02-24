@@ -142,12 +142,12 @@ or having them observable.
 
 # Indicating alternative transports
 
-While CoAP can indicate the authority component of the requested URI in all requests (by means of Uri-Host),
+While CoAP can indicate the authority component of the requested URI in all requests (by means of Uri-Host and Uri-Port),
 indicating the scheme of a requested URI (by means of Proxy-Scheme) makes the request implicitly a proxy request.
 However, this needs to be of only little practical concern:
 Any device can serve as a proxy for itself (a "same-host proxy")
 by accepting requests that carry the Proxy-Scheme option.
-If it is to be a well-behaved as a proxy,
+If it is to be a well-behaved proxy,
 the device should then check whether it recognizes the name indicated in Uri-Host as one of its own
 (as it should if no Proxy-Scheme option accompanied it). <!-- without 7252 explicitly mandating that -->
 If the name is not recognized,
@@ -722,6 +722,7 @@ This document heavily builds on concepts
 explored by Bill Silverajan and Mert Ocak in {{?I-D.silverajan-core-coap-protocol-negotiation}},
 and together with Ines Robles and Klaus Hartke inside T2TRG.
 
-[ TBD: reviewers
+\[ TBD: reviewers
 Marco
-]
+Klaus
+\]
