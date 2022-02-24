@@ -67,7 +67,7 @@ this document solves both by introducing the "has-proxy" terminology to Web Link
 The additional "has-unique-proxy" term is introduced
 to negate any per-request overhead that would otherwise be introduced in the course of this.
 
-CoAP also lacks a unified scheme to label a resource in a transport-indepenent way.
+CoAP also lacks a unified scheme to label a resource in a transport-independent way.
 This document does *not* attempt to introduce any new scheme here,
 or raise a scheme to be the canonical one.
 Instead, each host or application can pick a canonical address for its resources,
@@ -149,7 +149,7 @@ A server can indicate support for same-host proxying (or any kind of proxying, r
 by serving a Web Link with the "has-proxy" relation.
 
 The semantics of a link from C to T with relations has-proxy ("C has-proxy T", `<T>;rel=has-proxy;anchor="C"`)
-are that for any resource R hosted on C ("C hosts R"), T is can be used as a proxy to obtain R.
+are that for any resource R hosted on C ("C hosts R"), T can be used as a proxy to obtain R.
 
 Note that HTTP and CoAP proxies are not located at a particular resource,
 but at a host in general.
@@ -193,11 +193,11 @@ Payload:
 {: #fig-has-proxy title='Discovery and follow-up request through a has-proxy relation'}
 
 Note that generating this discovery file needs to be dynamic based on its available addresses;
-only if queried using a link-local source address, it may also respond with a link-local address in the authority component of the proxy URI.
+only if queried using a link-local source address, the server may also respond with a link-local address in the authority component of the proxy URI.
 
 Unless the device makes resources discoverable at `coap+tcp://[2001:db8::1]/.well-known/core` or another discovery mechanism,
 clients may not assume that `coap+tcp://[2001:db8::1]/sensors/temp` is a valid resource (let alone is equivalent to the other resource on the same path).
-The server advertising itself like this may reject any request on CoAP-over-TCP unless they contain a Proxy-Scheme option.
+The server advertising itself like this may reject any request on CoAP-over-TCP unless it contains a Proxy-Scheme option.
 
 Clients that want to access the device using CoAP-over-TCP would send a request
 by connecting to 2001:db8::1 TCP port 5683
@@ -228,7 +228,7 @@ they may even do so per request.
 (For example, they may perform individual requests using CoAP-over-UDP,
 but choose CoAP-over-TCP for requests with large expected responses).
 When the describing document approaches expiry,
-the client can use the representation's ETag renew their justification for using the alternative transport.
+the client can use the representation's ETag to efficiently renew its justification for using the alternative transport.
 
 ## Selection of a canonical origin
 
@@ -293,14 +293,14 @@ In requests to that target, the link source's scheme and host are implicitly pre
 While applications retain knowledge of the originally requested URI
 (even if it is not expressed in full on the wire),
 the original URI is not accessible to caches both within the host and on the network
-(the latter see {{actualproxies}}).
-Thus, cached responses to the canonical and any aliased URI are mutually interchangable
+(for the latter, see {{actualproxies}}).
+Thus, cached responses to the canonical and any aliased URI are mutually interchangeable
 as long as both the response and the proxy statement are fresh.
 
 A client MAY use a unique-proxy like a proxy and still send the Proxy-Scheme and Uri-Host option;
 such a client needs to recognize both relation types, as relations of the has-unique-proxy type
 are a specialization of has-proxy and typically don't carry the latter (redundant) annotation.
-\[ To be evaluated -- one one hand, supporting it this way means that the server needs to identify all of its addresses and reject others.
+\[ To be evaluated -- on one hand, supporting it this way means that the server needs to identify all of its addresses and reject others.
    Then again, is a server that (like many now do) fully ignore any set Uri-Host correct at all? \]
 
 Example:
@@ -453,9 +453,9 @@ in that they do not create different application-visible addresses,
 but provide dispatch through lower transport implementations.
 
 Unlike in HTTP, the variations of CoAP protocols each come with their unique URI schemes.
-Thus, origin URIs can be used without introducing a distrinction between protocol-id and scheme.
+Thus, origin URIs can be used without introducing a distinction between protocol-id and scheme.
 
-To accomodate the message size constraints typical of CoRE environments,
+To accommodate the message size constraints typical of CoRE environments,
 and accounting for the differences between HTTP headers and CoAP options,
 information is delivered once at discovery time.
 
@@ -495,7 +495,7 @@ Names that are resolved through different mechanisms than DNS,
 or names which are defined within the scope of DNS but have no universally valid answers to A/AAAA requests,
 can be advertised using the relation types defined here and CoAP discovery.
 
-In figure {{fig-rdlink}}, a server using a cryptographic name as described in {{?I-D.amsuess-t2trg-rdlink}} is discovered and used.
+In {{fig-rdlink}}, a server using a cryptographic name as described in {{?I-D.amsuess-t2trg-rdlink}} is discovered and used.
 
 ~~~~
 Req: to [ff02::fd]:5683 on UDP
@@ -534,7 +534,7 @@ this works independently of this document's mechanisms.
 As long as all the server's addresses are equally reachable,
 there is no need to advertise multiple addresses that can later be discovered through MPTCP anyway.
 When advertisements are long-lived and there is no single more stable address,
-several available addresses can be advertised (indepependently of whether MPTCP is involved or not).
+several available addresses can be advertised (independently of whether MPTCP is involved or not).
 If a client uses an address that is merely a proxy address (and not a unique proxy address),
 but during MPTCP finds out that the network location being accessed is actually an MPTCP alternative address of the used one,
 the client MAY forego sending of the Proxy-Scheme and Uri-Path option.
@@ -562,7 +562,7 @@ these transports are limited to same-host proxies.
 
 Accepting arbitrary proxies,
 even with security context propagation performed properly,
-would attackers to redirect traffic through systems under their control.
+would allow attackers to redirect traffic through systems under their control.
 Not only does that impact availability,
 it also allows an attacker to observe traffic patterns.
 
@@ -693,7 +693,7 @@ Since -00:
   ~~~~
 
   which is compatible with unaware clients,
-  but its correctnes with respect to canonical URIs needs to be argued by the client, in this sequence
+  but its correctness with respect to canonical URIs needs to be argued by the client, in this sequence
 
   * understanding the has-unique-proxy line,
   * understanding that the request that went to 2001:db8::1 was really a Proxy-Scheme/Uri-Host-elided version of a request to coap://myhostname, and then
@@ -709,3 +709,7 @@ Since -00:
 This document heavily builds on concepts
 explored by Bill Silverajan and Mert Ocak in {{?I-D.silverajan-core-coap-protocol-negotiation}},
 and together with Ines Robles and Klaus Hartke inside T2TRG.
+
+[ TBD: reviewers
+Marco
+]
