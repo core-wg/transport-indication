@@ -157,8 +157,10 @@ If the name is recognized,
 it should process the request as it would process a request coming in on the indicated protocol
 (which, for many hosts, is the same as if the option were absent completely).
 
-A server can indicate support for same-host proxying (or any kind of proxying, really)
+A server can indicate a recommended proxy
 by serving a Web Link with the "has-proxy" relation.
+In particular (and that is a typical case),
+it can indicate its own address on an alternative transport when implementing same-host proxy functionality.
 
 The semantics of a link from C to T with relations has-proxy ("C has-proxy T", `<T>;rel=has-proxy;anchor="C"`)
 are that for any resource R hosted on C ("C hosts R"), T can be used as a proxy to obtain R.
