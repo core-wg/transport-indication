@@ -548,7 +548,7 @@ Since -01:
 
 * Removed suggestion for generally trusted proxies;
   now stating that with (D)TLS,
-  "a third party proxy can usually not satisfy [the security context propagation requirement]".
+  "a third party proxy can usually not satisfy \[the security context propagation requirement\]".
 * State more clearly that valid cache entries for resources aliased through has-unique-proxy can be used.
 * Added considerations for Multipath TCP.
 * Added concrete suggestion and example for advertisement of general proxies.
@@ -624,12 +624,14 @@ In {{fig-rdlink}}, a server using a cryptographic name as described in {{?I-D.am
 Req: to [ff02::fd]:5683 on UDP
 Code: GET
 Uri-Path: /.well-known/core
-Uri-Query: rel=has-proxy&anchor=coap://nbswy3dpo5xxe3denbswy3dpo5xxe3de.ab.rdlink.arpa
+Uri-Query: rel=has-proxy
+Uri-Query: anchor=coap://nbswy3dpo5xxe3denbswy3dpo5xxe3de.ab.rdlink.arpa
 
 Res: from [2001:db8::1]:5683
 Content-Format: application/link-format
 Payload:
-<coap+tcp://[2001:db8::1]>;rel=has-unique-proxy;anchor="coap://nbswy3dpo5xxe3denbswy3dpo5xxe3de.ab.rdlink.arpa"
+<coap+tcp://[2001:db8::1]>;rel=has-unique-proxy;
+  anchor="coap://nbswy3dpo5xxe3denbswy3dpo5xxe3de.ab.rdlink.arpa"
 
 
 Req: to [2001:db8::1]:5683 on TCP
