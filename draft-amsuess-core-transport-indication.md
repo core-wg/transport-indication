@@ -45,7 +45,7 @@ informative:
 The Constrained Application Protocol (CoAP, {{!RFC7252}}) is available over different transports
 (UDP, DTLS, TCP, TLS, WebSockets),
 but lacks a way to unify these addresses.
-This document provides terminology based on Web Linking {{?RFC8288}}
+This document provides terminology and provisions based on Web Linking {{?RFC8288}}
 to express alternative transports available to a device,
 and to optimize exchanges using these.
 
@@ -74,6 +74,11 @@ Instead, each host or application can pick a canonical address for its resources
 and advertise other transports in addition.
 
 ## Terminology
+
+Readers are expected to be familiar with the terms and concepts
+described in CoAP {{RFC7252}}
+and link format ({{RFC6690}}
+(or, equivalently, web links as described in {{RFC8288}}).
 
 Same-host proxy:
 
@@ -129,7 +134,11 @@ For all these functions, security policies must be described that allow the clie
 
 This document will not concern itself with changes in transport availability over time,
 neither in causing them ("Please take up your TCP interface, I'm going to send a firmware update")
-nor in advertising them (other than by the server putting suitable Max-Age values on any of its statements).
+nor in advertising their availability in advance.
+Hosts whose transport's availability changes over time can utilize
+any suitable mechanism to keep client updated,
+such as placing a suitable Max-Age value on their resources
+or having them observable.
 
 # Indicating alternative transports
 
@@ -140,9 +149,12 @@ Any device can serve as a proxy for itself (a "same-host proxy")
 by accepting requests that carry the Proxy-Scheme option.
 If it is to be a well-behaved as a proxy,
 the device should then check whether it recognizes the name indicated in Uri-Host as one of its own
-(as it should if no Proxy-Scheme option accompanied it), <!-- without 7252 explicitly mandating that -->
-reject the request with 5.05 when it is not recognized,
-and otherwise process it as it would process a request coming in on that protocol
+(as it should if no Proxy-Scheme option accompanied it). <!-- without 7252 explicitly mandating that -->
+If the name is not recognized,
+it should reject the request with 5.05 (Proxying Not Supported)
+-- unless, of course, it implements forward proxy functionality exceeding the same-host proxy.
+If the name is recognized,
+it should process the request as it would process a request coming in on the indicated protocol
 (which, for many hosts, is the same as if the option were absent completely).
 
 A server can indicate support for same-host proxying (or any kind of proxying, really)
