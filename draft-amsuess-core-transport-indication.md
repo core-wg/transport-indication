@@ -458,107 +458,6 @@ and would (from the original CoAP caching rules) also be allowed
 to use any fresh cache representation of coap+tcp://h1.example.com/res
 to satisfy requests for coap://h1.example.com/res.
 
-# Related work and applicability to related fields
-
-## On HTTP
-
-The mechanisms introduced here are similar to the Alt-Svc header of {{?RFC7838}}
-in that they do not create different application-visible addresses,
-but provide dispatch through lower transport implementations.
-
-Unlike in HTTP, the variations of CoAP protocols each come with their unique URI schemes.
-Thus, origin URIs can be used without introducing a distinction between protocol-id and scheme.
-
-To accommodate the message size constraints typical of CoRE environments,
-and accounting for the differences between HTTP headers and CoAP options,
-information is delivered once at discovery time.
-
-Using the has-proxy and has-unique-proxy with HTTP URIs as the context is NOT RECOMMENDED;
-the HTTP provisions of the Alt-Svc header and ALPN are preferred.
-
-## Using DNS
-
-As pointed out in {{?RFC7838}},
-DNS can already serve some of the applications of Alt-Svc and has-unique-proxy by providing different CNAME records.
-These cover cases of multiple addresses,
-but not different ports or protocols.
-
-While not specified for CoAP yet (and neither being specified here),
-
-\[ which is an open discussion point for CoRE -- should we? Here? In a separate DNS-SD document? \]
-
-DNS SRV records (possibly in combination with DNS Service Discovery {{?RFC6763}}) can provide records that could be considered equivalent to has-unique-proxy relations.
-If `_coap._tcp`, `_coaps._tcp`, `_coap._udp`, `_coap+ws._tcp` etc. were defined with suitable semantics,
-these can be equivalent:
-
-~~~~
-_coap._udp.device.example.com SRV 0 0 device.example.com 61616
-device.example.com AAAA 2001:db8::1
-
-<coap://[2001:db8::1]>;rel=has-unique-proxy;anchor="coap://device.example.com"
-~~~~
-
-It would be up to such a specification to give details on what the link's context is;
-unlike the link based discovery of this document,
-it would either need to pick one distinguished context scheme for which these records are looked up,
-or would introduce aliasing on its own.
-
-## Using names outside regular DNS
-
-Names that are resolved through different mechanisms than DNS,
-or names which are defined within the scope of DNS but have no universally valid answers to A/AAAA requests,
-can be advertised using the relation types defined here and CoAP discovery.
-
-In {{fig-rdlink}}, a server using a cryptographic name as described in {{?I-D.amsuess-t2trg-rdlink}} is discovered and used.
-
-~~~~
-Req: to [ff02::fd]:5683 on UDP
-Code: GET
-Uri-Path: /.well-known/core
-Uri-Query: rel=has-proxy&anchor=coap://nbswy3dpo5xxe3denbswy3dpo5xxe3de.ab.rdlink.arpa
-
-Res: from [2001:db8::1]:5683
-Content-Format: application/link-format
-Payload:
-<coap+tcp://[2001:db8::1]>;rel=has-unique-proxy;anchor="coap://nbswy3dpo5xxe3denbswy3dpo5xxe3de.ab.rdlink.arpa"
-
-
-Req: to [2001:db8::1]:5683 on TCP
-Code: GET
-OSCORE: ...
-Uri-Path: /sensors/temp
-Observe: 0
-
-Res: 2.05 Content
-OSCORE: ...
-Observe: 0
-Payload:
-39.1°C
-~~~~
-{: #fig-rdlink title='Obtaining a sensor value from a local device with a global name'}
-
-## Multipath TCP
-
-When CoAP-over-TCP is used over Multipath TCP
-and no Uri-Host option is sent,
-the implicit assumption is that there is aliasing between URIs containing any of the endpoints' addresses.
-
-As these are negotiated within MPTCP,
-this works independently of this document's mechanisms.
-As long as all the server's addresses are equally reachable,
-there is no need to advertise multiple addresses that can later be discovered through MPTCP anyway.
-When advertisements are long-lived and there is no single more stable address,
-several available addresses can be advertised (independently of whether MPTCP is involved or not).
-If a client uses an address that is merely a proxy address (and not a unique proxy address),
-but during MPTCP finds out that the network location being accessed is actually an MPTCP alternative address of the used one,
-the client MAY forego sending of the Proxy-Scheme and Uri-Path option.
-
-\[ This follows from multiple addresses being valid for that TCP connection;
-at some point we may want to say something about what that means for the default value of the Uri-Host option --
-maybe something like "has the default value of any of the associated addresses, but the server may only enable MPTCP if there is implicit aliasing between all of them" (similar to OSCORE's statement)?  \]
-
-\[ TBD: Do we need a section analog to this that deals with (D)TLS session resumption in absence of SNI? \]
-
 # Security considerations
 
 ## Security context propagation
@@ -667,6 +566,107 @@ Since -00:
 * Added comparisons with related work, including rdlink and DNS-SD sketches
 * Added IANA considerations
 * Added section on open questions
+
+# Related work and applicability to related fields
+
+## On HTTP
+
+The mechanisms introduced here are similar to the Alt-Svc header of {{?RFC7838}}
+in that they do not create different application-visible addresses,
+but provide dispatch through lower transport implementations.
+
+Unlike in HTTP, the variations of CoAP protocols each come with their unique URI schemes.
+Thus, origin URIs can be used without introducing a distinction between protocol-id and scheme.
+
+To accommodate the message size constraints typical of CoRE environments,
+and accounting for the differences between HTTP headers and CoAP options,
+information is delivered once at discovery time.
+
+Using the has-proxy and has-unique-proxy with HTTP URIs as the context is NOT RECOMMENDED;
+the HTTP provisions of the Alt-Svc header and ALPN are preferred.
+
+## Using DNS
+
+As pointed out in {{?RFC7838}},
+DNS can already serve some of the applications of Alt-Svc and has-unique-proxy by providing different CNAME records.
+These cover cases of multiple addresses,
+but not different ports or protocols.
+
+While not specified for CoAP yet (and neither being specified here),
+
+\[ which is an open discussion point for CoRE -- should we? Here? In a separate DNS-SD document? \]
+
+DNS SRV records (possibly in combination with DNS Service Discovery {{?RFC6763}}) can provide records that could be considered equivalent to has-unique-proxy relations.
+If `_coap._tcp`, `_coaps._tcp`, `_coap._udp`, `_coap+ws._tcp` etc. were defined with suitable semantics,
+these can be equivalent:
+
+~~~~
+_coap._udp.device.example.com SRV 0 0 device.example.com 61616
+device.example.com AAAA 2001:db8::1
+
+<coap://[2001:db8::1]>;rel=has-unique-proxy;anchor="coap://device.example.com"
+~~~~
+
+It would be up to such a specification to give details on what the link's context is;
+unlike the link based discovery of this document,
+it would either need to pick one distinguished context scheme for which these records are looked up,
+or would introduce aliasing on its own.
+
+## Using names outside regular DNS
+
+Names that are resolved through different mechanisms than DNS,
+or names which are defined within the scope of DNS but have no universally valid answers to A/AAAA requests,
+can be advertised using the relation types defined here and CoAP discovery.
+
+In {{fig-rdlink}}, a server using a cryptographic name as described in {{?I-D.amsuess-t2trg-rdlink}} is discovered and used.
+
+~~~~
+Req: to [ff02::fd]:5683 on UDP
+Code: GET
+Uri-Path: /.well-known/core
+Uri-Query: rel=has-proxy&anchor=coap://nbswy3dpo5xxe3denbswy3dpo5xxe3de.ab.rdlink.arpa
+
+Res: from [2001:db8::1]:5683
+Content-Format: application/link-format
+Payload:
+<coap+tcp://[2001:db8::1]>;rel=has-unique-proxy;anchor="coap://nbswy3dpo5xxe3denbswy3dpo5xxe3de.ab.rdlink.arpa"
+
+
+Req: to [2001:db8::1]:5683 on TCP
+Code: GET
+OSCORE: ...
+Uri-Path: /sensors/temp
+Observe: 0
+
+Res: 2.05 Content
+OSCORE: ...
+Observe: 0
+Payload:
+39.1°C
+~~~~
+{: #fig-rdlink title='Obtaining a sensor value from a local device with a global name'}
+
+## Multipath TCP
+
+When CoAP-over-TCP is used over Multipath TCP
+and no Uri-Host option is sent,
+the implicit assumption is that there is aliasing between URIs containing any of the endpoints' addresses.
+
+As these are negotiated within MPTCP,
+this works independently of this document's mechanisms.
+As long as all the server's addresses are equally reachable,
+there is no need to advertise multiple addresses that can later be discovered through MPTCP anyway.
+When advertisements are long-lived and there is no single more stable address,
+several available addresses can be advertised (independently of whether MPTCP is involved or not).
+If a client uses an address that is merely a proxy address (and not a unique proxy address),
+but during MPTCP finds out that the network location being accessed is actually an MPTCP alternative address of the used one,
+the client MAY forego sending of the Proxy-Scheme and Uri-Path option.
+
+\[ This follows from multiple addresses being valid for that TCP connection;
+at some point we may want to say something about what that means for the default value of the Uri-Host option --
+maybe something like "has the default value of any of the associated addresses, but the server may only enable MPTCP if there is implicit aliasing between all of them" (similar to OSCORE's statement)?  \]
+
+\[ TBD: Do we need a section analog to this that deals with (D)TLS session resumption in absence of SNI? \]
 
 # Open Questions / further ideas
 
