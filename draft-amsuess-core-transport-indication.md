@@ -543,6 +543,8 @@ the client MAY forego sending of the Proxy-Scheme and Uri-Path option.
 at some point we may want to say something about what that means for the default value of the Uri-Host option --
 maybe something like "has the default value of any of the associated addresses, but the server may only enable MPTCP if there is implicit aliasing between all of them" (similar to OSCORE's statement)?  \]
 
+\[ TBD: Do we need a section analog to this that deals with (D)TLS session resumption in absence of SNI? \]
+
 # Security considerations
 
 ## Security context propagation
