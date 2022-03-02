@@ -96,15 +96,20 @@ hosts:
   For resources discovered via CoAP's discovery interface,
   a hosting statement is typically provided by the defaults implied by {{?RFC6690}}
   where a link like `</sensor/temp>` is implied to have the relation "hosts" and the anchor `/`,
-  such that a statement "coap://hostname hosts coap://hostname/sensor/temp" can be inferred.
+  such that a statement "coap://hostname hosts coap://hostname/sensor/temp" is implied in the link.
 
-  For many application it can make sense to assume that any resource has a "host" relation
-  leading from the root path of the server
-  without having performed that discovery explicitly.
+  The link relation has been occasionally used with different interpretations,
+  which ascribe more meaning to the term than it has in its definition.
+  In particular,
 
-  \[ TBD: The last paragraph could be a contentuous point;
-  things should still work without it,
-  and maybe that's even better because it precludes a dynamic resource created
+  * the "hosts" relation can not be inferred merely by two URIs having
+    the same scheme, host and port (and vice versa), and
+
+  * the "hosts" relation on its own does not make any statement
+    about the physical devices that hold the resource's representation.
+
+  \[ TBD: The former could probably still be used without too many ill effects;
+  but things might also get weird when a dynamic resource created
   with one transport from use with another transport unless explicitly cleared.
   \]
 
