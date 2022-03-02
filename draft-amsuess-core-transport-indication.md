@@ -167,12 +167,12 @@ by serving a Web Link with the "has-proxy" relation.
 In particular (and that is a typical case),
 it can indicate its own address on an alternative transport when implementing same-host proxy functionality.
 
-The semantics of a link from C to T with relations has-proxy ("C has-proxy T", `<T>;rel=has-proxy;anchor="C"`)
-are that for any resource R hosted on C ("C hosts R"), T can be used as a proxy to obtain R.
+The semantics of a link from S to P with relations has-proxy ("S has-proxy P", `<P>;rel=has-proxy;anchor="S"`)
+are that for any resource R hosted on S ("S hosts R"), P can be used as a proxy to obtain R.
 
 Note that HTTP and CoAP proxies are not located at a particular resource,
 but at a host in general.
-Thus, a proxy URI `T` in these protocols has the path "/", and no query component or fragment identifier.
+Thus, a proxy URI `P` in these protocols has the path "/", and no query component or fragment identifier.
 This is true even for CoAP over WebSockets (which uses the concrete resource `/.well-known/coap`, but that is not expressed in "coap+ws" URI).
 
 Future protocols for which CoAP proxying is defined may use more components.
@@ -226,8 +226,8 @@ and the Uri-Paths "sensors" and "temp".
 ## Security context propagation {#secctx-propagation}
 
 If the originally requested URI R or the application requirements demand a security mechanism is used,
-the client MUST only use the proxy T if the proxy can provide suitable credentials.
-(The hosting URI C is immaterial to these considerations).
+the client MUST only use the proxy P if the proxy can provide suitable credentials.
+(The hosting URI S is immaterial to these considerations).
 
 For example, if the application uses the host name and a public key infrastructure and R is `coap://example.com/`
 the proxy accessed as `coap+tcp://[2001:db8::1]` still needs to provide a certificate chain for the name example.com to one of the system's trust anchors.
