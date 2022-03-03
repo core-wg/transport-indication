@@ -234,6 +234,16 @@ the proxy accessed as `coap+tcp://[2001:db8::1]` still needs to provide a certif
 If, on the other hand, the application is doing a firmware update and requires any certificate from its configured firmware update issuer,
 the proxy needs to provide such a firmware update certificate.
 
+Some applications have requirements
+exceeding the requirements of a secure connection,
+e.g., (explicitly or implicitly) requiring that
+name resolution happen through a secure process
+and packets are only routed into networks where it trusts that they will not be intercepted on the path to the server.
+Such applications need to extend their requirements to the source of the `has-proxy` statement;
+a sufficient (but maybe needlessly strict) requirement is to only follow `has-proxy` statements
+that are part of the same resource that advertises the link currently being followed.
+Section {{proxy-foreign-advertisement}} adds further considerations.
+
 ## Choice of transports
 
 It is up to the client whether to use an advertised proxy transport,
