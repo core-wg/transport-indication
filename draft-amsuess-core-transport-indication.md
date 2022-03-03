@@ -511,6 +511,13 @@ and would (from the original CoAP caching rules) also be allowed
 to use any fresh cache representation of coap+tcp://h1.example.com/res
 to satisfy requests for coap://h1.example.com/res.
 
+A client that uses a forward proxy
+and learns of a different proxy advertised to access a particular resource
+will not change its behavior if its original proxy is part of its configuration.
+If the forward proxy was only used out of necessity
+(e.g., to access a resource on the protocol not supported by the client)
+it can be practical for the client to use the advertised proxy instead.
+
 # Security considerations
 
 ## Security context propagation
