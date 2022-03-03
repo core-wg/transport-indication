@@ -475,6 +475,8 @@ The considerations of {{proxy-foreign-advertisement}} apply here.
 
 A generic advertised proxy is always a forward proxy,
 and can not be advertised as a "unique" proxy as it would lack information about where to forward.
+(A proxy limited to a single outbound protocol might in theory work as a unique proxy when using a transport in which the full default Uri-Host value is configured at setup time,
+but these are considered impractical and thus not assigned a resource type here.)
 
 The use of a generic proxy can be limited to a set of devices that have permission to use it.
 Clients can be allowed by their network address if they can be verified,
