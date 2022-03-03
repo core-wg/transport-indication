@@ -604,6 +604,19 @@ Notes: The schemes for which the proxy is usable may be indicated using the prox
 
 # Change log
 
+Since -02 (mainly processing reviews from Marco and Klaus):
+
+* Acknowledge that 'coap://hostname/' is not the proxy but a URI that (in a particular phrasing) is used to stand in for the proxy's address (while it regularly identifies a resurce on the server)
+* Security: Referencing traffic misdirection already in the first security block.
+* Narrow down "unique" proxy semantics to those properties used by the client, allowing unique proxies to be co-hosted with forward proxies.
+* "Client picked proxies" clarified to merely illustrate how this is compatible with them.
+* Use of "hosts" relation sharpened.
+* Precision on how this does and does not consider changing transports.
+* "Related work" section demoted to appendix.
+* Add note on DTLS session resumption.
+* Variable renaming.
+* Various editorial fixes.
+
 Since -01:
 
 * Removed suggestion for generally trusted proxies;
