@@ -667,6 +667,7 @@ Since -02 (mainly processing reviews from Marco and Klaus):
 
 * Acknowledge that 'coap://hostname/' is not the proxy but a URI that (in a particular phrasing) is used to stand in for the proxy's address (while it regularly identifies a resurce on the server)
 * Security: Referencing traffic misdirection already in the first security block.
+* Security: Add (incomplete) considerations for unique-proxy case.
 * Narrow down "unique" proxy semantics to those properties used by the client, allowing unique proxies to be co-hosted with forward proxies.
 * "Client picked proxies" clarified to merely illustrate how this is compatible with them.
 * Use of "hosts" relation sharpened.
