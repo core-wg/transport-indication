@@ -336,8 +336,10 @@ but in general is discouraged {{aliases}}.
 To make efficient requests possible without creating URI aliases that propagate,
 the "has-unique-proxy" specialization of the has-proxy relation is defined.
 
-If a proxy is unique, it means that it unconditionally forwards to the server indicated in the link context,
-even if the Proxy-Scheme and Uri-Host options are elided.
+If a proxy is unique,
+it means that requests arriving at the proxy are treated the same
+no matter whether the scheme, authority and port of the link context are set in the Proxy-Scheme, Uri-Host and Uri-Port options, respectively,
+or whether all of them are absent.
 
 \[ The following two paragraphs are both true but follow different approaches to explaining the observable and implementable behavior;
    it may later be decided to focus on one or the other in this document. \]
