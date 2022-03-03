@@ -401,6 +401,65 @@ the security context is the same,
 the state is kept no longer than the has-unique-proxy statement is fresh,
 and it does not (for example) pass the URI on to other devices.
 
+## Impact on caches
+
+\[ This section is written with the "there is implied URI aliasing" mindset;
+it should be possible to write it with the "compression" mindset as well
+(but there is no point in having both around in the document at this time).
+
+It is also slightly duplicating, but also more detailed than,
+the brief note on the topic in {{actualproxies}}
+\]
+
+When a node that performs caching learns of a `has-unique-proxy` statement,
+it can utilize the information about the implied URI aliasing:
+Requests to resources hosted by S can be answered with cached entries from P
+(because by the rules of `has-unique-proxy` a request can be crafted that is sent to P for which a fresh response is available).
+The inverse direction (serving resources whose URI "starts with" P from a cached request that was sent to S) is harder to serve because it additionaly requires a fresh statement
+that "S hosts R" for the matching resource R.
+
+## Using unique proxies securely {#unique-security}
+
+\[
+This section is work in progress, it is more a flow of considerations turning back on each other.
+This is all made a bit trickier by not applying to OSCORE which is usually the author's go-to example,
+because OSCORE's requirements already preclude all these troubles.
+\]
+
+The use of unique proxies requires slightly more care in terms of security.
+
+No requirements are necessary on the client side; those of {#secctx-propagation} suffice.
+(In particular, it is not necessary for the statement to originate from the original server
+unless that were already a requirement without the uniqueness property).
+
+The extra care is necessary on the side of servers that are commissioned with wide ranging authorization \[ or is it? \]:
+These may now be tricked into serving a resource of which the client assumes a different name.
+For example,
+if the desired resource is `coaps://high-security.example.org/configuration`,
+and there exists a "home page" style service for employees with patterns of
+`coaps+tcp://user-${username}.example.org/` at which they can store files,
+and the server operating that service is commissioned with a wild-card certificate "*.example.org",
+then a device that receives the (malicious) information
+`<coaps+tcp://user-mave.example.org>;rel=has-unique-proxy;anchor="coaps://high-security.example.org"`
+might use this statement to contact the transport address indicated by `coaps+tcp://user-mave.example.org` and ask for `/config`
+(which, to the server, is indistinguishable from `coaps+tcp://user-mave.example.org/config`)
+and obtain a malicious configuration.
+
+In a non-unique proxy situation,
+the error would have been caught by the server,
+which would have seen the request for `coaps://high-security.example.com`
+and refused to serve a request containing critical options it can not adaequately process.
+
+In the unique proxy situation, ...
+\[ TBD:
+now whose fault is it?
+Can only be the client's ...
+because it looked at the wildcard certificate rather than whether the host-name it was narrowing it down to is authorized to speak for high-security.example.com?
+The server (operator) can barely be blamed,
+for while the certificate is needlessly wide,
+to the server it did look precisely like a good request.
+\]
+
 # Third party proxy services {#thirdparty}
 
 A server that is aware of a suitable cross proxy may use the has-proxy relation to advertise that proxy.
