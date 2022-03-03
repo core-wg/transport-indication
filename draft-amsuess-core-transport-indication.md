@@ -484,17 +484,20 @@ or by using explicit client authentication using the methods of {{?I-D.tiloca-co
 
 # Client picked proxies {#actualproxies}
 
+This section is purely informative,
+and serves to illustrate that the mechanisms introduced in this document do not hinder the continued use of existing proxies.
+
 When a resource is accessed through an "actual" proxy (i.e., a host between the client and the server, which itself may have a same-host proxy in addition to that),
 the proxy's choice of the upstream server is originally (i.e., without the mechanisms of this document)
 either configured (as in a "chain" of proxies)
-or determined by the request URI (where a proxy picks CoAP over TCP for a request aimed at a coap+tcp URI).
+or determined by the request URI (where a proxy picks CoAP over TCP and resolves the given name for a request aimed at a coap+tcp URI).
 
 A proxy that has learned,
 by active solicitation of the information or by consulting links in its cache,
 that the requested URI is available through a (possibly same-host) proxy,
-or that has learned of advertised URI aliasings,
 may use that information
 in choosing the upstream transport,
+to correct the URI associated with a cached response,
 and to use responses obtained through one transport to satisfy requests on another.
 
 For example, if a host at coap://h1.example.com has advertised `</res>,<coap+tcp://h1.example.com>;rel=has-proxy;anchor="/"`,
@@ -502,7 +505,7 @@ then a proxy that has an active CoAP-over-TCP connection to h1.example.com
 can forward an incoming request for coap://h1.example.com/res through that CoAP-over-TCP connection
 with a suitable Proxy-Scheme on that connection.
 
-If the host had marked the proxy point as `<coap+tcp://h1.example.com>;rel=has-unique-proxy`,
+If the host had marked the proxy point as `<coap+tcp://h1.example.com>;rel=has-unique-proxy` instead,
 then the proxy could elide the Proxy-Scheme and Uri-Host options,
 and would (from the original CoAP caching rules) also be allowed
 to use any fresh cache representation of coap+tcp://h1.example.com/res
