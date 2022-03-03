@@ -120,6 +120,48 @@ the need for using the Proxy-URI option should never arise.
 The Proxy-URI option is still equivalent to the decomposed options,
 and can be used if the server supports it.
 
+### Using URIs to identify protocol endpoints
+
+The URI `coap://device.example.com` identifies a particular resource, possibly a "welcome" text.
+It is, colloquially, also used to identify the combination
+of a host (identified through a name), the default port, and the CoAP method of sending requests to the host.
+
+For precision, this document uses the term
+"the transport address indicated by (a URI)" to refer to the host / port / protocol combination,
+but otherwise no big deal is made of it.
+
+For the CoAP schemes (coap, coaps, coap+tcp, coaps+tcp, coap+ws, coaps+ws),
+URIs indicating a transport are always given with an empty path
+(which under their URI normalization rules is equivalent to a path containing a single slash).
+For the coap and coap+tcp schemes, URIs with different host names
+can indicate the same transport as long as the names resolve to the same addresses.
+For the other protocols, the given host name informs the name set in TLS's Server Name Indication (SNI)
+and/or the host sent in the "Host" header of the underlying HTTP request.
+
+If an update to this document extends the list,
+for new schemes it might be allowed to have paths, queries or fragment identifiers present in the URI indicating the transport address.
+No guidance can be given here for these,
+as no realistic example is known.
+(Note that while the coap+ws scheme does use the well-known path `/.well-known/coap` internally,
+that is used purely on the HTTP side, and not part of the CoAP URI, not even for indicating the transport address).
+
+URIs indicating a transport are especially useful when talking about proxies;
+this use is aligned with the way they are exprssed in the conventional environment variables `http_proxy` etc.
+\[ cite https://about.gitlab.com/blog/2021/01/27/we-need-to-talk-no-proxy/ \].
+Furthermore, URIs processing is widespread in CoAP systems,
+and when that changes (e.g. through the introduction of {{?I-D.ietf-core-href}}),
+URIs indicating a transport will still be efficient to encode.
+And last but not least, it lines up well with the colloquial identity mentioned above.
+(An alternative would be using a dedicated naming scheme, say, `transport:coap:device.example.com:port`,
+but that would needlessly introduce implementation complexity).
+
+Note that this mechanism can only used with proxies that use CoAP's native address indication mechanisms.
+Proxies that perform URI mapping
+(as described in Section 5 of {{?RFC8075}}, especially using URI templates)
+are not supported in this document.
+
+\[ TBD: Do we want to extend this to HTTP proxies? Probably just not, and if so, only to those that can just take coap://... for a URI. \]
+
 ## Goals
 
 This document introduces provisions for the seamless use of different transport mechanisms for CoAP.
@@ -147,39 +189,28 @@ or having them observable.
 
 # Indicating alternative transports
 
-While CoAP can indicate the authority component of the requested URI in all requests (by means of Uri-Host and Uri-Port),
-indicating the scheme of a requested URI (by means of Proxy-Scheme) makes the request implicitly a proxy request.
+While CoAP can set the authority component of the requested URI in all requests (by means of Uri-Host and Uri-Port),
+setting the scheme of a requested URI (by means of Proxy-Scheme) makes the request implicitly a proxy request.
 However, this needs to be of only little practical concern:
 Any device can serve as a proxy for itself (a "same-host proxy")
 by accepting requests that carry the Proxy-Scheme option.
 If it is to be a well-behaved proxy,
-the device should then check whether it recognizes the name indicated in Uri-Host as one of its own
+the device should then check whether it recognizes the name set in Uri-Host as one of its own
 (as it should if no Proxy-Scheme option accompanied it). <!-- without 7252 explicitly mandating that -->
 If the name is not recognized,
 it should reject the request with 5.05 (Proxying Not Supported)
 -- unless, of course, it implements forward proxy functionality exceeding the same-host proxy.
 If the name is recognized,
-it should process the request as it would process a request coming in on the indicated protocol
+it should process the request as it would process a request coming in on the given protocol
 (which, for many hosts, is the same as if the option were absent completely).
 
-A server can indicate a recommended proxy
-by serving a Web Link with the "has-proxy" relation.
+A server can advertise a recommended proxy
+by serving a Web Link with the "has-proxy" relation to a URI indicating its transport address.
 In particular (and that is a typical case),
-it can indicate its own address on an alternative transport when implementing same-host proxy functionality.
+it can indicate its own transport address on an alternative transport when implementing same-host proxy functionality.
 
 The semantics of a link from S to P with relations has-proxy ("S has-proxy P", `<P>;rel=has-proxy;anchor="S"`)
-are that for any resource R hosted on S ("S hosts R"), P can be used as a proxy to obtain R.
-
-Note that HTTP and CoAP proxies are not located at a particular resource,
-but at a host in general.
-Thus, a proxy URI `P` in these protocols has the path "/", and no query component or fragment identifier.
-This is true even for CoAP over WebSockets (which uses the concrete resource `/.well-known/coap`, but that is not expressed in "coap+ws" URI).
-
-Future protocols for which CoAP proxying is defined may use more components.
-As this is designed primarily for CoAP,
-proxies that perform URI mapping
-(as described in Section 5 of {{?RFC8075}}, especially using URI templates)
-are not supported in this document.
+are that for any resource R hosted on S ("S hosts R"), the proxy with the transport address indicated by P can be used to obtain R.
 
 ## Example
 
@@ -590,8 +621,9 @@ The mechanisms introduced here are similar to the Alt-Svc header of {{?RFC7838}}
 in that they do not create different application-visible addresses,
 but provide dispatch through lower transport implementations.
 
-Unlike in HTTP, the variations of CoAP protocols each come with their unique URI schemes.
-Thus, origin URIs can be used without introducing a distinction between protocol-id and scheme.
+Unlike in HTTP, the variations of CoAP protocols each come with their unique URI schemes
+and thus enable the "transport address indicated by a URI" concept.
+Thus, there is no need for a distinction between protocol-id and scheme.
 
 To accommodate the message size constraints typical of CoRE environments,
 and accounting for the differences between HTTP headers and CoAP options,
