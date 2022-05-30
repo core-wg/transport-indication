@@ -1,6 +1,6 @@
 ---
 title: CoAP Protocol Indication
-docname: draft-amsuess-core-transport-indication-latest
+docname: draft-ietf-core-transport-indication-latest
 stand_alone: true
 ipr: trust200902
 cat: std
