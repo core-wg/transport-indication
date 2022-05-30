@@ -663,6 +663,10 @@ Notes: The schemes for which the proxy is usable may be indicated using the prox
 
 # Change log
 
+Since draft-amsuess-core-transport-indication-03:
+
+* No changes (merely changing the name after WG adoption)
+
 Since -02 (mainly processing reviews from Marco and Klaus):
 
 * Acknowledge that 'coap://hostname/' is not the proxy but a URI that (in a particular phrasing) is used to stand in for the proxy's address (while it regularly identifies a resurce on the server)
