@@ -1,18 +1,20 @@
 # CoAP Protocol Indication
 
-This is the working area for the individual Internet-Draft, "CoAP Protocol Indication".
+This is the working area for the IETF [CORE Working Group](https://datatracker.ietf.org/wg/core/documents/) Internet-Draft, "CoAP Protocol Indication".
 
-* [Datatracker Page](https://datatracker.ietf.org/doc/draft-amsuess-core-transport-indication)
-* [Individual Draft](https://datatracker.ietf.org/doc/html/draft-amsuess-core-transport-indication)
+* [Editor's Copy](https://core-wg.github.io/transport-indication/#go.draft-ietf-core-transport-indication.html)
+* [Datatracker Page](https://datatracker.ietf.org/doc/draft-ietf-core-transport-indication)
+* [Working Group Draft](https://datatracker.ietf.org/doc/html/draft-ietf-core-transport-indication)
+* [Compare Editor's Copy to Working Group Draft](https://core-wg.github.io/transport-indication/#go.draft-ietf-core-transport-indication.diff)
 
 
 ## Contributing
 
 See the
-[guidelines for contributions](https://gitlab.com/chrysn/transport-indication/-/blob/master/CONTRIBUTING.md).
+[guidelines for contributions](https://github.com/core-wg/transport-indication/blob/master/CONTRIBUTING.md).
 
 Contributions can be made by creating pull requests.
-The GitLab interface supports creating pull requests using the Edit (✏) button.
+The GitHub interface supports creating pull requests using the Edit (✏) button.
 
 
 ## Command Line Usage
