@@ -1,0 +1,105 @@
+{
+  "magic": "E!vIA5L86J2I",
+  "timestamp": "2022-05-31T02:09:00.567943+00:00",
+  "repo": "core-wg/transport-indication",
+  "labels": [
+    {
+      "name": "bug",
+      "description": "Something isn't working",
+      "color": "d73a4a"
+    },
+    {
+      "name": "documentation",
+      "description": "Improvements or additions to documentation",
+      "color": "0075ca"
+    },
+    {
+      "name": "duplicate",
+      "description": "This issue or pull request already exists",
+      "color": "cfd3d7"
+    },
+    {
+      "name": "enhancement",
+      "description": "New feature or request",
+      "color": "a2eeef"
+    },
+    {
+      "name": "good first issue",
+      "description": "Good for newcomers",
+      "color": "7057ff"
+    },
+    {
+      "name": "help wanted",
+      "description": "Extra attention is needed",
+      "color": "008672"
+    },
+    {
+      "name": "invalid",
+      "description": "This doesn't seem right",
+      "color": "e4e669"
+    },
+    {
+      "name": "question",
+      "description": "Further information is requested",
+      "color": "d876e3"
+    },
+    {
+      "name": "wontfix",
+      "description": "This will not be worked on",
+      "color": "ffffff"
+    }
+  ],
+  "issues": [
+    {
+      "number": 1,
+      "id": "I_kwDOHa3Jsc5Kqhmu",
+      "title": "device0815 example lacks introduction",
+      "url": "https://github.com/core-wg/transport-indication/issues/1",
+      "state": "OPEN",
+      "author": "chrysn",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "(From Marco's review)\r\n\r\n> [Section 3]\r\n> \r\n> * Perhaps introduce the device name device0815.example.com before the\r\n> example begins?\r\n> \r\n> * In the last paragraph, at least some of the text starting from \"A\r\n> simplistic client ...\" seems to actually refer to the example shown in\r\n> Figure 3 of Section 4.\r\n\r\n(Originally https://gitlab.com/chrysn/transport-indication/-/issues/1)",
+      "createdAt": "2022-05-30T12:20:42Z",
+      "updatedAt": "2022-05-30T12:20:42Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 2,
+      "id": "I_kwDOHa3Jsc5Kqh2p",
+      "title": "Process notes from -02-24 interim",
+      "url": "https://github.com/core-wg/transport-indication/issues/2",
+      "state": "OPEN",
+      "author": "chrysn",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "much of which is about applying Klaus's review comments.\r\n\r\nLargely addressed in -03; one TBD remains on 'While CoAP can indicate the authority component' from Klaus' mail.\r\n\r\n(Originally https://gitlab.com/chrysn/transport-indication/-/issues/2)",
+      "createdAt": "2022-05-30T12:21:31Z",
+      "updatedAt": "2022-05-30T12:21:31Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 3,
+      "id": "I_kwDOHa3Jsc5KqiBR",
+      "title": "\"hosts\": Work on transitive closure of hosting",
+      "url": "https://github.com/core-wg/transport-indication/issues/3",
+      "state": "OPEN",
+      "author": "chrysn",
+      "authorAssociation": "MEMBER",
+      "assignees": [
+        "chrysn"
+      ],
+      "labels": [],
+      "body": "It's kind of implied in the current text, but it's nowhere explicit.\r\n\r\n(Originally https://gitlab.com/chrysn/transport-indication/-/issues/3)",
+      "createdAt": "2022-05-30T12:22:05Z",
+      "updatedAt": "2022-05-30T12:22:05Z",
+      "closedAt": null,
+      "comments": []
+    }
+  ],
+  "pulls": []
+}
