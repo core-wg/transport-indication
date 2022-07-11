@@ -692,6 +692,12 @@ Notes: The schemes for which the proxy is usable may be indicated using the prox
 
 # Change log
 
+Since draft-ietf-core-transport-indication-00:
+
+* Add section on canonical URIs that are not necessarily reachable.
+* Clarify that the the "hosts" relation is followed transitively.
+* Cross reference with compatible multicast-notifications concept.
+
 Since draft-amsuess-core-transport-indication-03:
 
 * No changes (merely changing the name after WG adoption)
