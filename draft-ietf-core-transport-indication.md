@@ -155,6 +155,11 @@ as no realistic example is known.
 (Note that while the coap+ws scheme does use the well-known path `/.well-known/coap` internally,
 that is used purely on the HTTP side, and not part of the CoAP URI, not even for indicating the transport address).
 
+A similar concept is used in {{?I-D.ietf-core-observe-multicast-notifications}} (expressed as pieces of its `tp_info` parameter),
+but not expressed with URIs yet.
+As that document migrates towards using CRIs ({{I-D.ietf-core-href}}),
+it is expected that its transport addresses coincide with the URIs (CRIs, equivalently) indicating a transport.
+
 URIs indicating a transport are especially useful when talking about proxies;
 this use is aligned with the way they are exprssed in the conventional environment variables `http_proxy` etc.
 \[ cite https://about.gitlab.com/blog/2021/01/27/we-need-to-talk-no-proxy/ \].
