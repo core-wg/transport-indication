@@ -320,6 +320,20 @@ it is suggested to use the `coap` or `coaps` scheme
 (given that these are the most basic and widespread ones),
 and the most stable usable name the host has.
 
+### Unreachable canonical origin addresses
+
+For devicesc that are not generally reachable at a stable address,
+it may make sense to use a scheme and authority as the canonical address that can not actually be dereferenced.
+
+The registered names available for that purpose depend on the locally defined host or service name registry.
+When the Domain Name System (DNS) is used,
+such names would not be associated with any A or AAAA records
+(but may still use, for example, TLSA records).
+
+Such URIs are *only* usable to clients that discover a suitable proxy along with the URI,
+and which can place sufficient trust in that proxy.
+
+
 ## Advertisement through a Resource Directory
 
 In the Resource Directory specification {{?rfc9176}},
