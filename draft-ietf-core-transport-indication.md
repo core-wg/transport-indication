@@ -111,10 +111,17 @@ hosts:
   \[ TBD: The former could probably still be used without too many ill effects;
   but things might also get weird when a dynamic resource created
   with one transport from use with another transport unless explicitly cleared.
+
+  Whether or not "to host" is used exclusively along the "hosts" relation or using the more generic same-start-of-URI sense
+  is the largest open issue in this document.
   \]
 
   For the purpose of this document, "hosting" is used in a transitive way:
   If A hosts B and B hosts C, it is implied that A hosts C.
+
+  \[ TBD: It may make sense for many other relations to imply "hosts",
+  e.g. any relations that occur in a pub-sub context,
+  but that'd need further consideration. \]
 
 When talking of proxy requests,
 this document only talks of the Proxy-Scheme option.
