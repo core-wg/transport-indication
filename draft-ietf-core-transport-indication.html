@@ -14,26 +14,26 @@ This document provides terminology and provisions based on Web Linking
 to express alternative transports available to a device,
 and to optimize exchanges using these. 
     " name="description">
-<meta content="xml2rfc 3.12.7" name="generator">
+<meta content="xml2rfc 3.13.0" name="generator">
 <meta content="CoRE, Web Linking, Proxy, URI, aliasing" name="keyword">
 <meta content="draft-ietf-core-transport-indication-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.12.7
-    Python 3.9.7
+  xml2rfc 3.13.0
+    Python 3.10.4
     appdirs 1.4.4
-    ConfigArgParse 1.3
-    google-i18n-address 2.5.1
+    ConfigArgParse 1.5.3
+    google-i18n-address 2.5.2
     html5lib 1.1
     intervaltree 3.1.0
-    Jinja2 2.11.3
+    Jinja2 3.1.2
     kitchen 1.2.6
-    lxml 4.6.5
-    MarkupSafe 2.0.1
-    pycountry 20.7.3
-    pyflakes 2.3.1
-    PyYAML 5.4.1
-    requests 2.26.0
-    setuptools 52.0.0
+    lxml 4.9.1
+    MarkupSafe 2.1.1
+    pycountry 22.3.5
+    pyflakes 2.4.0
+    PyYAML 6.0
+    requests 2.27.1
+    setuptools 59.4.0
     six 1.16.0
 -->
 <link href="draft-ietf-core-transport-indication.xml" rel="alternate" type="application/rfc+xml">
@@ -1018,11 +1018,11 @@ svg [stroke="fill"], svg [fill^="#fff"] {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">CoAP Protocol Indication</td>
-<td class="right">May 2022</td>
+<td class="right">July 2022</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Amsüss</td>
-<td class="center">Expires 1 December 2022</td>
+<td class="center">Expires 12 January 2023</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1035,12 +1035,12 @@ svg [stroke="fill"], svg [fill^="#fff"] {
 <dd class="internet-draft">draft-ietf-core-transport-indication-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2022-05-30" class="published">30 May 2022</time>
+<time datetime="2022-07-11" class="published">11 July 2022</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2022-12-01">1 December 2022</time></dd>
+<dd class="expires"><time datetime="2023-01-12">12 January 2023</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1089,7 +1089,7 @@ and to optimize exchanges using these.<a href="#section-abstract-1" class="pilcr
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 1 December 2022.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 12 January 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1148,6 +1148,11 @@ and to optimize exchanges using these.<a href="#section-abstract-1" class="pilcr
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.4">
                 <p id="section-toc.1-1.2.2.4.1"><a href="#section-2.4" class="xref">2.4</a>.  <a href="#name-selection-of-a-canonical-or" class="xref">Selection of a canonical origin</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.4.2.1">
+                    <p id="section-toc.1-1.2.2.4.2.1.1"><a href="#section-2.4.1" class="xref">2.4.1</a>.  <a href="#name-unreachable-canonical-origi" class="xref">Unreachable canonical origin addresses</a></p>
+</li>
+                </ul>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.5">
                 <p id="section-toc.1-1.2.2.5.1"><a href="#section-2.5" class="xref">2.5</a>.  <a href="#name-advertisement-through-a-res" class="xref">Advertisement through a Resource Directory</a></p>
@@ -1310,8 +1315,15 @@ about the physical devices that hold the resource's representation.<a href="#sec
             </ul>
 <p id="section-1.1-2.6.5">[ TBD: The former could probably still be used without too many ill effects;
 but things might also get weird when a dynamic resource created
-with one transport from use with another transport unless explicitly cleared.
-]<a href="#section-1.1-2.6.5" class="pilcrow">¶</a></p>
+with one transport from use with another transport unless explicitly cleared.<a href="#section-1.1-2.6.5" class="pilcrow">¶</a></p>
+<p id="section-1.1-2.6.6">Whether or not "to host" is used exclusively along the "hosts" relation or using the more generic same-start-of-URI sense
+is the largest open issue in this document.
+]<a href="#section-1.1-2.6.6" class="pilcrow">¶</a></p>
+<p id="section-1.1-2.6.7">For the purpose of this document, "hosting" is used in a transitive way:
+If A hosts B and B hosts C, it is implied that A hosts C.<a href="#section-1.1-2.6.7" class="pilcrow">¶</a></p>
+<p id="section-1.1-2.6.8">[ TBD: It may make sense for many other relations to imply "hosts",
+e.g. any relations that occur in a pub-sub context,
+but that'd need further consideration. ]<a href="#section-1.1-2.6.8" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
 </dl>
@@ -1345,7 +1357,11 @@ No guidance can be given here for these,
 as no realistic example is known.
 (Note that while the coap+ws scheme does use the well-known path <code>/.well-known/coap</code> internally,
 that is used purely on the HTTP side, and not part of the CoAP URI, not even for indicating the transport address).<a href="#section-1.1.1-4" class="pilcrow">¶</a></p>
-<p id="section-1.1.1-5">URIs indicating a transport are especially useful when talking about proxies;
+<p id="section-1.1.1-5">A similar concept is used in <span>[<a href="#I-D.ietf-core-observe-multicast-notifications" class="xref">I-D.ietf-core-observe-multicast-notifications</a>]</span> (expressed as pieces of its <code>tp_info</code> parameter),
+but not expressed with URIs yet.
+As that document migrates towards using CRIs (<span>[<a href="#I-D.ietf-core-href" class="xref">I-D.ietf-core-href</a>]</span>),
+it is expected that its transport addresses coincide with the URIs (CRIs, equivalently) indicating a transport.<a href="#section-1.1.1-5" class="pilcrow">¶</a></p>
+<p id="section-1.1.1-6">URIs indicating a transport are especially useful when talking about proxies;
 this use is aligned with the way they are exprssed in the conventional environment variables <code>http_proxy</code> etc.
 [ cite https://about.gitlab.com/blog/2021/01/27/we-need-to-talk-no-proxy/ ].
 Furthermore, URIs processing is widespread in CoAP systems,
@@ -1353,12 +1369,12 @@ and when that changes (e.g. through the introduction of <span>[<a href="#I-D.iet
 URIs indicating a transport will still be efficient to encode.
 And last but not least, it lines up well with the colloquial identity mentioned above.
 (An alternative would be using a dedicated naming scheme, say, <code>transport:coap:device.example.com:port</code>,
-but that would needlessly introduce implementation complexity).<a href="#section-1.1.1-5" class="pilcrow">¶</a></p>
-<p id="section-1.1.1-6">Note that this mechanism can only used with proxies that use CoAP's native address indication mechanisms.
+but that would needlessly introduce implementation complexity).<a href="#section-1.1.1-6" class="pilcrow">¶</a></p>
+<p id="section-1.1.1-7">Note that this mechanism can only used with proxies that use CoAP's native address indication mechanisms.
 Proxies that perform URI mapping
 (as described in Section 5 of <span>[<a href="#RFC8075" class="xref">RFC8075</a>]</span>, especially using URI templates)
-are not supported in this document.<a href="#section-1.1.1-6" class="pilcrow">¶</a></p>
-<p id="section-1.1.1-7">[ TBD: Do we want to extend this to HTTP proxies? Probably just not, and if so, only to those that can just take coap://... for a URI. ]<a href="#section-1.1.1-7" class="pilcrow">¶</a></p>
+are not supported in this document.<a href="#section-1.1.1-7" class="pilcrow">¶</a></p>
+<p id="section-1.1.1-8">[ TBD: Do we want to extend this to HTTP proxies? Probably just not, and if so, only to those that can just take coap://... for a URI. ]<a href="#section-1.1.1-8" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1523,6 +1539,21 @@ it makes sense to use these for the canonical addresses.<a href="#section-2.4-2"
 it is suggested to use the <code>coap</code> or <code>coaps</code> scheme
 (given that these are the most basic and widespread ones),
 and the most stable usable name the host has.<a href="#section-2.4-3" class="pilcrow">¶</a></p>
+<div id="unreachable-canonical-origin-addresses">
+<section id="section-2.4.1">
+          <h4 id="name-unreachable-canonical-origi">
+<a href="#section-2.4.1" class="section-number selfRef">2.4.1. </a><a href="#name-unreachable-canonical-origi" class="section-name selfRef">Unreachable canonical origin addresses</a>
+          </h4>
+<p id="section-2.4.1-1">For devicesc that are not generally reachable at a stable address,
+it may make sense to use a scheme and authority as the canonical address that can not actually be dereferenced.<a href="#section-2.4.1-1" class="pilcrow">¶</a></p>
+<p id="section-2.4.1-2">The registered names available for that purpose depend on the locally defined host or service name registry.
+When the Domain Name System (DNS) is used,
+such names would not be associated with any A or AAAA records
+(but may still use, for example, TLSA records).<a href="#section-2.4.1-2" class="pilcrow">¶</a></p>
+<p id="section-2.4.1-3">Such URIs are <em>only</em> usable to clients that discover a suitable proxy along with the URI,
+and which can place sufficient trust in that proxy.<a href="#section-2.4.1-3" class="pilcrow">¶</a></p>
+</section>
+</div>
 </section>
 </div>
 <div id="advertisement-through-a-resource-directory">
@@ -1530,7 +1561,7 @@ and the most stable usable name the host has.<a href="#section-2.4-3" class="pil
         <h3 id="name-advertisement-through-a-res">
 <a href="#section-2.5" class="section-number selfRef">2.5. </a><a href="#name-advertisement-through-a-res" class="section-name selfRef">Advertisement through a Resource Directory</a>
         </h3>
-<p id="section-2.5-1">In the Resource Directory specification <span>[<a href="#I-D.ietf-core-resource-directory" class="xref">I-D.ietf-core-resource-directory</a>]</span>,
+<p id="section-2.5-1">In the Resource Directory specification <span>[<a href="#rfc9176" class="xref">rfc9176</a>]</span>,
 protocol negotiation was anticipated to use multiple base values.
 This approach was abandoned since then,
 as it would incur heavy URI aliasing.<a href="#section-2.5-1" class="pilcrow">¶</a></p>
@@ -1986,9 +2017,9 @@ and by providing own proxies when their clients need them.<a href="#section-6.3-
         <dd>
 <span class="refAuthor">Bormann, C.</span> and <span class="refAuthor">H. Birkholz</span>, <span class="refTitle">"Constrained Resource Identifiers"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-core-href-10</span>, <time datetime="2022-03-07" class="refDate">7 March 2022</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-core-href-10">https://datatracker.ietf.org/doc/html/draft-ietf-core-href-10</a>&gt;</span>. </dd>
 <dd class="break"></dd>
-<dt id="I-D.ietf-core-resource-directory">[I-D.ietf-core-resource-directory]</dt>
+<dt id="I-D.ietf-core-observe-multicast-notifications">[I-D.ietf-core-observe-multicast-notifications]</dt>
         <dd>
-<span class="refAuthor">Amsüss, C.</span>, <span class="refAuthor">Shelby, Z.</span>, <span class="refAuthor">Koster, M.</span>, <span class="refAuthor">Bormann, C.</span>, and <span class="refAuthor">P. V. D. Stok</span>, <span class="refTitle">"Constrained RESTful Environments (CoRE) Resource Directory"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-core-resource-directory-28</span>, <time datetime="2021-03-07" class="refDate">7 March 2021</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-core-resource-directory-28">https://datatracker.ietf.org/doc/html/draft-ietf-core-resource-directory-28</a>&gt;</span>. </dd>
+<span class="refAuthor">Tiloca, M.</span>, <span class="refAuthor">Höglund, R.</span>, <span class="refAuthor">Amsüss, C.</span>, and <span class="refAuthor">F. Palombini</span>, <span class="refTitle">"Observe Notifications as CoAP Multicast Responses"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-core-observe-multicast-notifications-04</span>, <time datetime="2022-07-11" class="refDate">11 July 2022</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-core-observe-multicast-notifications-04">https://datatracker.ietf.org/doc/html/draft-ietf-core-observe-multicast-notifications-04</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.ietf-lpwan-coap-static-context-hc">[I-D.ietf-lpwan-coap-static-context-hc]</dt>
         <dd>
@@ -2000,7 +2031,7 @@ and by providing own proxies when their clients need them.<a href="#section-6.3-
 <dd class="break"></dd>
 <dt id="I-D.tiloca-core-oscore-capable-proxies">[I-D.tiloca-core-oscore-capable-proxies]</dt>
         <dd>
-<span class="refAuthor">Tiloca, M.</span> and <span class="refAuthor">R. Höglund</span>, <span class="refTitle">"OSCORE-capable Proxies"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-tiloca-core-oscore-capable-proxies-02</span>, <time datetime="2022-03-07" class="refDate">7 March 2022</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-tiloca-core-oscore-capable-proxies-02">https://datatracker.ietf.org/doc/html/draft-tiloca-core-oscore-capable-proxies-02</a>&gt;</span>. </dd>
+<span class="refAuthor">Tiloca, M.</span> and <span class="refAuthor">R. Höglund</span>, <span class="refTitle">"OSCORE-capable Proxies"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-tiloca-core-oscore-capable-proxies-03</span>, <time datetime="2022-07-11" class="refDate">11 July 2022</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-tiloca-core-oscore-capable-proxies-03">https://datatracker.ietf.org/doc/html/draft-tiloca-core-oscore-capable-proxies-03</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="lwm2m">[lwm2m]</dt>
         <dd>
@@ -2027,8 +2058,12 @@ and by providing own proxies when their clients need them.<a href="#section-6.3-
 <span class="refAuthor">Bormann, C.</span>, <span class="refAuthor">Lemay, S.</span>, <span class="refAuthor">Tschofenig, H.</span>, <span class="refAuthor">Hartke, K.</span>, <span class="refAuthor">Silverajan, B.</span>, and <span class="refAuthor">B. Raymor, Ed.</span>, <span class="refTitle">"CoAP (Constrained Application Protocol) over TCP, TLS, and WebSockets"</span>, <span class="seriesInfo">RFC 8323</span>, <span class="seriesInfo">DOI 10.17487/RFC8323</span>, <time datetime="2018-02" class="refDate">February 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8323">https://www.rfc-editor.org/rfc/rfc8323</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC8613">[RFC8613]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Selander, G.</span>, <span class="refAuthor">Mattsson, J.</span>, <span class="refAuthor">Palombini, F.</span>, and <span class="refAuthor">L. Seitz</span>, <span class="refTitle">"Object Security for Constrained RESTful Environments (OSCORE)"</span>, <span class="seriesInfo">RFC 8613</span>, <span class="seriesInfo">DOI 10.17487/RFC8613</span>, <time datetime="2019-07" class="refDate">July 2019</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8613">https://www.rfc-editor.org/rfc/rfc8613</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="rfc9176">[rfc9176]</dt>
+      <dd>
+<span class="refAuthor">Amsüss, C., Ed.</span>, <span class="refAuthor">Shelby, Z.</span>, <span class="refAuthor">Koster, M.</span>, <span class="refAuthor">Bormann, C.</span>, and <span class="refAuthor">P. van der Stok</span>, <span class="refTitle">"Constrained RESTful Environments (CoRE) Resource Directory"</span>, <span class="seriesInfo">RFC 9176</span>, <span class="seriesInfo">DOI 10.17487/RFC9176</span>, <time datetime="2022-04" class="refDate">April 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9176">https://www.rfc-editor.org/rfc/rfc9176</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
@@ -2038,72 +2073,81 @@ and by providing own proxies when their clients need them.<a href="#section-6.3-
       <h2 id="name-change-log">
 <a href="#appendix-A" class="section-number selfRef">Appendix A. </a><a href="#name-change-log" class="section-name selfRef">Change log</a>
       </h2>
-<p id="appendix-A-1">Since draft-amsuess-core-transport-indication-03:<a href="#appendix-A-1" class="pilcrow">¶</a></p>
+<p id="appendix-A-1">Since draft-ietf-core-transport-indication-00:<a href="#appendix-A-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-A-2.1">No changes (merely changing the name after WG adoption)<a href="#appendix-A-2.1" class="pilcrow">¶</a>
+<li class="normal" id="appendix-A-2.1">Add section on canonical URIs that are not necessarily reachable.<a href="#appendix-A-2.1" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="appendix-A-2.2">Clarify that the the "hosts" relation is followed transitively.<a href="#appendix-A-2.2" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="appendix-A-2.3">Cross reference with compatible multicast-notifications concept.<a href="#appendix-A-2.3" class="pilcrow">¶</a>
 </li>
       </ul>
-<p id="appendix-A-3">Since -02 (mainly processing reviews from Marco and Klaus):<a href="#appendix-A-3" class="pilcrow">¶</a></p>
+<p id="appendix-A-3">Since draft-amsuess-core-transport-indication-03:<a href="#appendix-A-3" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-A-4.1">Acknowledge that 'coap://hostname/' is not the proxy but a URI that (in a particular phrasing) is used to stand in for the proxy's address (while it regularly identifies a resurce on the server)<a href="#appendix-A-4.1" class="pilcrow">¶</a>
-</li>
-        <li class="normal" id="appendix-A-4.2">Security: Referencing traffic misdirection already in the first security block.<a href="#appendix-A-4.2" class="pilcrow">¶</a>
-</li>
-        <li class="normal" id="appendix-A-4.3">Security: Add (incomplete) considerations for unique-proxy case.<a href="#appendix-A-4.3" class="pilcrow">¶</a>
-</li>
-        <li class="normal" id="appendix-A-4.4">Narrow down "unique" proxy semantics to those properties used by the client, allowing unique proxies to be co-hosted with forward proxies.<a href="#appendix-A-4.4" class="pilcrow">¶</a>
-</li>
-        <li class="normal" id="appendix-A-4.5">"Client picked proxies" clarified to merely illustrate how this is compatible with them.<a href="#appendix-A-4.5" class="pilcrow">¶</a>
-</li>
-        <li class="normal" id="appendix-A-4.6">Use of "hosts" relation sharpened.<a href="#appendix-A-4.6" class="pilcrow">¶</a>
-</li>
-        <li class="normal" id="appendix-A-4.7">Precision on how this does and does not consider changing transports.<a href="#appendix-A-4.7" class="pilcrow">¶</a>
-</li>
-        <li class="normal" id="appendix-A-4.8">"Related work" section demoted to appendix.<a href="#appendix-A-4.8" class="pilcrow">¶</a>
-</li>
-        <li class="normal" id="appendix-A-4.9">Add note on DTLS session resumption.<a href="#appendix-A-4.9" class="pilcrow">¶</a>
-</li>
-        <li class="normal" id="appendix-A-4.10">Variable renaming.<a href="#appendix-A-4.10" class="pilcrow">¶</a>
-</li>
-        <li class="normal" id="appendix-A-4.11">Various editorial fixes.<a href="#appendix-A-4.11" class="pilcrow">¶</a>
+<li class="normal" id="appendix-A-4.1">No changes (merely changing the name after WG adoption)<a href="#appendix-A-4.1" class="pilcrow">¶</a>
 </li>
       </ul>
-<p id="appendix-A-5">Since -01:<a href="#appendix-A-5" class="pilcrow">¶</a></p>
+<p id="appendix-A-5">Since -02 (mainly processing reviews from Marco and Klaus):<a href="#appendix-A-5" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-A-6.1">Removed suggestion for generally trusted proxies;
+<li class="normal" id="appendix-A-6.1">Acknowledge that 'coap://hostname/' is not the proxy but a URI that (in a particular phrasing) is used to stand in for the proxy's address (while it regularly identifies a resurce on the server)<a href="#appendix-A-6.1" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="appendix-A-6.2">Security: Referencing traffic misdirection already in the first security block.<a href="#appendix-A-6.2" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="appendix-A-6.3">Security: Add (incomplete) considerations for unique-proxy case.<a href="#appendix-A-6.3" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="appendix-A-6.4">Narrow down "unique" proxy semantics to those properties used by the client, allowing unique proxies to be co-hosted with forward proxies.<a href="#appendix-A-6.4" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="appendix-A-6.5">"Client picked proxies" clarified to merely illustrate how this is compatible with them.<a href="#appendix-A-6.5" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="appendix-A-6.6">Use of "hosts" relation sharpened.<a href="#appendix-A-6.6" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="appendix-A-6.7">Precision on how this does and does not consider changing transports.<a href="#appendix-A-6.7" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="appendix-A-6.8">"Related work" section demoted to appendix.<a href="#appendix-A-6.8" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="appendix-A-6.9">Add note on DTLS session resumption.<a href="#appendix-A-6.9" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="appendix-A-6.10">Variable renaming.<a href="#appendix-A-6.10" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="appendix-A-6.11">Various editorial fixes.<a href="#appendix-A-6.11" class="pilcrow">¶</a>
+</li>
+      </ul>
+<p id="appendix-A-7">Since -01:<a href="#appendix-A-7" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A-8.1">Removed suggestion for generally trusted proxies;
 now stating that with (D)TLS,
-"a third party proxy can usually not satisfy [the security context propagation requirement]".<a href="#appendix-A-6.1" class="pilcrow">¶</a>
+"a third party proxy can usually not satisfy [the security context propagation requirement]".<a href="#appendix-A-8.1" class="pilcrow">¶</a>
 </li>
-        <li class="normal" id="appendix-A-6.2">State more clearly that valid cache entries for resources aliased through has-unique-proxy can be used.<a href="#appendix-A-6.2" class="pilcrow">¶</a>
+        <li class="normal" id="appendix-A-8.2">State more clearly that valid cache entries for resources aliased through has-unique-proxy can be used.<a href="#appendix-A-8.2" class="pilcrow">¶</a>
 </li>
-        <li class="normal" id="appendix-A-6.3">Added considerations for Multipath TCP.<a href="#appendix-A-6.3" class="pilcrow">¶</a>
+        <li class="normal" id="appendix-A-8.3">Added considerations for Multipath TCP.<a href="#appendix-A-8.3" class="pilcrow">¶</a>
 </li>
-        <li class="normal" id="appendix-A-6.4">Added concrete suggestion and example for advertisement of general proxies.<a href="#appendix-A-6.4" class="pilcrow">¶</a>
+        <li class="normal" id="appendix-A-8.4">Added concrete suggestion and example for advertisement of general proxies.<a href="#appendix-A-8.4" class="pilcrow">¶</a>
 </li>
-        <li class="normal" id="appendix-A-6.5">Added concrete suggestion for RD lookup extension that provides proxies.<a href="#appendix-A-6.5" class="pilcrow">¶</a>
+        <li class="normal" id="appendix-A-8.5">Added concrete suggestion for RD lookup extension that provides proxies.<a href="#appendix-A-8.5" class="pilcrow">¶</a>
 </li>
-        <li class="normal" id="appendix-A-6.6">Minor editorial and example changes.<a href="#appendix-A-6.6" class="pilcrow">¶</a>
+        <li class="normal" id="appendix-A-8.6">Minor editorial and example changes.<a href="#appendix-A-8.6" class="pilcrow">¶</a>
 </li>
       </ul>
-<p id="appendix-A-7">Since -00:<a href="#appendix-A-7" class="pilcrow">¶</a></p>
+<p id="appendix-A-9">Since -00:<a href="#appendix-A-9" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-A-8.1">Added introduction<a href="#appendix-A-8.1" class="pilcrow">¶</a>
+<li class="normal" id="appendix-A-10.1">Added introduction<a href="#appendix-A-10.1" class="pilcrow">¶</a>
 </li>
-        <li class="normal" id="appendix-A-8.2">Added examples<a href="#appendix-A-8.2" class="pilcrow">¶</a>
+        <li class="normal" id="appendix-A-10.2">Added examples<a href="#appendix-A-10.2" class="pilcrow">¶</a>
 </li>
-        <li class="normal" id="appendix-A-8.3">Added SCHC analogy<a href="#appendix-A-8.3" class="pilcrow">¶</a>
+        <li class="normal" id="appendix-A-10.3">Added SCHC analogy<a href="#appendix-A-10.3" class="pilcrow">¶</a>
 </li>
-        <li class="normal" id="appendix-A-8.4">Expanded security considerations<a href="#appendix-A-8.4" class="pilcrow">¶</a>
+        <li class="normal" id="appendix-A-10.4">Expanded security considerations<a href="#appendix-A-10.4" class="pilcrow">¶</a>
 </li>
-        <li class="normal" id="appendix-A-8.5">Added guidance on choice of transport, and canonical addresses<a href="#appendix-A-8.5" class="pilcrow">¶</a>
+        <li class="normal" id="appendix-A-10.5">Added guidance on choice of transport, and canonical addresses<a href="#appendix-A-10.5" class="pilcrow">¶</a>
 </li>
-        <li class="normal" id="appendix-A-8.6">Added subsection on interaction with a Resource Directory<a href="#appendix-A-8.6" class="pilcrow">¶</a>
+        <li class="normal" id="appendix-A-10.6">Added subsection on interaction with a Resource Directory<a href="#appendix-A-10.6" class="pilcrow">¶</a>
 </li>
-        <li class="normal" id="appendix-A-8.7">Added comparisons with related work, including rdlink and DNS-SD sketches<a href="#appendix-A-8.7" class="pilcrow">¶</a>
+        <li class="normal" id="appendix-A-10.7">Added comparisons with related work, including rdlink and DNS-SD sketches<a href="#appendix-A-10.7" class="pilcrow">¶</a>
 </li>
-        <li class="normal" id="appendix-A-8.8">Added IANA considerations<a href="#appendix-A-8.8" class="pilcrow">¶</a>
+        <li class="normal" id="appendix-A-10.8">Added IANA considerations<a href="#appendix-A-10.8" class="pilcrow">¶</a>
 </li>
-        <li class="normal" id="appendix-A-8.9">Added section on open questions<a href="#appendix-A-8.9" class="pilcrow">¶</a>
+        <li class="normal" id="appendix-A-10.9">Added section on open questions<a href="#appendix-A-10.9" class="pilcrow">¶</a>
 </li>
       </ul>
 </section>

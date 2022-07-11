@@ -3,9 +3,9 @@
 
 
 CoRE                                                           C. Amsüss
-Internet-Draft                                               30 May 2022
+Internet-Draft                                              11 July 2022
 Intended status: Standards Track                                        
-Expires: 1 December 2022
+Expires: 12 January 2023
 
 
                         CoAP Protocol Indication
@@ -46,7 +46,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 1 December 2022.
+   This Internet-Draft will expire on 12 January 2023.
 
 Copyright Notice
 
@@ -73,6 +73,7 @@ Table of Contents
      2.2.  Security context propagation
      2.3.  Choice of transports
      2.4.  Selection of a canonical origin
+       2.4.1.  Unreachable canonical origin addresses
      2.5.  Advertisement through a Resource Directory
    3.  Elision of Proxy-Scheme and Uri-Host
      3.1.  Impact on caches
@@ -165,7 +166,19 @@ Table of Contents
       [ TBD: The former could probably still be used without too many
       ill effects; but things might also get weird when a dynamic
       resource created with one transport from use with another
-      transport unless explicitly cleared. ]
+      transport unless explicitly cleared.
+
+      Whether or not "to host" is used exclusively along the "hosts"
+      relation or using the more generic same-start-of-URI sense is the
+      largest open issue in this document. ]
+
+      For the purpose of this document, "hosting" is used in a
+      transitive way: If A hosts B and B hosts C, it is implied that A
+      hosts C.
+
+      [ TBD: It may make sense for many other relations to imply
+      "hosts", e.g. any relations that occur in a pub-sub context, but
+      that'd need further consideration. ]
 
    When talking of proxy requests, this document only talks of the
    Proxy-Scheme option.  Given that all URIs this is usable with can be
@@ -201,6 +214,13 @@ Table of Contents
    that while the coap+ws scheme does use the well-known path /.well-
    known/coap internally, that is used purely on the HTTP side, and not
    part of the CoAP URI, not even for indicating the transport address).
+
+   A similar concept is used in
+   [I-D.ietf-core-observe-multicast-notifications] (expressed as pieces
+   of its tp_info parameter), but not expressed with URIs yet.  As that
+   document migrates towards using CRIs ([I-D.ietf-core-href]), it is
+   expected that its transport addresses coincide with the URIs (CRIs,
+   equivalently) indicating a transport.
 
    URIs indicating a transport are especially useful when talking about
    proxies; this use is aligned with the way they are exprssed in the
@@ -394,12 +414,27 @@ Table of Contents
    that these are the most basic and widespread ones), and the most
    stable usable name the host has.
 
+2.4.1.  Unreachable canonical origin addresses
+
+   For devicesc that are not generally reachable at a stable address, it
+   may make sense to use a scheme and authority as the canonical address
+   that can not actually be dereferenced.
+
+   The registered names available for that purpose depend on the locally
+   defined host or service name registry.  When the Domain Name System
+   (DNS) is used, such names would not be associated with any A or AAAA
+   records (but may still use, for example, TLSA records).
+
+   Such URIs are _only_ usable to clients that discover a suitable proxy
+   along with the URI, and which can place sufficient trust in that
+   proxy.
+
 2.5.  Advertisement through a Resource Directory
 
-   In the Resource Directory specification
-   [I-D.ietf-core-resource-directory], protocol negotiation was
-   anticipated to use multiple base values.  This approach was abandoned
-   since then, as it would incur heavy URI aliasing.
+   In the Resource Directory specification [rfc9176], protocol
+   negotiation was anticipated to use multiple base values.  This
+   approach was abandoned since then, as it would incur heavy URI
+   aliasing.
 
    Instead, devices can submit their has-proxy links to the Resource
    Directory like all their other metadata.
@@ -857,13 +892,13 @@ Payload:
               <https://datatracker.ietf.org/doc/html/draft-ietf-core-
               href-10>.
 
-   [I-D.ietf-core-resource-directory]
-              Amsüss, C., Shelby, Z., Koster, M., Bormann, C., and P. V.
-              D. Stok, "Constrained RESTful Environments (CoRE) Resource
-              Directory", Work in Progress, Internet-Draft, draft-ietf-
-              core-resource-directory-28, 7 March 2021,
+   [I-D.ietf-core-observe-multicast-notifications]
+              Tiloca, M., Höglund, R., Amsüss, C., and F. Palombini,
+              "Observe Notifications as CoAP Multicast Responses", Work
+              in Progress, Internet-Draft, draft-ietf-core-observe-
+              multicast-notifications-04, 11 July 2022,
               <https://datatracker.ietf.org/doc/html/draft-ietf-core-
-              resource-directory-28>.
+              observe-multicast-notifications-04>.
 
    [I-D.ietf-lpwan-coap-static-context-hc]
               Minaburo, A., Toutain, L., and R. Andreasen, "Static
@@ -883,9 +918,9 @@ Payload:
    [I-D.tiloca-core-oscore-capable-proxies]
               Tiloca, M. and R. Höglund, "OSCORE-capable Proxies", Work
               in Progress, Internet-Draft, draft-tiloca-core-oscore-
-              capable-proxies-02, 7 March 2022,
+              capable-proxies-03, 11 July 2022,
               <https://datatracker.ietf.org/doc/html/draft-tiloca-core-
-              oscore-capable-proxies-02>.
+              oscore-capable-proxies-03>.
 
    [lwm2m]    OMA SpecWorks, "White Paper – Lightweight M2M 1.1", n.d.,
               <https://omaspecworks.org/white-paper-lightweight-m2m-
@@ -920,7 +955,20 @@ Payload:
               (OSCORE)", RFC 8613, DOI 10.17487/RFC8613, July 2019,
               <https://www.rfc-editor.org/rfc/rfc8613>.
 
+   [rfc9176]  Amsüss, C., Ed., Shelby, Z., Koster, M., Bormann, C., and
+              P. van der Stok, "Constrained RESTful Environments (CoRE)
+              Resource Directory", RFC 9176, DOI 10.17487/RFC9176, April
+              2022, <https://www.rfc-editor.org/rfc/rfc9176>.
+
 Appendix A.  Change log
+
+   Since draft-ietf-core-transport-indication-00:
+
+   *  Add section on canonical URIs that are not necessarily reachable.
+
+   *  Clarify that the the "hosts" relation is followed transitively.
+
+   *  Cross reference with compatible multicast-notifications concept.
 
    Since draft-amsuess-core-transport-indication-03:
 
