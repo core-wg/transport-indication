@@ -322,7 +322,7 @@ and the most stable usable name the host has.
 
 ## Advertisement through a Resource Directory
 
-In the Resource Directory specification {{?I-D.ietf-core-resource-directory}},
+In the Resource Directory specification {{?rfc9176}},
 protocol negotiation was anticipated to use multiple base values.
 This approach was abandoned since then,
 as it would incur heavy URI aliasing.
