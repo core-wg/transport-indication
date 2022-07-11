@@ -113,6 +113,9 @@ hosts:
   with one transport from use with another transport unless explicitly cleared.
   \]
 
+  For the purpose of this document, "hosting" is used in a transitive way:
+  If A hosts B and B hosts C, it is implied that A hosts C.
+
 When talking of proxy requests,
 this document only talks of the Proxy-Scheme option.
 Given that all URIs this is usable with can be expressed in decomposed CoAP URIs,
