@@ -322,7 +322,7 @@ and the most stable usable name the host has.
 
 ### Unreachable canonical origin addresses
 
-For devicesc that are not generally reachable at a stable address,
+For devices that are not generally reachable at a stable address,
 it may make sense to use a scheme and authority as the canonical address that can not actually be dereferenced.
 
 The registered names available for that purpose depend on the locally defined host or service name registry.
