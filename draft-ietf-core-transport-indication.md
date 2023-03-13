@@ -693,6 +693,11 @@ Notes: The schemes for which the proxy is usable may be indicated using the prox
 
 # Change log
 
+Since draft-ietf-core-transport-indication-01:
+
+* Simplify same-host proxy behavior by referring to existing RFC7252 mandate.
+* proxy-links= lookup: Refer to prior art.
+
 Since draft-ietf-core-transport-indication-00:
 
 * Add section on canonical URIs that are not necessarily reachable.
