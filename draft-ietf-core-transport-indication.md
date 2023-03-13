@@ -182,15 +182,15 @@ are not supported in this document.
 This document introduces provisions for the seamless use of different transport mechanisms for CoAP.
 Combined, these provide:
 
-* Enablement: Inform clients of the availability of other transports of servers.
+1. Enablement: Inform clients of the availability of other transports of servers.
 
-* No Aliasing: Any URI aliasing must be opt-in by the server. Any defined mechanisms must allow applications to keep working on the canonical URIs given by the server.
+2. No Aliasing: Any URI aliasing must be opt-in by the server. Any defined mechanisms must allow applications to keep working on the canonical URIs given by the server.
 
-* Optimization: Do not incur per-request overhead from switching protocols. This may depend on the server's willingness to create aliased URIs.
+3. Optimization: Do not incur per-request overhead from switching protocols. This may depend on the server's willingness to create aliased URIs.
 
-* Proxy usability: All information provided must be usable by aware proxies to reduce the need for duplicate cache entries.
+4. Proxy usability: All information provided must be usable by aware proxies to reduce the need for duplicate cache entries.
 
-* Proxy announcement: Allow third parties to announce that they provide alternative transports to a host.
+5. Proxy announcement: Allow third parties to announce that they provide alternative transports to a host.
 
 For all these functions, security policies must be described that allow the client to use them as securely as the original transport.
 
