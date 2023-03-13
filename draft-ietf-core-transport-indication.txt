@@ -3,9 +3,9 @@
 
 
 CoRE                                                           C. Amsüss
-Internet-Draft                                              11 July 2022
+Internet-Draft                                             13 March 2023
 Intended status: Standards Track                                        
-Expires: 12 January 2023
+Expires: 14 September 2023
 
 
                         CoAP Protocol Indication
@@ -46,11 +46,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 12 January 2023.
+   This Internet-Draft will expire on 14 September 2023.
 
 Copyright Notice
 
-   Copyright (c) 2022 IETF Trust and the persons identified as the
+   Copyright (c) 2023 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -247,22 +247,22 @@ Table of Contents
    This document introduces provisions for the seamless use of different
    transport mechanisms for CoAP.  Combined, these provide:
 
-   *  Enablement: Inform clients of the availability of other transports
-      of servers.
+   1.  Enablement: Inform clients of the availability of other
+       transports of servers.
 
-   *  No Aliasing: Any URI aliasing must be opt-in by the server.  Any
-      defined mechanisms must allow applications to keep working on the
-      canonical URIs given by the server.
+   2.  No Aliasing: Any URI aliasing must be opt-in by the server.  Any
+       defined mechanisms must allow applications to keep working on the
+       canonical URIs given by the server.
 
-   *  Optimization: Do not incur per-request overhead from switching
-      protocols.  This may depend on the server's willingness to create
-      aliased URIs.
+   3.  Optimization: Do not incur per-request overhead from switching
+       protocols.  This may depend on the server's willingness to create
+       aliased URIs.
 
-   *  Proxy usability: All information provided must be usable by aware
-      proxies to reduce the need for duplicate cache entries.
+   4.  Proxy usability: All information provided must be usable by aware
+       proxies to reduce the need for duplicate cache entries.
 
-   *  Proxy announcement: Allow third parties to announce that they
-      provide alternative transports to a host.
+   5.  Proxy announcement: Allow third parties to announce that they
+       provide alternative transports to a host.
 
    For all these functions, security policies must be described that
    allow the client to use them as securely as the original transport.
@@ -283,15 +283,12 @@ Table of Contents
    implicitly a proxy request.  However, this needs to be of only little
    practical concern: Any device can serve as a proxy for itself (a
    "same-host proxy") by accepting requests that carry the Proxy-Scheme
-   option.  If it is to be a well-behaved proxy, the device should then
-   check whether it recognizes the name set in Uri-Host as one of its
-   own (as it should if no Proxy-Scheme option accompanied it).  If the
-   name is not recognized, it should reject the request with 5.05
-   (Proxying Not Supported) -- unless, of course, it implements forward
-   proxy functionality exceeding the same-host proxy.  If the name is
-   recognized, it should process the request as it would process a
-   request coming in on the given protocol (which, for many hosts, is
-   the same as if the option were absent completely).
+   option.  Section 5.7.2 of [RFC7252] already mandates that a proxy
+   recognize its own addresses.  A minimal same-host proxy supports only
+   those and respond with 5.05 (Proxying Not Supported).  In many cases
+   (precisely: on hosts that alias their resources across protocols),
+   this is equivalent to ignoring the Proxy-Scheme option in that
+   request.
 
    A server can advertise a recommended proxy by serving a Web Link with
    the "has-proxy" relation to a URI indicating its transport address.
@@ -416,7 +413,7 @@ Table of Contents
 
 2.4.1.  Unreachable canonical origin addresses
 
-   For devicesc that are not generally reachable at a stable address, it
+   For devices that are not generally reachable at a stable address, it
    may make sense to use a scheme and authority as the canonical address
    that can not actually be dereferenced.
 
@@ -445,11 +442,20 @@ Table of Contents
    volunteer that information during resource lookups even though the
    has-proxy link itself does not match the search criteria.
 
-   [ It may be useful to define RD parameters for use with lookup here,
+   [
+
+   It may be useful to define RD parameters for use with lookup here,
    which'd guide which available proxies to include.  For example,
    asking ?if=tag:example.com,sensor&proxy-links=tcp could give as a
-   result: <coap://[2001:db8::1]/s>;rt=tag:example.com,sensor,<coap+tcp:
-   //[2001:db8::1]/>;rel=has-proxy;anchor="coap://[2001:db8::1]/" ]
+   result:
+
+   <coap://[2001:db8::1]/s>;rt=tag:example.com,sensor,<coap+tcp://[2001:
+   db8::1]/>;rel=has-proxy;anchor="coap://[2001:db8::1]/"
+
+   This is similar to the extension suggested in Section 5 of
+   [I-D.amsuess-core-resource-directory-extensions].
+
+   ]
 
 3.  Elision of Proxy-Scheme and Uri-Host
 
@@ -866,9 +872,16 @@ Payload:
    [I-D.amsuess-core-coap-over-gatt]
               Amsüss, C., "CoAP over GATT (Bluetooth Low Energy Generic
               Attributes)", Work in Progress, Internet-Draft, draft-
-              amsuess-core-coap-over-gatt-01, 2 November 2020,
+              amsuess-core-coap-over-gatt-02, 11 July 2022,
               <https://datatracker.ietf.org/doc/html/draft-amsuess-core-
-              coap-over-gatt-01>.
+              coap-over-gatt-02>.
+
+   [I-D.amsuess-core-resource-directory-extensions]
+              Amsüss, C., "CoRE Resource Directory Extensions", Work in
+              Progress, Internet-Draft, draft-amsuess-core-resource-
+              directory-extensions-08, 13 March 2023,
+              <https://datatracker.ietf.org/doc/html/draft-amsuess-core-
+              resource-directory-extensions-08>.
 
    [I-D.amsuess-t2trg-rdlink]
               Amsüss, C., "rdlink: Robust distributed links to
@@ -888,17 +901,17 @@ Payload:
    [I-D.ietf-core-href]
               Bormann, C. and H. Birkholz, "Constrained Resource
               Identifiers", Work in Progress, Internet-Draft, draft-
-              ietf-core-href-10, 7 March 2022,
+              ietf-core-href-12, 6 March 2023,
               <https://datatracker.ietf.org/doc/html/draft-ietf-core-
-              href-10>.
+              href-12>.
 
    [I-D.ietf-core-observe-multicast-notifications]
               Tiloca, M., Höglund, R., Amsüss, C., and F. Palombini,
               "Observe Notifications as CoAP Multicast Responses", Work
               in Progress, Internet-Draft, draft-ietf-core-observe-
-              multicast-notifications-04, 11 July 2022,
+              multicast-notifications-05, 24 October 2022,
               <https://datatracker.ietf.org/doc/html/draft-ietf-core-
-              observe-multicast-notifications-04>.
+              observe-multicast-notifications-05>.
 
    [I-D.ietf-lpwan-coap-static-context-hc]
               Minaburo, A., Toutain, L., and R. Andreasen, "Static
@@ -918,9 +931,9 @@ Payload:
    [I-D.tiloca-core-oscore-capable-proxies]
               Tiloca, M. and R. Höglund, "OSCORE-capable Proxies", Work
               in Progress, Internet-Draft, draft-tiloca-core-oscore-
-              capable-proxies-03, 11 July 2022,
+              capable-proxies-05, 13 March 2023,
               <https://datatracker.ietf.org/doc/html/draft-tiloca-core-
-              oscore-capable-proxies-03>.
+              oscore-capable-proxies-05>.
 
    [lwm2m]    OMA SpecWorks, "White Paper – Lightweight M2M 1.1", n.d.,
               <https://omaspecworks.org/white-paper-lightweight-m2m-
@@ -961,6 +974,13 @@ Payload:
               2022, <https://www.rfc-editor.org/rfc/rfc9176>.
 
 Appendix A.  Change log
+
+   Since draft-ietf-core-transport-indication-01:
+
+   *  Simplify same-host proxy behavior by referring to existing RFC7252
+      mandate.
+
+   *  proxy-links= lookup: Refer to prior art.
 
    Since draft-ietf-core-transport-indication-00:
 
