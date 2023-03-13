@@ -348,9 +348,15 @@ by asking for `?anchor=<the-discovered-host>&rel=has-proxy`.
 <!-- We don't say that the RD can not do that, right? -->
 The RD may also volunteer that information during resource lookups even though the has-proxy link itself does not match the search criteria.
 
-\[ It may be useful to define RD parameters for use with lookup here, which'd guide which available proxies to include.
+\[
+
+It may be useful to define RD parameters for use with lookup here, which'd guide which available proxies to include.
 For example, asking `?if=tag:example.com,sensor&proxy-links=tcp` could give as a result:
+
 `<coap://[2001:db8::1]/s>;rt=tag:example.com,sensor,<coap+tcp://[2001:db8::1]/>;rel=has-proxy;anchor="coap://[2001:db8::1]/"`
+
+This is similar to the extension suggested in {{Section 5 of ?I-D.amsuess-core-resource-directory-extensions}}.
+
 \]
 
 # Elision of Proxy-Scheme and Uri-Host
