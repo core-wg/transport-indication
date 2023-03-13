@@ -209,15 +209,10 @@ setting the scheme of a requested URI (by means of Proxy-Scheme) makes the reque
 However, this needs to be of only little practical concern:
 Any device can serve as a proxy for itself (a "same-host proxy")
 by accepting requests that carry the Proxy-Scheme option.
-If it is to be a well-behaved proxy,
-the device should then check whether it recognizes the name set in Uri-Host as one of its own
-(as it should if no Proxy-Scheme option accompanied it). <!-- without 7252 explicitly mandating that -->
-If the name is not recognized,
-it should reject the request with 5.05 (Proxying Not Supported)
--- unless, of course, it implements forward proxy functionality exceeding the same-host proxy.
-If the name is recognized,
-it should process the request as it would process a request coming in on the given protocol
-(which, for many hosts, is the same as if the option were absent completely).
+{{Section 5.7.2 of RFC7252}} already mandates that a proxy recognize its own addresses.
+A minimal same-host proxy supports only those and respond with 5.05 (Proxying Not Supported).
+In many cases (precisely: on hosts that alias their resources across protocols),
+this is equivalent to ignoring the Proxy-Scheme option in that request.
 
 A server can advertise a recommended proxy
 by serving a Web Link with the "has-proxy" relation to a URI indicating its transport address.
