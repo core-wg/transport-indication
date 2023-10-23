@@ -39,6 +39,7 @@ informative:
     author:
       org: OMA SpecWorks
     target: https://omaspecworks.org/white-paper-lightweight-m2m-1-1/
+  I-D.ietf-lake-edhoc:
 
 --- abstract
 
@@ -645,12 +646,24 @@ Aspects for consideration are:
 
 * A proxy advertised by the device hosting the resource to be accessed is less risky to use than one advertised by a third party.
 
-  Note that in some applications, servers produce representations based on unverified user input.
-  In such cases, and more so when multiple applications share a security context, the advertisements' provenance may need to be considered.
+  The `/.well-known/core` resource is regarded as a source of authoritative information on the endpoint's CoAP related metadata,
+  and can be queried early in the discovery process,
+  or queried for verification (with filtering applied) after discovery through an RD.
+  Other resources may be less trustworthy as they may be controlled by entities not trusted with the endpoint's traffic.
 
 <!-- Note that these aspects' applicability is mutually exclusive:
 When the advertisement was obtained from the target host,
 that needs to be reachable. -->
+
+{{ead}} describes an extension to {{I-D.ietf-lake-edhoc}} by which the client can verify that the proxy used by the client is recognized by the server.
+This is similar to querying `/.well-known/core` for any proxies advertised there,
+but happens earlier in the connection establishment,
+and leaves the decision whether the proxy is legitimate to the server.
+
+It only conveys information about the URI of the proxy.
+The mapping of any host name inside it to an IP address,
+or of an IP address to a routing decision,
+is left to the security mechanisms of the respective layers.
 
 ## Protecting the proxy
 
@@ -692,6 +705,10 @@ Notes: The schemes for which the proxy is usable may be indicated using the prox
 --- back
 
 # Change log
+
+Since draft-ietf-core-transport-indication-02:
+
+* Added EAD appendix, adjusted security considerations to match.
 
 Since draft-ietf-core-transport-indication-01:
 
@@ -898,6 +915,28 @@ maybe something like "has the default value of any of the associated addresses, 
   but that's the sequence needed to understand how the `/foo` here is really `coap://myhostname/foo`).
 
   If CoRAL is used during discovery, a base directive or reverse relation to has-unique-proxy would make this easier.
+
+# EDHOC EAD for verifying legitimate proxies {#ead}
+
+This document sketches an extension to {{I-D.ietf-lake-edhoc}} that informs the server of the public address the client is using,
+allowing it to detect undesired reverse proxies.
+
+[ This section is immature, and written up as a discussion starting point. Further research into prior art is still necessary. ]
+
+The External Authorization Data (EAD) item with name "Proxy CRI", label TBD24, is defined for use with messages 1, 2 and 3.
+
+A client can set this label in uncritical form, followed by a CRI ({{I-D.ietf-core-href}}) that is CBOR-encoded in a byte string as a CBOR sequence.
+The transport indicated by the URI is the proxy the client chose from information advertised about the server.
+
+If a server can not determine its set of legitimate proxies,
+it ignores the option (as does any EDHOC implementation that is unaware of it).
+
+If it recognizes the CRI as belonging to a legitimate proxy,
+it places the label in its non-critical form in the next message to confirm the proxy choice.
+Otherwise, it places the label in its critical form.
+The client may then decide to discontinue using the proxy,
+or to use more extensive padding options to sidestep the attack.
+Both the client and the server may alert their administrators of a possible traffic misdirection.
 
 # Acknowledgements
 
