@@ -1,0 +1,107 @@
+\documentclass[aspectratio=169,colorlinks]{beamer}
+\usetheme{Boadilla} % plainest one with slide number footer
+% The empty linkcolor is mainly to not have a non-matching color in the presentation name in the footer
+\hypersetup{colorlinks,linkcolor=,urlcolor=blue!50!black}
+
+% generic packages
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{verbatim}
+\usepackage{amsmath}
+
+% about the presentation
+\title{Outcome and outlook of the Friday T2TRG meeting}
+\subtitle[]{
+  \texttt{draft-core-transport-indication},
+  \texttt{draft-amsuess-coap-over-gatt},
+  \texttt{draft-core-resource-directory-extensions},
+  \texttt{draft-t2trg-onion-coap}\\
+  … all about Naming Things
+}
+\author{Christian~Amsüss}
+\date{IETF118 Prague, LAKE, 2023-11-09}
+
+% This should be my "always used in presentations" git module
+\newcommand{\rfc}[1]{\href{https://datatracker.ietf.org/doc/html/rfc#1}{RFC~#1}}
+\newcommand{\ietfdraft}[1]{\href{https://datatracker.ietf.org/doc/draft-#1/}{draft #1}}
+
+% attach self
+
+\usepackage{embedfile}
+\embedfile{\jobname.tex}
+\embedfile{Makefile}
+
+\begin{document}
+
+\frame{\titlepage}
+
+\begin{frame}{Orientation}\large
+  \begin{description}
+    \item[Origin:] \rfc{8323} introducing \texttt{coap+tcp://}
+    \item[led to:] \ietfdraft{silverajan-core-coap-protocol-negotiation} (stalled)
+    \item[used by:] {\footnotesize \ietfdraft{bormann-t2trg-slipmux} (\texttt{coap+uart://}), \ietfdraft{amsuess-core-coap-over-gatt} (\texttt{coap+gatt://}), \ietfdraft{becker-core-coap-sms-gprs} (\texttt{coap+sms://})}
+    \item[reboot:] \ietfdraft{ietf-core-transport-indication} -- \texttt{rel=has-proxy}
+    \item[more users:] \ietfdraft{amsuess-t2trg-rdlink}, \ietfdraft{amsuess-t2trg-onion-coap} (both \texttt{coap://encodedpublickey.tbd.arpa})
+
+      \bigskip
+
+    \item T2TRG meeting on Friday
+  \end{description}
+\end{frame}
+
+\begin{frame}{Do we really need \texttt{coap+foo}?}\large
+  Ambiguous: \texttt{coap://$\underbrace{\texttt{[2001:db8::1]:1234}}_{\textsf{TCP port? UDP port?}}$/}
+
+  Clarified: \texttt{coap+tcp://[2001:db8::1]:1234/}
+
+  \bigskip
+
+  Unambiguous:
+  \begin{itemize}
+    \item \texttt{coap://0123456789abcdef.ble.arpa/} (was \texttt{coap+ble://\ldots})
+    \item \texttt{coap://7.6.5.4.3.2.1.5.5.5.3.4.e164.arpa/} (was \texttt{coap+sms://+43555\ldots})
+    \item \texttt{coap://ttyUSB0.uart.tbdlocal.arpa/}\footnote{Or \texttt{ttyUSB0.alt}?} % as long as components can recognize it's locally significant
+    \item \texttt{coap://001.004.usb.tbdlocal.arpa/}
+  \end{itemize}
+
+  \bigskip
+
+  Criterion: \texttt{coap+foo} needed if the literal for of authority values are ambiguous with respect to transports. Or if the resolution process produces such values.
+\end{frame}
+
+\begin{frame}{Can't just be about literals!}\large
+  \framesubtitle{How do I know what to do with \texttt{coap://c.example.com}?}
+
+  Naming systems provide metadata.
+
+  \bigskip
+
+  \texttt{{\color{gray}\$} dig c.example.com}\\
+  \texttt{coap.example.com. 32000 IN AAAA $\underbrace{\texttt{2001:db8::42}}_{\textsf{insufficient literal\footnotemark[1]}}$}\footnotetext[1]{The literal is OK on its own, but insufficient when combined with just a port.}
+
+  \texttt{{\color{gray}\$} dig BLE c.example.com}\\
+  \texttt{coap.example.com. 32000 IN BLE 0123456789abcdef}\footnote[2]{With no desire to do this here, but it would suffice.}
+\end{frame}
+
+\begin{frame}[fragile]{Other lookup systems can provide similar metadata}\large
+  \framesubtitle{Extrapolating from \ietfdraft{core-resource-directory-extensions} for forward proxy setup}
+
+\begin{verbatim}
+GET coap://thedirectory.net/rd-lookup/
+          ?anchor=coap://00publickey00.onion-ish.arpa
+
+2.05 Content
+Payload:
+<coap+tcp://[2001:db8::5]/>;rel=has-proxy;
+          anchor="coap://00publickey00.onion-ish.arpa"
+\end{verbatim}
+\end{frame}
+
+\begin{frame}{Going forward}\Large
+  \begin{itemize}
+    \item Gather any objections here.
+    \item Update GATT, slipmux? and transport-interfaces drafts with findings.
+  \end{itemize}
+\end{frame}
+
+\end{document}
