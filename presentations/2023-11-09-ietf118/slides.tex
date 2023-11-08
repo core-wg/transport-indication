@@ -69,7 +69,23 @@
   Criterion: \texttt{coap+foo} needed if the literal for of authority values are ambiguous with respect to transports. Or if the resolution process produces such values.
 \end{frame}
 
-\begin{frame}{Can't just be about literals!}\large
+\begin{frame}{Proposal to update \texttt{transport-indication}}\large
+  \begin{itemize}
+    \item Recommend not adding \texttt{coap+x} schemes unless criterion is met.
+  \end{itemize}
+
+  \begin{block}{Doesn't this create aliasing?}
+    No. It's only aliasing when differert URIs point to the same resource.
+
+    Whether a server uses the same name for different transports or not is up to the operator.
+  \end{block}
+
+  \bigskip
+
+  \ldots and CoAP-over-GATT (and slipmux?) will follow.\footnote{No development is known to be going on with the other transports.}
+\end{frame}
+
+\begin{frame}{Can't just rely on literals!}\large
   \framesubtitle{How do I know what to do with \texttt{coap://c.example.com}?}
 
   Naming systems provide metadata.
@@ -77,10 +93,12 @@
   \bigskip
 
   \texttt{{\color{gray}\$} dig c.example.com}\\
-  \texttt{coap.example.com. 32000 IN AAAA $\underbrace{\texttt{2001:db8::42}}_{\textsf{insufficient literal\footnotemark[1]}}$}\footnotetext[1]{The literal is OK on its own, but insufficient when combined with just a port.}
+  \texttt{c.example.com. 32000 IN AAAA $\underbrace{\texttt{2001:db8::42}}_{\textsf{insufficient literal\footnotemark[1]}}$}\footnotetext[1]{The literal is OK on its own, but insufficient when combined with just a port.}
+
+  but
 
   \texttt{{\color{gray}\$} dig BLE c.example.com}\\
-  \texttt{coap.example.com. 32000 IN BLE 0123456789ab}\footnote[2]{With no desire to do this here, but it would suffice.}
+  \texttt{c.example.com. 32000 IN $\underbrace{\texttt{BLE\footnotemark[2]\quad 0123456789ab}}_{\textsf{Not much more, but has own discovery}}$}\footnotetext[2]{With no desire to do this here or precisely that way, but it would suffice.}
 \end{frame}
 
 \begin{frame}[fragile]{Other lookup systems can provide similar metadata}\large
@@ -97,10 +115,24 @@ Payload:
 \end{verbatim}
 \end{frame}
 
+\begin{frame}{Alternative history}\large
+  \framesubtitle{If we had \rfc{9460} SVCB back when \rfc{8323} was done\footnote{CoAP over TCP was approved 2017-12-18, first \ietfdraft{schwartz-httpbis-dns-alt-svc} was published 2018-01-16}…}
+
+  \texttt{{\color{gray}\$} dig SVCB \_coap.c.example.com}\\
+  \texttt{c.example.com. 32000 IN SVCB 1 . transport="tcp"}\\
+  \texttt{c.example.com. 32000 IN SVCB 2 . transport="udp" port=61616}\\
+  \texttt{c.example.com. 32000 IN SVCB 3 . transport="udp"}
+
+  \bigskip
+
+  Adopt for future IP based transports;
+  solves no problems for us any more unless anyone wants to deprecate \texttt{+tcp} and \texttt{+ws}.
+\end{frame}
+
 \begin{frame}{Going forward}\Large
   \begin{itemize}
     \item Gather any objections here.
-    \item Update GATT, slipmux? and transport-interfaces drafts with findings.
+    \item Update GATT and transport-interfaces drafts to not do \texttt{coap+x} unless criterion is met.
   \end{itemize}
 \end{frame}
 
