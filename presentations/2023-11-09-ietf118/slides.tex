@@ -58,7 +58,7 @@
 
   Unambiguous:
   \begin{itemize}
-    \item \texttt{coap://0123456789abcdef.ble.arpa/} (was \texttt{coap+ble://\ldots})
+    \item \texttt{coap://0123456789ab.ble.arpa/} (was \texttt{coap+ble://\ldots})
     \item \texttt{coap://7.6.5.4.3.2.1.5.5.5.3.4.e164.arpa/} (was \texttt{coap+sms://+43555\ldots})
     \item \texttt{coap://ttyUSB0.uart.tbdlocal.arpa/}\footnote{Or \texttt{ttyUSB0.alt}?} % as long as components can recognize it's locally significant
     \item \texttt{coap://001.004.usb.tbdlocal.arpa/}
@@ -80,7 +80,7 @@
   \texttt{coap.example.com. 32000 IN AAAA $\underbrace{\texttt{2001:db8::42}}_{\textsf{insufficient literal\footnotemark[1]}}$}\footnotetext[1]{The literal is OK on its own, but insufficient when combined with just a port.}
 
   \texttt{{\color{gray}\$} dig BLE c.example.com}\\
-  \texttt{coap.example.com. 32000 IN BLE 0123456789abcdef}\footnote[2]{With no desire to do this here, but it would suffice.}
+  \texttt{coap.example.com. 32000 IN BLE 0123456789ab}\footnote[2]{With no desire to do this here, but it would suffice.}
 \end{frame}
 
 \begin{frame}[fragile]{Other lookup systems can provide similar metadata}\large
