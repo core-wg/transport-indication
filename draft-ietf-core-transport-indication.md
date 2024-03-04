@@ -952,7 +952,52 @@ The client may then decide to discontinue using the proxy,
 or to use more extensive padding options to sidestep the attack.
 Both the client and the server may alert their administrators of a possible traffic misdirection.
 
-# Literals beyond IP addresses
+# Alternative History: What if SVCB had been around before CoAP over TCP?
+
+This appendix explores a hypothetical scenario in which SVCB {{?RFC9460}} was around and supported before the controversial decision to establish the "coap+tcp" scheme.
+It serves to provide a fresh perspective of what logically necessary
+before looking into how the facilities can be unified.
+
+## Hypothetical retrospecification
+
+CoAP is specified for several transports:
+CoAP over UDP, over DTLS, over TCP, over TLS and over (secure or insecure) WebSockets.
+URIs of all these are expressed using the "coap" or "coaps" scheme,
+depending on whether a (D)TLS connection is to be used.
+
+Any server providing CoAP services
+announces not only its address
+but also its SVCB Service Parameters,
+including at least one of alpn and coaptransfer.
+
+For example, a host serving "coap://sensor.example.com" and "coaps://sensor.example.com"
+might have these records:
+
+```
+_coap.sensor.example.com IN SVCB 0 . alpn="coap" coaptransfer="tcp,udp" port="61616"
+sensor.example.com IN AAAA 2001:db8::1
+```
+
+A client connecting to the server loops up the name's service parameters using its system's discovery mechanisms.
+
+For example, if DNS is used, it obtains SVCB records for \_coap.sensor.example.com,
+and receives the corresponding AAAA record either immediately from an SVCB aware resolver
+or through a second query.
+It learns that the service is available through CoAP-over-DTLS (ALPN "coap")
+or through unencrypted TCP or UDP, and that port 61616 needs to be used.
+
+If the server and the client do not have a transport in common,
+or if one of them supports only IPv4 and the other only IPv6,
+no exchange is possible;
+the client may resort to using a proxy.
+
+## Shortcomings
+
+While the mechanism above would have unified the CoAP transports under a pair of schemes,
+it would have rendered the use of IP literals impossible.
+{{newlit}} provides a solution for this issue.
+
+# Literals beyond IP addresses {#newlit}
 
 \[
 This section is placed here preliminarily:
