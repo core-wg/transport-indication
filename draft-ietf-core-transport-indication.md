@@ -22,6 +22,7 @@ author:
   name: Christian Amsüss
   country: Austria
   email: christian@amsuess.com
+# - + martine for SVCB stuff
 normative:
 informative:
   aliases:
@@ -40,6 +41,12 @@ informative:
       org: OMA SpecWorks
     target: https://omaspecworks.org/white-paper-lightweight-m2m-1-1/
   I-D.ietf-lake-edhoc:
+  w3address:
+    title: "W3 address syntax: BNF"
+    author:
+      name: Tim BL
+    target: http://info.cern.ch/hypertext/WWW/Addressing/BNF.html#43
+    date: 1992-06-29
 
 --- abstract
 
@@ -921,7 +928,7 @@ maybe something like "has the default value of any of the associated addresses, 
 This document sketches an extension to {{I-D.ietf-lake-edhoc}} that informs the server of the public address the client is using,
 allowing it to detect undesired reverse proxies.
 
-[ This section is immature, and written up as a discussion starting point. Further research into prior art is still necessary. ]
+\[ This section is immature, and written up as a discussion starting point. Further research into prior art is still necessary. ]
 
 The External Authorization Data (EAD) item with name "Proxy CRI", label TBD24, is defined for use with messages 1, 2 and 3.
 
@@ -937,6 +944,58 @@ Otherwise, it places the label in its critical form.
 The client may then decide to discontinue using the proxy,
 or to use more extensive padding options to sidestep the attack.
 Both the client and the server may alert their administrators of a possible traffic misdirection.
+
+# Literals beyond IP addresses
+
+\[
+This section is placed here preliminarily:
+After initial review in CoRE, this may be better moved into a separate document aiming for a wider IETF audience.
+\]
+
+IP literals were part of URIs from the start {{w3address}}.
+Initially, they were equivalent to host names in their expressiveness,
+save for their inherent difference that the former can be used without a shared resolver,
+and the latter can be switched to a different network address.
+
+This equivalence got lost gradually:
+Certificates for TLS (its precursor SSL has been available since 1995)
+<!-- TBD cite - https://en.wikipedia.org/wiki/HTTPS or https://www.digicert.com/blog/evolution-of-ssl ? -->
+have only practically been available to host names.
+The Host header introduced in HTTP 1.1 {{Section 14.23 of ?RFC2616}}
+introduced name based virtual hosting in 1999.
+DANE {{?RFC6698}}, which provides TLS public keys augmenting the or outside of the public key infrastructure,
+is only available for host names resolved through DNSSEC.
+SVCB records {{?RFC9460}} introduced in 2023
+allow starting newer HTTP transports without going through HTTP/1.1 first
+and enable Encrypted Client Hello --
+again, only for host names resolved through DNS.
+
+This document proposes an expression for the host component of a URI
+that fills that gap.
+Note that no attempt is yet made to register `service.arpa` in the .ARPA Zone Management;
+that name is used only for the purpose of discussion.
+
+## Syntax of `service.arpa`
+
+Names under `service.arpa` are structured into labels as follows:
+
+~~~abnf
+name = [ custom ".-." ] *(component) "service.arpa"
+
+custom = *nodot / "."
+component = 1*63 nodot "." comptype "."
+comptype = nodotnodash 0*62 nodot
+
+
+nodotnodash = ALPHA / DIGIT / "_" / "~" ; unreserved without dot or dash
+nodot  = nodotnodash / "-" ; unreserved without dot
+~~~
+
+While not ever carried by DNS by design,
+this still upholds the constraints of DNS (maximum of 63 bytes between two dots) for compatibility reasons.
+Due to {{?RFC3986}}'s rules,
+all components are case insensitive and canonically lowercase.
+
 
 # Acknowledgements
 
