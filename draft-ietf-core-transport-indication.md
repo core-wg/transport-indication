@@ -22,7 +22,14 @@ author:
   name: Christian Amsüss
   country: Austria
   email: christian@amsuess.com
-# - + martine for SVCB stuff
+- fullname: Martine Sophie Lenders
+  org: TUD Dresden University of Technology
+  abbrev: TU Dresden
+  street: Helmholtzstr. 10
+  city: Dresden
+  code: D-01069
+  country: Germany
+  email: martine.lenders@tu-dresden.de
 normative:
 informative:
   aliases:
