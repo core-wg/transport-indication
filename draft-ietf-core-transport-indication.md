@@ -720,6 +720,11 @@ Notes: The schemes for which the proxy is usable may be indicated using the prox
 
 # Change log
 
+Since draft-ietf-core-transport-indication-03:
+
+* Added appendices on alternative history and Literals beyond IP addresses.
+  The remaining document was not brought in sync with those new parts.
+
 Since draft-ietf-core-transport-indication-02:
 
 * Added EAD appendix, adjusted security considerations to match.
