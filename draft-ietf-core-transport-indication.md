@@ -22,6 +22,14 @@ author:
   name: Christian Amsüss
   country: Austria
   email: christian@amsuess.com
+- fullname: Martine Sophie Lenders
+  org: TUD Dresden University of Technology
+  abbrev: TU Dresden
+  street: Helmholtzstr. 10
+  city: Dresden
+  code: D-01069
+  country: Germany
+  email: martine.lenders@tu-dresden.de
 normative:
 informative:
   aliases:
@@ -40,6 +48,12 @@ informative:
       org: OMA SpecWorks
     target: https://omaspecworks.org/white-paper-lightweight-m2m-1-1/
   I-D.ietf-lake-edhoc:
+  w3address:
+    title: "W3 address syntax: BNF"
+    author:
+      name: Tim BL
+    target: http://info.cern.ch/hypertext/WWW/Addressing/BNF.html#43
+    date: 1992-06-29
 
 --- abstract
 
@@ -921,7 +935,7 @@ maybe something like "has the default value of any of the associated addresses, 
 This document sketches an extension to {{I-D.ietf-lake-edhoc}} that informs the server of the public address the client is using,
 allowing it to detect undesired reverse proxies.
 
-[ This section is immature, and written up as a discussion starting point. Further research into prior art is still necessary. ]
+\[ This section is immature, and written up as a discussion starting point. Further research into prior art is still necessary. ]
 
 The External Authorization Data (EAD) item with name "Proxy CRI", label TBD24, is defined for use with messages 1, 2 and 3.
 
@@ -937,6 +951,201 @@ Otherwise, it places the label in its critical form.
 The client may then decide to discontinue using the proxy,
 or to use more extensive padding options to sidestep the attack.
 Both the client and the server may alert their administrators of a possible traffic misdirection.
+
+# Alternative History: What if SVCB had been around before CoAP over TCP?
+
+This appendix explores a hypothetical scenario in which SVCB {{?RFC9460}} was around and supported before the controversial decision to establish the "coap+tcp" scheme.
+It serves to provide a fresh perspective of what logically necessary
+before looking into how the facilities can be unified.
+
+## Hypothetical retrospecification
+
+CoAP is specified for several transports:
+CoAP over UDP, over DTLS, over TCP, over TLS and over (secure or insecure) WebSockets.
+URIs of all these are expressed using the "coap" or "coaps" scheme,
+depending on whether a (D)TLS connection is to be used.
+
+Any server providing CoAP services
+announces not only its address
+but also its SVCB Service Parameters,
+including at least one of alpn and coaptransfer.
+
+For example, a host serving "coap://sensor.example.com" and "coaps://sensor.example.com"
+might have these records:
+
+```
+_coap.sensor.example.com IN SVCB 0 . alpn="coap" coaptransfer="tcp,udp" port="61616"
+sensor.example.com IN AAAA 2001:db8::1
+```
+
+A client connecting to the server loops up the name's service parameters using its system's discovery mechanisms.
+
+For example, if DNS is used, it obtains SVCB records for \_coap.sensor.example.com,
+and receives the corresponding AAAA record either immediately from an SVCB aware resolver
+or through a second query.
+It learns that the service is available through CoAP-over-DTLS (ALPN "coap")
+or through unencrypted TCP or UDP, and that port 61616 needs to be used.
+
+If the server and the client do not have a transport in common,
+or if one of them supports only IPv4 and the other only IPv6,
+no exchange is possible;
+the client may resort to using a proxy.
+
+## Shortcomings
+
+While the mechanism above would have unified the CoAP transports under a pair of schemes,
+it would have rendered the use of IP literals impossible.
+{{newlit}} provides a solution for this issue.
+
+# Literals beyond IP addresses {#newlit}
+
+\[
+This section is placed here preliminarily:
+After initial review in CoRE, this may be better moved into a separate document aiming for a wider IETF audience.
+\]
+
+## Motivation for new literal-ish names
+
+IP literals were part of URIs from the start {{w3address}}.
+Initially, they were equivalent to host names in their expressiveness,
+save for their inherent difference that the former can be used without a shared resolver,
+and the latter can be switched to a different network address.
+
+This equivalence got lost gradually:
+Certificates for TLS (its precursor SSL has been available since 1995)
+<!-- TBD cite - https://en.wikipedia.org/wiki/HTTPS or https://www.digicert.com/blog/evolution-of-ssl ? -->
+have only practically been available to host names.
+The Host header introduced in HTTP 1.1 {{Section 14.23 of ?RFC2616}}
+introduced name based virtual hosting in 1999.
+DANE {{?RFC6698}}, which provides TLS public keys augmenting the or outside of the public key infrastructure,
+is only available for host names resolved through DNSSEC.
+SVCB records {{?RFC9460}} introduced in 2023
+allow starting newer HTTP transports without going through HTTP/1.1 first,
+enables load balancing, fail-over,
+and enable Encrypted Client Hello --
+again, only for host names resolved through DNS.
+
+This document proposes an expression for the host component of a URI
+that fills that gap.
+Note that no attempt is yet made to register `service.arpa` in the .ARPA Zone Management;
+that name is used only for the purpose of discussion.
+
+[^prelim]
+
+[^prelim]:
+    The structure and even more the syntax used here is highly preliminary.
+    They serves to illustrate that the desired properties can be obtained,
+    and do not claim to be optimal.
+    As one of many aspects, they are missing considerations for normalization
+    and for internationalization.
+
+## Structure of `service.arpa`
+
+Names under service.arpa are structured into
+an optional custom prefix,
+an ordered list of key-value component pairs,
+and the common name service.arpa.
+
+The custom prefix can contain user defined components.
+The intended use is labelling, and to differentiate services provided by a single host.
+Any data is allowed within the structure of a URI (ABNF reg-name) and DNS name rules (63 bytes per segment).
+(While not ever carried by DNS,
+this upholds the constraints of DNS for names.
+That decision may be revised later,
+but is upheld while demonstrating that the desired properties can be obtained).
+
+Component pairs consist of a registered component type
+(no precise registry is proposed at this early point)
+followed by encoded data.
+The component type "--" is special in that it concatenates the values to its left and to its right,
+creating component values that may exceed 63 bytes in length.
+
+Initial component types are:
+
+* "6": The value encodes an IPv6 address
+  in {{?RFC5952}} format, with the colon character (":") replaced with a dash ("-").
+
+  It indicates an address of a host providing the service.
+
+  If any address information is present,
+  a client SHOULD use that information to access the service.
+
+* "4": The value encodes an IPv4 address
+  in dotted decimal format {{?RFC1123}}, with the dot character (".") replaced with a dash ("-").
+
+  It indicates an address of a host providing the service.
+
+* "tlsa": The data of a DNS TLSA record {{?RFC6698}} encoded in base32 {{?RFC4648}}.
+
+  Depending on the usage, this describes TLS credentials through which the service can be authenticated.
+
+  If present,
+  a client MUST establish a secure connection,
+  and MUST reject the connection if the TLSA record's requirements are not met.
+
+* "s": Service Parameters {{?RFC9460}}).
+  SvcbParams in base32 encoding of their wire format.
+
+  TBD: There is likely a transformation of the parameters' presentation format that is compatible with the reuqirements of the authority component,
+  but this will require some more work on the syntax.
+
+  If present,
+  a client SHOULD use these hints to establish a connection.
+
+  TBD: Encoding only the SvcParams and not priorities and targets appears to be the right thing to do for the immediate record,
+  but does not enable load balancing and failover.
+  Further work is required to explore how those can be expressed,
+  and how data pertaining to the target can be expressed,
+  possibly in a nested structure.
+
+## Syntax of `service.arpa`
+
+~~~abnf
+name = [ custom ".-." ] *(component) "service.arpa"
+
+custom = reg-name
+component = 1*63nodot "." comptype "."
+comptype = nodotnodash /  2*63nodot
+
+; unreserved/subdelims without dot
+nodot  = nodotnodash / "-"
+; unreserved/subdelims without dot or dash
+nodotnodash = ALPHA / DIGIT / "_" / "~" / sub-delims
+
+; reg-name and sub-delims as in RFC3986
+~~~
+
+Due to {{?RFC3986}}'s rules,
+all components are case insensitive and canonically lowercase.
+
+Note that while using the IPvFuture mechanism of {{?RFC3986}} would avoid compatibility issues around the 63 character limit
+and some of the character restrictions,
+it would not resolve the larger limitation of case insensitivity.
+
+## Processing `service.arpa`
+
+A client accessing a resource under a service.arpa name
+does not consult DNS,
+but obtains information equivalent to the results of a DNS query from parsing the name.
+
+DNS resolvers should refuse to resolve service.arpa names.
+(They would have all the information needed to produce sensible results,
+but operational aspects would need a lot of consideration;
+future versions of this document may revise this).
+
+## Examples
+
+TBD: For SvcParams, the examples are inconsistent with the base32 recommendation;
+they serve to explore the possible alternatives.
+
+* http://s.alpn_h2c.6.2001-db8--1.service.arpa/ -- The server is reachable on 2001:db8::1 using HTTP/2
+
+* https://mail.-.tlsa.amaqckrkfivcukrkfivcukrkfivcukrkfivcukrkfivcukrkfivcukrk.service.arpa/ -- No address information is provided, the client needs to resort to other discovery mechanisms.
+  Any server is eligible to serve the resource if it can present a (possibly self-signed) certificate whose public key SHA256 matches the encoded value.
+  The "mail.-." part is provided to the server as part of the Host header,
+  and can be used for name based virtual hosting.
+
+* coap://s.coaptransfer_tcp_coapsecurity_edhoc_oauth-aud_.6.2001-db8--1.service.arpa/ -- The server is reachable using CoAP over TCP with EDHOC security at 2001:db8::1. (The SVCB parameters are experimental values from {{?I-D.lenders-core-dnr}}).
 
 # Acknowledgements
 
