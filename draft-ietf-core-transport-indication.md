@@ -152,7 +152,7 @@ It is, colloquially, also used to identify the combination
 of a host (identified through a name), the default port, and the CoAP method of sending requests to the host.
 
 For precision, this document uses the term
-"the transport address indicated by (a URI)" to refer to the host / port / protocol combination,
+"the transport address indicated by (a URI)" to refer to the protocol and protocol details (host and port for the IP based protocols),
 but otherwise no big deal is made of it.
 
 For the CoAP schemes (coap, coaps, coap+tcp, coaps+tcp, coap+ws, coaps+ws),
