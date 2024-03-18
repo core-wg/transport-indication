@@ -304,14 +304,16 @@ and the Uri-Paths "sensors" and "temp".
 
 ## Security context propagation {#secctx-propagation}
 
-If the originally requested URI R or the application requirements demand a security mechanism is used,
-the client MUST only use the proxy P if the proxy can provide suitable credentials.
-(The hosting URI S is immaterial to these considerations).
+Any security requirements posed by a server or client application on a CoAP request
+MUST be applied independently of the transport that is used to perform the request.
+If a transport can not be used to satisfy the requirements,
+it is ineligible for use with the request (from a client's point of view),
+and unauthorized (from a server's point of view).
 
-For example, if the application uses the host name and a public key infrastructure and R is `coap://example.com/`
-the proxy accessed as `coap+tcp://[2001:db8::1]` still needs to provide a certificate chain for the name example.com to one of the system's trust anchors.
-If, on the other hand, the application is doing a firmware update and requires any certificate from its configured firmware update issuer,
-the proxy needs to provide such a firmware update certificate.
+If the requirements contain transport layer security,
+the proxy needs to present the credentials required of the server to the client,
+and those of the client to the server;
+this is only practical when the proxy is a same-host proxy.
 
 Some applications have requirements
 exceeding the requirements of a secure connection,
