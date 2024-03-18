@@ -155,11 +155,21 @@ For precision, this document uses the term
 "the transport address indicated by (a URI)" to refer to the transport and its details (in the example, CoAP over UDP with an IPv6 address and the default port),
 but otherwise no big deal is made of it.
 
-A URI indicating a transport address can contain a registered name (as opposed to an address literal),
-whose resolution may yield multiple addresses.
+The transport indicated by a URI is not only influenced by the URI scheme,
+but also by the authority component.
+The transports and resolution mechanisms currently specified
+make little use of this possibility,
+mainly because the most prominent resolution mechanism (SVCB records) has not been avaialble when {{?RFC8323}} was published
+(see also {{althist}}),
+end because it can not be expressed in IP literals (see {{newlit}}).
+
+When the resolution mechanism used for a registered name authority component yields multiple addresses,
+all of those are possible ways to interact with the resource.
 The resolution mechanism or other underlying transport can give guidance on how to find the best usable one.
-(For example, when using TCP and receiving an IPv4 and an IPv6 address,
-{{?RFC8305}} describes how to establish a connection).
+With the currently specified transports and resolution mechanisms,
+the most prominent example of making use of that information
+is applying {{?RFC8305}}'s Happy Eyeballs mechanism to establish a TCP connection
+when a name resolves to both IPv4 and IPv6 addresses,
 
 #### Paths in URIs that indicate transport addresses
 
@@ -972,7 +982,7 @@ The client may then decide to discontinue using the proxy,
 or to use more extensive padding options to sidestep the attack.
 Both the client and the server may alert their administrators of a possible traffic misdirection.
 
-# Alternative History: What if SVCB had been around before CoAP over TCP?
+# Alternative History: What if SVCB had been around before CoAP over TCP? {#althist}
 
 This appendix explores a hypothetical scenario in which SVCB {{?RFC9460}} was around and supported before the controversial decision to establish the "coap+tcp" scheme.
 It serves to provide a fresh perspective of what logically necessary
