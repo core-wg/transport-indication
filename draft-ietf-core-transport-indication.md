@@ -187,6 +187,9 @@ No guidance can be given here for these,
 as no realistic example is known.
 (Note that while the coap+ws scheme does use the well-known path `/.well-known/coap` internally,
 that is used purely on the HTTP side, and not part of the CoAP URI, not even for indicating the transport address).
+[^svcbpathparam]
+
+[^svcbpathparam]: It is conceivable that a path such as the `/.well-known/coap` of CoAP-over-WebSockets would be indicated in an SVCB discovery's parameters similar to dohpath. This does not immediately help with the question of whether a URI indicating a transport can have a path, though. --CA
 
 #### Existing use
 
