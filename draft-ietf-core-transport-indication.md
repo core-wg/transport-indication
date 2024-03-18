@@ -147,13 +147,21 @@ and can be used if the server supports it.
 
 ### Using URIs to identify protocol endpoints
 
-The URI `coap://device.example.com` identifies a particular resource, possibly a "welcome" text.
+The URI `coap://[2001:db8::1]` identifies a particular resource, possibly a "welcome" text.
 It is, colloquially, also used to identify the combination
-of a host (identified through a name), the default port, and the CoAP method of sending requests to the host.
+of a host, the default port, and the CoAP method of sending requests to the host.
 
 For precision, this document uses the term
 "the transport address indicated by (a URI)" to refer to the protocol and protocol details (host and port for the IP based protocols),
 but otherwise no big deal is made of it.
+
+A URI indicating a transport address can contain a registered name (as opposed to an address literal),
+whose resolution may yield multiple addresses.
+The resolution mechanism or other underlying protocol can give guidance on how to find the best usable one.
+(For example, when using TCP and receiving an IPv4 and an IPv6 address,
+{{?RFC8305}} describes how to establish a connection).
+
+#### Paths in URIs that indicate transport addresses
 
 For the CoAP schemes (coap, coaps, coap+tcp, coaps+tcp, coap+ws, coaps+ws),
 URIs indicating a transport are always given with an empty path
@@ -169,6 +177,8 @@ No guidance can be given here for these,
 as no realistic example is known.
 (Note that while the coap+ws scheme does use the well-known path `/.well-known/coap` internally,
 that is used purely on the HTTP side, and not part of the CoAP URI, not even for indicating the transport address).
+
+#### Existing use
 
 A similar concept is used in {{?I-D.ietf-core-observe-multicast-notifications}} (expressed as pieces of its `tp_info` parameter),
 but not expressed with URIs yet.
