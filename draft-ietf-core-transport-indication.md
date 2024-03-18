@@ -1,5 +1,5 @@
 ---
-title: CoAP Protocol Indication
+title: CoAP Transport Indication
 docname: draft-ietf-core-transport-indication-latest
 stand_alone: true
 ipr: trust200902
@@ -145,19 +145,19 @@ the need for using the Proxy-URI option should never arise.
 The Proxy-URI option is still equivalent to the decomposed options,
 and can be used if the server supports it.
 
-### Using URIs to identify protocol endpoints
+### Using URIs to identify transport endpoints
 
 The URI `coap://[2001:db8::1]` identifies a particular resource, possibly a "welcome" text.
 It is, colloquially, also used to identify the combination
-of a host, the default port, and the CoAP method of sending requests to the host.
+of a CoAP transport and the transport specific details.
 
 For precision, this document uses the term
-"the transport address indicated by (a URI)" to refer to the protocol and protocol details (host and port for the IP based protocols),
+"the transport address indicated by (a URI)" to refer to the transport and its details (in the example, CoAP over UDP with an IPv6 address and the default port),
 but otherwise no big deal is made of it.
 
 A URI indicating a transport address can contain a registered name (as opposed to an address literal),
 whose resolution may yield multiple addresses.
-The resolution mechanism or other underlying protocol can give guidance on how to find the best usable one.
+The resolution mechanism or other underlying transport can give guidance on how to find the best usable one.
 (For example, when using TCP and receiving an IPv4 and an IPv6 address,
 {{?RFC8305}} describes how to establish a connection).
 
@@ -168,7 +168,7 @@ URIs indicating a transport are always given with an empty path
 (which under their URI normalization rules is equivalent to a path containing a single slash).
 For the coap and coap+tcp schemes, URIs with different host names
 can indicate the same transport as long as the names resolve to the same addresses.
-For the other protocols, the given host name informs the name set in TLS's Server Name Indication (SNI)
+For the others, the given host name informs the name set in TLS's Server Name Indication (SNI)
 and/or the host sent in the "Host" header of the underlying HTTP request.
 
 If an update to this document extends the list,
@@ -211,7 +211,7 @@ Combined, these provide:
 
 2. No Aliasing: Any URI aliasing must be opt-in by the server. Any defined mechanisms must allow applications to keep working on the canonical URIs given by the server.
 
-3. Optimization: Do not incur per-request overhead from switching protocols. This may depend on the server's willingness to create aliased URIs.
+3. Optimization: Do not incur per-request overhead from switching transports. This may depend on the server's willingness to create aliased URIs.
 
 4. Proxy usability: All information provided must be usable by aware proxies to reduce the need for duplicate cache entries.
 
@@ -236,7 +236,7 @@ Any device can serve as a proxy for itself (a "same-host proxy")
 by accepting requests that carry the Proxy-Scheme option.
 {{Section 5.7.2 of RFC7252}} already mandates that a proxy recognize its own addresses.
 A minimal same-host proxy supports only those and respond with 5.05 (Proxying Not Supported).
-In many cases (precisely: on hosts that alias their resources across protocols),
+In many cases (precisely: on hosts that alias their resources across transports),
 this is equivalent to ignoring the Proxy-Scheme option in that request.
 
 A server can advertise a recommended proxy
@@ -518,7 +518,7 @@ to the server it did look precisely like a good request.
 # Third party proxy services {#thirdparty}
 
 A server that is aware of a suitable cross proxy may use the has-proxy relation to advertise that proxy.
-If the protocol used towards the proxy provides name indication (as CoAP over TLS or WebSockets does),
+If the transport used towards the proxy provides name indication (as CoAP over TLS or WebSockets does),
 or by using a large number of addresses or ports,
 it can even advertise a (more efficient) has-unique-proxy relation.
 This is particularly interesting when the advertisements are made available across transports,
@@ -557,7 +557,7 @@ Payload:
 ## Generic proxy advertisements {#generic-advertisements}
 
 A third party proxy may advertise its availability to act as a proxy for arbitrary CoAP requests.
-This use is not directly related to the protocol indication in other parts of this document,
+This use is not directly related to the transport indication in other parts of this document,
 but sufficiently similar to warrant being described in the same document.
 
 The resource type "TBDcore.proxy" can be used to describe such a proxy.
@@ -589,7 +589,7 @@ The considerations of {{proxy-foreign-advertisement}} apply here.
 
 A generic advertised proxy is always a forward proxy,
 and can not be advertised as a "unique" proxy as it would lack information about where to forward.
-(A proxy limited to a single outbound protocol might in theory work as a unique proxy when using a transport in which the full default Uri-Host value is configured at setup time,
+(A proxy limited to a single outbound transport might in theory work as a unique proxy when using a transport in which the full default Uri-Host value is configured at setup time,
 but these are considered impractical and thus not assigned a resource type here.)
 
 The use of a generic proxy can be limited to a set of devices that have permission to use it.
@@ -629,7 +629,7 @@ A client that uses a forward proxy
 and learns of a different proxy advertised to access a particular resource
 will not change its behavior if its original proxy is part of its configuration.
 If the forward proxy was only used out of necessity
-(e.g., to access a resource on the protocol not supported by the client)
+(e.g., to access a resource whose indicated transport not supported by the client)
 it can be practical for the client to use the advertised proxy instead.
 
 # Security considerations
@@ -799,7 +799,7 @@ The mechanisms introduced here are similar to the Alt-Svc header of {{?RFC7838}}
 in that they do not create different application-visible addresses,
 but provide dispatch through lower transport implementations.
 
-Unlike in HTTP, the variations of CoAP protocols each come with their unique URI schemes
+Unlike in HTTP, the variations of CoAP transports each come with their unique URI schemes
 and thus enable the "transport address indicated by a URI" concept.
 Thus, there is no need for a distinction between protocol-id and scheme.
 
@@ -815,7 +815,7 @@ the HTTP provisions of the Alt-Svc header and ALPN are preferred.
 As pointed out in {{?RFC7838}},
 DNS can already serve some of the applications of Alt-Svc and has-unique-proxy by providing different CNAME records.
 These cover cases of multiple addresses,
-but not different ports or protocols.
+but not different ports or transports.
 
 While not specified for CoAP yet (and neither being specified here),
 
@@ -913,7 +913,7 @@ maybe something like "has the default value of any of the associated addresses, 
   can probably publish something like `</>;rel=has-unique-proxy` to do so.
 
   This'd help applications justify when they can elide the Uri-Host,
-  even when no different protocols are involved.
+  even when no different transports are involved.
 
 * Advertising under a stable name:
 
