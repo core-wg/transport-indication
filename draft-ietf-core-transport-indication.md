@@ -730,6 +730,11 @@ Notes: The schemes for which the proxy is usable may be indicated using the prox
 
 # Change log
 
+Since draft-ietf-core-transport-indication-04:
+
+* Rename to "Transport Indication", using "protocol" only for other protocols, in established phrases, or when referring to CoAP as a general protocol.
+* Point out that registerd names already can fan out to different addresses.
+
 Since draft-ietf-core-transport-indication-03:
 
 * Added appendices on alternative history and Literals beyond IP addresses.
