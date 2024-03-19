@@ -145,7 +145,7 @@ the need for using the Proxy-URI option should never arise.
 The Proxy-URI option is still equivalent to the decomposed options,
 and can be used if the server supports it.
 
-### Using URIs to identify transport endpoints
+### Using URIs to identify transport endpoints {#identifying}
 
 The URI `coap://[2001:db8::1]` identifies a particular resource, possibly a "welcome" text.
 It is, colloquially, also used to identify the combination
@@ -632,6 +632,49 @@ will not change its behavior if its original proxy is part of its configuration.
 If the forward proxy was only used out of necessity
 (e.g., to access a resource whose indicated transport not supported by the client)
 it can be practical for the client to use the advertised proxy instead.
+
+# Guidance to upcoming transports
+
+When new transports are defined for CoAP,
+it is recommended to use the "coap" scheme
+(or "coaps" for TLS based transports).
+
+If the transport's identifiers are IP based and have identifiers typically resolved through DNS,
+authors of new transports are encouraged to specify Service Binding records ({{?RFC9460}}) for CoAP
+(possibly taking inspiration from {{althist}}),
+and if IP literals are relevant to the transport, to follow up on {{newlit}}.
+
+If the transport's native identifiers are compatible with the structure of the authority component of a URI,
+those identifiers can be used as an authority as-is.
+To help the host decide the resolution mechanism,
+it may be helpful to register a subdomain of .arpa as described in {{?rfc3172}}.
+The guidence for users is to never attempt to resolve such a name,
+and for the zone's implementation is to return NXDOMAIN unconditionally.
+
+If the transport's native identifiers are incompatible with that structure
+(e.g. because they contain colons),
+the document may define some transformation.
+
+If a transport's native identifiers are only local,
+the zone .alt {{?rfc9476}} may be used instead.
+
+For example,
+CoAP over GATT {{?I-D.amsuess-coap-over-gatt}}
+removes the colons from Bluetooth Low Energy MAC addresses like 00:11:22:33:44:55
+and combines them into authority compoennts such as `001122334455.ble.arpa`.
+Slipmux {{?I-D.bormann-t2trg-slipmux}}
+might use the locally significant device name `/dev/ttyUSB0`
+as `coap://ttyUSB0.dev.alt/`.
+
+URIs created from such names may not indicate the protocol uniquely:
+Additional transports specified later may also provide CoAP services for the same name.
+In the sense of {{identifying}},
+both transport would be identified by that URI.
+That is not an issue as long as the protocols underneath the CoAP transport
+provide a means of advertising the precise protocol used.
+For example,
+a hypothetical CoAP transport for BLE that is not GATT based
+can be selected for the same scheme and authority based on data in the BLE advertisement.
 
 # Security considerations
 
