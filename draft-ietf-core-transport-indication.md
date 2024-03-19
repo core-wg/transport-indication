@@ -952,9 +952,9 @@ Both the client and the server may alert their administrators of a possible traf
 
 # Alternative History: What if SVCB had been around before CoAP over TCP? {#althist}
 
-This appendix explores a hypothetical scenario in which SVCB {{?RFC9460}} was around and supported before the controversial decision to establish the "coap+tcp" scheme.
-It serves to provide a fresh perspective of what logically necessary
-before looking into how the facilities can be unified.
+This appendix explores a hypothetical scenario in which Service Binding (SVCB, {{?RFC9460}}) was around and supported before the controversial decision to establish the "coap+tcp" scheme.
+It serves to provide a fresh perspective of what parts are logically necessary,
+and to ease the exploration of how it may be used in the future.
 
 ## Hypothetical retrospecification
 
@@ -962,17 +962,18 @@ CoAP is specified for several transports:
 CoAP over UDP, over DTLS, over TCP, over TLS and over (secure or insecure) WebSockets.
 URIs of all these are expressed using the "coap" or "coaps" scheme,
 depending on whether a (D)TLS connection is to be used.
+\[ It is currently unclear whether the two schemes should also be unified; the rest of the text is left intentionally vague on that distinction. \]
 
 Any server providing CoAP services
 announces not only its address
 but also its SVCB Service Parameters,
-including at least one of alpn and coaptransfer.
+including at least one of `alpn` and `coaptransfer`.
 
 For example, a host serving "coap://sensor.example.com" and "coaps://sensor.example.com"
 might have these records:
 
 ```
-_coap.sensor.example.com IN SVCB 0 . alpn="coap" coaptransfer="tcp,udp" port="61616"
+_coap.sensor.example.com IN SVCB 1 . alpn=coap,co coaptransfer=tcp,udp port=61616
 sensor.example.com IN AAAA 2001:db8::1
 ```
 
@@ -981,8 +982,8 @@ A client connecting to the server loops up the name's service parameters using i
 For example, if DNS is used, it obtains SVCB records for \_coap.sensor.example.com,
 and receives the corresponding AAAA record either immediately from an SVCB aware resolver
 or through a second query.
-It learns that the service is available through CoAP-over-DTLS (ALPN "coap")
-or through unencrypted TCP or UDP, and that port 61616 needs to be used.
+It learns that the service is available through CoAP-over-DTLS (ALPN "co"), CoAP-over-TLS (ALPN "coap"),
+or through unencrypted TCP or UDP, and that port 61616 needs to be used in all cases.
 
 If the server and the client do not have a transport in common,
 or if one of them supports only IPv4 and the other only IPv6,
@@ -992,7 +993,8 @@ the client may resort to using a proxy.
 ## Shortcomings
 
 While the mechanism above would have unified the CoAP transports under a pair of schemes,
-it would have rendered the use of IP literals impossible.
+it would have rendered the use of IP literals impossible:
+The URI `coap://[2001:db8::1]` would be ambiguous as to whether CoAP-over-UDP or CoAP-over-TCP should be used.
 {{newlit}} provides a solution for this issue.
 
 # Literals beyond IP addresses {#newlit}
@@ -1042,7 +1044,7 @@ that name is used only for the purpose of discussion.
 Names under service.arpa are structured into
 an optional custom prefix,
 an ordered list of key-value component pairs,
-and the common name service.arpa.
+and the common suffix `service.arpa`.
 
 The custom prefix can contain user defined components.
 The intended use is labelling, and to differentiate services provided by a single host.
@@ -1079,12 +1081,12 @@ Initial component types are:
 
   If present,
   a client MUST establish a secure connection,
-  and MUST reject the connection if the TLSA record's requirements are not met.
+  and MUST fail the connection if the TLSA record's requirements are not met.
 
 * "s": Service Parameters {{?RFC9460}}).
   SvcbParams in base32 encoding of their wire format.
 
-  TBD: There is likely a transformation of the parameters' presentation format that is compatible with the reuqirements of the authority component,
+  TBD: There is likely a transformation of the parameters' presentation format that is compatible with the requirements of the authority component,
   but this will require some more work on the syntax.
 
   If present,
@@ -1143,7 +1145,7 @@ they serve to explore the possible alternatives.
   The "mail.-." part is provided to the server as part of the Host header,
   and can be used for name based virtual hosting.
 
-* coap://s.coaptransfer_tcp_coapsecurity_edhoc_oauth-aud_.6.2001-db8--1.service.arpa/ -- The server is reachable using CoAP over TCP with EDHOC security at 2001:db8::1. (The SVCB parameters are experimental values from {{?I-D.lenders-core-dnr}}).
+* coap://s.coaptransfer_tcp_coapsecurity_edhoc.6.2001-db8--1.service.arpa/ -- The server is reachable using CoAP over TCP with EDHOC security at 2001:db8::1. (The SVCB parameters are experimental values from {{?I-D.lenders-core-dnr}}).
 
 # Acknowledgements
 
