@@ -890,16 +890,6 @@ maybe something like "has the default value of any of the associated addresses, 
 
 # Open Questions / further ideas
 
-* OSCORE interaction: {{?RFC8613}} Section 4.1.3.2 requirements place OSCORE use in a weird category between has-proxy and has-unique-proxy
-  (because if routing still works, the result will be correct).
-  Not sure how to write this down properly,
-  or whether it's actionable at all.
-
-  Possibly there is an inbetween category of
-  "The host needs the Uri-Host etc. when accessed through CoAP,
-  but because the host does not use the same OSCORE KID across different virtual hosts,
-  it's has-unique-proxy as soon as you talk OSCORE".
-
 * Self-uniqueness:
 
   A host that wants to indicate that it doesn't care about Uri-Host
