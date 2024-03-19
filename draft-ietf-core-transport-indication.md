@@ -786,8 +786,18 @@ Reference: \[ this document \]
 
 Since draft-ietf-core-transport-indication-04:
 
+* Not just the scheme, but also the authority value influences the transport selection.
+  - Add guidance section for new transports.
+  - Point out that registerd names already can fan out to different addresses.
+* Rephrase and simplify security considerations, especially by limiting unique proxying for TLS.
+* Add recommendation to new scheme authors to use "coap"/"coaps" and let the resolution process guide the selection.
+  - Remove proxy-schemes attribute from core.proxy because of its greatly reduced value.
+* Update "Related work" appendix to cover SVCB instead of SRV records
 * Rename to "Transport Indication", using "protocol" only for other protocols, in established phrases, or when referring to CoAP as a general protocol.
-* Point out that registerd names already can fan out to different addresses.
+* Add note linking CoAP-over-WS's .well-known/coap to dohpath
+* Remove OSCORE vs. unique-proxy open point
+* EDHOC EAD: Describe response option content
+* Editorial updates
 
 Since draft-ietf-core-transport-indication-03:
 
