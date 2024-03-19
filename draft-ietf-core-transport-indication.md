@@ -554,7 +554,6 @@ This use is not directly related to the transport indication in other parts of t
 but sufficiently similar to warrant being described in the same document.
 
 The resource type "TBDcore.proxy" can be used to describe such a proxy.
-The link target attribute "proxy-schemes" can be used to indicate the scheme(s) supported by the proxy, separated by the space character.
 
 ~~~~~
 Req: GET coap://[fe80::1]/.well-known/core?rt=TBDcore.proxy
@@ -562,7 +561,7 @@ Req: GET coap://[fe80::1]/.well-known/core?rt=TBDcore.proxy
 Res:
 Content-Format: application/link-format
 Payload:
-<>;rt=TBDcore.proxy;proxy-schemes="coap coap+tcp coap+ws http"
+<>;rt=TBDcore.proxy
 
 Req: to [fe80::1] via CoAP
 Code: GET
@@ -582,8 +581,17 @@ The considerations of {{proxy-foreign-advertisement}} apply here.
 
 A generic advertised proxy is always a forward proxy,
 and can not be advertised as a "unique" proxy as it would lack information about where to forward.
-(A proxy limited to a single outbound transport might in theory work as a unique proxy when using a transport in which the full default Uri-Host value is configured at setup time,
-but these are considered impractical and thus not assigned a resource type here.)
+
+A proxy may be limited in the URIs it can service,
+for technical reasons (e.g. when none of the URI's transports are supported by the server)
+or for policy reasons (only accessing servers inside an organizational structure).
+Future documents (or versions of this document) may add target attributes
+that allow specifying the capabilities of a proxy.
+\[
+An earlier version of this document contained a proxy-schemes attribute.
+This was discontinued because it could already not express whether a proxy could access IPv4 or IPv6 peers,
+and because the use of schemes is becoming less useful given the new recommendation of incorporating details from registered name resolution into the transport selection.
+\]
 
 The use of a generic proxy can be limited to a set of devices that have permission to use it.
 Clients can be allowed by their network address if they can be verified,
@@ -716,8 +724,6 @@ Attribute Value: core.proxy
 Description: Forward proxying services
 
 Reference: \[ this document \]
-
-Notes: The schemes for which the proxy is usable may be indicated using the proxy-schemes target attribute as per {{generic-advertisements}} of \[ this document \].
 
 --- back
 
