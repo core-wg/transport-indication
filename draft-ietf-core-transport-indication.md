@@ -54,6 +54,18 @@ informative:
       name: Tim BL
     target: http://info.cern.ch/hypertext/WWW/Addressing/BNF.html#43
     date: 1992-06-29
+  noproxy:
+    title: "We need to talk: Can we standardize NO_PROXY?"
+    author:
+      name: Stan Hu
+    target: https://about.gitlab.com/blog/2021/01/27/we-need-to-talk-no-proxy/
+    date: 2021-01-27
+  evossl:
+    title: The Evolution of SSL and TLS
+    author:
+      name: Elizabeth Baier
+    target: https://www.digicert.com/blog/evolution-of-ssl
+    date: 2015-02-02
 
 --- abstract
 
@@ -199,8 +211,8 @@ As that document migrates towards using CRIs ({{I-D.ietf-core-href}}),
 it is expected that its transport addresses coincide with the URIs (CRIs, equivalently) indicating a transport.
 
 URIs indicating a transport are especially useful when talking about proxies;
-this use is aligned with the way they are exprssed in the conventional environment variables `http_proxy` etc.
-\[ cite https://about.gitlab.com/blog/2021/01/27/we-need-to-talk-no-proxy/ \].
+this use is aligned with the way they are expressed in the conventional environment variables `http_proxy` etc.
+{{noproxy}}.
 Furthermore, URIs processing is widespread in CoAP systems,
 and when that changes (e.g. through the introduction of {{?I-D.ietf-core-href}}),
 URIs indicating a transport will still be efficient to encode.
@@ -659,7 +671,7 @@ If a transport's native identifiers are only local,
 the zone .alt {{?rfc9476}} may be used instead.
 
 For example,
-CoAP over GATT {{?I-D.amsuess-coap-over-gatt}}
+CoAP over GATT {{?I-D.amsuess-core-coap-over-gatt}}
 removes the colons from Bluetooth Low Energy MAC addresses like 00:11:22:33:44:55
 and combines them into authority compoennts such as `001122334455.ble.arpa`.
 Slipmux {{?I-D.bormann-t2trg-slipmux}}
@@ -1055,8 +1067,8 @@ save for their inherent difference that the former can be used without a shared 
 and the latter can be switched to a different network address.
 
 This equivalence got lost gradually:
-Certificates for TLS (its precursor SSL has been available since 1995)
-<!-- TBD cite - https://en.wikipedia.org/wiki/HTTPS or https://www.digicert.com/blog/evolution-of-ssl ? -->
+Certificates for TLS (its precursor SSL has been available since 1995 {{evossl}})
+<!-- TBD cite - https://en.wikipedia.org/wiki/HTTPS or  ? -->
 have only practically been available to host names.
 The Host header introduced in HTTP 1.1 {{Section 14.23 of ?RFC2616}}
 introduced name based virtual hosting in 1999.
