@@ -1,0 +1,146 @@
+\input{shared/ietf-slides.tex}
+
+% about the presentation
+\title{CoAP Protocol Indication}
+\subtitle{\ietfdraft{ietf-core-transport-indication-05}}
+\author{\textit{Christian~Amsüss}, Martine~Lenders}
+\date{2024-03-20 \\CoRE at IETF 119 in Brisbane}
+
+\begin{document}
+
+\frame{\titlepage}
+
+\begin{frame}{Goals}\Large
+  \begin{enumerate}
+    \item Enablement of transport discovery
+    \item No Aliasing
+    \item Optimization (no cost per request)
+    \item Proxy usability
+    \item Proxy announcement
+  \end{enumerate}
+
+  \bigskip
+
+  \begin{itemize}
+    \item Give way forward after \texttt{coap://} and \texttt{coap+tcp} diverged
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Changes since IETF118}\large
+  \framesubtitle{\textit{Why} did \texttt{coap://} and \texttt{coap+tcp} diverge? -- rehash of IETF118}
+
+  Ambiguous: \texttt{coap://$\underbrace{\texttt{[2001:db8::1]:1234}}_{\textsf{TCP port? UDP port?}}$/}
+
+  Clarified: \texttt{coap+tcp://[2001:db8::1]:1234/}
+
+  \bigskip
+
+  Unambiguous:
+  \begin{itemize}
+    \item \texttt{coap://0123456789ab.ble.arpa/} (was \texttt{coap+ble://\ldots})
+    \item \texttt{coap://ttyUSB0.dev.alt/} (was \texttt{coap+uart://ttyUSB0/})
+  \end{itemize}
+
+  \bigskip
+
+  Criterion: \texttt{coap+foo} needed if the literal for of authority values are ambiguous with respect to transports. Or if the resolution process produces such values.
+\end{frame}
+
+\begin{frame}{Changes since IETF118}\Large
+  \begin{itemize}
+    \item Guidance to new transports: \texttt{coap://}
+      
+      \ldots and if is IP based, do SVCB as described in the appendix E.
+
+      \ldots and if you need that with IP literals, finish appendix F.
+    \item Security guidence simplified
+    \item Consistenlty talk of ``transports''
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{}\Huge
+  \center
+  IETF118 changes are applied.
+
+  \bigskip
+
+  Let's get this done\ldots
+\end{frame}
+
+\begin{frame}{Open question: Scope of \texttt{has-proxy}}\large
+  ``only through link relations''
+
+  \begin{itemize}
+    \item URIs regarded as opaque
+    \item Relations are explicit
+    \item Allows to exclude indvidiual resources from transport indication
+      \footnote{No support adding transport indication for individual resources is planned}
+    \item Uses \rfc{6690} \texttt{rel=hosts} which is not very clear
+    \item Hard to keep track of what works where
+  \end{itemize}
+  
+  \begin{center}
+  vs.
+  \end{center}
+
+  ``Applies per Origin''
+
+  \begin{itemize}
+    \item HTTP's mechanism
+    \item Simple
+    \item Way shorter wording in terminology section
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Open question: Self description style guide}\large
+  \framesubtitle{e.\,g. after multicast discovery}
+
+``Explicitly using canonical names''
+
+\begin{verbatim}
+<coap://myhostname/foo>,...,
+<coap://[2001:db8::1]>;rel=has-unique-proxy;anchor="coap://myhostname"
+\end{verbatim}
+
+\begin{center}
+vs.
+\end{center}
+
+``Relying on client to re-interpret the document after having parsed parts of it''
+
+\begin{verbatim}
+</foo>,...,
+<coap://[2001:db8::1]>;rel=has-unique-proxy;anchor="coap://myhostname"
+\end{verbatim}
+
+  \bigskip
+
+  \ldots Or do we not care so much about \rfc{6690} anyway,
+    because other formats would allow setting a base anyway?
+\end{frame}
+
+\begin{frame}{Open question: Appendices}\Large
+  \begin{itemize}
+    \item Is alternative history fiction a thing here?
+    \item (Where) should literals for service parameters (and other data from DNS) go?
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Summary}\Large
+  Open questions:
+  \begin{itemize}
+    \item Decide ``only through link relation'' vs ``always when Origin matches''
+    \item Advertising self-proxies / importance of \rfc{6690}
+    \item Fate of appendices
+  \end{itemize}
+
+  \bigskip
+  
+  What else before this is done?
+
+  \bigskip
+
+  Interop?
+\end{frame}
+
+\end{document}
