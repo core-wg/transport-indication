@@ -490,44 +490,22 @@ that "S hosts R" for the matching resource R.
 
 ## Using unique proxies securely {#unique-security}
 
+The elision of the host name afforded by the `unique-proxy` relation
+is only possible if the required security mechanisms verify the scheme and host of the server.
+
+This is given for OSCORE based mechanisms,
+where "unprotected message fields (including Uri-Host [...]) MUST not lead to an OSCORE message becoming verified".
+
+With TLS based security mechanisms,
+name and scheme can not be completely elided in general.
+While the use of the SNI HostName field sets the default Uri-Host already,
+the scheme still needs to be sent in a Proxy-Scheme option
+to satisfy the requirement of {{secctx-propagation}}.
+
 \[
-This section is work in progress, it is more a flow of considerations turning back on each other.
-This is all made a bit trickier by not applying to OSCORE which is usually the author's go-to example,
-because OSCORE's requirements already preclude all these troubles.
-\]
-
-The use of unique proxies requires slightly more care in terms of security.
-
-No requirements are necessary on the client side; those of {#secctx-propagation} suffice.
-(In particular, it is not necessary for the statement to originate from the original server
-unless that were already a requirement without the uniqueness property).
-
-The extra care is necessary on the side of servers that are commissioned with wide ranging authorization \[ or is it? \]:
-These may now be tricked into serving a resource of which the client assumes a different name.
-For example,
-if the desired resource is `coaps://high-security.example.org/configuration`,
-and there exists a "home page" style service for employees with patterns of
-`coaps+tcp://user-${username}.example.org/` at which they can store files,
-and the server operating that service is commissioned with a wild-card certificate "*.example.org",
-then a device that receives the (malicious) information
-`<coaps+tcp://user-mave.example.org>;rel=has-unique-proxy;anchor="coaps://high-security.example.org"`
-might use this statement to contact the transport address indicated by `coaps+tcp://user-mave.example.org` and ask for `/config`
-(which, to the server, is indistinguishable from `coaps+tcp://user-mave.example.org/config`)
-and obtain a malicious configuration.
-
-In a non-unique proxy situation,
-the error would have been caught by the server,
-which would have seen the request for `coaps://high-security.example.com`
-and refused to serve a request containing critical options it can not adaequately process.
-
-In the unique proxy situation, ...
-\[ TBD:
-now whose fault is it?
-Can only be the client's ...
-because it looked at the wildcard certificate rather than whether the host-name it was narrowing it down to is authorized to speak for high-security.example.com?
-The server (operator) can barely be blamed,
-for while the certificate is needlessly wide,
-to the server it did look precisely like a good request.
+It may be possible to relax this requirement
+if the host publishes a *trustworthy* statement about serving the same content on all schemes;
+however, no urgent need for this optimization is currently known that warrants the extra scrutiny.
 \]
 
 # Third party proxy services {#thirdparty}
