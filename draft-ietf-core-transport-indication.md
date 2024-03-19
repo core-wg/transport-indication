@@ -803,9 +803,11 @@ The mechanisms introduced here are similar to the Alt-Svc header of {{?RFC7838}}
 in that they do not create different application-visible addresses,
 but provide dispatch through lower transport implementations.
 
-Unlike in HTTP, the variations of CoAP transports each come with their unique URI schemes
-and thus enable the "transport address indicated by a URI" concept.
-Thus, there is no need for a distinction between protocol-id and scheme.
+In HTTP, different versions of the protocol (i.e., different transports)
+are distinguished using a protocol identifier equivalent to an ALPN.
+This works well because all relevant transports use transport layer security and thus can use ALPNs.
+In contrast, the currently specified CoAP transports predate ALPNs,
+and specified per-transport schemes, which enable the use of URIs that indicate transports.
 
 To accommodate the message size constraints typical of CoRE environments,
 and accounting for the differences between HTTP headers and CoAP options,
@@ -816,30 +818,17 @@ the HTTP provisions of the Alt-Svc header and ALPN are preferred.
 
 ## Using DNS
 
-As pointed out in {{?RFC7838}},
-DNS can already serve some of the applications of Alt-Svc and has-unique-proxy by providing different CNAME records.
-These cover cases of multiple addresses,
-but not different ports or transports.
+DNS Service Binding resource records (SVCB RRs)
+described in {{?RFC9460}} can carry many of the details otherwise negotiated using the proxy relations.
+In HTTP, they can be used in a way similar to Alt-Svc headers.
 
-While not specified for CoAP yet (and neither being specified here),
+SVCB records were not specified when CoAP was specified for TCP,
+but could have been (see {{althist}}).
 
-\[ which is an open discussion point for CoRE -- should we? Here? In a separate DNS-SD document? \]
-
-DNS SRV records (possibly in combination with DNS Service Discovery {{?RFC6763}}) can provide records that could be considered equivalent to has-unique-proxy relations.
-If `_coap._tcp`, `_coaps._tcp`, `_coap._udp`, `_coap+ws._tcp` etc. were defined with suitable semantics,
-these can be equivalent:
-
-~~~~
-_coap._udp.device.example.com SRV 0 0 device.example.com 61616
-device.example.com AAAA 2001:db8::1
-
-<coap://[2001:db8::1]>;rel=has-unique-proxy;anchor="coap://device.example.com"
-~~~~
-
-It would be up to such a specification to give details on what the link's context is;
-unlike the link based discovery of this document,
-it would either need to pick one distinguished context scheme for which these records are looked up,
-or would introduce aliasing on its own.
+If at any point SVCB records for CoAP are defined,
+name resolution produces a set of transport details that can be used immediately
+without the need for a `has-proxy` link.
+Explicit `has-proxy` links would still be relevant for third party advertised proxies.
 
 ## Using names outside regular DNS
 
