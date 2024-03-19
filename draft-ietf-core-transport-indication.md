@@ -618,7 +618,7 @@ and to use responses obtained through one transport to satisfy requests on anoth
 For example, if a host at coap://h1.example.com has advertised `</res>,<coap+tcp://h1.example.com>;rel=has-proxy;anchor="/"`,
 then a proxy that has an active CoAP-over-TCP connection to h1.example.com
 can forward an incoming request for coap://h1.example.com/res through that CoAP-over-TCP connection
-with a suitable Proxy-Scheme on that connection.
+with a suitable Proxy-Scheme and Uri-Host on that connection.
 
 If the host had marked the proxy point as `<coap+tcp://h1.example.com>;rel=has-unique-proxy` instead,
 then the proxy could elide the Proxy-Scheme and Uri-Host options,
