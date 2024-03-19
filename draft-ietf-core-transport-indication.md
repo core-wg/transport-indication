@@ -944,8 +944,8 @@ If a server can not determine its set of legitimate proxies,
 it ignores the option (as does any EDHOC implementation that is unaware of it).
 
 If it recognizes the CRI as belonging to a legitimate proxy,
-it places the label in its non-critical form in the next message to confirm the proxy choice.
-Otherwise, it places the label in its critical form.
+it places the empty label in its non-critical form in the next message to confirm the proxy choice.
+Otherwise, it places the label in its critical form, either empty or containing a recommended CRI.
 The client may then decide to discontinue using the proxy,
 or to use more extensive padding options to sidestep the attack.
 Both the client and the server may alert their administrators of a possible traffic misdirection.
