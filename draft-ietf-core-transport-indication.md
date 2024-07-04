@@ -116,40 +116,6 @@ Same-host proxy:
   this specification does not use the distinction in normative requirements,
   and clients need not make the distinction at all.
 
-hosts:
-
-: The verb "to host" is used here in the sense of the link relation of the same name defined in {{?RFC6690}}.
-
-  For resources discovered via CoAP's discovery interface,
-  a hosting statement is typically provided by the defaults implied by {{?RFC6690}}
-  where a link like `</sensor/temp>` is implied to have the relation "hosts" and the anchor `/`,
-  such that a statement "coap://hostname hosts coap://hostname/sensor/temp" is implied in the link.
-
-  The link relation has been occasionally used with different interpretations,
-  which ascribe more meaning to the term than it has in its definition.
-  In particular,
-
-  * the "hosts" relation can not be inferred merely by two URIs having
-    the same scheme, host and port (and vice versa), and
-
-  * the "hosts" relation on its own does not make any statement
-    about the physical devices that hold the resource's representation.
-
-  \[ TBD: The former could probably still be used without too many ill effects;
-  but things might also get weird when a dynamic resource created
-  with one transport from use with another transport unless explicitly cleared.
-
-  Whether or not "to host" is used exclusively along the "hosts" relation or using the more generic same-start-of-URI sense
-  is the largest open issue in this document.
-  \]
-
-  For the purpose of this document, "hosting" is used in a transitive way:
-  If A hosts B and B hosts C, it is implied that A hosts C.
-
-  \[ TBD: It may make sense for many other relations to imply "hosts",
-  e.g. any relations that occur in a pub-sub context,
-  but that'd need further consideration. \]
-
 When talking of proxy requests,
 this document only talks of the Proxy-Scheme option.
 Given that all URIs this is usable with can be expressed in decomposed CoAP URIs,
@@ -270,7 +236,7 @@ In particular (and that is a typical case),
 it can indicate its own transport address on an alternative transport when implementing same-host proxy functionality.
 
 The semantics of a link from S to P with relations has-proxy ("S has-proxy P", `<P>;rel=has-proxy;anchor="S"`)
-are that for any resource R hosted on S ("S hosts R"), the proxy with the transport address indicated by P can be used to obtain R.
+are that for any resource that has the same origin as S, the transport address indicated by P can be used to obtain that resource.
 
 ## Example
 
@@ -495,10 +461,8 @@ the brief note on the topic in {{actualproxies}}
 
 When a node that performs caching learns of a `has-unique-proxy` statement,
 it can utilize the information about the implied URI aliasing:
-Requests to resources hosted by S can be answered with cached entries from P
-(because by the rules of `has-unique-proxy` a request can be crafted that is sent to P for which a fresh response is available).
-The inverse direction (serving resources whose URI "starts with" P from a cached request that was sent to S) is harder to serve because it additionaly requires a fresh statement
-that "S hosts R" for the matching resource R.
+As long as the `has-unique-proxy` statement is fresh and trusted,
+requests for either of the origins can be served from the cache of the other origin.
 
 ## Using unique proxies securely {#unique-security}
 
@@ -763,9 +727,9 @@ and by providing own proxies when their clients need them<!-- in a sense, avoid 
 
 IANA is asked to add two entries into the Link Relation Type Registry last updated in {{!RFC8288}}:
 
-| Relation Name     | Description                                                                 | Reference   |
-| has-proxy         | The link target can be used as a proxy to reach the link context.           | RFCthis     |
-| has-unique-proxy  | Like has-proxy, and using this proxy implies scheme and host of the target. | RFCthis     |
+| Relation Name     | Description                                                                                  | Reference   |
+| has-proxy         | The link target can be used as a proxy to reach URIs inside the origin of the link context.  | RFCthis     |
+| has-unique-proxy  | Like has-proxy, and using this proxy implies scheme and host of the target.                  | RFCthis     |
 {: #tab-iana title='New Link Relation types' }
 
 ## Resource Types
