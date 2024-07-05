@@ -485,6 +485,20 @@ if the host publishes a *trustworthy* statement about serving the same content o
 however, no urgent need for this optimization is currently known that warrants the extra scrutiny.
 \]
 
+## Self-description as a unique proxy
+
+The level of assurance a client needs from a server
+to elide the Uri-Host option in a request that was created from a URI with no IP address literal
+has been a controversial topic.
+\[ Should we dig up old conversations, link to https://github.com/core-wg/wiki/wiki/CoAP-FAQ#q4,
+or just let the weight of a WG consensus-document-to-be do its work? \]
+
+The `has-unique-proxy` relation provides an easy way for a server
+to indicate that this is in fact allowed:
+A server can publish a statement such as `</>;rel=has-unique-proxy` in its `/.well-known/core` file.
+A client that receives and understands it can thus elide the Uri-Host option in requests to the server
+as per the definition of the relation.
+
 # Third party proxy services {#thirdparty}
 
 A server that is aware of a suitable cross proxy may use the has-proxy relation to advertise that proxy.
@@ -919,14 +933,6 @@ maybe something like "has the default value of any of the associated addresses, 
 \[ TBD: Do we need a section analog to this that deals with (D)TLS session resumption in absence of SNI? \]
 
 # Open Questions / further ideas
-
-* Self-uniqueness:
-
-  A host that wants to indicate that it doesn't care about Uri-Host
-  can probably publish something like `</>;rel=has-unique-proxy` to do so.
-
-  This'd help applications justify when they can elide the Uri-Host,
-  even when no different transports are involved.
 
 * Advertising under a stable name:
 
