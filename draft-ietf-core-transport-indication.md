@@ -529,15 +529,15 @@ A third party proxy may advertise its availability to act as a proxy for arbitra
 This use is not directly related to the transport indication in other parts of this document,
 but sufficiently similar to warrant being described in the same document.
 
-The resource type "TBDcore.proxy" can be used to describe such a proxy.
+The resource type "CPA-core.proxy" can be used to describe such a proxy.
 
 ~~~~~
-Req: GET coap://[fe80::1]/.well-known/core?rt=TBDcore.proxy
+Req: GET coap://[fe80::1]/.well-known/core?rt=CPA-core.proxy
 
 Res:
 Content-Format: application/link-format
 Payload:
-<>;rt=TBDcore.proxy
+<>;rt=CPA-core.proxy
 
 Req: to [fe80::1] via CoAP
 Code: GET
@@ -736,7 +736,7 @@ IANA is asked to add two entries into the Link Relation Type Registry last updat
 
 IANA is asked to add an entry into the "Resource Type (rt=) Link Target Attribute Values" registry under the Constrained RESTful Environments (CoRE) Parameters:
 
-\[ The RFC Editor is asked to replace any occurrence of TBDcore.proxy with the actually registered attribute value. \]
+\[ The RFC Editor is asked to replace any occurrence of CPA-core.proxy with the actually registered attribute value. \]
 
 Attribute Value: core.proxy
 
@@ -964,7 +964,7 @@ allowing it to detect undesired reverse proxies.
 
 \[ This section is immature, and written up as a discussion starting point. Further research into prior art is still necessary. ]
 
-The External Authorization Data (EAD) item with name "Proxy CRI", label TBD24, is defined for use with messages 1, 2 and 3.
+The External Authorization Data (EAD) item with name "Proxy CRI", label 24-CPA, is defined for use with messages 1, 2 and 3.
 
 A client can set this label in uncritical form, followed by a CRI ({{I-D.ietf-core-href}}) that is CBOR-encoded in a byte string as a CBOR sequence.
 The transport indicated by the URI is the proxy the client chose from information advertised about the server.
