@@ -7,7 +7,7 @@ stand_alone: true
 
 venue:
   mail: core@ietf.org
-  github: core-wg/edn-literal
+  github: core-wg/transport-indication
   latest: "https://core-wg.github.io/transport-indication/"
 
 ipr: trust200902
