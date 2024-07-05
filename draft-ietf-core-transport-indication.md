@@ -104,7 +104,7 @@ and advertise other transports in addition.
 
 Readers are expected to be familiar with the terms and concepts
 described in CoAP {{RFC7252}}
-and link format ({{RFC6690}}
+and link format {{!RFC6690}}
 (or, equivalently, web links as described in {{RFC8288}}).
 
 Same-host proxy:
