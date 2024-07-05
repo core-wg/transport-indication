@@ -4,6 +4,7 @@ docname: draft-ietf-core-transport-indication-latest
 stand_alone: true
 ipr: trust200902
 cat: std
+stream: IETF
 pi:
   strict: 'yes'
   toc: 'yes'
@@ -470,7 +471,7 @@ The elision of the host name afforded by the `unique-proxy` relation
 is only possible if the required security mechanisms verify the scheme and host of the server.
 
 This is given for OSCORE based mechanisms,
-where "unprotected message fields (including Uri-Host [...]) MUST not lead to an OSCORE message becoming verified".
+where "unprotected message fields (including Uri-Host \[...]) MUST not lead to an OSCORE message becoming verified".
 
 With TLS based security mechanisms,
 name and scheme can not be completely elided in general.
