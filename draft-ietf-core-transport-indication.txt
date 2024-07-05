@@ -36,7 +36,7 @@ About This Document
    https://www.ietf.org/mailman/listinfo/core/.
 
    Source for this draft and an issue tracker can be found at
-   https://github.com/core-wg/edn-literal.
+   https://github.com/core-wg/transport-indication.
 
 Status of This Memo
 
