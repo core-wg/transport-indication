@@ -1189,6 +1189,9 @@ and to optimize exchanges using these.<a href="#section-abstract-1" class="pilcr
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2">
                 <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="auto internal xref">3.2</a>.  <a href="#name-using-unique-proxies-secure" class="internal xref">Using unique proxies securely</a></p>
 </li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.3">
+                <p id="section-toc.1-1.3.2.3.1"><a href="#section-3.3" class="auto internal xref">3.3</a>.  <a href="#name-self-description-as-a-uniqu" class="internal xref">Self-description as a unique proxy</a></p>
+</li>
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
@@ -1750,6 +1753,23 @@ It may be possible to relax this requirement
 if the host publishes a <em>trustworthy</em> statement about serving the same content on all schemes;
 however, no urgent need for this optimization is currently known that warrants the extra scrutiny.
 ]<a href="#section-3.2-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="self-description-as-a-unique-proxy">
+<section id="section-3.3">
+        <h3 id="name-self-description-as-a-uniqu">
+<a href="#section-3.3" class="section-number selfRef">3.3. </a><a href="#name-self-description-as-a-uniqu" class="section-name selfRef">Self-description as a unique proxy</a>
+        </h3>
+<p id="section-3.3-1">The level of assurance a client needs from a server
+to elide the Uri-Host option in a request that was created from a URI with no IP address literal
+has been a controversial topic.
+[ Should we dig up old conversations, link to https://github.com/core-wg/wiki/wiki/CoAP-FAQ#q4,
+or just let the weight of a WG consensus-document-to-be do its work? ]<a href="#section-3.3-1" class="pilcrow">¶</a></p>
+<p id="section-3.3-2">The <code>has-unique-proxy</code> relation provides an easy way for a server
+to indicate that this is in fact allowed:
+A server can publish a statement such as <code>&lt;/&gt;;rel=has-unique-proxy</code> in its <code>/.well-known/core</code> file.
+A client that receives and understands it can thus elide the Uri-Host option in requests to the server
+as per the definition of the relation.<a href="#section-3.3-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -2520,53 +2540,44 @@ maybe something like "has the default value of any of the associated addresses, 
       </h2>
 <ul class="normal">
 <li class="normal" id="appendix-C-1.1">
-          <p id="appendix-C-1.1.1">Self-uniqueness:<a href="#appendix-C-1.1.1" class="pilcrow">¶</a></p>
+          <p id="appendix-C-1.1.1">Advertising under a stable name:<a href="#appendix-C-1.1.1" class="pilcrow">¶</a></p>
 <p id="appendix-C-1.1.2">
-A host that wants to indicate that it doesn't care about Uri-Host
-can probably publish something like <code>&lt;/&gt;;rel=has-unique-proxy</code> to do so.<a href="#appendix-C-1.1.2" class="pilcrow">¶</a></p>
+If a host wants to advertise its host name rather than its IP address during multicast, how does it best do that?<a href="#appendix-C-1.1.2" class="pilcrow">¶</a></p>
 <p id="appendix-C-1.1.3">
-This'd help applications justify when they can elide the Uri-Host,
-even when no different transports are involved.<a href="#appendix-C-1.1.3" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-C-1.2">
-          <p id="appendix-C-1.2.1">Advertising under a stable name:<a href="#appendix-C-1.2.1" class="pilcrow">¶</a></p>
-<p id="appendix-C-1.2.2">
-If a host wants to advertise its host name rather than its IP address during multicast, how does it best do that?<a href="#appendix-C-1.2.2" class="pilcrow">¶</a></p>
-<p id="appendix-C-1.2.3">
-Options, when answering from 2001:db8::1 to a request to ff02::fd are:<a href="#appendix-C-1.2.3" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="appendix-C-1.2.4">
+Options, when answering from 2001:db8::1 to a request to ff02::fd are:<a href="#appendix-C-1.1.3" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="appendix-C-1.1.4">
 <pre>
 &lt;coap://myhostname/foo&gt;,...,
 &lt;coap://[2001:db8::1]&gt;;rel=has-unique-proxy;anchor="coap://myhostname"
-</pre><a href="#appendix-C-1.2.4" class="pilcrow">¶</a>
+</pre><a href="#appendix-C-1.1.4" class="pilcrow">¶</a>
 </div>
-<p id="appendix-C-1.2.5">
-which is verbose but formally clear, and<a href="#appendix-C-1.2.5" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="appendix-C-1.2.6">
+<p id="appendix-C-1.1.5">
+which is verbose but formally clear, and<a href="#appendix-C-1.1.5" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="appendix-C-1.1.6">
 <pre>
 &lt;/foo&gt;,...,
 &lt;coap://[2001:db8::1]&gt;;rel=has-unique-proxy;anchor="coap://myhostname"
-</pre><a href="#appendix-C-1.2.6" class="pilcrow">¶</a>
+</pre><a href="#appendix-C-1.1.6" class="pilcrow">¶</a>
 </div>
-<p id="appendix-C-1.2.7">
+<p id="appendix-C-1.1.7">
 which is compatible with unaware clients,
-but its correctness with respect to canonical URIs needs to be argued by the client, in this sequence<a href="#appendix-C-1.2.7" class="pilcrow">¶</a></p>
+but its correctness with respect to canonical URIs needs to be argued by the client, in this sequence<a href="#appendix-C-1.1.7" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-C-1.2.8.1">
-              <p id="appendix-C-1.2.8.1.1">understanding the has-unique-proxy line,<a href="#appendix-C-1.2.8.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-C-1.1.8.1">
+              <p id="appendix-C-1.1.8.1.1">understanding the has-unique-proxy line,<a href="#appendix-C-1.1.8.1.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="appendix-C-1.2.8.2">
-              <p id="appendix-C-1.2.8.2.1">understanding that the request that went to 2001:db8::1 was really a Proxy-Scheme/Uri-Host-elided version of a request to coap://myhostname, and then<a href="#appendix-C-1.2.8.2.1" class="pilcrow">¶</a></p>
+            <li class="normal" id="appendix-C-1.1.8.2">
+              <p id="appendix-C-1.1.8.2.1">understanding that the request that went to 2001:db8::1 was really a Proxy-Scheme/Uri-Host-elided version of a request to coap://myhostname, and then<a href="#appendix-C-1.1.8.2.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="appendix-C-1.2.8.3">
-              <p id="appendix-C-1.2.8.3.1">processing any relative reference with this new base in mind.<a href="#appendix-C-1.2.8.3.1" class="pilcrow">¶</a></p>
+            <li class="normal" id="appendix-C-1.1.8.3">
+              <p id="appendix-C-1.1.8.3.1">processing any relative reference with this new base in mind.<a href="#appendix-C-1.1.8.3.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
-<p id="appendix-C-1.2.9">
+<p id="appendix-C-1.1.9">
 (Not that it'd need to happen in software in that sequence,
-but that's the sequence needed to understand how the <code>/foo</code> here is really <code>coap://myhostname/foo</code>).<a href="#appendix-C-1.2.9" class="pilcrow">¶</a></p>
-<p id="appendix-C-1.2.10">
-If CoRAL is used during discovery, a base directive or reverse relation to has-unique-proxy would make this easier.<a href="#appendix-C-1.2.10" class="pilcrow">¶</a></p>
+but that's the sequence needed to understand how the <code>/foo</code> here is really <code>coap://myhostname/foo</code>).<a href="#appendix-C-1.1.9" class="pilcrow">¶</a></p>
+<p id="appendix-C-1.1.10">
+If CoRAL is used during discovery, a base directive or reverse relation to has-unique-proxy would make this easier.<a href="#appendix-C-1.1.10" class="pilcrow">¶</a></p>
 </li>
       </ul>
 </section>

@@ -85,6 +85,7 @@ Table of Contents
    3.  Elision of Proxy-Scheme and Uri-Host
      3.1.  Impact on caches
      3.2.  Using unique proxies securely
+     3.3.  Self-description as a unique proxy
    4.  Third party proxy services
      4.1.  Generic proxy advertisements
    5.  Client picked proxies
@@ -592,6 +593,22 @@ Table of Contents
    a _trustworthy_ statement about serving the same content on all
    schemes; however, no urgent need for this optimization is currently
    known that warrants the extra scrutiny. ]
+
+3.3.  Self-description as a unique proxy
+
+   The level of assurance a client needs from a server to elide the Uri-
+   Host option in a request that was created from a URI with no IP
+   address literal has been a controversial topic. [ Should we dig up
+   old conversations, link to https://github.com/core-wg/wiki/wiki/CoAP-
+   FAQ#q4, or just let the weight of a WG consensus-document-to-be do
+   its work? ]
+
+   The has-unique-proxy relation provides an easy way for a server to
+   indicate that this is in fact allowed: A server can publish a
+   statement such as </>;rel=has-unique-proxy in its /.well-known/core
+   file.  A client that receives and understands it can thus elide the
+   Uri-Host option in requests to the server as per the definition of
+   the relation.
 
 4.  Third party proxy services
 
@@ -1322,15 +1339,6 @@ B.4.  Multipath TCP
    session resumption in absence of SNI? ]
 
 Appendix C.  Open Questions / further ideas
-
-  *  Self-uniqueness:
-
-     A host that wants to indicate that it doesn't care about Uri-Host
-     can probably publish something like </>;rel=has-unique-proxy to do
-     so.
-
-     This'd help applications justify when they can elide the Uri-Host,
-     even when no different transports are involved.
 
   *  Advertising under a stable name:
 
