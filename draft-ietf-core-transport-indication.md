@@ -1,7 +1,15 @@
 ---
+v: 3
+
 title: CoAP Transport Indication
 docname: draft-ietf-core-transport-indication-latest
 stand_alone: true
+
+venue:
+  mail: core@ietf.org
+  github: core-wg/edn-literal
+  latest: "https://core-wg.github.io/transport-indication/"
+
 ipr: trust200902
 cat: std
 stream: IETF
