@@ -1231,6 +1231,9 @@ and to optimize exchanges using these.<a href="#section-abstract-1" class="pilcr
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.2">
                 <p id="section-toc.1-1.8.2.2.1"><a href="#section-8.2" class="auto internal xref">8.2</a>.  <a href="#name-resource-types" class="internal xref">Resource Types</a></p>
 </li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.3">
+                <p id="section-toc.1-1.8.2.3.1"><a href="#section-8.3" class="auto internal xref">8.3</a>.  <a href="#name-service-parameter-key-svcpa" class="internal xref">Service Parameter Key (SvcParamKey)</a></p>
+</li>
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9">
@@ -1911,7 +1914,7 @@ If the forward proxy was only used out of necessity
 it can be practical for the client to use the advertised proxy instead.<a href="#section-5-6" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="guidance-to-upcoming-transports">
+<div id="upcomingtransports">
 <section id="section-6">
       <h2 id="name-guidance-to-upcoming-transp">
 <a href="#section-6" class="section-number selfRef">6. </a><a href="#name-guidance-to-upcoming-transp" class="section-name selfRef">Guidance to upcoming transports</a>
@@ -1920,8 +1923,8 @@ it can be practical for the client to use the advertised proxy instead.<a href="
 it is recommended to use the "coap" scheme
 (or "coaps" for TLS based transports).<a href="#section-6-1" class="pilcrow">¶</a></p>
 <p id="section-6-2">If the transport's identifiers are IP based and have identifiers typically resolved through DNS,
-authors of new transports are encouraged to specify Service Binding records (<span>[<a href="#RFC9460" class="cite xref">RFC9460</a>]</span>) for CoAP
-(possibly taking inspiration from <a href="#althist" class="auto internal xref">Appendix E</a>),
+authors of new transports are encouraged to specify Service Binding records (<span>[<a href="#RFC9460" class="cite xref">RFC9460</a>]</span>) for CoAP,
+e.g., using a <code>coaptransport</code>, (possibly taking inspiration from <a href="#althist" class="auto internal xref">Appendix E</a>),
 and if IP literals are relevant to the transport, to follow up on <a href="#newlit" class="auto internal xref">Appendix F</a>.<a href="#section-6-2" class="pilcrow">¶</a></p>
 <p id="section-6-3">If the transport's native identifiers are compatible with the structure of the authority component of a URI,
 those identifiers can be used as an authority as-is.
@@ -1929,19 +1932,26 @@ To help the host decide the resolution mechanism,
 it may be helpful to register a subdomain of .arpa as described in <span>[<a href="#rfc3172" class="cite xref">rfc3172</a>]</span>.
 The guidence for users is to never attempt to resolve such a name,
 and for the zone's implementation is to return NXDOMAIN unconditionally.<a href="#section-6-3" class="pilcrow">¶</a></p>
-<p id="section-6-4">If the transport's native identifiers are incompatible with that structure
+<p id="section-6-4">For the purpose of specifying a transport protocol via Service Binding records, and to encourage
+future authors more, this document specifies the <code>coaptransport</code> Service Parameter Key (SvcParamKey)
+with the initial legal values "udp" and "tcp" which indicate either CoAP over UDP and CoAP over
+TCP as the transport. The present of transport security is indicated by the <code>alpn</code> SvcParamKey. If
+it the <code>alpn</code> SvcParamKey is not provided, but <code>coaptransport</code> is, the transport is unencrypted.<span class="cref" id="_1">Wondering if "udp" or "tcp" should be strings or numeric representations as value. The later
+  would need an extra table or is there something we could reuse, e.g. from
+  <span>[<a href="#I-D.ietf-core-href" class="cite xref">I-D.ietf-core-href</a>]</span>?</span><a href="#section-6-4" class="pilcrow">¶</a></p>
+<p id="section-6-5">If the transport's native identifiers are incompatible with that structure
 (e.g. because they contain colons),
-the document may define some transformation.<a href="#section-6-4" class="pilcrow">¶</a></p>
-<p id="section-6-5">If a transport's native identifiers are only local,
-the zone .alt <span>[<a href="#rfc9476" class="cite xref">rfc9476</a>]</span> may be used instead.<a href="#section-6-5" class="pilcrow">¶</a></p>
-<p id="section-6-6">For example,
+the document may define some transformation.<a href="#section-6-5" class="pilcrow">¶</a></p>
+<p id="section-6-6">If a transport's native identifiers are only local,
+the zone .alt <span>[<a href="#rfc9476" class="cite xref">rfc9476</a>]</span> may be used instead.<a href="#section-6-6" class="pilcrow">¶</a></p>
+<p id="section-6-7">For example,
 CoAP over GATT <span>[<a href="#I-D.amsuess-core-coap-over-gatt" class="cite xref">I-D.amsuess-core-coap-over-gatt</a>]</span>
 removes the colons from Bluetooth Low Energy MAC addresses like 00:11:22:33:44:55
 and combines them into authority compoennts such as <code>001122334455.ble.arpa</code>.
 Slipmux <span>[<a href="#I-D.bormann-t2trg-slipmux" class="cite xref">I-D.bormann-t2trg-slipmux</a>]</span>
 might use the locally significant device name <code>/dev/ttyUSB0</code>
-as <code>coap://ttyUSB0.dev.alt/</code>.<a href="#section-6-6" class="pilcrow">¶</a></p>
-<p id="section-6-7">URIs created from such names may not indicate the protocol uniquely:
+as <code>coap://ttyUSB0.dev.alt/</code>.<a href="#section-6-7" class="pilcrow">¶</a></p>
+<p id="section-6-8">URIs created from such names may not indicate the protocol uniquely:
 Additional transports specified later may also provide CoAP services for the same name.
 In the sense of <a href="#identifying" class="auto internal xref">Section 1.1.1</a>,
 both transport would be identified by that URI.
@@ -1949,7 +1959,7 @@ That is not an issue as long as the protocols underneath the CoAP transport
 provide a means of advertising the precise protocol used.
 For example,
 a hypothetical CoAP transport for BLE that is not GATT based
-can be selected for the same scheme and authority based on data in the BLE advertisement.<a href="#section-6-7" class="pilcrow">¶</a></p>
+can be selected for the same scheme and authority based on data in the BLE advertisement.<a href="#section-6-8" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="security-considerations">
@@ -2080,6 +2090,35 @@ and by providing own proxies when their clients need them.<a href="#section-7.3-
 <p id="section-8.2-3">Attribute Value: core.proxy<a href="#section-8.2-3" class="pilcrow">¶</a></p>
 <p id="section-8.2-4">Description: Forward proxying services<a href="#section-8.2-4" class="pilcrow">¶</a></p>
 <p id="section-8.2-5">Reference: [ this document ]<a href="#section-8.2-5" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="service-parameter-key-svcparamkey">
+<section id="section-8.3">
+        <h3 id="name-service-parameter-key-svcpa">
+<a href="#section-8.3" class="section-number selfRef">8.3. </a><a href="#name-service-parameter-key-svcpa" class="section-name selfRef">Service Parameter Key (SvcParamKey)</a>
+        </h3>
+<p id="section-8.3-1">This document adds the following entry to the SVCB Service Parameters
+registry (<span>[<a href="#RFC9460" class="cite xref">RFC9460</a>]</span>). The definition of this parameter can be found in <a href="#upcomingtransports" class="auto internal xref">Section 6</a>.<a href="#section-8.3-1" class="pilcrow">¶</a></p>
+<table class="center" id="table-2">
+          <caption><a href="#table-2" class="selfRef">Table 2</a></caption>
+<thead>
+            <tr>
+              <th class="text-left" rowspan="1" colspan="1">Number</th>
+              <th class="text-left" rowspan="1" colspan="1">Name</th>
+              <th class="text-left" rowspan="1" colspan="1">Meaning</th>
+              <th class="text-left" rowspan="1" colspan="1">Reference</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">10 (suggested)</td>
+              <td class="text-left" rowspan="1" colspan="1">coaptransport</td>
+              <td class="text-left" rowspan="1" colspan="1">CoAP transport protocol</td>
+              <td class="text-left" rowspan="1" colspan="1">[TBD-this-spec] <a href="#upcomingtransports" class="auto internal xref">Section 6</a>
+</td>
+            </tr>
+          </tbody>
+        </table>
 </section>
 </div>
 </section>
@@ -2624,11 +2663,11 @@ depending on whether a (D)TLS connection is to be used.
 <p id="appendix-E.1-2">Any server providing CoAP services
 announces not only its address
 but also its SVCB Service Parameters,
-including at least one of <code>alpn</code> and <code>coaptransfer</code>.<a href="#appendix-E.1-2" class="pilcrow">¶</a></p>
+including at least one of <code>alpn</code> and <code>coaptransport</code>.<a href="#appendix-E.1-2" class="pilcrow">¶</a></p>
 <p id="appendix-E.1-3">For example, a host serving "coap://sensor.example.com" and "coaps://sensor.example.com"
 might have these records:<a href="#appendix-E.1-3" class="pilcrow">¶</a></p>
 <p id="appendix-E.1-4"><code>
-_coap.sensor.example.com IN SVCB 1 . alpn=coap,co coaptransfer=tcp,udp port=61616
+_coap.sensor.example.com IN SVCB 1 . alpn=coap,co coaptransport=tcp,udp port=61616
 sensor.example.com IN AAAA 2001:db8::1
 </code><a href="#appendix-E.1-4" class="pilcrow">¶</a></p>
 <p id="appendix-E.1-5">A client connecting to the server loops up the name's service parameters using its system's discovery mechanisms.<a href="#appendix-E.1-5" class="pilcrow">¶</a></p>

@@ -97,6 +97,7 @@ Table of Contents
    8.  IANA considerations
      8.1.  Link Relation Types
      8.2.  Resource Types
+     8.3.  Service Parameter Key (SvcParamKey)
    9.  References
      9.1.  Normative References
      9.2.  Informative References
@@ -757,9 +758,10 @@ Payload:
 
    If the transport's identifiers are IP based and have identifiers
    typically resolved through DNS, authors of new transports are
-   encouraged to specify Service Binding records ([RFC9460]) for CoAP
-   (possibly taking inspiration from Appendix E), and if IP literals are
-   relevant to the transport, to follow up on Appendix F.
+   encouraged to specify Service Binding records ([RFC9460]) for CoAP,
+   e.g., using a coaptransport, (possibly taking inspiration from
+   Appendix E), and if IP literals are relevant to the transport, to
+   follow up on Appendix F.
 
    If the transport's native identifiers are compatible with the
    structure of the authority component of a URI, those identifiers can
@@ -768,6 +770,18 @@ Payload:
    .arpa as described in [rfc3172].  The guidence for users is to never
    attempt to resolve such a name, and for the zone's implementation is
    to return NXDOMAIN unconditionally.
+
+   For the purpose of specifying a transport protocol via Service
+   Binding records, and to encourage future authors more, this document
+   specifies the coaptransport Service Parameter Key (SvcParamKey) with
+   the initial legal values "udp" and "tcp" which indicate either CoAP
+   over UDP and CoAP over TCP as the transport.  The present of
+   transport security is indicated by the alpn SvcParamKey.  If it the
+   alpn SvcParamKey is not provided, but coaptransport is, the transport
+   is unencrypted.
+   // Wondering if "udp" or "tcp" should be strings or numeric
+   // representations as value.  The later would need an extra table or
+   // is there something we could reuse, e.g. from [I-D.ietf-core-href]?
 
    If the transport's native identifiers are incompatible with that
    structure (e.g. because they contain colons), the document may define
@@ -900,6 +914,21 @@ Payload:
    Description: Forward proxying services
 
    Reference: [ this document ]
+
+8.3.  Service Parameter Key (SvcParamKey)
+
+   This document adds the following entry to the SVCB Service Parameters
+   registry ([RFC9460]).  The definition of this parameter can be found
+   in Section 6.
+
+   +================+===============+================+=================+
+   | Number         | Name          | Meaning        | Reference       |
+   +================+===============+================+=================+
+   | 10             | coaptransport | CoAP transport | [TBD-this-spec] |
+   | (suggested)    |               | protocol       | Section 6       |
+   +----------------+---------------+----------------+-----------------+
+
+                                  Table 2
 
 9.  References
 
@@ -1425,13 +1454,13 @@ E.1.  Hypothetical retrospecification
 
    Any server providing CoAP services announces not only its address but
    also its SVCB Service Parameters, including at least one of alpn and
-   coaptransfer.
+   coaptransport.
 
    For example, a host serving "coap://sensor.example.com" and
    "coaps://sensor.example.com" might have these records:
 
    _coap.sensor.example.com IN SVCB 1 . alpn=coap,co
-   coaptransfer=tcp,udp port=61616 sensor.example.com IN AAAA
+   coaptransport=tcp,udp port=61616 sensor.example.com IN AAAA
    2001:db8::1
 
    A client connecting to the server loops up the name's service
