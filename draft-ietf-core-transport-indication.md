@@ -632,15 +632,17 @@ If the forward proxy was only used out of necessity
 (e.g., to access a resource whose indicated transport not supported by the client)
 it can be practical for the client to use the advertised proxy instead.
 
-# Guidance to upcoming transports
+# Guidance to upcoming transports {#upcomingtransports}
 
 When new transports are defined for CoAP,
 it is recommended to use the "coap" scheme
 (or "coaps" for TLS based transports).
 
+{:ml: source="Martine"}
+
 If the transport's identifiers are IP based and have identifiers typically resolved through DNS,
-authors of new transports are encouraged to specify Service Binding records ({{?RFC9460}}) for CoAP
-(possibly taking inspiration from {{althist}}),
+authors of new transports are encouraged to specify Service Binding records ({{?RFC9460}}) for CoAP,
+e.g., using a `coaptransport`, (possibly taking inspiration from {{althist}}),
 and if IP literals are relevant to the transport, to follow up on {{newlit}}.
 
 If the transport's native identifiers are compatible with the structure of the authority component of a URI,
@@ -649,6 +651,17 @@ To help the host decide the resolution mechanism,
 it may be helpful to register a subdomain of .arpa as described in {{?rfc3172}}.
 The guidence for users is to never attempt to resolve such a name,
 and for the zone's implementation is to return NXDOMAIN unconditionally.
+
+For the purpose of specifying a transport protocol via Service Binding records, and to encourage
+future authors more, this document specifies the `coaptransport` Service Parameter Key (SvcParamKey)
+with the initial legal values "udp" and "tcp" which indicate either CoAP over UDP and CoAP over
+TCP as the transport. The present of transport security is indicated by the `alpn` SvcParamKey. If
+it the `alpn` SvcParamKey is not provided, but `coaptransport` is, the transport is unencrypted.[^1]{:ml:}
+
+[^1]: Wondering if "udp" or "tcp" should be strings or numeric representations as value. The later
+      would need an extra table or is there something we could reuse, e.g. from
+      {{I-D.ietf-core-href}}?
+
 
 If the transport's native identifiers are incompatible with that structure
 (e.g. because they contain colons),
@@ -766,6 +779,17 @@ Attribute Value: core.proxy
 Description: Forward proxying services
 
 Reference: \[ this document \]
+
+## Service Parameter Key (SvcParamKey)
+
+
+This document adds the following entry to the SVCB Service Parameters
+registry ({{?RFC9460}}). The definition of this parameter can be found in {{upcomingtransports}}.
+
+| Number  | Name           | Meaning                            | Reference       |
+| ------- | -------------- | ---------------------------------- | --------------- |
+| 10 (suggested)      | coaptransport        | CoAP transport protocol        | \[TBD-this-spec\] {{upcomingtransports}} |
+
 
 --- back
 
@@ -1011,13 +1035,13 @@ depending on whether a (D)TLS connection is to be used.
 Any server providing CoAP services
 announces not only its address
 but also its SVCB Service Parameters,
-including at least one of `alpn` and `coaptransfer`.
+including at least one of `alpn` and `coaptransport`.
 
 For example, a host serving "coap://sensor.example.com" and "coaps://sensor.example.com"
 might have these records:
 
 ```
-_coap.sensor.example.com IN SVCB 1 . alpn=coap,co coaptransfer=tcp,udp port=61616
+_coap.sensor.example.com IN SVCB 1 . alpn=coap,co coaptransport=tcp,udp port=61616
 sensor.example.com IN AAAA 2001:db8::1
 ```
 
