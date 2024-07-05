@@ -1,6 +1,6 @@
-# CoAP Protocol Indication
+# CoAP Transport Indication
 
-This is the working area for the IETF [CORE Working Group](https://datatracker.ietf.org/wg/core/documents/) Internet-Draft, "CoAP Protocol Indication".
+This is the working area for the IETF [CORE Working Group](https://datatracker.ietf.org/wg/core/documents/) Internet-Draft, "CoAP Transport Indication".
 
 * [Editor's Copy](https://core-wg.github.io/transport-indication/#go.draft-ietf-core-transport-indication.html)
 * [Datatracker Page](https://datatracker.ietf.org/doc/draft-ietf-core-transport-indication)
