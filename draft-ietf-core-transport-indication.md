@@ -642,7 +642,7 @@ it is recommended to use the "coap" scheme
 
 If the transport's identifiers are IP based and have identifiers typically resolved through DNS,
 authors of new transports are encouraged to specify Service Binding records ({{?RFC9460}}) for CoAP,
-e.g., using a `coaptransport`, (possibly taking inspiration from {{althist}}),
+e.g., using an `alpn` or `coaptransport` parameter.
 and if IP literals are relevant to the transport, to follow up on {{newlit}}.
 
 If the transport's native identifiers are compatible with the structure of the authority component of a URI,
