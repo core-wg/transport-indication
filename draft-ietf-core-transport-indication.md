@@ -632,6 +632,184 @@ If the forward proxy was only used out of necessity
 (e.g., to access a resource whose indicated transport not supported by the client)
 it can be practical for the client to use the advertised proxy instead.
 
+# Transport indication from other sources: Service Binding Parameters
+
+Discovery mechanisms that exist in DNS {{?RFC9460}}, DHCP or Router Advertisements {{?RFC9463}}
+can provide details already that would otherwise only be discovered later through proxy links.
+For when those details are provided in the shape of Service Binding Parameters,
+this section describes their interpretation in the context of CoAP transport indication.
+
+## Discovering transport indication details from name resolution {#svcb-discovery}
+
+When a host finds a CoAP transport from a URI
+and the URI's authority component does not contain a precise address literal,
+the resolution mechanisms which it may try generally depend on the CoAP transports and their variation which it supports.
+For example, if it supports CoAP-over-UDP and IPv6,
+it requests AAAA records through DNS and look them up in a host file.
+
+This document extends this and registers the `_coap` and `_coaps` attrleaf labels
+in {{iana-underscored}},
+using the pattern described as described in {{Section 10.4.5 of RFC9460}}
+and thus enabling the use of SVCB records.
+This path is chosen over the creation of a new SVCB RR pair "COAP" / "COAPS"
+because it is considered unlikely that DNS implementations would update their code bases to apply SVCB behavior;
+this assumption will be revisited before registration.
+
+Some SVCB parameters have defaults; for those new services, these are:
+* port: 5683 for `_coap`, 5684 for `_coaps`
+* ALPN: empty for `_coap`, "co" for `_coaps`
+* coaptransport: "udp" for `_coap`, empty for `_coaps`
+
+As SVCB records were not specified for the existing CoAP transports originally,
+generic CoAP clients are not required to use the SVCB lookup mechanism,
+but MAY attempt it opportunistically in order to obtain a usable transport
+(or to obtain it faster).
+Applications built on CoAP MAY require clients to perform this kind of discovery.
+Adding such a requirement is particularly useful if the application frequently advertises URIs with a scheme that defaults to a transport which its clients may not support,
+or when the application makes use of functionality afforded by {{?RFC9460}} such as apex domain redirection.
+
+The effects on a client of seeing SVCB parameters are similar
+to those of seeing a "has-proxy" link from the origin to the URI built using {#svcblit}.
+They differ in that SVCB parameters describe the server itself:
+Credentials expressed apply end to end
+(as opposed to credentials that describe the proxy in a "has-proxy" link),
+and the client could conclude that the implied proxy is a same-host proxy
+(if that had any impact on the client, which it does not).
+
+## Service Parameters
+
+Several parameters are relevant in the context of CoAP,
+independently of whether they are used with SVCB records or Service Binding Parameters transported outside of SVCB records,
+and independently of whether they apply to the `_coap` / `_coaps` service or another service that can be used on top of CoAP (such as `_dns`):
+
+* `port`: The CoAP service using the transport described in this parameter is reachable on this port
+  (described in {{RFC9460}}).
+
+* `alpn`: The ALPN "coap" has been defined for CoAP-over-TLS {{?RFC8323}}, and "co" for CoAP-over-DTLS in {{?I-D.lenders-core-coap-dtls-svcb}}.
+
+  If an ALPN service parameter is found, this indicates that the ALPN(s) and thus the CoAP transport that can be used on this address / port.
+  For example, "co" indicates that DTLS (and thus UDP) is used.
+
+* `coaptransport`: This is a new parameter defined in this document, and similar to the ALPN parameter.
+
+  If a `coaptransport` parameter is present, the indicated transport(s) can be used on this address / port.
+
+  The names registered for existing transports are identical to the URI schemes that indicate their use in the absence of Service Binding Parameters.
+
+  \[ It is left for review by SVCB experts whether these are a separate parameter space or we should just take ALPNs for them, like eg. h2c does. \]
+
+* `cred`: This is a new parameter defined in this document, and describes credentials usable to authenticate the server.
+
+  The `cred` parameter's value is a CBOR sequence of COSE Header maps as defined in {{!RFC9052}}.
+  If the parameter is present, it indicates that a COSE based security layer such as EDHOC can be used on the transport,
+  and that the server can be authenticated by any credential expressed in the sequence.
+  This is similar to the TLSA records specified in {{?RFC6698}}.
+
+  A COSE Header map can express many properties, not all of which are sufficient to authenticate a peer on any given security mechanism.
+  Without excluding applications that may process other entries,
+  a practical criterion for whether a header map is suitable for EDHOC is that the header map could also be used in EDHOC as `ID_CRED_R`
+  if the credential is sent by value.
+
+  For example, a header map with a `kccs` entry can be used to indicate a public key including a Key ID (`kid`),
+  and that public key does not need to be sent during the EDHOC exchange.
+  Alternatively, a header map with an `x5t` identifies the end entity certificate the server presents by a thumbprint (hash).
+
+  It is up to the application to define requirements for the provenance of the `cred` parameter,
+  whether it needs to be provided through secure mechanism,
+  or whether the server is strictly required to present that credential.
+
+  This is unlike TLSA, which needs to be transported through DNSSEC,
+  because a `cred` parameter may be sent using other means than DNS
+  (for example in DHCPv6 responses or Router Advertisements).
+
+  \[
+  The current phrasing of this is rather general toward COSE,
+  but we only have two security mechanisms based on it for CoAP,
+  and only one of those is asymmetric enough to be practical.
+  Should we try to stay generic, or just call this "edhoc" and be done with it?
+  (Applications where a server is identified by OSCORE kid are very limited in that the OSCORE context needs to be pre-established, and the ).
+  \]
+
+* `edhoc-info`: This is a new parameter defined in this document, describing how EDHOC can be used on the server.
+
+  The value of the parameter is a CBOR map following the `EDHOC_Information` structure defined in {{?I-D.ietf-ace-edhoc-oscore-profile}}
+  and extended in {{?I-D.tiloca-lake-app-profiles}}.
+
+  It is optional to provide and optional to process, but can help speed up the establishment of a security context.
+
+### Examples of using name resolution discovery and parameters
+
+#### Generic client discovering transport options
+
+A generic client is directed to obtain `coap://dev1.example.com/log`
+requests the name to be resolved using the system's resolution mechanisms,
+resulting in a DNS query for these records:
+
+```
+_coap.dev1.example.com IN SVCB
+dev1.example.com       IN AAAA
+```
+
+The following records are returned:
+
+```
+_coap.dev1.example.com IN SVCB 1 . coaptransport=tcp,udp
+_coap.dev1.example.com IN SVCB 1 . alpn=co,coap port=5684
+_coap.dev1.example.com IN SVCB 1 . coaptransport=udp port=61616
+dev1.example.com       IN AAAA 2001:db8:1::1
+```
+
+Exceeding the single option it had with just the IP address,
+it may now also choose to establish a TCP connection on the default port,
+to use port 61616 for UDP (which results in more compact frames on a 6LoWPAN link),
+or to use either of the TLS based options.
+
+#### Application mandating SVCB
+
+An application's policy is to mandate client support for SVCB records,
+and to require that a security mechanism must be used where credentials are backed either by DNSSEC or by the Web PKI.
+
+A server operator is running in a legacy network that only provides an IPv4 address behind NAT with a dynamic public address,
+but has PCP {{?RFC7291}} available.
+After running PCP to open a UDP port,
+it learns that 1.2.3.4:5678 will be available for some time.
+
+It therefore updates its DNS record like this:
+
+```
+_coap.host.example.net 600 IN SVCB 1 publicudp.host.example.net       \
+                       port=5678                                      \
+                       cred={14:{... /KCCS containing its public key/}}
+```
+
+When a client starts using `coap://host.example.net/interactive`,
+it looks up that record and verifies it using DNSSEC.
+It then proceeds to send EDHOC requests over CoAP to 1.2.3.4 port 5678,
+setting the Uri-Host option to "host.example.net".
+
+The client could also have initiated an EDHOC session if no cred parameter had been present,
+but then,
+it would have required that the server present some credential that could be verified through the Web PKI,
+for example an x5chain containing a Let's Encrypt certificate.
+
+
+## Expressing Service Parameters as literals {#svcblit}
+
+TBD
+
+### Examples
+
+## Producing a URI from a discovered service {#svcb2uri}
+
+If a service's discovery process does not produce a URI but an address, host name and/or Service Binding Parameters,
+those can be converted to a CoAP URI,
+for which transport hints are already encoded in the parameters the URI is constructed from.
+An example of this is DNS server discovery {{?I-D.lenders-core-dnr}}.
+
+TBD
+
+### Examples
+
 # Guidance to upcoming transports {#upcomingtransports}
 
 When new transports are defined for CoAP,
@@ -790,6 +968,19 @@ registry ({{?RFC9460}}). The definition of this parameter can be found in {{upco
 | ------- | -------------- | ---------------------------------- | --------------- |
 | 10 (suggested)      | coaptransport        | CoAP transport protocol        | \[TBD-this-spec\] {{upcomingtransports}} |
 
+## Underscored and Globally Scoped DNS Node Names {#iana-underscored}
+
+IANA is NOT YET requested to add the following entries to the Underscored and Globally Scoped DNS Node Names registry
+(in the DNS Parameters group)
+established in {{?RFC8552}}
+and thus enables its use with SVCB records:
+
+* SVCB, `_coap`, {{svcb-discovery}} of this document
+* SVCB, `_coaps`, {{svcb-discovery}} of this document
+
+The request for registration is deliberately not expressed at this point
+because it is yet to be revisited whether the creation of a "COAP" / "COAPS" RR pair
+similar to the "HTTPS" RR would be preferable.
 
 --- back
 
