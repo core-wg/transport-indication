@@ -5,8 +5,8 @@
 CoRE                                                           C. Amsüss
 Internet-Draft                                                          
 Intended status: Standards Track                           M. S. Lenders
-Expires: 7 January 2025                                       TU Dresden
-                                                             6 July 2024
+Expires: 8 January 2025                                       TU Dresden
+                                                             7 July 2024
 
 
                        CoAP Transport Indication
@@ -53,7 +53,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 7 January 2025.
+   This Internet-Draft will expire on 8 January 2025.
 
 Copyright Notice
 
@@ -89,16 +89,16 @@ Table of Contents
    4.  Third party proxy services
      4.1.  Generic proxy advertisements
    5.  Client picked proxies
-   6.  Transport indication from other sources: Service Binding
+   6.  Transport indication from non-link sources: Service Binding
            Parameters
      6.1.  Discovering transport indication details from name
            resolution
      6.2.  Service Parameters
        6.2.1.  Examples of using name resolution discovery and
                parameters
-     6.3.  Expressing Service Parameters as literals
+     6.3.  Producing a URI from a discovered service
        6.3.1.  Examples
-     6.4.  Producing a URI from a discovered service
+     6.4.  Expressing Service Parameters as literals
        6.4.1.  Examples
    7.  Guidance to upcoming transports
    8.  Security considerations
@@ -763,14 +763,24 @@ Payload:
    resource whose indicated transport not supported by the client) it
    can be practical for the client to use the advertised proxy instead.
 
-6.  Transport indication from other sources: Service Binding Parameters
+6.  Transport indication from non-link sources: Service Binding
+    Parameters
 
-   Discovery mechanisms that exist in DNS [RFC9460], DHCP or Router
-   Advertisements [RFC9463] can provide details already that would
-   otherwise only be discovered later through proxy links.  For when
-   those details are provided in the shape of Service Binding
-   Parameters, this section describes their interpretation in the
-   context of CoAP transport indication.
+   Discovery mechanisms that exist in DNS [RFC9460], DHCP, Router
+   Advertisements [RFC9463] or other mechanisms can provide details
+   already that would otherwise only be discovered later through proxy
+   links.  For when those details are provided in the shape of Service
+   Binding Parameters, this section describes their interpretation in
+   the context of CoAP transport indication.
+
+   The subsections in this section are arranged to describe a consistent
+   sequential full picture.  The capabilities of this big picture are
+   not exercised by any application known at the time of draft
+   publication.  It is instead backed by many small-scope use cases
+   (such as bootstrapping issues of proxy-link based CoAP scheme
+   unification, [I-D.lenders-core-dnr], [I-D.amsuess-t2trg-onion-coap]
+   and also applications outside CoAP such as [SUIB]) and presents a
+   unified solution framework.
 
 6.1.  Discovering transport indication details from name resolution
 
@@ -782,12 +792,28 @@ Payload:
    them up in a host file.
 
    This document extends this and registers the _coap and _coaps
-   attrleaf labels in Section 9.4, using the pattern described as
-   described in Section 10.4.5 of [RFC9460] and thus enabling the use of
+   attrleaf labels in Section 9.4 using the pattern described as
+   described in Section 10.4.5 of [RFC9460], and thus enables the use of
    SVCB records.  This path is chosen over the creation of a new SVCB RR
    pair "COAP" / "COAPS" because it is considered unlikely that DNS
    implementations would update their code bases to apply SVCB behavior;
    this assumption will be revisited before registration.
+
+   These can be used during the resolution of URIs using the "coap" or
+   "coaps" schemes, respectively.  No such labels are registered for
+   other CoAP schemes that have been registered, as it is expected that
+   applications that use them will prefer leaving the more detailed
+   transport choice to the parameters.  The "coaps" scheme comes with
+   the expectation of using a secured transport.  While discovered
+   parameters can override this, components and applications MUST NOT
+   select a transport and security mechanism combination with a reduced
+   security level.
+
+   [ There is no formal description of what the requirements following
+   "coaps" really are.  Would it make sense to only register "coap"
+   here, unifying the scheme space even further, given that any
+   applications needs to describe its security requirements anyway, and
+   can just as well apply them to "coap"? ]
 
    Some SVCB parameters have defaults; for those new services, these
    are: * port: 5683 for _coap, 5684 for _coaps * ALPN: empty for _coap,
@@ -945,19 +971,19 @@ Payload:
    server present some credential that could be verified through the Web
    PKI, for example an x5chain containing a Let's Encrypt certificate.
 
-6.3.  Expressing Service Parameters as literals
-
-   TBD
-
-6.3.1.  Examples
-
-6.4.  Producing a URI from a discovered service
+6.3.  Producing a URI from a discovered service
 
    If a service's discovery process does not produce a URI but an
    address, host name and/or Service Binding Parameters, those can be
    converted to a CoAP URI, for which transport hints are already
    encoded in the parameters the URI is constructed from.  An example of
    this is DNS server discovery [I-D.lenders-core-dnr].
+
+   TBD
+
+6.3.1.  Examples
+
+6.4.  Expressing Service Parameters as literals
 
    TBD
 
@@ -1205,6 +1231,13 @@ Payload:
               <https://datatracker.ietf.org/doc/html/draft-amsuess-core-
               resource-directory-extensions-10>.
 
+   [I-D.amsuess-t2trg-onion-coap]
+              Amsüss, C., Tiloca, M., and R. Höglund, "Using onion
+              routing with CoAP", Work in Progress, Internet-Draft,
+              draft-amsuess-t2trg-onion-coap-02, 17 May 2024,
+              <https://datatracker.ietf.org/doc/html/draft-amsuess-
+              t2trg-onion-coap-02>.
+
    [I-D.amsuess-t2trg-rdlink]
               Amsüss, C., "rdlink: Robust distributed links to
               constrained devices", Work in Progress, Internet-Draft,
@@ -1392,6 +1425,10 @@ Payload:
    [rfc9476]  Kumari, W. and P. Hoffman, "The .alt Special-Use Top-Level
               Domain", RFC 9476, DOI 10.17487/RFC9476, September 2023,
               <https://www.rfc-editor.org/rfc/rfc9476>.
+
+   [SUIB]     "Router and IoT Vulnerabilities: Insecure by Design",
+              2021, <https://manysecured.net/wp-content/uploads/2022/09/
+              ManySecured-SUIB-White-Paper.pdf>.
 
    [w3address]
               BL, T., "W3 address syntax: BNF", 29 June 1992,
