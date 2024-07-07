@@ -815,18 +815,19 @@ it would have required that the server present some credential that could be ver
 for example an x5chain containing a Let's Encrypt certificate.
 
 
-## Expressing Service Parameters as literals {#svcblit}
-
-TBD
-
-### Examples
-
 ## Producing a URI from a discovered service {#svcb2uri}
 
 If a service's discovery process does not produce a URI but an address, host name and/or Service Binding Parameters,
 those can be converted to a CoAP URI,
 for which transport hints are already encoded in the parameters the URI is constructed from.
 An example of this is DNS server discovery {{?I-D.lenders-core-dnr}}.
+
+TBD
+
+### Examples
+
+
+## Expressing Service Parameters as literals {#svcblit}
 
 TBD
 
