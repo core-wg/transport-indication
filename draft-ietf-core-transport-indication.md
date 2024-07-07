@@ -75,6 +75,10 @@ informative:
       name: Elizabeth Baier
     target: https://www.digicert.com/blog/evolution-of-ssl
     date: 2015-02-02
+  SUIB:
+    title: "Router and IoT Vulnerabilities: Insecure by Design"
+    target: https://manysecured.net/wp-content/uploads/2022/09/ManySecured-SUIB-White-Paper.pdf
+    date: 2021
 
 --- abstract
 
@@ -639,6 +643,12 @@ can provide details already that would otherwise only be discovered later throug
 For when those details are provided in the shape of Service Binding Parameters,
 this section describes their interpretation in the context of CoAP transport indication.
 
+The subsections in this section are arranged to describe a consistent sequential full picture.
+The capabilities of this big picture are not exercised by any application known at the time of draft publication.
+It is instead backed by many small-scope use cases
+(such as bootstrapping issues of proxy-link based CoAP scheme unification, {{?I-D.lenders-core-dnr}}, {{?I-D.amsuess-t2trg-onion-coap}} and also applications outside CoAP such as {{SUIB}})
+and presents a unified solution framework.
+
 ## Discovering transport indication details from name resolution {#svcb-discovery}
 
 When a host finds a CoAP transport from a URI
@@ -654,6 +664,18 @@ and thus enables the use of SVCB records.
 This path is chosen over the creation of a new SVCB RR pair "COAP" / "COAPS"
 because it is considered unlikely that DNS implementations would update their code bases to apply SVCB behavior;
 this assumption will be revisited before registration.
+
+These can be used during the resolution of URIs using the "coap" or "coaps" schemes, respectively.
+No such labels are registered for other CoAP schemes that have been registered,
+as it is expected that applications that use them will prefer leaving the more detailed transport choice to the parameters.
+The "coaps" scheme comes with the expectation of using a secured transport.
+While discovered parameters can override this, components and applications
+MUST NOT select a transport and security mechanism combination with a reduced security level.
+
+\[ There is no formal description of what the requirements following "coaps" really are.
+Would it make sense to only register "coap" here, unifying the scheme space even further,
+given that any applications needs to describe its security requirements anyway,
+and can just as well apply them to "coap"? \]
 
 Some SVCB parameters have defaults; for those new services, these are:
 * port: 5683 for `_coap`, 5684 for `_coaps`
