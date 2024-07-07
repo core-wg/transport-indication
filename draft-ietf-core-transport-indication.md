@@ -632,9 +632,9 @@ If the forward proxy was only used out of necessity
 (e.g., to access a resource whose indicated transport not supported by the client)
 it can be practical for the client to use the advertised proxy instead.
 
-# Transport indication from other sources: Service Binding Parameters
+# Transport indication from non-link sources: Service Binding Parameters
 
-Discovery mechanisms that exist in DNS {{?RFC9460}}, DHCP or Router Advertisements {{?RFC9463}}
+Discovery mechanisms that exist in DNS {{?RFC9460}}, DHCP, Router Advertisements {{?RFC9463}} or other mechanisms
 can provide details already that would otherwise only be discovered later through proxy links.
 For when those details are provided in the shape of Service Binding Parameters,
 this section describes their interpretation in the context of CoAP transport indication.
@@ -648,9 +648,9 @@ For example, if it supports CoAP-over-UDP and IPv6,
 it requests AAAA records through DNS and look them up in a host file.
 
 This document extends this and registers the `_coap` and `_coaps` attrleaf labels
-in {{iana-underscored}},
-using the pattern described as described in {{Section 10.4.5 of RFC9460}}
-and thus enabling the use of SVCB records.
+in {{iana-underscored}}
+using the pattern described as described in {{Section 10.4.5 of RFC9460}},
+and thus enables the use of SVCB records.
 This path is chosen over the creation of a new SVCB RR pair "COAP" / "COAPS"
 because it is considered unlikely that DNS implementations would update their code bases to apply SVCB behavior;
 this assumption will be revisited before registration.
