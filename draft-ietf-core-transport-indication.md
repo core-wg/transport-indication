@@ -1410,7 +1410,11 @@ Initial component types are:
   a client MUST establish a secure connection,
   and MUST fail the connection if the TLSA record's requirements are not met.
 
-* "s": Service Parameters {{?RFC9460}}).
+* "edhoc-cred", "edhoc-info", "oauth-info": SvcbParams in base32 encoding of their wire format.
+
+* "coaptransport": SvcbParam in its text encoding.
+
+* "s": Other Service Parameters that do not have an explicit component type.
   SvcbParams in base32 encoding of their wire format.
 
   TBD: There is likely a transformation of the parameters' presentation format that is compatible with the requirements of the authority component,
@@ -1472,12 +1476,9 @@ they serve to explore the possible alternatives.
   The "mail.-." part is provided to the server as part of the Host header,
   and can be used for name based virtual hosting.
 
-* coap://s.mnxqaaqaafswiacpueekcaneaebcaajblaqlxq2jmbjg5jgtf2kazljkenaurxo.--.cc6i2ckx3zowjgyrai3ouj4bclaqekgpck4rwwkqm4ibd6cjr6hzynst27wte7t.--.paccgcetcr5k7wa4q.6.2001-db8--1.service.arpa/ -- The server is reachable using CoAP over TCP with EDHOC security at 2001:db8::1, and the service is identifiable by the use of a KCCS credential..
+* coap://coaptransport.tcp.edhoc-cred.ueekcandaeasabbblaqlxq2jmbjg5jgtf2kazljkenaurxocc6i2ckx3zowjgyr.--.ai3ouj4a.6.2001-db8--1.service.arpa/ -- The server is reachable using CoAP over TCP with EDHOC security at 2001:db8::1, and the service is identifiable by the use of a KCCS credential describing an X25519 public key.
 
-  The sequence of base32 encoded data in the `s` parameter means (modulo encoding errors: the SVCB parameter encoding was done by hand, assuming some allocated code points):
-
-  * coaptransport=tcp
-  * edhoc-cred={14: {8: {1: {1: 2, -1: 1, -2: h'bbc34960526ea4d32e940cad2a234148ddc21791a12afbcbac93622046dd44f0', -3: h'4519e257236b2a0ce2023f0931f1f386ca7afda64fcde0108c224c51eabf6072'}}}}
+* coap://edhoc-cred.ueekcandaeasabbblaqlxq2jmbjg5jgtf2kazljkenaurxocc6i2ckx3zowjgyr.--.ai3ouj4a.service.arpa/ -- The same server without any discoverability hints; it is up to the client to discover a (possibly short-lived) connection opportunities to the server identified by that key.
 
 # Acknowledgements
 
