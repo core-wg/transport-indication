@@ -750,6 +750,28 @@ and independently of whether they apply to the `_coap` / `_coaps` service or ano
 
   It is optional to provide and optional to process, but can help speed up the establishment of a security context.
 
+* `oauth-hints`: This is a new parameter defined in this document,
+  describing how ACE-OAuth {{?RFC9200}} can be used with this service.
+
+  Its value is a CBOR map containing AS Request Creation Hints as described in {{Section 5.3 of RFC9200}}.
+  While an empty map can be useful (hinting that the client should use its configured ACE-OAuth setup),
+  typical useful keys are
+  1 (AS, indicating the URI of the Authorization Server),
+  5 (audience, indicating the name under which the service is known to the Authorization Server),
+  and 9 (scope, when discovering a particular service rather than just getting transport information for a host).
+  That data is using the same shape the server might use when responding to an attempt at an unencrypted connection,
+  and can not only speed up the discovery of the right AS,
+  but can also protect that information (eg. when DNSSEC is used),
+  and avoids the need for an unprotected first request.
+
+  It is up to the application to define requirements for the use of such data.
+  For example,
+  it may require that the audience matches the requested host name,
+  or may require that the scope matches the kind of service being discovered.
+
+  When expressed in text format, e.g. in DNS zone files,
+  the CBOR diagnostic notation {{?I-D.ietf-cbor-edn-literals}} can be used.
+
 ### Examples of using name resolution discovery and parameters
 
 #### Generic client discovering transport options
