@@ -869,7 +869,7 @@ Payload:
       separate parameter space or we should just take ALPNs for them,
       like eg. h2c does. ]
 
-   *  edhoc: This is a new parameter defined in this document, and
+   *  edhoc-cred: This is a new parameter defined in this document, and
       describes that EDHOC can be used with the server, and which
       credentials can authenticate the server.
 
@@ -1240,18 +1240,28 @@ Payload:
 
 9.3.  Service Parameter Key (SvcParamKey)
 
-   This document adds the following entry to the SVCB Service Parameters
-   registry ([RFC9460]).  The definition of this parameter can be found
-   in Section 7.
+   IANA is NOT YET requested to add the following entries to the SVCB
+   Service Parameters registry ([RFC9460]).  The definition of this
+   parameter can be found in Section 7.
 
-   +================+===============+================+=================+
-   | Number         | Name          | Meaning        | Reference       |
-   +================+===============+================+=================+
-   | 10             | coaptransport | CoAP transport | [TBD-this-spec] |
-   | (suggested)    |               | protocol       | Section 7       |
-   +----------------+---------------+----------------+-----------------+
+   +================+===============+=================================+
+   | Number         | Name          | Meaning                         |
+   +================+===============+=================================+
+   | 10 (suggested) | coaptransport | CoAP transport protocol         |
+   +----------------+---------------+---------------------------------+
+   | to be assigned | edhoc-cred    | EDHOC credentials identifying   |
+   |                |               | the server                      |
+   +----------------+---------------+---------------------------------+
+   | to be assigned | edhoc-info    | EDHOC profile information       |
+   +----------------+---------------+---------------------------------+
+   | to be assigned | oauth-hints   | Describes how to obtain a token |
+   |                |               | at an ACE Authorization Server  |
+   +----------------+---------------+---------------------------------+
 
-                                  Table 2
+                                 Table 2
+
+   All entries have in common that their Reference is this this
+   document, Section 6.2}
 
 9.4.  Underscored and Globally Scoped DNS Node Names
 
@@ -1560,6 +1570,54 @@ Payload:
               BNF.html#43>.
 
 Appendix A.  Change log
+
+   Since draft-ietf-core-transport-indication-05:
+
+   *  Semantics for where a has-proxy applies were changed from
+      "wherever there is a hosts relation" to "across the same origin".
+
+      The hosts relation has received complaints about its complexity,
+      and there were no strong voices in either direction during or
+      after IETF119 when the question has been asked; going for the
+      easier version.
+
+   *  Use of SVCB is added as a section.  Underscore prefixes are
+      registered for CoAP, enabling the use of SVCB DNS records for
+      applications that opt in to it (rather than processing it as an
+      alternative history).
+
+      While the alternative history section was appreciated during
+      IETF119, the authors found it highly impractical to provide SVCB
+      ground work without having the actual registrations (it would have
+      worked only because DNS discovery acts on a separate _dns prefix
+      anyway), and chose the consistent approach of allowing SVCB
+      lookups.
+
+   *  Material from the DNS and DNR for CoAP documents was moved in (and
+      overhauled in the process):
+
+      -  Constructing CoAP requests from Service Parameters that did not
+         result from a host name lookup is described.
+
+      -  The coaptransport SVCB parameter is defined.
+
+      -  SVCB hints for ACE/OAuth are defined.
+
+   *  Section on how a host can tell that Uri-Host is optional was moved
+      from Open Questions into a section.
+
+      This had been around for ages, and gathering some more experience
+      with the matter, looks like the obvious approach.
+
+   *  Editorial:
+
+      -  Style for unallocated registrations changed from TBD to CPA
+
+      -  References updated
+
+      -  Tooling updates
+
+      -  Minor fixes
 
    Since draft-ietf-core-transport-indication-04:
 
