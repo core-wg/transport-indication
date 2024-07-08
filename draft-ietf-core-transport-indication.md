@@ -1472,7 +1472,12 @@ they serve to explore the possible alternatives.
   The "mail.-." part is provided to the server as part of the Host header,
   and can be used for name based virtual hosting.
 
-* coap://s.coaptransfer_tcp_coapsecurity_edhoc.6.2001-db8--1.service.arpa/ -- The server is reachable using CoAP over TCP with EDHOC security at 2001:db8::1. (The SVCB parameters are experimental values from {{?I-D.lenders-core-dnr}}).
+* coap://s.mnxqaaqaafswiacpueekcaneaebcaajblaqlxq2jmbjg5jgtf2kazljkenaurxo.--.cc6i2ckx3zowjgyrai3ouj4bclaqekgpck4rwwkqm4ibd6cjr6hzynst27wte7t.--.paccgcetcr5k7wa4q.6.2001-db8--1.service.arpa/ -- The server is reachable using CoAP over TCP with EDHOC security at 2001:db8::1, and the service is identifiable by the use of a KCCS credential..
+
+  The sequence of base32 encoded data in the `s` parameter means (modulo encoding errors: the SVCB parameter encoding was done by hand, assuming some allocated code points):
+
+  * coaptransport=tcp
+  * edhoc-cred={14: {8: {1: {1: 2, -1: 1, -2: h'bbc34960526ea4d32e940cad2a234148ddc21791a12afbcbac93622046dd44f0', -3: h'4519e257236b2a0ce2023f0931f1f386ca7afda64fcde0108c224c51eabf6072'}}}}
 
 # Acknowledgements
 
