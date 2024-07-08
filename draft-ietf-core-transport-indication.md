@@ -150,8 +150,11 @@ but also by the authority component.
 The transports and resolution mechanisms currently specified
 make little use of this possibility,
 mainly because the most prominent resolution mechanism (SVCB records) has not been avaialble when {{?RFC8323}} was published
-(see also {{althist}}),
-end because it can not be expressed in IP literals (see {{newlit}}).
+and because it can not be expressed in IP literals.
+The provisions of this document
+enable this opportunistically for registered names
+({{svcb-discovery}})
+and for literals using the mechanism in {{newlit}}.
 
 When the resolution mechanism used for a registered name authority component yields multiple addresses,
 all of those are possible ways to interact with the resource.
@@ -688,6 +691,8 @@ but MAY attempt it opportunistically in order to obtain a usable transport
 Applications built on CoAP MAY require clients to perform this kind of discovery.
 Adding such a requirement is particularly useful if the application frequently advertises URIs with a scheme that defaults to a transport which its clients may not support,
 or when the application makes use of functionality afforded by {{?RFC9460}} such as apex domain redirection.
+(Had the SVCB specification predated the first new CoAP transports,
+that mechanism might have been used in the first place instead of additional schemes).
 
 The effects on a client of seeing SVCB parameters are similar
 to those of seeing a "has-proxy" link from the origin to the URI built using {#svcblit}.
@@ -916,6 +921,10 @@ is described in {{newlit}}.
 Among other things,
 that mechanism allows encoding the full information obtained during service discovery in a URI
 instead of just the one choice taken.
+It is also required if different CoAP transports are using the same scheme
+(as is recommended in {{upcomingtransports}})
+with IP address literals in URIs,
+for which unlike for resolved names no service parameters are available.
 
 # Guidance to upcoming transports {#upcomingtransports}
 
@@ -1196,8 +1205,7 @@ DNS Service Binding resource records (SVCB RRs)
 described in {{?RFC9460}} can carry many of the details otherwise negotiated using the proxy relations.
 In HTTP, they can be used in a way similar to Alt-Svc headers.
 
-SVCB records were not specified when CoAP was specified for TCP,
-but could have been (see {{althist}}).
+SVCB records were not specified when CoAP was specified for TCP.
 
 If at any point SVCB records for CoAP are defined,
 name resolution produces a set of transport details that can be used immediately
@@ -1315,53 +1323,6 @@ Otherwise, it places the label in its critical form, either empty or containing 
 The client may then decide to discontinue using the proxy,
 or to use more extensive padding options to sidestep the attack.
 Both the client and the server may alert their administrators of a possible traffic misdirection.
-
-# Alternative History: What if SVCB had been around before CoAP over TCP? {#althist}
-
-This appendix explores a hypothetical scenario in which Service Binding (SVCB, {{?RFC9460}}) was around and supported before the controversial decision to establish the "coap+tcp" scheme.
-It serves to provide a fresh perspective of what parts are logically necessary,
-and to ease the exploration of how it may be used in the future.
-
-## Hypothetical retrospecification
-
-CoAP is specified for several transports:
-CoAP over UDP, over DTLS, over TCP, over TLS and over (secure or insecure) WebSockets.
-URIs of all these are expressed using the "coap" or "coaps" scheme,
-depending on whether a (D)TLS connection is to be used.
-\[ It is currently unclear whether the two schemes should also be unified; the rest of the text is left intentionally vague on that distinction. \]
-
-Any server providing CoAP services
-announces not only its address
-but also its SVCB Service Parameters,
-including at least one of `alpn` and `coaptransport`.
-
-For example, a host serving "coap://sensor.example.com" and "coaps://sensor.example.com"
-might have these records:
-
-```
-_coap.sensor.example.com IN SVCB 1 . alpn=coap,co coaptransport=tcp,udp port=61616
-sensor.example.com IN AAAA 2001:db8::1
-```
-
-A client connecting to the server loops up the name's service parameters using its system's discovery mechanisms.
-
-For example, if DNS is used, it obtains SVCB records for \_coap.sensor.example.com,
-and receives the corresponding AAAA record either immediately from an SVCB aware resolver
-or through a second query.
-It learns that the service is available through CoAP-over-DTLS (ALPN "co"), CoAP-over-TLS (ALPN "coap"),
-or through unencrypted TCP or UDP, and that port 61616 needs to be used in all cases.
-
-If the server and the client do not have a transport in common,
-or if one of them supports only IPv4 and the other only IPv6,
-no exchange is possible;
-the client may resort to using a proxy.
-
-## Shortcomings
-
-While the mechanism above would have unified the CoAP transports under a pair of schemes,
-it would have rendered the use of IP literals impossible:
-The URI `coap://[2001:db8::1]` would be ambiguous as to whether CoAP-over-UDP or CoAP-over-TCP should be used.
-{{newlit}} provides a solution for this issue.
 
 # Literals beyond IP addresses {#newlit}
 
