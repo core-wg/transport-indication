@@ -39,7 +39,6 @@ author:
   code: D-01069
   country: Germany
   email: martine.lenders@tu-dresden.de
-normative:
 informative:
   aliases:
     title: Architecture of the World Wide Web, Section 2.3.1 URI aliases
@@ -659,7 +658,7 @@ it requests AAAA records through DNS and look them up in a host file.
 
 This document extends this and registers the `_coap` and `_coaps` attrleaf labels
 in {{iana-underscored}}
-using the pattern described as described in {{Section 10.4.5 of RFC9460}},
+using the pattern described as described in {{Section 10.4.5 of !RFC9460}},
 and thus enables the use of SVCB records.
 This path is chosen over the creation of a new SVCB RR pair "COAP" / "COAPS"
 because it is considered unlikely that DNS implementations would update their code bases to apply SVCB behavior;
@@ -815,17 +814,85 @@ it would have required that the server present some credential that could be ver
 for example an x5chain containing a Let's Encrypt certificate.
 
 
-## Producing a URI from a discovered service {#svcb2uri}
+## Producing request for a discovered service {#svcb2uri}
 
 If a service's discovery process does not produce a URI but an address, host name and/or Service Binding Parameters,
 those can be converted to a CoAP URI,
 for which transport hints are already encoded in the parameters the URI is constructed from.
 An example of this is DNS server discovery {{?I-D.lenders-core-dnr}}.
 
-TBD
+While it is up to the service to define the service's semantics,
+this section applies to any service
+whose use with CoAP is defined by a normative referencing this section:
 
-### Examples
+* The client tries the available serivces with their ALPNs and CoAP transports
+  according to its capabilities
+  and the priorities and mandatory parameters
+  as defined for Service Bindings.
 
+* The service either defines a well-known path,
+  or it defines a Service Binding Parameter that describes the service's path on the described endpoint,
+  or it defines both (and the well-known path is the default in absence of the defined parameter).
+
+  Th value is a CBOR sequence {{!RFC8742}} of text strings,
+  which represent Uri-Path options in a CoAP request,
+  or (equivalently) the path of a CRI reference
+  {{I-D.ietf-core-href}}.
+
+  A parameter value that is not a well-formed CBOR sequence,
+  or any item is not a text string,
+  is considerd malformed.
+
+  When expressed in text format, e.g. in DNS zone files,
+  the CBOR diagnostic notation {{?I-D.ietf-cbor-edn-literals}} can be used.
+
+  To access the service,
+  a client sets the text string values
+  of the used Service Binding
+  as Uri-Path options in the request.
+
+  If the resource is unavailable,
+  the client may continue with options that have a larger SvcPriority value associated
+  (if such a property exists in the discovery method).
+
+  An example of such an option is `docpath`
+  as defined in {{?I-D.ietf-core-dns-over-coap}}.
+  (As that document precedes this one,
+  it repeats the same rules explicitly rather than reusing these rules).
+
+* A Service Binding is accompanied by a hostname:
+  For example,
+  this is the hostname of the Encrypted DNS Resolver or the Special-Use Domain Name
+  in the case of {{?RFC9462}} lookups,
+  or the authentication-domain-name in case of {{?RFC9463}} DHCP options or Router Advertisements.
+
+  Unless its value is identical to the default value for Uri-Host
+  (which is the case on transports with Server Name Indication (SNI)),
+  the that name is added in the Uri-Host option.
+
+* If the `port` Service Binding Parameter is set,
+  the Uri-Port option is set to the port that set in the port prefix of the query
+  (or the used CoAP transport's default port),
+  unless that is its default value anyway.
+
+* No Proxy-Scheme option is set.
+
+By following the rules of {{Section 6.5 of RFC7252}}
+or the equivalent rules for the respective CoAP transport,
+<!-- I'd rather not need that, see https://github.com/core-wg/corrclar/issues/38 -->
+the service can be translated into a URI.
+This implies URI aliasing between the composed URIs of all transports
+if any of the transports use different schemes.
+
+The rules for setting Uri-Host and Uri-Port result in the authority component of the URI
+being equal to the Binding Authority defined in {{?RFC9461}}.
+
+Note that since different security policies may apply to service discovery
+and other application components that dereference URIs,
+any connections established while using the service
+and cache entries created by it
+need to be treated carefully,
+for example by using separate connection and cache pools.
 
 ## Expressing Service Parameters as literals {#svcblit}
 
