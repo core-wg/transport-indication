@@ -719,10 +719,10 @@ and independently of whether they apply to the `_coap` / `_coaps` service or ano
 
   \[ It is left for review by SVCB experts whether these are a separate parameter space or we should just take ALPNs for them, like eg. h2c does. \]
 
-* `cred`: This is a new parameter defined in this document, and describes credentials usable to authenticate the server.
+* `edhoc`: This is a new parameter defined in this document, and describes that EDHOC can be used with the server, and which credentials can authenticate the server.
 
-  The `cred` parameter's value is a CBOR sequence of COSE Header maps as defined in {{!RFC9052}}.
-  If the parameter is present, it indicates that a COSE based security layer such as EDHOC can be used on the transport,
+  The `edhoc-cred` parameter's value is a CBOR sequence of COSE Header maps as defined in {{!RFC9052}}.
+  If the parameter is present, it indicates that EDHOC {{!RFC9528}} can be used on the transport,
   and that the server can be authenticated by any credential expressed in the sequence.
   This is similar to the TLSA records specified in {{?RFC6698}}.
 
@@ -735,21 +735,13 @@ and independently of whether they apply to the `_coap` / `_coaps` service or ano
   and that public key does not need to be sent during the EDHOC exchange.
   Alternatively, a header map with an `x5t` identifies the end entity certificate the server presents by a thumbprint (hash).
 
-  It is up to the application to define requirements for the provenance of the `cred` parameter,
+  It is up to the application to define requirements for the provenance of the `edhoc-cred` parameter,
   whether it needs to be provided through secure mechanism,
   or whether the server is strictly required to present that credential.
 
   This is unlike TLSA, which needs to be transported through DNSSEC,
-  because a `cred` parameter may be sent using other means than DNS
+  because a `edhoc-cred` parameter may be sent using other means than DNS
   (for example in DHCPv6 responses or Router Advertisements).
-
-  \[
-  The current phrasing of this is rather general toward COSE,
-  but we only have two security mechanisms based on it for CoAP,
-  and only one of those is asymmetric enough to be practical.
-  Should we try to stay generic, or just call this "edhoc" and be done with it?
-  (Applications where a server is identified by OSCORE kid are very limited in that the OSCORE context needs to be pre-established, and the ).
-  \]
 
 * `edhoc-info`: This is a new parameter defined in this document, describing how EDHOC can be used on the server.
 
@@ -800,7 +792,7 @@ It therefore updates its DNS record like this:
 ```
 _coap.host.example.net 600 IN SVCB 1 publicudp.host.example.net       \
                        port=5678                                      \
-                       cred={14:{... /KCCS containing its public key/}}
+                       edhoc-cred={14:{... /KCCS with its public key/}}
 ```
 
 When a client starts using `coap://host.example.net/interactive`,
@@ -808,7 +800,7 @@ it looks up that record and verifies it using DNSSEC.
 It then proceeds to send EDHOC requests over CoAP to 1.2.3.4 port 5678,
 setting the Uri-Host option to "host.example.net".
 
-The client could also have initiated an EDHOC session if no cred parameter had been present,
+The client could also have initiated an EDHOC session if no edhoc-cred parameter had been present,
 but then,
 it would have required that the server present some credential that could be verified through the Web PKI,
 for example an x5chain containing a Let's Encrypt certificate.
