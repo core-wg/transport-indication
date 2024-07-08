@@ -1102,6 +1102,39 @@ similar to the "HTTPS" RR would be preferable.
 
 # Change log
 
+Since draft-ietf-core-transport-indication-05:
+
+* Semantics for where a has-proxy applies were changed from "wherever there is a `hosts` relation" to "across the same origin".
+
+  The `hosts` relation has received complaints about its complexity,
+  and there were no strong voices in either direction during or after IETF119 when the question has been asked;
+  going for the easier version.
+
+* Use of SVCB is added as a section. Underscore prefixes are registered for CoAP, enabling the use of SVCB DNS records for applications that opt in to it (rather than processing it as an alternative history).
+
+  While the alternative history section was appreciated during IETF119,
+  the authors found it highly impractical to provide SVCB ground work without having the actual registrations
+  (it would have worked only because DNS discovery acts on a separate `_dns` prefix anyway),
+  and chose the consistent approach of allowing SVCB lookups.
+
+* Material from the DNS and DNR for CoAP documents was moved in (and overhauled in the process):
+
+  * Constructing CoAP requests from Service Parameters that did not result from a host name lookup is described.
+  * The coaptransport SVCB parameter is defined.
+  * SVCB hints for ACE/OAuth are defined.
+
+* Section on how a host can tell that Uri-Host is optional was moved from Open Questions into a section.
+
+  This had been around for ages,
+  and gathering some more experience with the matter,
+  looks like the obvious approach.
+
+* Editorial:
+  * Style for unallocated registrations changed from TBD to CPA
+  * References updated
+  * Tooling updates
+  * Minor fixes
+
 Since draft-ietf-core-transport-indication-04:
 
 * Not just the scheme, but also the authority value influences the transport selection.
