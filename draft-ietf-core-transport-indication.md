@@ -702,7 +702,7 @@ Credentials expressed apply end to end
 and the client could conclude that the implied proxy is a same-host proxy
 (if that had any impact on the client, which it does not).
 
-## Service Parameters
+## Service Parameters {#svcparams}
 
 Several parameters are relevant in the context of CoAP,
 independently of whether they are used with SVCB records or Service Binding Parameters transported outside of SVCB records,
@@ -724,7 +724,7 @@ and independently of whether they apply to the `_coap` / `_coaps` service or ano
 
   \[ It is left for review by SVCB experts whether these are a separate parameter space or we should just take ALPNs for them, like eg. h2c does. \]
 
-* `edhoc`: This is a new parameter defined in this document, and describes that EDHOC can be used with the server, and which credentials can authenticate the server.
+* `edhoc-cred`: This is a new parameter defined in this document, and describes that EDHOC can be used with the server, and which credentials can authenticate the server.
 
   The `edhoc-cred` parameter's value is a CBOR sequence of COSE Header maps as defined in {{!RFC9052}}.
   If the parameter is present, it indicates that EDHOC {{!RFC9528}} can be used on the transport,
@@ -1076,13 +1076,17 @@ Reference: \[ this document \]
 
 ## Service Parameter Key (SvcParamKey)
 
-
-This document adds the following entry to the SVCB Service Parameters
+IANA is NOT YET requested to add the following entries to the SVCB Service Parameters
 registry ({{?RFC9460}}). The definition of this parameter can be found in {{upcomingtransports}}.
 
-| Number  | Name           | Meaning                            | Reference       |
-| ------- | -------------- | ---------------------------------- | --------------- |
-| 10 (suggested)      | coaptransport        | CoAP transport protocol        | \[TBD-this-spec\] {{upcomingtransports}} |
+| Number  | Name           | Meaning                            |
+| ------- | -------------- | ---------------------------------- |
+| 10 (suggested)      | coaptransport        | CoAP transport protocol |
+| to be assigned      | edhoc-cred           | EDHOC credentials identifying the server |
+| to be assigned      | edhoc-info           | EDHOC profile information |
+| to be assigned      | oauth-hints          | Describes how to obtain a token at an ACE Authorization Server |
+
+All entries have in common that their Reference is this this document, {{svcparams}}}
 
 ## Underscored and Globally Scoped DNS Node Names {#iana-underscored}
 
