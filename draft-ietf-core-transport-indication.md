@@ -896,9 +896,12 @@ for example by using separate connection and cache pools.
 
 ## Expressing Service Parameters as literals {#svcblit}
 
-TBD
+A method for expressing Service Parameters in URIs that do not use registered names
+is described in {{newlit}}.
 
-### Examples
+Among other things,
+that mechanism allows encoding the full information obtained during service discovery in a URI
+instead of just the one choice taken.
 
 # Guidance to upcoming transports {#upcomingtransports}
 
