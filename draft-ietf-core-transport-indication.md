@@ -1086,7 +1086,8 @@ registry ({{?RFC9460}}). The definition of this parameter can be found in {{upco
 | to be assigned      | edhoc-info           | EDHOC profile information |
 | to be assigned      | oauth-hints          | Describes how to obtain a token at an ACE Authorization Server |
 
-All entries have in common that their Reference is this this document, {{svcparams}}}
+All entries have in common that their Reference is this this document, {{svcparams}}},
+and that their change controller is IETF.
 
 ## Underscored and Globally Scoped DNS Node Names {#iana-underscored}
 
