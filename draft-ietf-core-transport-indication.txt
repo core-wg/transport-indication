@@ -5,8 +5,8 @@
 CoRE                                                           C. Amsüss
 Internet-Draft                                                          
 Intended status: Standards Track                           M. S. Lenders
-Expires: 9 January 2025                                       TU Dresden
-                                                             8 July 2024
+Expires: 24 January 2025                                      TU Dresden
+                                                            23 July 2024
 
 
                        CoAP Transport Indication
@@ -53,7 +53,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 9 January 2025.
+   This Internet-Draft will expire on 24 January 2025.
 
 Copyright Notice
 
@@ -1261,7 +1261,7 @@ Payload:
                                  Table 2
 
    All entries have in common that their Reference is this this
-   document, Section 6.2}
+   document, Section 6.2}, and that their change controller is IETF.
 
 9.4.  Underscored and Globally Scoped DNS Node Names
 
@@ -1429,9 +1429,9 @@ Payload:
               Lenders, M. S., Amsüss, C., Schmidt, T. C., and M.
               Wählisch, "Discovery of Network-designated OSCORE-based
               Resolvers: Problem Statement", Work in Progress, Internet-
-              Draft, draft-lenders-core-dnr-02, 29 June 2024,
+              Draft, draft-lenders-core-dnr-03, 8 July 2024,
               <https://datatracker.ietf.org/doc/html/draft-lenders-core-
-              dnr-02>.
+              dnr-03>.
 
    [I-D.silverajan-core-coap-protocol-negotiation]
               Silverajan, B. and M. Ocak, "CoAP Protocol Negotiation",
