@@ -1,0 +1,143 @@
+{
+  "magic": "E!vIA5L86J2I",
+  "timestamp": "2023-05-18T01:26:25.866960+00:00",
+  "repo": "core-wg/transport-indication",
+  "labels": [
+    {
+      "name": "bug",
+      "description": "Something isn't working",
+      "color": "d73a4a"
+    },
+    {
+      "name": "documentation",
+      "description": "Improvements or additions to documentation",
+      "color": "0075ca"
+    },
+    {
+      "name": "duplicate",
+      "description": "This issue or pull request already exists",
+      "color": "cfd3d7"
+    },
+    {
+      "name": "enhancement",
+      "description": "New feature or request",
+      "color": "a2eeef"
+    },
+    {
+      "name": "good first issue",
+      "description": "Good for newcomers",
+      "color": "7057ff"
+    },
+    {
+      "name": "help wanted",
+      "description": "Extra attention is needed",
+      "color": "008672"
+    },
+    {
+      "name": "invalid",
+      "description": "This doesn't seem right",
+      "color": "e4e669"
+    },
+    {
+      "name": "question",
+      "description": "Further information is requested",
+      "color": "d876e3"
+    },
+    {
+      "name": "wontfix",
+      "description": "This will not be worked on",
+      "color": "ffffff"
+    }
+  ],
+  "issues": [
+    {
+      "number": 1,
+      "id": "I_kwDOHa3Jsc5Kqhmu",
+      "title": "device0815 example lacks introduction",
+      "url": "https://github.com/core-wg/transport-indication/issues/1",
+      "state": "OPEN",
+      "author": "chrysn",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "(From Marco's review)\r\n\r\n> [Section 3]\r\n> \r\n> * Perhaps introduce the device name device0815.example.com before the\r\n> example begins?\r\n> \r\n> * In the last paragraph, at least some of the text starting from \"A\r\n> simplistic client ...\" seems to actually refer to the example shown in\r\n> Figure 3 of Section 4.\r\n\r\n(Originally https://gitlab.com/chrysn/transport-indication/-/issues/1)",
+      "createdAt": "2022-05-30T12:20:42Z",
+      "updatedAt": "2022-05-30T12:20:42Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 2,
+      "id": "I_kwDOHa3Jsc5Kqh2p",
+      "title": "Process notes from -02-24 interim",
+      "url": "https://github.com/core-wg/transport-indication/issues/2",
+      "state": "OPEN",
+      "author": "chrysn",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "much of which is about applying Klaus's review comments.\r\n\r\nLargely addressed in -03; one TBD remains on 'While CoAP can indicate the authority component' from Klaus' mail.\r\n\r\n(Originally https://gitlab.com/chrysn/transport-indication/-/issues/2)",
+      "createdAt": "2022-05-30T12:21:31Z",
+      "updatedAt": "2022-05-30T12:21:31Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 3,
+      "id": "I_kwDOHa3Jsc5KqiBR",
+      "title": "\"hosts\": Work on transitive closure of hosting",
+      "url": "https://github.com/core-wg/transport-indication/issues/3",
+      "state": "CLOSED",
+      "author": "chrysn",
+      "authorAssociation": "MEMBER",
+      "assignees": [
+        "chrysn"
+      ],
+      "labels": [],
+      "body": "It's kind of implied in the current text, but it's nowhere explicit.\r\n\r\n(Originally https://gitlab.com/chrysn/transport-indication/-/issues/3)",
+      "createdAt": "2022-05-30T12:22:05Z",
+      "updatedAt": "2022-07-11T23:06:04Z",
+      "closedAt": "2022-07-11T23:06:04Z",
+      "comments": []
+    },
+    {
+      "number": 4,
+      "id": "I_kwDOHa3Jsc5PB6DE",
+      "title": "link example seems confused",
+      "url": "https://github.com/core-wg/transport-indication/issues/4",
+      "state": "OPEN",
+      "author": "mcr",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "\r\n````\r\n  For resources discovered via CoAP's discovery interface,\r\n  a hosting statement is typically provided by the defaults implied by {{?RFC6690}}\r\n  where a link like `</sensor/temp>` is implied to have the relation \"hosts\" and the anchor `/`,\r\n  such that a statement \"coap://hostname hosts coap://hostname/sensor/temp\" is implied in the link.\r\n````\r\nI don't understand this statement.  It feels like something is unstated, or maybe there are 6690 stuff I don't get.\r\n",
+      "createdAt": "2022-08-02T13:56:40Z",
+      "updatedAt": "2022-08-02T15:07:12Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "body": "Link format has default values for both rel and anchor.\r\n\r\nIf a resource registers its working resource `</sensor/temp>`, and in addition a generic statement about proxying (that there is a proxy for `</>`), then all that is needed to make the connection, i.e., that `</sensors/temp>;rel=hosts;anchor=\"/\"`, are already in place due to these defaults, and never need to be written down.",
+          "createdAt": "2022-08-02T14:14:52Z",
+          "updatedAt": "2022-08-02T14:14:52Z"
+        },
+        {
+          "author": "mcr",
+          "authorAssociation": "NONE",
+          "body": "It's the \"coap://hostname hosts coap://hostname/sensor/temp\" that I'm having problems with.",
+          "createdAt": "2022-08-02T14:15:51Z",
+          "updatedAt": "2022-08-02T14:15:51Z"
+        },
+        {
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "body": "It doesn't have any meaning on its own, it's just something 6690 defined. It evokes all kinds of associations, but really it's just a label associating these with each other.",
+          "createdAt": "2022-08-02T15:07:11Z",
+          "updatedAt": "2022-08-02T15:07:11Z"
+        }
+      ]
+    }
+  ],
+  "pulls": []
+}
