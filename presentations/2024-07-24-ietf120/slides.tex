@@ -1,0 +1,127 @@
+\input{shared/ietf-slides.tex}
+
+% about the presentation
+\title[CoAP Transport Indication]{CoAP Transport Indication}
+\subtitle{\ietfdraft{ietf-core-transport-indication-06}}
+\author{\textit{Christian~Amsüss}, Martine~Lenders}
+\date{2024-07-24 \\CoRE at IETF 120 in Vancouver}
+
+\begin{document}
+
+\frame{\titlepage}
+
+\begin{frame}{Goals}\Large
+  \begin{enumerate}
+    \color{gray} 
+    \item Enablement of transport discovery
+    \item No Aliasing
+    \item Optimization (no cost per request)
+    \item Proxy usability
+    \item Proxy announcement
+  \end{enumerate}
+
+  \bigskip
+
+  \begin{itemize}
+    \color{gray} 
+    \item Give way forward after \texttt{coap://} and \texttt{coap+tcp} diverged
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Recent changes worth discussing}\Large
+  \begin{itemize}
+    \item Scope of has-proxy relation
+    \item A lot about SVCB
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Open question: Scope of \texttt{has-proxy}}\large
+  \color{gray}
+  ``only through link relations''
+
+  \begin{itemize}
+    \color{gray}
+    \item URIs regarded as opaque
+    \item Relations are explicit
+    \item Allows to exclude indvidiual resources from transport indication
+    \item Uses RFC~6690 \texttt{rel=hosts} which is not very clear
+    \item Hard to keep track of what works where
+  \end{itemize}
+  
+  \color{black}
+  \begin{center}
+  vs.
+  \end{center}
+
+  ``Applies per Origin''
+
+  \begin{itemize}
+    \item HTTP's mechanism
+    \item Simple
+    \item Way shorter wording in terminology section
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Recent changes worth discussing}\Large
+  \begin{itemize}
+    \color{gray} 
+    \item Scope of has-proxy relation
+    \color{black}
+    \item A lot about SVCB
+  \end{itemize}
+
+  \bigskip
+
+  \ldots without moving away from ``transports are proxies'' as a guiding principle
+\end{frame}
+
+\begin{frame}[fragile]{SVCB components}
+% * DNR describes handling of SVCB data -- generalized
+% * SVCB handling was mushy: mix of DNR actual-use-case, next-ip-based-should and what-if history
+% * plot: flows
+  figer WIP / to be updated in iteration:
+
+\begin{verbatim}
+       A / AAAA
+       _____    ___ _coap SVCB
+      /      \     \
+              v     v
+URI  <--->   full message  <---->   SVCB param set
+     1     (transport proto etc)        (_coap or _dns,
+                 _________________->    latter w/ path)
+                /             /
+[ SVCB from DDR ]      [ SVCBish from RA / DHCP ]
+
+for future msgs can only go left with SVCB literals
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}{SVCB records for name resolutions}\Large
+  \begin{itemize}
+    \item Not retroactively activated.
+    \item Applications can opt in.
+  \end{itemize}
+
+  \bigskip
+
+  Questions:
+
+  \begin{itemize}
+    \item Is the above too cautious?
+    \item \texttt{\_coap SVCB} or \texttt{COAP} RR?
+      % main reason for HTTPS are catch-all zones
+    \item Extra \texttt{\_coaps SVCB}?
+      % it's not like it has as precise semantics as HTTPS in practice
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Next steps}\Large
+  \begin{itemize}
+    \item Who would review this?
+    \item Follow SVCB-parameters literals\footnote{Necessary if we want the next IP based CoAP transport to work without a new scheme, or are we happy if that can't use literals}?
+    \item Who would implement enough of this to interop test?\footnote{Document is probably useful as theoretical background for new transports on its own, but I doubt that's all we want.}
+  \end{itemize}
+\end{frame}
+
+\end{document}
