@@ -24,31 +24,11 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      inkscape:zoom="2.102413"
-     inkscape:cx="269.45229"
+     inkscape:cx="268.97665"
      inkscape:cy="160.29201"
-     inkscape:current-layer="original" />
+     inkscape:current-layer="security" />
   <defs
      id="defs1">
-    <marker
-       style="overflow:visible"
-       id="ArrowWide"
-       refX="0"
-       refY="0"
-       orient="auto-start-reverse"
-       inkscape:stockid="Wide arrow"
-       markerWidth="1"
-       markerHeight="1"
-       viewBox="0 0 1 1"
-       inkscape:isstock="true"
-       inkscape:collect="always"
-       preserveAspectRatio="xMidYMid">
-      <path
-         style="fill:none;stroke:context-stroke;stroke-width:1;stroke-linecap:butt"
-         d="M 3,-3 0,0 3,3"
-         transform="rotate(180,0.125,0)"
-         sodipodi:nodetypes="ccc"
-         id="path1" />
-    </marker>
     <marker
        style="overflow:visible"
        id="ArrowWide_Fnone_S-000000-7"
@@ -91,368 +71,482 @@
     </marker>
   </defs>
   <g
-     inkscape:label="svcb"
      inkscape:groupmode="layer"
-     id="svcb">
-    <text
-       xml:space="preserve"
-       style="color:#000000;font-size:2.82222px;line-height:3.175px;font-family:'TeX Gyre Adventor';-inkscape-font-specification:'TeX Gyre Adventor';text-decoration:none;text-decoration-line:none;letter-spacing:0px;word-spacing:0px;overflow:visible;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="100.47408"
-       y="7.7828422"
-       id="text8-4-4-8"><tspan
-         sodipodi:role="line"
-         style="font-size:2.82222px;line-height:3.175px;stroke:none;stroke-width:0.264583px"
+     id="security"
+     inkscape:label="security">
+    <g
+       inkscape:label="svcb"
+       inkscape:groupmode="layer"
+       id="svcb">
+      <text
+         xml:space="preserve"
+         style="color:#000000;font-size:2.82222px;line-height:3.175px;font-family:'TeX Gyre Adventor';-inkscape-font-specification:'TeX Gyre Adventor';text-decoration:none;text-decoration-line:none;letter-spacing:0px;word-spacing:0px;overflow:visible;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
          x="100.47408"
          y="7.7828422"
-         id="tspan28-3">SVCB lookup</tspan><tspan
-         sodipodi:role="line"
-         style="font-size:2.82222px;line-height:3.175px;stroke:none;stroke-width:0.264583px"
-         x="100.47408"
-         y="10.957842"
-         id="tspan36">for _coap.example.com</tspan></text>
-    <text
-       xml:space="preserve"
-       style="color:#000000;font-size:4.23333px;line-height:4.7625px;font-family:'TeX Gyre Adventor';-inkscape-font-specification:'TeX Gyre Adventor';text-decoration:none;text-decoration-line:none;letter-spacing:0px;word-spacing:0px;overflow:visible;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="59.824829"
-       y="7.6659193"
-       id="text1-3-5-5-4"><tspan
-         sodipodi:role="line"
-         style="font-size:4.23333px;line-height:4.7625px;fill:#800080;stroke:none;stroke-width:0.264583px"
+         id="text8-4-4-8"><tspan
+           sodipodi:role="line"
+           style="font-size:2.82222px;line-height:3.175px;stroke:none;stroke-width:0.264583px"
+           x="100.47408"
+           y="7.7828422"
+           id="tspan28-3">SVCB lookup</tspan><tspan
+           sodipodi:role="line"
+           style="font-size:2.82222px;line-height:3.175px;stroke:none;stroke-width:0.264583px"
+           x="100.47408"
+           y="10.957842"
+           id="tspan36">for _coap.example.com</tspan></text>
+      <text
+         xml:space="preserve"
+         style="color:#000000;font-size:4.23333px;line-height:4.7625px;font-family:'TeX Gyre Adventor';-inkscape-font-specification:'TeX Gyre Adventor';text-decoration:none;text-decoration-line:none;letter-spacing:0px;word-spacing:0px;overflow:visible;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
          x="59.824829"
          y="7.6659193"
-         id="tspan2-4-6-4">this?</tspan></text>
-    <path
-       style="opacity:1;fill:none;stroke:#000000;stroke-width:0.5;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#ArrowWide_Fnone_S-000000)"
-       id="path34"
-       sodipodi:type="arc"
-       sodipodi:cx="64.257751"
-       sodipodi:cy="49.978603"
-       sodipodi:rx="61.348179"
-       sodipodi:ry="46.80566"
-       sodipodi:start="3.5801156"
-       sodipodi:end="5.7268391"
-       sodipodi:arc-type="arc"
-       d="M 8.7143489,30.104797 A 61.348179,46.80566 0 0 1 60.64572,3.254141 61.348179,46.80566 0 0 1 116.35403,25.261144"
-       sodipodi:open="true" />
-    <g
-       inkscape:groupmode="layer"
-       id="dnr"
-       inkscape:label="dnr">
+         id="text1-3-5-5-4"><tspan
+           sodipodi:role="line"
+           style="font-size:4.23333px;line-height:4.7625px;fill:#800080;stroke:none;stroke-width:0.264583px"
+           x="59.824829"
+           y="7.6659193"
+           id="tspan2-4-6-4">this?</tspan></text>
+      <path
+         style="opacity:1;fill:none;stroke:#000000;stroke-width:0.5;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#ArrowWide_Fnone_S-000000)"
+         id="path34"
+         sodipodi:type="arc"
+         sodipodi:cx="64.257751"
+         sodipodi:cy="49.978603"
+         sodipodi:rx="61.348179"
+         sodipodi:ry="46.80566"
+         sodipodi:start="3.5801156"
+         sodipodi:end="5.7268391"
+         sodipodi:arc-type="arc"
+         d="M 8.7143489,30.104797 A 61.348179,46.80566 0 0 1 60.64572,3.254141 61.348179,46.80566 0 0 1 116.35403,25.261144"
+         sodipodi:open="true" />
       <g
          inkscape:groupmode="layer"
-         id="original"
-         inkscape:label="original">
+         id="dnr"
+         inkscape:label="dnr">
         <g
-           id="g12"
-           transform="translate(-12.144648,-12.754582)">
-          <text
-             xml:space="preserve"
-             style="color:#000000;font-size:4.23333px;line-height:4.7625px;font-family:'TeX Gyre Adventor';-inkscape-font-specification:'TeX Gyre Adventor';text-decoration:none;text-decoration-line:none;letter-spacing:0px;word-spacing:0px;overflow:visible;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-             x="67.504738"
-             y="44.895779"
-             id="text1-3"><tspan
-               sodipodi:role="line"
-               style="font-size:4.23333px;line-height:4.7625px;fill:#000000;stroke:none;stroke-width:0.264583px"
+           inkscape:groupmode="layer"
+           id="original"
+           inkscape:label="original">
+          <g
+             id="g12"
+             transform="translate(-12.144648,-12.754582)">
+            <text
+               xml:space="preserve"
+               style="color:#000000;font-size:4.23333px;line-height:4.7625px;font-family:'TeX Gyre Adventor';-inkscape-font-specification:'TeX Gyre Adventor';text-decoration:none;text-decoration-line:none;letter-spacing:0px;word-spacing:0px;overflow:visible;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
                x="67.504738"
                y="44.895779"
-               id="tspan2">CoAP message</tspan></text>
+               id="text1-3"><tspan
+                 sodipodi:role="line"
+                 style="font-size:4.23333px;line-height:4.7625px;fill:#000000;stroke:none;stroke-width:0.264583px"
+                 x="67.504738"
+                 y="44.895779"
+                 id="tspan2">CoAP message</tspan></text>
+            <text
+               xml:space="preserve"
+               style="color:#000000;font-size:2.82222px;line-height:3.175px;font-family:'TeX Gyre Adventor';-inkscape-font-specification:'TeX Gyre Adventor';text-decoration:none;text-decoration-line:none;letter-spacing:0px;word-spacing:0px;overflow:visible;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+               x="67.565491"
+               y="48.400261"
+               id="text8"><tspan
+                 sodipodi:role="line"
+                 id="tspan8"
+                 style="font-size:2.82222px;line-height:3.175px;stroke:none;stroke-width:0.264583px"
+                 x="67.565491"
+                 y="48.400261">Envelope: UDP</tspan><tspan
+                 sodipodi:role="line"
+                 style="font-size:2.82222px;line-height:3.175px;stroke:none;stroke-width:0.264583px"
+                 x="67.565491"
+                 y="51.57526"
+                 id="tspan19">    to [2001:db8::1]:5863</tspan><tspan
+                 sodipodi:role="line"
+                 style="font-size:2.82222px;line-height:3.175px;stroke:none;stroke-width:0.264583px"
+                 x="67.565491"
+                 y="54.750259"
+                 id="tspan18">Header: GET</tspan><tspan
+                 sodipodi:role="line"
+                 style="font-size:2.82222px;line-height:3.175px;stroke:none;stroke-width:0.264583px"
+                 x="67.565491"
+                 y="57.925262"
+                 id="tspan17">Options:</tspan><tspan
+                 sodipodi:role="line"
+                 style="font-size:2.82222px;line-height:3.175px;stroke:none;stroke-width:0.264583px"
+                 x="67.565491"
+                 y="61.100262"
+                 id="tspan9">    Uri-Host: example.com</tspan><tspan
+                 sodipodi:role="line"
+                 style="font-size:2.82222px;line-height:3.175px;stroke:none;stroke-width:0.264583px"
+                 x="67.565491"
+                 y="64.275261"
+                 id="tspan11">    Uri-Path: d</tspan></text>
+          </g>
           <text
              xml:space="preserve"
-             style="color:#000000;font-size:2.82222px;line-height:3.175px;font-family:'TeX Gyre Adventor';-inkscape-font-specification:'TeX Gyre Adventor';text-decoration:none;text-decoration-line:none;letter-spacing:0px;word-spacing:0px;overflow:visible;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-             x="67.565491"
-             y="48.400261"
-             id="text8"><tspan
-               sodipodi:role="line"
-               id="tspan8"
-               style="font-size:2.82222px;line-height:3.175px;stroke:none;stroke-width:0.264583px"
-               x="67.565491"
-               y="48.400261">Envelope: UDP</tspan><tspan
-               sodipodi:role="line"
-               style="font-size:2.82222px;line-height:3.175px;stroke:none;stroke-width:0.264583px"
-               x="67.565491"
-               y="51.57526"
-               id="tspan19">    to [2001:db8::1]:5863</tspan><tspan
-               sodipodi:role="line"
-               style="font-size:2.82222px;line-height:3.175px;stroke:none;stroke-width:0.264583px"
-               x="67.565491"
-               y="54.750259"
-               id="tspan18">Header: GET</tspan><tspan
-               sodipodi:role="line"
-               style="font-size:2.82222px;line-height:3.175px;stroke:none;stroke-width:0.264583px"
-               x="67.565491"
-               y="57.925262"
-               id="tspan17">Options:</tspan><tspan
-               sodipodi:role="line"
-               style="font-size:2.82222px;line-height:3.175px;stroke:none;stroke-width:0.264583px"
-               x="67.565491"
-               y="61.100262"
-               id="tspan9">    Uri-Host: example.com</tspan><tspan
-               sodipodi:role="line"
-               style="font-size:2.82222px;line-height:3.175px;stroke:none;stroke-width:0.264583px"
-               x="67.565491"
-               y="64.275261"
-               id="tspan11">    Uri-Path: d</tspan></text>
-        </g>
-        <text
-           xml:space="preserve"
-           style="color:#000000;font-size:4.23333px;line-height:4.7625px;font-family:'TeX Gyre Adventor';-inkscape-font-specification:'TeX Gyre Adventor';text-decoration:none;text-decoration-line:none;letter-spacing:0px;word-spacing:0px;overflow:visible;fill:#800080;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-           x="39.75412"
-           y="37.115273"
-           id="text1-3-52-2"><tspan
-             sodipodi:role="line"
-             style="font-size:4.23333px;line-height:4.7625px;fill:#800080;stroke:none;stroke-width:0.264583px"
+             style="color:#000000;font-size:4.23333px;line-height:4.7625px;font-family:'TeX Gyre Adventor';-inkscape-font-specification:'TeX Gyre Adventor';text-decoration:none;text-decoration-line:none;letter-spacing:0px;word-spacing:0px;overflow:visible;fill:#800080;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
              x="39.75412"
              y="37.115273"
-             id="tspan2-5-6">RFC</tspan><tspan
-             sodipodi:role="line"
-             style="font-size:4.23333px;line-height:4.7625px;fill:#800080;stroke:none;stroke-width:0.264583px"
-             x="39.75412"
-             y="41.877773"
-             id="tspan30">7252</tspan></text>
+             id="text1-3-52-2"><tspan
+               sodipodi:role="line"
+               style="font-size:4.23333px;line-height:4.7625px;fill:#800080;stroke:none;stroke-width:0.264583px"
+               x="39.75412"
+               y="37.115273"
+               id="tspan2-5-6">RFC</tspan><tspan
+               sodipodi:role="line"
+               style="font-size:4.23333px;line-height:4.7625px;fill:#800080;stroke:none;stroke-width:0.264583px"
+               x="39.75412"
+               y="41.877773"
+               id="tspan30">7252</tspan></text>
+          <g
+             id="g12-4"
+             transform="translate(-65.043037,-9.5559423)">
+            <text
+               xml:space="preserve"
+               style="color:#000000;font-size:4.23333px;line-height:4.7625px;font-family:'TeX Gyre Adventor';-inkscape-font-specification:'TeX Gyre Adventor';text-decoration:none;text-decoration-line:none;letter-spacing:0px;word-spacing:0px;overflow:visible;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+               x="67.504738"
+               y="44.895779"
+               id="text1-3-52"><tspan
+                 sodipodi:role="line"
+                 style="font-size:4.23333px;line-height:4.7625px;fill:#000000;stroke:none;stroke-width:0.264583px"
+                 x="67.504738"
+                 y="44.895779"
+                 id="tspan2-5">URI</tspan></text>
+            <text
+               xml:space="preserve"
+               style="color:#000000;font-size:2.82222px;line-height:3.175px;font-family:'TeX Gyre Adventor';-inkscape-font-specification:'TeX Gyre Adventor';text-decoration:none;text-decoration-line:none;letter-spacing:0px;word-spacing:0px;overflow:visible;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+               x="67.565491"
+               y="48.400261"
+               id="text8-4"><tspan
+                 sodipodi:role="line"
+                 style="font-size:2.82222px;line-height:3.175px;stroke:none;stroke-width:0.264583px"
+                 x="67.565491"
+                 y="48.400261"
+                 id="tspan11-7">coap://example.com/d</tspan></text>
+          </g>
+          <path
+             style="fill:none;stroke:#000000;stroke-width:0.5;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#ArrowWide_Fnone_S-000000-7)"
+             id="path27"
+             sodipodi:type="arc"
+             sodipodi:cx="44.566467"
+             sodipodi:cy="38.223213"
+             sodipodi:rx="13.9466"
+             sodipodi:ry="13.9466"
+             sodipodi:start="3.499433"
+             sodipodi:end="5.4730657"
+             sodipodi:arc-type="arc"
+             d="m 31.503309,33.338386 a 13.9466,13.9466 0 0 1 9.936092,-8.706681 13.9466,13.9466 0 0 1 12.742017,3.489015"
+             sodipodi:open="true" />
+          <text
+             xml:space="preserve"
+             style="color:#000000;font-size:2.82222px;line-height:3.175px;font-family:'TeX Gyre Adventor';-inkscape-font-specification:'TeX Gyre Adventor';text-decoration:none;text-decoration-line:none;letter-spacing:0px;word-spacing:0px;overflow:visible;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+             x="35.933998"
+             y="16.38879"
+             id="text8-4-4"><tspan
+               sodipodi:role="line"
+               style="font-size:2.82222px;line-height:3.175px;stroke:none;stroke-width:0.264583px"
+               x="35.933998"
+               y="16.38879"
+               id="tspan11-7-9">A / AAAA lookup</tspan><tspan
+               sodipodi:role="line"
+               style="font-size:2.82222px;line-height:3.175px;stroke:none;stroke-width:0.264583px"
+               x="35.933998"
+               y="19.563789"
+               id="tspan27">(with unique transport</tspan><tspan
+               sodipodi:role="line"
+               style="font-size:2.82222px;line-height:3.175px;stroke:none;stroke-width:0.264583px"
+               x="35.933998"
+               y="22.738791"
+               id="tspan28">per scheme if successful)</tspan></text>
+          <path
+             style="fill:none;stroke:#000000;stroke-width:0.5;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#ArrowWide_Fnone_S-000000-7)"
+             id="path27-9"
+             sodipodi:type="arc"
+             sodipodi:cx="44.566467"
+             sodipodi:cy="38.223213"
+             sodipodi:rx="13.9466"
+             sodipodi:ry="13.9466"
+             sodipodi:start="0.72658025"
+             sodipodi:end="2.9201904"
+             sodipodi:arc-type="arc"
+             d="M 54.990861,47.488183 A 13.9466,13.9466 0 0 1 41.08105,51.727269 13.9466,13.9466 0 0 1 30.960297,41.285857"
+             sodipodi:open="true" />
+        </g>
         <g
-           id="g12-4"
-           transform="translate(-65.043037,-9.5559423)">
+           id="g12-4-7"
+           transform="translate(-43.21825,33.547725)">
           <text
              xml:space="preserve"
              style="color:#000000;font-size:4.23333px;line-height:4.7625px;font-family:'TeX Gyre Adventor';-inkscape-font-specification:'TeX Gyre Adventor';text-decoration:none;text-decoration-line:none;letter-spacing:0px;word-spacing:0px;overflow:visible;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
              x="67.504738"
              y="44.895779"
-             id="text1-3-52"><tspan
+             id="text1-3-52-7"><tspan
                sodipodi:role="line"
                style="font-size:4.23333px;line-height:4.7625px;fill:#000000;stroke:none;stroke-width:0.264583px"
                x="67.504738"
                y="44.895779"
-               id="tspan2-5">URI</tspan></text>
+               id="tspan2-5-67">DDR / <tspan
+   style="fill:#800080"
+   id="tspan33">RFC9462</tspan></tspan></text>
           <text
              xml:space="preserve"
              style="color:#000000;font-size:2.82222px;line-height:3.175px;font-family:'TeX Gyre Adventor';-inkscape-font-specification:'TeX Gyre Adventor';text-decoration:none;text-decoration-line:none;letter-spacing:0px;word-spacing:0px;overflow:visible;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
              x="67.565491"
              y="48.400261"
-             id="text8-4"><tspan
+             id="text8-4-3"><tspan
                sodipodi:role="line"
                style="font-size:2.82222px;line-height:3.175px;stroke:none;stroke-width:0.264583px"
                x="67.565491"
                y="48.400261"
-               id="tspan11-7">coap://example.com/d</tspan></text>
+               id="tspan11-7-6">Query:</tspan><tspan
+               sodipodi:role="line"
+               style="font-size:2.82222px;line-height:3.175px;stroke:none;stroke-width:0.264583px"
+               x="67.565491"
+               y="51.57526"
+               id="tspan31">_dns.$DOMAIN IN SVCB</tspan></text>
         </g>
-        <path
-           style="fill:none;stroke:#000000;stroke-width:0.5;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#ArrowWide_Fnone_S-000000-7)"
-           id="path27"
-           sodipodi:type="arc"
-           sodipodi:cx="44.566467"
-           sodipodi:cy="38.223213"
-           sodipodi:rx="13.9466"
-           sodipodi:ry="13.9466"
-           sodipodi:start="3.499433"
-           sodipodi:end="5.4730657"
-           sodipodi:arc-type="arc"
-           d="m 31.503309,33.338386 a 13.9466,13.9466 0 0 1 9.936092,-8.706681 13.9466,13.9466 0 0 1 12.742017,3.489015"
-           sodipodi:open="true" />
-        <text
-           xml:space="preserve"
-           style="color:#000000;font-size:2.82222px;line-height:3.175px;font-family:'TeX Gyre Adventor';-inkscape-font-specification:'TeX Gyre Adventor';text-decoration:none;text-decoration-line:none;letter-spacing:0px;word-spacing:0px;overflow:visible;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-           x="35.933998"
-           y="16.38879"
-           id="text8-4-4"><tspan
-             sodipodi:role="line"
-             style="font-size:2.82222px;line-height:3.175px;stroke:none;stroke-width:0.264583px"
-             x="35.933998"
-             y="16.38879"
-             id="tspan11-7-9">A / AAAA lookup</tspan><tspan
-             sodipodi:role="line"
-             style="font-size:2.82222px;line-height:3.175px;stroke:none;stroke-width:0.264583px"
-             x="35.933998"
-             y="19.563789"
-             id="tspan27">(with unique transport</tspan><tspan
-             sodipodi:role="line"
-             style="font-size:2.82222px;line-height:3.175px;stroke:none;stroke-width:0.264583px"
-             x="35.933998"
-             y="22.738791"
-             id="tspan28">per scheme if successful)</tspan></text>
-        <path
-           style="fill:none;stroke:#000000;stroke-width:0.5;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#ArrowWide_Fnone_S-000000-7)"
-           id="path27-9"
-           sodipodi:type="arc"
-           sodipodi:cx="44.566467"
-           sodipodi:cy="38.223213"
-           sodipodi:rx="13.9466"
-           sodipodi:ry="13.9466"
-           sodipodi:start="0.72658025"
-           sodipodi:end="2.9201904"
-           sodipodi:arc-type="arc"
-           d="M 54.990861,47.488183 A 13.9466,13.9466 0 0 1 41.08105,51.727269 13.9466,13.9466 0 0 1 30.960297,41.285857"
-           sodipodi:open="true" />
-      </g>
-      <g
-         id="g12-4-7"
-         transform="translate(-43.21825,33.547725)">
-        <text
-           xml:space="preserve"
-           style="color:#000000;font-size:4.23333px;line-height:4.7625px;font-family:'TeX Gyre Adventor';-inkscape-font-specification:'TeX Gyre Adventor';text-decoration:none;text-decoration-line:none;letter-spacing:0px;word-spacing:0px;overflow:visible;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-           x="67.504738"
-           y="44.895779"
-           id="text1-3-52-7"><tspan
-             sodipodi:role="line"
-             style="font-size:4.23333px;line-height:4.7625px;fill:#000000;stroke:none;stroke-width:0.264583px"
+        <g
+           id="g12-4-7-9"
+           transform="translate(19.800806,33.693875)">
+          <text
+             xml:space="preserve"
+             style="color:#000000;font-size:4.23333px;line-height:4.7625px;font-family:'TeX Gyre Adventor';-inkscape-font-specification:'TeX Gyre Adventor';text-decoration:none;text-decoration-line:none;letter-spacing:0px;word-spacing:0px;overflow:visible;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
              x="67.504738"
              y="44.895779"
-             id="tspan2-5-67">DDR / <tspan
-   style="fill:#800080"
-   id="tspan33">RFC9462</tspan></tspan></text>
-        <text
-           xml:space="preserve"
-           style="color:#000000;font-size:2.82222px;line-height:3.175px;font-family:'TeX Gyre Adventor';-inkscape-font-specification:'TeX Gyre Adventor';text-decoration:none;text-decoration-line:none;letter-spacing:0px;word-spacing:0px;overflow:visible;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-           x="67.565491"
-           y="48.400261"
-           id="text8-4-3"><tspan
-             sodipodi:role="line"
-             style="font-size:2.82222px;line-height:3.175px;stroke:none;stroke-width:0.264583px"
-             x="67.565491"
-             y="48.400261"
-             id="tspan11-7-6">Query:</tspan><tspan
-             sodipodi:role="line"
-             style="font-size:2.82222px;line-height:3.175px;stroke:none;stroke-width:0.264583px"
-             x="67.565491"
-             y="51.57526"
-             id="tspan31">_dns.$DOMAIN IN SVCB</tspan></text>
-      </g>
-      <g
-         id="g12-4-7-9"
-         transform="translate(19.800806,33.693875)">
-        <text
-           xml:space="preserve"
-           style="color:#000000;font-size:4.23333px;line-height:4.7625px;font-family:'TeX Gyre Adventor';-inkscape-font-specification:'TeX Gyre Adventor';text-decoration:none;text-decoration-line:none;letter-spacing:0px;word-spacing:0px;overflow:visible;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-           x="67.504738"
-           y="44.895779"
-           id="text1-3-52-7-4"><tspan
-             sodipodi:role="line"
-             style="font-size:4.23333px;line-height:4.7625px;fill:#000000;stroke:none;stroke-width:0.264583px"
-             x="67.504738"
-             y="44.895779"
-             id="tspan2-5-67-8">DNR / <tspan
+             id="text1-3-52-7-4"><tspan
+               sodipodi:role="line"
+               style="font-size:4.23333px;line-height:4.7625px;fill:#000000;stroke:none;stroke-width:0.264583px"
+               x="67.504738"
+               y="44.895779"
+               id="tspan2-5-67-8">DNR / <tspan
    style="fill:#800080"
    id="tspan34">RFC9463</tspan></tspan></text>
-        <text
-           xml:space="preserve"
-           style="color:#000000;font-size:2.82222px;line-height:3.175px;font-family:'TeX Gyre Adventor';-inkscape-font-specification:'TeX Gyre Adventor';text-decoration:none;text-decoration-line:none;letter-spacing:0px;word-spacing:0px;overflow:visible;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-           x="67.565491"
-           y="48.400261"
-           id="text8-4-3-1"><tspan
-             sodipodi:role="line"
-             style="font-size:2.82222px;line-height:3.175px;stroke:none;stroke-width:0.264583px"
+          <text
+             xml:space="preserve"
+             style="color:#000000;font-size:2.82222px;line-height:3.175px;font-family:'TeX Gyre Adventor';-inkscape-font-specification:'TeX Gyre Adventor';text-decoration:none;text-decoration-line:none;letter-spacing:0px;word-spacing:0px;overflow:visible;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
              x="67.565491"
              y="48.400261"
-             id="tspan31-9">DHCPv6 or RA provides</tspan><tspan
-             sodipodi:role="line"
-             style="font-size:2.82222px;line-height:3.175px;stroke:none;stroke-width:0.264583px"
-             x="67.565491"
-             y="51.57526"
-             id="tspan32">SVCB-ish data</tspan></text>
-      </g>
-      <g
-         id="g12-5"
-         transform="translate(47.229896,-14.144095)">
+             id="text8-4-3-1"><tspan
+               sodipodi:role="line"
+               style="font-size:2.82222px;line-height:3.175px;stroke:none;stroke-width:0.264583px"
+               x="67.565491"
+               y="48.400261"
+               id="tspan31-9">DHCPv6 or RA provides</tspan><tspan
+               sodipodi:role="line"
+               style="font-size:2.82222px;line-height:3.175px;stroke:none;stroke-width:0.264583px"
+               x="67.565491"
+               y="51.57526"
+               id="tspan32">SVCB-ish data</tspan></text>
+        </g>
+        <g
+           id="g12-5"
+           transform="translate(47.229896,-14.144095)">
+          <text
+             xml:space="preserve"
+             style="color:#000000;font-size:4.23333px;line-height:4.7625px;font-family:'TeX Gyre Adventor';-inkscape-font-specification:'TeX Gyre Adventor';text-decoration:none;text-decoration-line:none;letter-spacing:0px;word-spacing:0px;overflow:visible;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+             x="67.504738"
+             y="44.895779"
+             id="text1-3-5"><tspan
+               sodipodi:role="line"
+               style="font-size:4.23333px;line-height:4.7625px;fill:#000000;stroke:none;stroke-width:0.264583px"
+               x="67.504738"
+               y="44.895779"
+               id="tspan2-4">SVCB data</tspan></text>
+          <text
+             xml:space="preserve"
+             style="color:#000000;font-size:2.82222px;line-height:3.175px;font-family:'TeX Gyre Adventor';-inkscape-font-specification:'TeX Gyre Adventor';text-decoration:none;text-decoration-line:none;letter-spacing:0px;word-spacing:0px;overflow:visible;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+             x="68.351112"
+             y="48.377918"
+             id="text8-7"><tspan
+               sodipodi:role="line"
+               id="tspan8-6"
+               style="font-size:2.82222px;line-height:3.175px;stroke:none;stroke-width:0.264583px"
+               x="68.351112"
+               y="48.377918">Service: _dns</tspan><tspan
+               sodipodi:role="line"
+               style="font-size:2.82222px;line-height:3.175px;stroke:none;stroke-width:0.264583px"
+               x="68.351112"
+               y="51.552917"
+               id="tspan16">Name: example.com</tspan><tspan
+               sodipodi:role="line"
+               style="font-size:2.82222px;line-height:3.175px;stroke:none;stroke-width:0.264583px"
+               x="68.351112"
+               y="54.727917"
+               id="tspan15">Sevice Params:</tspan><tspan
+               sodipodi:role="line"
+               style="font-size:2.82222px;line-height:3.175px;stroke:none;stroke-width:0.264583px"
+               x="68.351112"
+               y="57.90292"
+               id="tspan9-5">    coap-transport=udp</tspan><tspan
+               sodipodi:role="line"
+               style="font-size:2.82222px;line-height:3.175px;stroke:none;stroke-width:0.264583px"
+               x="68.351112"
+               y="61.077919"
+               id="tspan12">      (or alpn=co)</tspan><tspan
+               sodipodi:role="line"
+               style="font-size:2.82222px;line-height:3.175px;stroke:none;stroke-width:0.264583px"
+               x="68.351112"
+               y="64.252914"
+               id="tspan13">    port=5683</tspan><tspan
+               sodipodi:role="line"
+               style="font-size:2.82222px;line-height:3.175px;stroke:none;stroke-width:0.264583px"
+               x="68.351112"
+               y="67.427917"
+               id="tspan26">    docpath=[&quot;d&quot;]</tspan><tspan
+               sodipodi:role="line"
+               style="font-size:2.82222px;line-height:3.175px;stroke:none;stroke-width:0.264583px"
+               x="68.351112"
+               y="70.602921"
+               id="tspan11-6">AAAA: 2001:db8::1</tspan></text>
+        </g>
+        <path
+           style="fill:none;stroke:#000000;stroke-width:0.5;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#ArrowWide_Fnone_S-000000)"
+           id="path32"
+           sodipodi:type="arc"
+           sodipodi:cx="109.34812"
+           sodipodi:cy="72.811295"
+           sodipodi:rx="13.784099"
+           sodipodi:ry="13.784099"
+           sodipodi:start="3.1748914"
+           sodipodi:end="4.7288439"
+           sodipodi:open="true"
+           sodipodi:arc-type="arc"
+           d="M 95.571664,72.352386 A 13.784099,13.784099 0 0 1 109.57493,59.029062" />
+        <path
+           style="fill:none;stroke:#000000;stroke-width:0.499999;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#ArrowWide_Fnone_S-000000)"
+           id="path32-9"
+           inkscape:transform-center-x="-0.049588327"
+           inkscape:transform-center-y="88.849158"
+           sodipodi:type="arc"
+           sodipodi:cx="109.38928"
+           sodipodi:cy="147.95938"
+           sodipodi:rx="88.998528"
+           sodipodi:ry="88.998528"
+           sodipodi:start="4.1163008"
+           sodipodi:end="4.5630261"
+           sodipodi:open="true"
+           sodipodi:arc-type="arc"
+           d="M 59.424655,74.309711 A 88.998528,88.998528 0 0 1 96.145577,59.951755" />
+        <path
+           style="fill:none;stroke:#000000;stroke-width:0.499999;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#ArrowWide_Fnone_S-000000)"
+           d="M 112.39461,42.725482 H 88.557165"
+           id="path33" />
         <text
            xml:space="preserve"
            style="color:#000000;font-size:4.23333px;line-height:4.7625px;font-family:'TeX Gyre Adventor';-inkscape-font-specification:'TeX Gyre Adventor';text-decoration:none;text-decoration-line:none;letter-spacing:0px;word-spacing:0px;overflow:visible;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-           x="67.504738"
-           y="44.895779"
-           id="text1-3-5"><tspan
-             sodipodi:role="line"
-             style="font-size:4.23333px;line-height:4.7625px;fill:#000000;stroke:none;stroke-width:0.264583px"
-             x="67.504738"
-             y="44.895779"
-             id="tspan2-4">SVCB data</tspan></text>
-        <text
-           xml:space="preserve"
-           style="color:#000000;font-size:2.82222px;line-height:3.175px;font-family:'TeX Gyre Adventor';-inkscape-font-specification:'TeX Gyre Adventor';text-decoration:none;text-decoration-line:none;letter-spacing:0px;word-spacing:0px;overflow:visible;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-           x="68.351112"
-           y="48.377918"
-           id="text8-7"><tspan
-             sodipodi:role="line"
-             id="tspan8-6"
-             style="font-size:2.82222px;line-height:3.175px;stroke:none;stroke-width:0.264583px"
-             x="68.351112"
-             y="48.377918">Service: _dns</tspan><tspan
-             sodipodi:role="line"
-             style="font-size:2.82222px;line-height:3.175px;stroke:none;stroke-width:0.264583px"
-             x="68.351112"
-             y="51.552917"
-             id="tspan16">Name: example.com</tspan><tspan
-             sodipodi:role="line"
-             style="font-size:2.82222px;line-height:3.175px;stroke:none;stroke-width:0.264583px"
-             x="68.351112"
-             y="54.727917"
-             id="tspan15">Sevice Params:</tspan><tspan
-             sodipodi:role="line"
-             style="font-size:2.82222px;line-height:3.175px;stroke:none;stroke-width:0.264583px"
-             x="68.351112"
-             y="57.90292"
-             id="tspan9-5">    coap-transport=udp</tspan><tspan
-             sodipodi:role="line"
-             style="font-size:2.82222px;line-height:3.175px;stroke:none;stroke-width:0.264583px"
-             x="68.351112"
-             y="61.077919"
-             id="tspan12">      (or alpn=co)</tspan><tspan
-             sodipodi:role="line"
-             style="font-size:2.82222px;line-height:3.175px;stroke:none;stroke-width:0.264583px"
-             x="68.351112"
-             y="64.252914"
-             id="tspan13">    port=5683</tspan><tspan
-             sodipodi:role="line"
-             style="font-size:2.82222px;line-height:3.175px;stroke:none;stroke-width:0.264583px"
-             x="68.351112"
-             y="67.427917"
-             id="tspan26">    docpath=[&quot;d&quot;]</tspan><tspan
-             sodipodi:role="line"
-             style="font-size:2.82222px;line-height:3.175px;stroke:none;stroke-width:0.264583px"
-             x="68.351112"
-             y="70.602921"
-             id="tspan11-6">AAAA: 2001:db8::1</tspan></text>
-      </g>
-      <path
-         style="fill:none;stroke:#000000;stroke-width:0.5;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#ArrowWide_Fnone_S-000000)"
-         id="path32"
-         sodipodi:type="arc"
-         sodipodi:cx="109.34812"
-         sodipodi:cy="72.811295"
-         sodipodi:rx="13.784099"
-         sodipodi:ry="13.784099"
-         sodipodi:start="3.1748914"
-         sodipodi:end="4.7288439"
-         sodipodi:open="true"
-         sodipodi:arc-type="arc"
-         d="M 95.571664,72.352386 A 13.784099,13.784099 0 0 1 109.57493,59.029062" />
-      <path
-         style="fill:none;stroke:#000000;stroke-width:0.499999;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#ArrowWide_Fnone_S-000000)"
-         id="path32-9"
-         inkscape:transform-center-x="-0.049588327"
-         inkscape:transform-center-y="88.849158"
-         sodipodi:type="arc"
-         sodipodi:cx="109.38928"
-         sodipodi:cy="147.95938"
-         sodipodi:rx="88.998528"
-         sodipodi:ry="88.998528"
-         sodipodi:start="4.1163008"
-         sodipodi:end="4.5630261"
-         sodipodi:open="true"
-         sodipodi:arc-type="arc"
-         d="M 59.424655,74.309711 A 88.998528,88.998528 0 0 1 96.145577,59.951755" />
-      <path
-         style="fill:none;stroke:#000000;stroke-width:0.499999;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#ArrowWide_Fnone_S-000000)"
-         d="M 112.39461,42.725482 H 88.557165"
-         id="path33" />
-      <text
-         xml:space="preserve"
-         style="color:#000000;font-size:4.23333px;line-height:4.7625px;font-family:'TeX Gyre Adventor';-inkscape-font-specification:'TeX Gyre Adventor';text-decoration:none;text-decoration-line:none;letter-spacing:0px;word-spacing:0px;overflow:visible;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-         x="91.024277"
-         y="41.000008"
-         id="text1-3-5-5"><tspan
-           sodipodi:role="line"
-           style="font-size:4.23333px;line-height:4.7625px;fill:#800080;stroke:none;stroke-width:0.264583px"
            x="91.024277"
            y="41.000008"
-           id="tspan2-4-6">DoC / this</tspan></text>
+           id="text1-3-5-5"><tspan
+             sodipodi:role="line"
+             style="font-size:4.23333px;line-height:4.7625px;fill:#800080;stroke:none;stroke-width:0.264583px"
+             x="91.024277"
+             y="41.000008"
+             id="tspan2-4-6">DoC / this</tspan></text>
+      </g>
     </g>
+    <rect
+       style="fill:#ffffff;fill-opacity:0.668345;stroke-width:0.5;stroke-linejoin:round"
+       id="rect40-5-8-3"
+       width="6.3662648"
+       height="2.6234479"
+       x="126.42894"
+       y="47.853844" />
+    <text
+       xml:space="preserve"
+       style="color:#000000;font-size:2.82222px;line-height:3.175px;font-family:'TeX Gyre Adventor';-inkscape-font-specification:'TeX Gyre Adventor';text-decoration:none;text-decoration-line:none;letter-spacing:0px;word-spacing:0px;overflow:visible;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="115.58101"
+       y="34.233822"
+       id="text8-7-5"><tspan
+         sodipodi:role="line"
+         style="font-size:2.82222px;line-height:3.175px;stroke:none;stroke-width:0.264583px"
+         x="115.58101"
+         y="34.233822"
+         id="tspan11-6-7" /><tspan
+         sodipodi:role="line"
+         style="font-size:2.82222px;line-height:3.175px;stroke:none;stroke-width:0.264583px"
+         x="115.58101"
+         y="37.408821"
+         id="tspan14" /><tspan
+         sodipodi:role="line"
+         style="font-size:2.82222px;line-height:3.175px;stroke:none;stroke-width:0.264583px"
+         x="115.58101"
+         y="40.58382"
+         id="tspan20" /><tspan
+         sodipodi:role="line"
+         style="font-size:2.82222px;line-height:3.175px;stroke:none;stroke-width:0.264583px"
+         x="115.58101"
+         y="43.758823"
+         id="tspan21" /><tspan
+         sodipodi:role="line"
+         style="font-size:2.82222px;line-height:3.175px;stroke:none;stroke-width:0.264583px"
+         x="115.58101"
+         y="46.933823"
+         id="tspan22" /><tspan
+         sodipodi:role="line"
+         style="font-size:2.82222px;line-height:3.175px;stroke:none;stroke-width:0.264583px"
+         x="115.58101"
+         y="50.108822"
+         id="tspan23">              5384</tspan><tspan
+         sodipodi:role="line"
+         style="font-size:2.82222px;line-height:3.175px;stroke:none;stroke-width:0.264583px"
+         x="115.58101"
+         y="53.283821"
+         id="tspan24" /><tspan
+         sodipodi:role="line"
+         style="font-size:2.82222px;line-height:3.175px;stroke:none;stroke-width:0.264583px"
+         x="115.58101"
+         y="56.45882"
+         id="tspan25" /><tspan
+         sodipodi:role="line"
+         style="font-size:2.82222px;line-height:3.175px;stroke:none;stroke-width:0.264583px"
+         x="115.58101"
+         y="59.633823"
+         id="tspan1">TLSA: hexhex1234</tspan></text>
+    <rect
+       style="fill:#ffffff;fill-opacity:0.668345;stroke-width:0.5;stroke-linejoin:round"
+       id="rect40-5-8-3-7"
+       width="6.3662648"
+       height="2.6234479"
+       x="80.509621"
+       y="36.506035" />
+    <rect
+       style="fill:#ffffff;stroke-width:0.499999;stroke-linejoin:round;fill-opacity:0.66834545"
+       id="rect40"
+       width="5.8951974"
+       height="2.6234479"
+       x="69.366219"
+       y="33.380508" />
+    <text
+       xml:space="preserve"
+       style="color:#000000;font-size:2.82222px;line-height:3.175px;font-family:'TeX Gyre Adventor';-inkscape-font-specification:'TeX Gyre Adventor';text-decoration:none;text-decoration-line:none;letter-spacing:0px;word-spacing:0px;overflow:visible;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="55.420841"
+       y="35.645679"
+       id="text8-2"><tspan
+         sodipodi:role="line"
+         style="font-size:2.82222px;line-height:3.175px;stroke:none;stroke-width:0.264583px"
+         x="55.420841"
+         y="35.645679"
+         id="tspan29">                  DTLS requiring hexhex1234</tspan><tspan
+         sodipodi:role="line"
+         style="font-size:2.82222px;line-height:3.175px;stroke:none;stroke-width:0.264583px"
+         x="55.420841"
+         y="38.820679"
+         id="tspan40">                                5384</tspan></text>
+    <rect
+       style="fill:#ffffff;fill-opacity:0.668345;stroke-width:0.5;stroke-linejoin:round"
+       id="rect40-5"
+       width="29.457277"
+       height="2.6897969"
+       x="118.71381"
+       y="41.679367" />
+    <rect
+       style="fill:#ffffff;fill-opacity:0.668345;stroke-width:0.5;stroke-linejoin:round"
+       id="rect40-5-8"
+       width="7.0740647"
+       height="2.6234479"
+       x="117.7638"
+       y="44.844036" />
+    <rect
+       style="fill:#ffffff;fill-opacity:0.668345;stroke-width:0.5;stroke-linejoin:round"
+       id="rect40-5-8-6"
+       width="7.0740647"
+       height="2.6234479"
+       x="136.39505"
+       y="44.933525" />
   </g>
 </svg>
