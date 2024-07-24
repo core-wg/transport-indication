@@ -2,7 +2,7 @@
 
 % about the presentation
 \title[CoAP Transport Indication]{CoAP Transport Indication}
-\subtitle{\ietfdraft{ietf-core-transport-indication-06}}
+\subtitle{\texttt{ietf-core-transport-indication-06}}
 \author{\textit{Christian~Amsüss}, Martine~Lenders}
 \date{2024-07-24 \\CoRE at IETF 120 in Vancouver}
 
@@ -75,26 +75,24 @@
   \ldots without moving away from ``transports are proxies'' as a guiding principle
 \end{frame}
 
-\begin{frame}[fragile]{SVCB components}
 % * DNR describes handling of SVCB data -- generalized
 % * SVCB handling was mushy: mix of DNR actual-use-case, next-ip-based-should and what-if history
 % * plot: flows
-  figer WIP / to be updated in iteration:
 
-\begin{verbatim}
-       A / AAAA
-       _____    ___ _coap SVCB
-      /      \     \
-              v     v
-URI  <--->   full message  <---->   SVCB param set
-     1     (transport proto etc)        (_coap or _dns,
-                 _________________->    latter w/ path)
-                /             /
-[ SVCB from DDR ]      [ SVCBish from RA / DHCP ]
 
-for future msgs can only go left with SVCB literals
-\end{verbatim}
+\begin{frame}{Rough URI equivalents}
+\vspace{-1cm}
+\includegraphics{.generated/components-clip-original.pdf}
+\end{frame}
 
+\begin{frame}{DNS discovery requirements}
+\vspace{-1cm}
+\includegraphics{.generated/components-clip-dnr.pdf}
+\end{frame}
+
+\begin{frame}{Using SVCB}
+\vspace{-1cm}
+\includegraphics{.generated/components-clip-svcb.pdf}
 \end{frame}
 
 \begin{frame}{SVCB records for name resolutions}\Large
