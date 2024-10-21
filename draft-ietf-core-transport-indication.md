@@ -153,7 +153,7 @@ any suitable mechanism to keep client updated,
 such as placing a suitable Max-Age value on their resources
 or having them observable.
 
-## Core principle: Transports are proxies
+## Core principle: Transport endpoints are proxies
 
 CoAP does not need any special provisions to send the same request for a single resource through different transports:
 A request to any globally addressable resource
