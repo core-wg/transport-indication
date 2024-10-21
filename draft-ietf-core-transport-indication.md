@@ -458,7 +458,8 @@ This makes for efficient requests (with no Proxy-Scheme or Uri-Host option),
 but in general is discouraged {{aliases}}.
 
 To make efficient requests possible without creating URI aliases that propagate,
-the "has-unique-proxy" specialization of the has-proxy relation is defined.
+the "has-unique-proxy" specialization of the has-proxy relation
+and the "is-unique-proxy" SVCB parameter are defined.
 
 If a proxy is unique,
 it means that requests arriving at the proxy are treated the same
@@ -785,6 +786,11 @@ and independently of whether they apply to the `_coap` / `_coaps` service or ano
   The names registered for existing transports are identical to the URI schemes that indicate their use in the absence of Service Binding Parameters.
 
   \[ It is left for review by SVCB experts whether these are a separate parameter space or we should just take ALPNs for them, like eg. h2c does. \]
+
+* `is-unique-proxy`: This is a new parameter defined in this document,
+  and equivalent to the `has-unique-proxy` in its semantics.
+
+  Its value is empty.
 
 * `edhoc-cred`: This is a new parameter defined in this document, and describes that EDHOC can be used with the server, and which credentials can authenticate the server.
 
