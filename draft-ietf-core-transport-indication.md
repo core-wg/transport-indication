@@ -102,10 +102,9 @@ but CoAP implementations commonly support several of them,
 and proxies can translate between them.
 
 CoAP currently lacks a way to indicate which transports are available for a given resource,
-and to indicate that a device is prepared to serve as a proxy;
-this document solves both by introducing the "has-proxy" terminology to Web Linking {{!RFC8288}} that expresses the former through the latter.
-The additional "has-unique-proxy" term is introduced
-to negate any per-request overhead that would otherwise be introduced in the course of this.
+and which endpoints are available for them.
+This document introduces ways to discover
+and how to use them.
 
 CoAP also lacks a unified scheme to label a resource in a transport-independent way.
 This document does *not* attempt to introduce any new scheme here,
@@ -121,6 +120,13 @@ and link format {{!RFC6690}}
 (or, equivalently, web links as described in {{RFC8288}}).
 
 The phrase "the transport indicated by (a URI)" is used as described in {{identifying}}.
+
+A protocol that implements CoAP request-response semantics for a lower layer
+is called a "(CoAP) transport".
+
+When the term "endpoint" is used in this document,
+it is generalized from the {{RFC7252}} definition
+to mean the transport and any multiplexing information particular to that transport.
 
 ## Goals
 
@@ -146,6 +152,29 @@ Hosts whose transport's availability changes over time can utilize
 any suitable mechanism to keep client updated,
 such as placing a suitable Max-Age value on their resources
 or having them observable.
+
+## Core principle: Transports are proxies
+
+CoAP does not need any special provisions to send the same request for a single resource through different transports:
+A request to any globally addressable resource
+can be sent to any endpoint
+by phrasing it as a proxy request.
+
+Whether that endpoint is
+trusted to,
+capable to
+and willing to
+relay that request,
+and how to find suitable endpoints
+to serve as a proxy for a request
+is discussed in this document.
+
+When resource identifiers have different meanings depending on the host.
+the applicability of this document is limited.
+[^applicabilitylimited]
+Examples of such resources are those whose URIs including loopback addresses or partially-qualified domain names.
+
+[^applicabilitylimited]: Possibly not limited a lot, but we have not looked into those cases in detail yet. --CA
 
 ## Concepts
 
