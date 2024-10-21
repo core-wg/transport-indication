@@ -911,7 +911,7 @@ While it is up to the service to define the service's semantics,
 this section applies to any service
 whose use with CoAP is defined by a normative referencing this section:
 
-* The client tries the available serivces with their ALPNs and CoAP transports
+* The client tries the available services with their ALPNs and CoAP transports
   according to its capabilities
   and the priorities and mandatory parameters
   as defined for Service Bindings.
@@ -920,7 +920,7 @@ whose use with CoAP is defined by a normative referencing this section:
   or it defines a Service Binding Parameter that describes the service's path on the described endpoint,
   or it defines both (and the well-known path is the default in absence of the defined parameter).
 
-  Th value is a CBOR sequence {{!RFC8742}} of text strings,
+  The value is a CBOR sequence {{!RFC8742}} of text strings,
   which represent Uri-Path options in a CoAP request,
   or (equivalently) the path of a CRI reference
   {{I-D.ietf-core-href}}.
@@ -934,7 +934,7 @@ whose use with CoAP is defined by a normative referencing this section:
 
   To access the service,
   a client sets the text string values
-  of the used Service Binding
+  of the used Service Binding parameter
   as Uri-Path options in the request.
 
   If the resource is unavailable,
