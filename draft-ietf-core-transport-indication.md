@@ -741,6 +741,7 @@ given that any applications needs to describe its security requirements anyway,
 and can just as well apply them to "coap"? \]
 
 Some SVCB parameters have defaults; for those new services, these are:
+
 * port: 5683 for `_coap`, 5684 for `_coaps`
 * ALPN: empty for `_coap`, "co" for `_coaps`
 * coaptransport: "udp" for `_coap`, empty for `_coaps`
