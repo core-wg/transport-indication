@@ -701,12 +701,14 @@ If the forward proxy was only used out of necessity
 (e.g., to access a resource whose indicated transport not supported by the client)
 it can be practical for the client to use the advertised proxy instead.
 
-# Transport indication from non-link sources: Service Binding Parameters
+# Service Binding Parameters for CoAP transports
 
 Discovery mechanisms that exist in DNS {{?RFC9460}}, DHCP, Router Advertisements {{?RFC9463}} or other mechanisms
 can provide details already that would otherwise only be discovered later through proxy links.
 For when those details are provided in the shape of Service Binding Parameters,
 this section describes their interpretation in the context of CoAP transport indication.
+
+\[ The following paragraph is outdated, but its replacement will depend on the outcome of IETF121 discussions. \]
 
 The subsections in this section are arranged to describe a consistent sequential full picture.
 The capabilities of this big picture are not exercised by any application known at the time of draft publication.
@@ -716,37 +718,31 @@ and presents a unified solution framework.
 
 ## Discovering transport indication details from name resolution {#svcb-discovery}
 
-When a host finds a CoAP transport from a URI
-and the URI's authority component does not contain a precise address literal,
-the resolution mechanisms which it may try generally depend on the CoAP transports and their variation which it supports.
-For example, if it supports CoAP-over-UDP and IPv6,
-it requests AAAA records through DNS and look them up in a host file.
-
-This document extends this and registers the `_coap` and `_coaps` attrleaf labels
+This document registers the `_coap` attrleaf label
 in {{iana-underscored}}
 using the pattern described as described in {{Section 10.4.5 of !RFC9460}},
 and thus enables the use of SVCB records.
-This path is chosen over the creation of a new SVCB RR pair "COAP" / "COAPS"
+This path is chosen over the creation of a new SVCB RR "COAP"
 because it is considered unlikely that DNS implementations would update their code bases to apply SVCB behavior;
 this assumption will be revisited before registration.
 
-These can be used during the resolution of URIs using the "coap" or "coaps" schemes, respectively.
-No such labels are registered for other CoAP schemes that have been registered,
-as it is expected that applications that use them will prefer leaving the more detailed transport choice to the parameters.
-The "coaps" scheme comes with the expectation of using a secured transport.
-While discovered parameters can override this, components and applications
-MUST NOT select a transport and security mechanism combination with a reduced security level.
+These can be used during the resolution of URIs that use any CoAP scheme.
+The presence of an SVCB record for a registered name
+implies that any transport advertised in the record is suitable for proxying to
+resources of any CoAP scheme and that registered name,
+provided that a resource is available at that URI in the first place.
+This does not create URI aliasing:
+Any resource is still accessed at its original URI through the advertised proxy endpoints.
 
-\[ There is no formal description of what the requirements following "coaps" really are.
-Would it make sense to only register "coap" here, unifying the scheme space even further,
-given that any applications needs to describe its security requirements anyway,
-and can just as well apply them to "coap"? \]
+It is possible through this to advertise transports without transport layer security
+for URIs with the schemes "coaps", "coaps+tcp" and "coaps+ws".
+Unless the applications explicitly regards an object layer security mechanism as a sufficient replacement for transport layer security,
+those transports can not be selected for operations on such URIs as per {{secctx-propagation}}.
 
-Some SVCB parameters have defaults; for those new services, these are:
+Some SVCB parameters have defaults; for "_coap", these are:
 
-* port: 5683 for `_coap`, 5684 for `_coaps`
-* ALPN: empty for `_coap`, "co" for `_coaps`
-* coaptransport: "udp" for `_coap`, empty for `_coaps`
+* port: 5683
+* ALPN: empty
 
 As SVCB records were not specified for the existing CoAP transports originally,
 generic CoAP clients are not required to use the SVCB lookup mechanism,
@@ -757,6 +753,8 @@ Adding such a requirement is particularly useful if the application frequently a
 or when the application makes use of functionality afforded by {{?RFC9460}} such as apex domain redirection.
 (Had the SVCB specification predated the first new CoAP transports,
 that mechanism might have been used in the first place instead of additional schemes).
+
+\[ The following paragraph may need to be revisited depending on the outcome of IETF121 discussions. \]
 
 The effects on a client of seeing SVCB parameters are similar
 to those of seeing a "has-proxy" link from the origin to the URI built using {#svcblit}.
@@ -770,7 +768,7 @@ and the client could conclude that the implied proxy is a same-host proxy
 
 Several parameters are relevant in the context of CoAP,
 independently of whether they are used with SVCB records or Service Binding Parameters transported outside of SVCB records,
-and independently of whether they apply to the `_coap` / `_coaps` service or another service that can be used on top of CoAP (such as `_dns`):
+and independently of whether they apply to the `_coap` service or another service that can be used on top of CoAP (such as `_dns`):
 
 * `port`: The CoAP service using the transport described in this parameter is reachable on this port
   (described in {{RFC9460}}).
