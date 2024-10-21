@@ -1158,16 +1158,15 @@ and that their change controller is IETF.
 
 ## Underscored and Globally Scoped DNS Node Names {#iana-underscored}
 
-IANA is NOT YET requested to add the following entries to the Underscored and Globally Scoped DNS Node Names registry
+IANA is NOT YET requested to add the following entry to the Underscored and Globally Scoped DNS Node Names registry
 (in the DNS Parameters group)
 established in {{?RFC8552}}
 and thus enables its use with SVCB records:
 
 * SVCB, `_coap`, {{svcb-discovery}} of this document
-* SVCB, `_coaps`, {{svcb-discovery}} of this document
 
 The request for registration is deliberately not expressed at this point
-because it is yet to be revisited whether the creation of a "COAP" / "COAPS" RR pair
+because it is yet to be revisited whether the creation of a "COAP" RR
 similar to the "HTTPS" RR would be preferable.
 
 --- back
