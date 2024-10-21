@@ -74,7 +74,7 @@ Table of Contents
    1.  Introduction
      1.1.  Terminology
      1.2.  Goals
-     1.3.  Core principle: Transports are proxies
+     1.3.  Core principle: Transport endpoints are proxies
      1.4.  Concepts
        1.4.1.  Using URIs to identify transport endpoints
    2.  Indicating alternative transports
@@ -200,7 +200,7 @@ Table of Contents
    keep client updated, such as placing a suitable Max-Age value on
    their resources or having them observable.
 
-1.3.  Core principle: Transports are proxies
+1.3.  Core principle: Transport endpoints are proxies
 
    CoAP does not need any special provisions to send the same request
    for a single resource through different transports: A request to any
