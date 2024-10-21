@@ -150,7 +150,7 @@ The transport indicated by a URI is not only influenced by the URI scheme,
 but also by the authority component.
 The transports and resolution mechanisms currently specified
 make little use of this possibility,
-mainly because the most prominent resolution mechanism (SVCB records) has not been avaialble when {{?RFC8323}} was published
+mainly because the most prominent resolution mechanism (SVCB records) has not been available when {{?RFC8323}} was published
 and because it can not be expressed in IP literals.
 The provisions of this document
 enable this opportunistically for registered names
@@ -162,7 +162,7 @@ all of those are possible ways to interact with the resource.
 The resolution mechanism or other underlying transport can give guidance on how to find the best usable one.
 With the currently specified transports and resolution mechanisms,
 the most prominent example of making use of that information
-is applying {{?RFC8305}}'s Happy Eyeballs mechanism to establish a TCP connection
+is applying the Happy Eyeballs mechanism {{?RFC8305}} to establish a TCP connection
 when a name resolves to both IPv4 and IPv6 addresses,
 
 \[ TBD: Do we want to extend this to HTTP proxies? Probably just not, and if so, only to those that can just take coap://... for a URI. \]
@@ -802,7 +802,7 @@ for example an x5chain containing a Let's Encrypt certificate.
 If a service's discovery process does not produce a URI but an address, host name and/or Service Binding Parameters,
 those can be converted to a CoAP URI,
 for which transport hints are already encoded in the parameters the URI is constructed from.
-An example of this is DNS server discovery {{?I-D.lenders-core-dnr}}.
+An example of this is DNS server discovery {{?I-D.ietf-core-coap-dtls-svcb}}.
 
 While it is up to the service to define the service's semantics,
 this section applies to any service

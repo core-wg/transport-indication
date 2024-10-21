@@ -46,7 +46,7 @@ And last but not least, it lines up well with the colloquial identity mentioned 
 (An alternative would be using a dedicated naming scheme, say, `transport:coap:device.example.com:port`,
 but that would needlessly introduce implementation complexity).
 
-Note that this mechanism can only used with proxies that use CoAP's native address indication mechanisms.
+Note that this mechanism can only be used with proxies that use the native address indication mechanisms of CoAP.
 Proxies that perform URI mapping
 (as described in Section 5 of {{?RFC8075}}, especially using URI templates)
 are not supported in this document.
