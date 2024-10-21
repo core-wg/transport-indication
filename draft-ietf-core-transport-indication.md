@@ -373,25 +373,26 @@ exceeding the requirements of a secure connection,
 e.g., (explicitly or implicitly) requiring that
 name resolution happen through a secure process
 and packets are only routed into networks where it trusts that they will not be intercepted on the path to the server.
-Such applications need to extend their requirements to the source of the `has-proxy` statement;
-a sufficient (but maybe needlessly strict) requirement is to only follow `has-proxy` statements
+Such applications need to extend their requirements to the the sources used to obtain the endpoints
+(i.e., the source of any `has-proxy` statement or the SVCB data);
+a sufficient (but maybe needlessly strict) requirement for `has-proxy` statements is to only follow those
 that are part of the same resource that advertises the link currently being followed.
 Section {{proxy-foreign-advertisement}} adds further considerations.
 
-## Choice of transports
+## Choice of endpoints
 
-It is up to the client whether to use an advertised proxy transport,
+It is up to the client whether to use an advertised endpoint,
 or (if multiple are provided) which to pick.
 
-Links to proxies may be annotated with additional metadata that may help guide such a choice;
+Information about endpoints may be annotated with additional metadata that may help guide such a choice;
 defining such metadata is out of scope for this document.
 
-Clients MAY switch between advertised transports as long as the document describing them is fresh;
+Clients MAY switch between endpoints as long as the source describing them is fresh;
 they may even do so per request.
 (For example, they may perform individual requests using CoAP-over-UDP,
 but choose CoAP-over-TCP for requests with large expected responses).
-When the describing document approaches expiry,
-the client can use the representation's ETag to efficiently renew its justification for using the alternative transport.
+When the information about endpoints is obtained through CoAP (eg. as a `has-proxy` link),
+the client can use the describing representation's ETag to efficiently renew its justification for using the alternative transport.
 
 ## Selection of a canonical origin
 
@@ -413,7 +414,7 @@ and the most stable usable name the host has.
 For devices that are not generally reachable at a stable address,
 it may make sense to use a scheme and authority as the canonical address that can not actually be dereferenced.
 
-The registered names available for that purpose depend on the locally defined host or service name registry.
+The registered names available for that purpose depend on the resolution mechanisms in use.
 When the Domain Name System (DNS) is used,
 such names would not be associated with any A or AAAA records
 (but may still use, for example, TLSA records).
