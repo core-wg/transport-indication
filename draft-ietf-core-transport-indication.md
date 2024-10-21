@@ -743,19 +743,19 @@ A generic client is directed to obtain `coap://dev1.example.com/log`
 requests the name to be resolved using the system's resolution mechanisms,
 resulting in a DNS query for these records:
 
-```
+~~~
 _coap.dev1.example.com IN SVCB
 dev1.example.com       IN AAAA
-```
+~~~
 
 The following records are returned:
 
-```
+~~~
 _coap.dev1.example.com IN SVCB 1 . coaptransport=tcp,udp
 _coap.dev1.example.com IN SVCB 1 . alpn=co,coap port=5684
 _coap.dev1.example.com IN SVCB 1 . coaptransport=udp port=61616
 dev1.example.com       IN AAAA 2001:db8:1::1
-```
+~~~
 
 Exceeding the single option it had with just the IP address,
 it may now also choose to establish a TCP connection on the default port,
@@ -774,11 +774,11 @@ it learns that 1.2.3.4:5678 will be available for some time.
 
 It therefore updates its DNS record like this:
 
-```
+~~~
 _coap.host.example.net 600 IN SVCB 1 publicudp.host.example.net       \
                        port=5678                                      \
                        edhoc-cred={14:{... /KCCS with its public key/}}
-```
+~~~
 
 When a client starts using `coap://host.example.net/interactive`,
 it looks up that record and verifies it using DNSSEC.
