@@ -225,27 +225,98 @@ when a name resolves to both IPv4 and IPv6 addresses,
 
 \[ TBD: Do we want to extend this to HTTP proxies? Probably just not, and if so, only to those that can just take coap://... for a URI. \]
 
-# Indicating alternative transports
+# Finding suitable endpoints for a URI
 
-While CoAP can set the authority component of the requested URI in all requests (by means of Uri-Host and Uri-Port),
-setting the scheme of a requested URI (by means of Proxy-Scheme) makes the request implicitly a proxy request.
-However, this needs to be of only little practical concern:
-Any device can serve as a proxy for itself (a "same-host proxy")
-by accepting requests that carry the Proxy-Scheme option.
-{{Section 5.7.2 of RFC7252}} already mandates that a proxy recognize its own addresses.
-A minimal same-host proxy supports only those and respond with 5.05 (Proxying Not Supported).
-In many cases (precisely: on hosts that alias their resources across transports),
-this is equivalent to ignoring the Proxy-Scheme option in that request.
+When a CoAP request is created,
+a typical starting point is the URI of the request's target resource.
+To send the request,
+a suitable endpoint needs to be discovered.
+This section lists the ways one or more such endpoints can be found.
+
+In some situations,
+a client decides to use a forward proxy to access the resource.
+In that case, it relays all the URI components to the proxy,
+which then decides on an endpoint to which to forward the request
+using the tools described in this section.
+
+The endpoint (and thus transport)
+used to access a resource does not alter the resource's URI.
+If the URI scheme associated with the selected transport differs from the request URI's scheme,
+a different host name is encountered as part of the resolution process
+(e.g. due to a DNS CNAME or an explicit SVCB target name)
+or a different port is used (as possible through SVCB),
+the Proxy-Scheme, Uri-Host and Uri-Port options are set as needed
+to ensure that the request keeps targetting the requested resource.
+For servers that follow the common pattern of exposing the same resources on all transports (and thus having multiple aliased URIs for the same resource)
+and that do not act as proxies for other systems,
+the presence of the Proxy-Scheme option has little practical consequence:
+such servers become same-host proxies,
+and can ignore the Proxy-Scheme option as long as they recognize the Uri-Host value
+(which they already have been required to process).
+
+While a server is at liberty to create aliases,
+clients can not infer from the presence of a transport for a host
+that URIs created from addressing that transport are present.
+For example, if `coap://h.example.net/sensors/temp` is a known resource,
+and CoAP-over-TCP on [2001:db8::1] is indicated as a transport endpoint,
+there is no reason for the client to assume that `coap+tcp://[2001:db8::1]/sensors/temp` exists,
+let alone is the same resource:
+Clients that access the known resource by establishing a TCP connection
+need to send the options Proxy-Scheme value "coap", the Uri-Host value "h.example.net"
+and the Uri-Path values "sensors" and "temp".
+
+## Processing scheme and authority
+
+To discover endpoints for a given URI,
+the scheme and the authority component of the URI
+are typical starting points.
+
+### Transport-unaware resolution
+
+The IP based transports specified so far (CoAP over UDP, DTLS, TCP, TLS and WebSockets)
+all indicate the transport in their scheme,
+and have a default port.
+The only remaining details of multiplexing information required are the IP version(s) and IP address(es) of the server.
+
+If the host component of the URI is a literal,
+that information is already available.
+
+If the host component of the URI is a registered name,
+a name resolution service is used for a simple name lookup:
+When DNS is used as a resolution service,
+AAAA (or A) records of the name are looked up.
+
+Beyond the IP address,
+the resolution service may provide some additional information,
+such as the zone identifier (implied in DNS by using the zone the DNS response was obtained through)
+or TLSA records (which can guide the (D)TLS certificate validation process but are out of scope for this document).
+
+Simple resolution services do not indicate which transports are available on the address.
+Servers reached that way can resort to {{hasproxy}} to indicate alternative transports while exchanging initial data through the original transport,
+or to store information in link format / web-link based information systems (such as a Resource Directory {{?RFC9176}}).
+
+### Transport-aware resolution mechanisms
+
+Advanced resolution services
+provide information about which transports are available.
+
+For the DNS resolution mechanism, SVCB lookups described in {{svcb-discovery}}
+provide that information.
+
+It is recommended
+that future transports are designed to utilize transport-aware resolution mechanisms; see {{upcomingtransports}} for details.
+
+## Explicit proxy indication {#hasproxy}
 
 A server can advertise a recommended proxy
-by serving a Web Link with the "has-proxy" relation to a URI indicating its transport address.
+by publishing a Web Link with the "has-proxy" relation, defined in this document, to a URI indicating its transport address.
 In particular (and that is a typical case),
-it can indicate its own transport address on an alternative transport when implementing same-host proxy functionality.
+it can indicate its own network address on an alternative transport when implementing same-host proxy functionality.
 
 The semantics of a link from S to P with relations has-proxy ("S has-proxy P", `<P>;rel=has-proxy;anchor="S"`)
 are that for any resource that has the same origin as S, the transport address indicated by P can be used to obtain that resource.
 
-## Example
+### Example
 
 A constrained device at the address 2001:db8::1 that supports CoAP over TCP in addition to CoAP can self-describe like this:
 
@@ -283,14 +354,7 @@ Payload:
 Note that generating this discovery file needs to be dynamic based on its available addresses;
 only if queried using a link-local source address, the server may also respond with a link-local address in the authority component of the proxy URI.
 
-Unless the device makes resources discoverable at `coap+tcp://[2001:db8::1]/.well-known/core` or another discovery mechanism,
-clients may not assume that `coap+tcp://[2001:db8::1]/sensors/temp` is a valid resource (let alone is equivalent to the other resource on the same path).
-The server advertising itself like this may reject any request on CoAP-over-TCP unless it contains a Proxy-Scheme option.
-
-Clients that want to access the device using CoAP-over-TCP would send a request
-by connecting to 2001:db8::1 TCP port 5683
-and sending a GET with the options Proxy-Scheme: coap, no Uri-Host or -Port options (utilizing their default values),
-and the Uri-Paths "sensors" and "temp".
+# Operational concerns of discovered transport endpoints
 
 ## Security context propagation {#secctx-propagation}
 
