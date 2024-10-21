@@ -912,7 +912,7 @@ it the `alpn` SvcParamKey is not provided, but `coaptransport` is, the transport
 
 [^1]: Wondering if "udp" or "tcp" should be strings or numeric representations as value. The later
       would need an extra table or is there something we could reuse, e.g. from
-      {{I-D.ietf-core-href}}?
+      {{?I-D.ietf-core-href}}?
 
 
 If the transport's native identifiers are incompatible with that structure
@@ -1307,7 +1307,7 @@ allowing it to detect undesired reverse proxies.
 
 The External Authorization Data (EAD) item with name "Proxy CRI", label 24-CPA, is defined for use with messages 1, 2 and 3.
 
-A client can set this label in uncritical form, followed by a CRI ({{I-D.ietf-core-href}}) that is CBOR-encoded in a byte string as a CBOR sequence.
+A client can set this label in uncritical form, followed by a CRI ({{!I-D.ietf-core-href}}) that is CBOR-encoded in a byte string as a CBOR sequence.
 The transport indicated by the URI is the proxy the client chose from information advertised about the server.
 
 If a server can not determine its set of legitimate proxies,
