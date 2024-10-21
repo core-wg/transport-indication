@@ -5,8 +5,8 @@
 CoRE                                                           C. Amsüss
 Internet-Draft                                                          
 Intended status: Standards Track                           M. S. Lenders
-Expires: 9 January 2025                                       TU Dresden
-                                                             8 July 2024
+Expires: 24 April 2025                                        TU Dresden
+                                                         21 October 2024
 
 
                        CoAP Transport Indication
@@ -17,9 +17,9 @@ Abstract
    The Constrained Application Protocol (CoAP, [RFC7252]) is available
    over different transports (UDP, DTLS, TCP, TLS, WebSockets), but
    lacks a way to unify these addresses.  This document provides
-   terminology and provisions based on Web Linking [RFC8288] to express
-   alternative transports available to a device, and to optimize
-   exchanges using these.
+   terminology and provisions based on Web Linking [RFC8288] and Service
+   Bindings (SVCB, [RFC9460]) to express alternative transports
+   available to a device, and to optimize exchanges using these.
 
 About This Document
 
@@ -53,7 +53,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 9 January 2025.
+   This Internet-Draft will expire on 24 April 2025.
 
 Copyright Notice
 
@@ -73,8 +73,10 @@ Table of Contents
 
    1.  Introduction
      1.1.  Terminology
-       1.1.1.  Using URIs to identify transport endpoints
      1.2.  Goals
+     1.3.  Core principle: Transports are proxies
+     1.4.  Concepts
+       1.4.1.  Using URIs to identify transport endpoints
    2.  Indicating alternative transports
      2.1.  Example
      2.2.  Security context propagation
@@ -130,21 +132,18 @@ Table of Contents
 
 1.  Introduction
 
-   The Constrained Application Protocol (CoAP) provides transports
-   mechanisms (UDP and DTLS since [RFC7252], TCP, TLS and WebSockets
-   since [RFC8323]), with some additional being used in LwM2M [lwm2m]
-   and even more being explored ([I-D.bormann-t2trg-slipmux],
-   [I-D.amsuess-core-coap-over-gatt]).  These are mutually incompatible
-   on the wire, but CoAP implementations commonly support several of
-   them, and proxies can translate between them.
+   The Constrained Application Protocol (CoAP) provides multiple
+   transports mechanisms: UDP and DTLS since [RFC7252], and TCP, TLS and
+   WebSockets since [RFC8323].  Some additional transports being used in
+   LwM2M [lwm2m], and even more being explored
+   ([I-D.bormann-t2trg-slipmux], [I-D.amsuess-core-coap-over-gatt].
+   These are mutually incompatible on the wire, but CoAP implementations
+   commonly support several of them, and proxies can translate between
+   them.
 
    CoAP currently lacks a way to indicate which transports are available
-   for a given resource, and to indicate that a device is prepared to
-   serve as a proxy; this document solves both by introducing the "has-
-   proxy" terminology to Web Linking [RFC8288] that expresses the former
-   through the latter.  The additional "has-unique-proxy" term is
-   introduced to negate any per-request overhead that would otherwise be
-   introduced in the course of this.
+   for a given resource, and which endpoints are available for them.
+   This document introduces ways to discover and how to use them.
 
    CoAP also lacks a unified scheme to label a resource in a transport-
    independent way.  This document does _not_ attempt to introduce any
@@ -158,106 +157,15 @@ Table of Contents
    described in CoAP [RFC7252] and link format [RFC6690] (or,
    equivalently, web links as described in [RFC8288]).
 
-   Same-host proxy:  A CoAP server that accepts forward proxy requests
-      (i.e., requests carrying the Proxy-Scheme option) exclusively for
-      URIs that it is also the authoritative server for is defined as a
-      "same-host proxy".
+   The phrase "the transport indicated by (a URI)" is used as described
+   in Section 1.4.1.
 
-      The distinction between a same-host and any other proxy is only
-      relevant on a practical, server-implementation and illustrative
-      level; this specification does not use the distinction in
-      normative requirements, and clients need not make the distinction
-      at all.
+   A protocol that implements CoAP request-response semantics for a
+   lower layer is called a "(CoAP) transport".
 
-   When talking of proxy requests, this document only talks of the
-   Proxy-Scheme option.  Given that all URIs this is usable with can be
-   expressed in decomposed CoAP URIs, the need for using the Proxy-URI
-   option should never arise.  The Proxy-URI option is still equivalent
-   to the decomposed options, and can be used if the server supports it.
-
-1.1.1.  Using URIs to identify transport endpoints
-
-   The URI coap://[2001:db8::1] identifies a particular resource,
-   possibly a "welcome" text.  It is, colloquially, also used to
-   identify the combination of a CoAP transport and the transport
-   specific details.
-
-   For precision, this document uses the term "the transport address
-   indicated by (a URI)" to refer to the transport and its details (in
-   the example, CoAP over UDP with an IPv6 address and the default
-   port), but otherwise no big deal is made of it.
-
-   The transport indicated by a URI is not only influenced by the URI
-   scheme, but also by the authority component.  The transports and
-   resolution mechanisms currently specified make little use of this
-   possibility, mainly because the most prominent resolution mechanism
-   (SVCB records) has not been avaialble when [RFC8323] was published
-   and because it can not be expressed in IP literals.  The provisions
-   of this document enable this opportunistically for registered names
-   (Section 6.1) and for literals using the mechanism in Appendix E.
-
-   When the resolution mechanism used for a registered name authority
-   component yields multiple addresses, all of those are possible ways
-   to interact with the resource.  The resolution mechanism or other
-   underlying transport can give guidance on how to find the best usable
-   one.  With the currently specified transports and resolution
-   mechanisms, the most prominent example of making use of that
-   information is applying [RFC8305]'s Happy Eyeballs mechanism to
-   establish a TCP connection when a name resolves to both IPv4 and IPv6
-   addresses,
-
-1.1.1.1.  Paths in URIs that indicate transport addresses
-
-   For the CoAP schemes (coap, coaps, coap+tcp, coaps+tcp, coap+ws,
-   coaps+ws), URIs indicating a transport are always given with an empty
-   path (which under their URI normalization rules is equivalent to a
-   path containing a single slash).  For the coap and coap+tcp schemes,
-   URIs with different host names can indicate the same transport as
-   long as the names resolve to the same addresses.  For the others, the
-   given host name informs the name set in TLS's Server Name Indication
-   (SNI) and/or the host sent in the "Host" header of the underlying
-   HTTP request.
-
-   If an update to this document extends the list, for new schemes it
-   might be allowed to have paths, queries or fragment identifiers
-   present in the URI indicating the transport address.  No guidance can
-   be given here for these, as no realistic example is known.  (Note
-   that while the coap+ws scheme does use the well-known path /.well-
-   known/coap internally, that is used purely on the HTTP side, and not
-   part of the CoAP URI, not even for indicating the transport address).
-   // It is conceivable that a path such as the /.well-known/coap of
-   // CoAP-over-WebSockets would be indicated in an SVCB discovery's
-   // parameters similar to dohpath.  This does not immediately help
-   // with the question of whether a URI indicating a transport can have
-   // a path, though. --CA
-
-1.1.1.2.  Existing use
-
-   A similar concept is used in
-   [I-D.ietf-core-observe-multicast-notifications] (expressed as pieces
-   of its tp_info parameter), but not expressed with URIs yet.  As that
-   document migrates towards using CRIs ([I-D.ietf-core-href]), it is
-   expected that its transport addresses coincide with the URIs (CRIs,
-   equivalently) indicating a transport.
-
-   URIs indicating a transport are especially useful when talking about
-   proxies; this use is aligned with the way they are expressed in the
-   conventional environment variables http_proxy etc. [noproxy].
-   Furthermore, URIs processing is widespread in CoAP systems, and when
-   that changes (e.g. through the introduction of [I-D.ietf-core-href]),
-   URIs indicating a transport will still be efficient to encode.  And
-   last but not least, it lines up well with the colloquial identity
-   mentioned above.  (An alternative would be using a dedicated naming
-   scheme, say, transport:coap:device.example.com:port, but that would
-   needlessly introduce implementation complexity).
-
-   Note that this mechanism can only used with proxies that use CoAP's
-   native address indication mechanisms.  Proxies that perform URI
-   mapping (as described in Section 5 of [RFC8075], especially using URI
-   templates) are not supported in this document.
-
-   [ TBD: Do we want to extend this to HTTP proxies?  Probably just not,
-   and if so, only to those that can just take coap://... for a URI. ]
+   When the term "endpoint" is used in this document, it is generalized
+   from the [RFC7252] definition to mean the transport and any
+   multiplexing information particular to that transport.
 
 1.2.  Goals
 
@@ -291,6 +199,77 @@ Table of Contents
    availability changes over time can utilize any suitable mechanism to
    keep client updated, such as placing a suitable Max-Age value on
    their resources or having them observable.
+
+1.3.  Core principle: Transports are proxies
+
+   CoAP does not need any special provisions to send the same request
+   for a single resource through different transports: A request to any
+   globally addressable resource can be sent to any endpoint by phrasing
+   it as a proxy request.
+
+   Whether that endpoint is trusted to, capable to and willing to relay
+   that request, and how to find suitable endpoints to serve as a proxy
+   for a request is discussed in this document.
+
+   When resource identifiers have different meanings depending on the
+   host. the applicability of this document is limited.
+   // Possibly not limited a lot, but we have not looked into those
+   // cases in detail yet. --CA Examples of such resources are those
+   whose URIs including loopback addresses or partially-qualified domain
+   names.
+
+1.4.  Concepts
+
+   Same-host proxy:  A CoAP server that accepts forward proxy requests
+      (i.e., requests carrying the Proxy-Scheme option) exclusively for
+      URIs that it is also the authoritative server for is defined as a
+      "same-host proxy".
+
+      The distinction between a same-host and any other proxy is only
+      relevant on a practical, server-implementation and illustrative
+      level; this specification does not use the distinction in
+      normative requirements, and clients need not make the distinction
+      at all.
+
+   When talking of proxy requests, this document only talks of the
+   Proxy-Scheme option.  Given that all URIs this is usable with can be
+   expressed in decomposed CoAP URIs, the need for using the Proxy-URI
+   option should never arise.  The Proxy-URI option is still equivalent
+   to the decomposed options, and can be used if the server supports it.
+
+1.4.1.  Using URIs to identify transport endpoints
+
+   The URI coap://[2001:db8::1] identifies a particular resource,
+   possibly a "welcome" text.  It is, colloquially, also used to
+   identify the combination of a CoAP transport and the transport
+   specific details.
+
+   For precision, this document uses the term "the transport address
+   indicated by (a URI)" to refer to the transport and its details (in
+   the example, CoAP over UDP with an IPv6 address and the default
+   port), but otherwise no big deal is made of it.
+
+   The transport indicated by a URI is not only influenced by the URI
+   scheme, but also by the authority component.  The transports and
+   resolution mechanisms currently specified make little use of this
+   possibility, mainly because the most prominent resolution mechanism
+   (SVCB records) has not been available when [RFC8323] was published
+   and because it can not be expressed in IP literals.  The provisions
+   of this document enable this opportunistically for registered names
+   (Section 6.1) and for literals using the mechanism in Appendix E.
+
+   When the resolution mechanism used for a registered name authority
+   component yields multiple addresses, all of those are possible ways
+   to interact with the resource.  The resolution mechanism or other
+   underlying transport can give guidance on how to find the best usable
+   one.  With the currently specified transports and resolution
+   mechanisms, the most prominent example of making use of that
+   information is applying the Happy Eyeballs mechanism [RFC8305] to
+   establish a TCP connection when a name resolves to both IPv4 and IPv6
+   addresses,
+
+   [ TBD: Do we want to extend this to HTTP proxies?  Probably just not,
+   and if so, only to those that can just take coap://... for a URI. ]
 
 2.  Indicating alternative transports
 
@@ -348,6 +327,11 @@ Table of Contents
 
        Figure 1: Discovery and follow-up request through a has-proxy
                                   relation
+
+
+   // When not 100% familiar with the format the linebreak under Payload
+   // in the first response is a bit confusing.  I thought at first, it
+   // was advertising two resources -- ML
 
    Note that generating this discovery file needs to be dynamic based on
    its available addresses; only if queried using a link-local source
@@ -848,7 +832,7 @@ Payload:
 
    *  alpn: The ALPN "coap" has been defined for CoAP-over-TLS
       [RFC8323], and "co" for CoAP-over-DTLS in
-      [I-D.lenders-core-coap-dtls-svcb].
+      [I-D.ietf-core-coap-dtls-alpn].
 
       If an ALPN service parameter is found, this indicates that the
       ALPN(s) and thus the CoAP transport that can be used on this
@@ -869,7 +853,7 @@ Payload:
       separate parameter space or we should just take ALPNs for them,
       like eg. h2c does. ]
 
-   *  edhoc: This is a new parameter defined in this document, and
+   *  edhoc-cred: This is a new parameter defined in this document, and
       describes that EDHOC can be used with the server, and which
       credentials can authenticate the server.
 
@@ -946,14 +930,15 @@ Payload:
    requests the name to be resolved using the system's resolution
    mechanisms, resulting in a DNS query for these records:
 
-   _coap.dev1.example.com IN SVCB dev1.example.com IN AAAA
+   _coap.dev1.example.com IN SVCB
+   dev1.example.com       IN AAAA
 
    The following records are returned:
 
    _coap.dev1.example.com IN SVCB 1 . coaptransport=tcp,udp
    _coap.dev1.example.com IN SVCB 1 . alpn=co,coap port=5684
    _coap.dev1.example.com IN SVCB 1 . coaptransport=udp port=61616
-   dev1.example.com IN AAAA 2001:db8:1::1
+   dev1.example.com       IN AAAA 2001:db8:1::1
 
    Exceeding the single option it had with just the IP address, it may
    now also choose to establish a TCP connection on the default port, to
@@ -973,8 +958,9 @@ Payload:
 
    It therefore updates its DNS record like this:
 
-   _coap.host.example.net 600 IN SVCB 1 publicudp.host.example.net \
-   port=5678 \ edhoc-cred={14:{... /KCCS with its public key/}}
+ _coap.host.example.net 600 IN SVCB 1 publicudp.host.example.net       \
+                        port=5678                                      \
+                        edhoc-cred={14:{... /KCCS with its public key/}}
 
    When a client starts using coap://host.example.net/interactive, it
    looks up that record and verifies it using DNSSEC.  It then proceeds
@@ -993,7 +979,7 @@ Payload:
    address, host name and/or Service Binding Parameters, those can be
    converted to a CoAP URI, for which transport hints are already
    encoded in the parameters the URI is constructed from.  An example of
-   this is DNS server discovery [I-D.lenders-core-dnr].
+   this is DNS server discovery [I-D.ietf-core-coap-dtls-alpn].
 
    While it is up to the service to define the service's semantics, this
    section applies to any service whose use with CoAP is defined by a
@@ -1122,7 +1108,7 @@ Payload:
 
    URIs created from such names may not indicate the protocol uniquely:
    Additional transports specified later may also provide CoAP services
-   for the same name.  In the sense of Section 1.1.1, both transport
+   for the same name.  In the sense of Section 1.4.1, both transport
    would be identified by that URI.  That is not an issue as long as the
    protocols underneath the CoAP transport provide a means of
    advertising the precise protocol used.  For example, a hypothetical
@@ -1240,18 +1226,28 @@ Payload:
 
 9.3.  Service Parameter Key (SvcParamKey)
 
-   This document adds the following entry to the SVCB Service Parameters
-   registry ([RFC9460]).  The definition of this parameter can be found
-   in Section 7.
+   IANA is NOT YET requested to add the following entries to the SVCB
+   Service Parameters registry ([RFC9460]).  The definition of this
+   parameter can be found in Section 7.
 
-   +================+===============+================+=================+
-   | Number         | Name          | Meaning        | Reference       |
-   +================+===============+================+=================+
-   | 10             | coaptransport | CoAP transport | [TBD-this-spec] |
-   | (suggested)    |               | protocol       | Section 7       |
-   +----------------+---------------+----------------+-----------------+
+   +================+===============+=================================+
+   | Number         | Name          | Meaning                         |
+   +================+===============+=================================+
+   | 10 (suggested) | coaptransport | CoAP transport protocol         |
+   +----------------+---------------+---------------------------------+
+   | to be assigned | edhoc-cred    | EDHOC credentials identifying   |
+   |                |               | the server                      |
+   +----------------+---------------+---------------------------------+
+   | to be assigned | edhoc-info    | EDHOC profile information       |
+   +----------------+---------------+---------------------------------+
+   | to be assigned | oauth-hints   | Describes how to obtain a token |
+   |                |               | at an ACE Authorization Server  |
+   +----------------+---------------+---------------------------------+
 
-                                  Table 2
+                                 Table 2
+
+   All entries have in common that their Reference is this this
+   document, Section 6.2}, and that their change controller is IETF.
 
 9.4.  Underscored and Globally Scoped DNS Node Names
 
@@ -1272,6 +1268,13 @@ Payload:
 10.  References
 
 10.1.  Normative References
+
+   [I-D.ietf-core-href]
+              Bormann, C. and H. Birkholz, "Constrained Resource
+              Identifiers", Work in Progress, Internet-Draft, draft-
+              ietf-core-href-16, 24 July 2024,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-core-
+              href-16>.
 
    [RFC6690]  Shelby, Z., "Constrained RESTful Environments (CoRE) Link
               Format", RFC 6690, DOI 10.17487/RFC6690, August 2012,
@@ -1320,9 +1323,9 @@ Payload:
    [I-D.amsuess-core-coap-over-gatt]
               Amsüss, C., "CoAP over GATT (Bluetooth Low Energy Generic
               Attributes)", Work in Progress, Internet-Draft, draft-
-              amsuess-core-coap-over-gatt-06, 18 March 2024,
+              amsuess-core-coap-over-gatt-07, 25 September 2024,
               <https://datatracker.ietf.org/doc/html/draft-amsuess-core-
-              coap-over-gatt-06>.
+              coap-over-gatt-07>.
 
    [I-D.amsuess-core-resource-directory-extensions]
               Amsüss, C., "CoRE Resource Directory Extensions", Work in
@@ -1359,38 +1362,31 @@ Payload:
               Security for Constrained Environments (OSCORE) Profile for
               Authentication and Authorization for Constrained
               Environments (ACE)", Work in Progress, Internet-Draft,
-              draft-ietf-ace-edhoc-oscore-profile-05, 8 July 2024,
+              draft-ietf-ace-edhoc-oscore-profile-06, 21 October 2024,
               <https://datatracker.ietf.org/doc/html/draft-ietf-ace-
-              edhoc-oscore-profile-05>.
+              edhoc-oscore-profile-06>.
 
    [I-D.ietf-cbor-edn-literals]
               Bormann, C., "CBOR Extended Diagnostic Notation (EDN)",
               Work in Progress, Internet-Draft, draft-ietf-cbor-edn-
-              literals-10, 4 July 2024,
+              literals-12, 1 September 2024,
               <https://datatracker.ietf.org/doc/html/draft-ietf-cbor-
-              edn-literals-10>.
+              edn-literals-12>.
+
+   [I-D.ietf-core-coap-dtls-alpn]
+              Lenders, M. S., Amsüss, C., Schmidt, T. C., and M.
+              Wählisch, "ALPN ID Specification for CoAP over DTLS", Work
+              in Progress, Internet-Draft, draft-ietf-core-coap-dtls-
+              alpn-00, 5 September 2024,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-core-
+              coap-dtls-alpn-00>.
 
    [I-D.ietf-core-dns-over-coap]
               Lenders, M. S., Amsüss, C., Gündoğan, C., Schmidt, T. C.,
               and M. Wählisch, "DNS over CoAP (DoC)", Work in Progress,
-              Internet-Draft, draft-ietf-core-dns-over-coap-07, 28 June
-              2024, <https://datatracker.ietf.org/doc/html/draft-ietf-
-              core-dns-over-coap-07>.
-
-   [I-D.ietf-core-href]
-              Bormann, C. and H. Birkholz, "Constrained Resource
-              Identifiers", Work in Progress, Internet-Draft, draft-
-              ietf-core-href-15, 21 April 2024,
-              <https://datatracker.ietf.org/doc/html/draft-ietf-core-
-              href-15>.
-
-   [I-D.ietf-core-observe-multicast-notifications]
-              Tiloca, M., Höglund, R., Amsüss, C., and F. Palombini,
-              "Observe Notifications as CoAP Multicast Responses", Work
-              in Progress, Internet-Draft, draft-ietf-core-observe-
-              multicast-notifications-09, 8 July 2024,
-              <https://datatracker.ietf.org/doc/html/draft-ietf-core-
-              observe-multicast-notifications-09>.
+              Internet-Draft, draft-ietf-core-dns-over-coap-09, 21
+              October 2024, <https://datatracker.ietf.org/doc/html/
+              draft-ietf-core-dns-over-coap-09>.
 
    [I-D.ietf-lake-edhoc]
               Selander, G., Mattsson, J. P., and F. Palombini,
@@ -1407,21 +1403,13 @@ Payload:
               2021, <https://datatracker.ietf.org/doc/html/draft-ietf-
               lpwan-coap-static-context-hc-19>.
 
-   [I-D.lenders-core-coap-dtls-svcb]
-              Lenders, M. S., Amsüss, C., Schmidt, T. C., and M.
-              Wählisch, "Service Binding and Parameter Specification for
-              CoAP over (D)TLS", Work in Progress, Internet-Draft,
-              draft-lenders-core-coap-dtls-svcb-00, 21 June 2024,
-              <https://datatracker.ietf.org/doc/html/draft-lenders-core-
-              coap-dtls-svcb-00>.
-
    [I-D.lenders-core-dnr]
               Lenders, M. S., Amsüss, C., Schmidt, T. C., and M.
               Wählisch, "Discovery of Network-designated OSCORE-based
               Resolvers: Problem Statement", Work in Progress, Internet-
-              Draft, draft-lenders-core-dnr-02, 29 June 2024,
+              Draft, draft-lenders-core-dnr-03, 8 July 2024,
               <https://datatracker.ietf.org/doc/html/draft-lenders-core-
-              dnr-02>.
+              dnr-03>.
 
    [I-D.silverajan-core-coap-protocol-negotiation]
               Silverajan, B. and M. Ocak, "CoAP Protocol Negotiation",
@@ -1441,9 +1429,9 @@ Payload:
               Tiloca, M. and R. Höglund, "Coordinating the Use of
               Application Profiles for Ephemeral Diffie-Hellman Over
               COSE (EDHOC)", Work in Progress, Internet-Draft, draft-
-              tiloca-lake-app-profiles-02, 8 July 2024,
+              tiloca-lake-app-profiles-03, 21 October 2024,
               <https://datatracker.ietf.org/doc/html/draft-tiloca-lake-
-              app-profiles-02>.
+              app-profiles-03>.
 
    [lwm2m]    OMA SpecWorks, "White Paper – Lightweight M2M 1.1", n.d.,
               <https://omaspecworks.org/white-paper-lightweight-m2m-
@@ -1497,12 +1485,6 @@ Payload:
    [RFC7838]  Nottingham, M., McManus, P., and J. Reschke, "HTTP
               Alternative Services", RFC 7838, DOI 10.17487/RFC7838,
               April 2016, <https://www.rfc-editor.org/rfc/rfc7838>.
-
-   [RFC8075]  Castellani, A., Loreto, S., Rahman, A., Fossati, T., and
-              E. Dijk, "Guidelines for Mapping Implementations: HTTP to
-              the Constrained Application Protocol (CoAP)", RFC 8075,
-              DOI 10.17487/RFC8075, February 2017,
-              <https://www.rfc-editor.org/rfc/rfc8075>.
 
    [RFC8305]  Schinazi, D. and T. Pauly, "Happy Eyeballs Version 2:
               Better Connectivity Using Concurrency", RFC 8305,
@@ -1560,6 +1542,54 @@ Payload:
               BNF.html#43>.
 
 Appendix A.  Change log
+
+   Since draft-ietf-core-transport-indication-05:
+
+   *  Semantics for where a has-proxy applies were changed from
+      "wherever there is a hosts relation" to "across the same origin".
+
+      The hosts relation has received complaints about its complexity,
+      and there were no strong voices in either direction during or
+      after IETF119 when the question has been asked; going for the
+      easier version.
+
+   *  Use of SVCB is added as a section.  Underscore prefixes are
+      registered for CoAP, enabling the use of SVCB DNS records for
+      applications that opt in to it (rather than processing it as an
+      alternative history).
+
+      While the alternative history section was appreciated during
+      IETF119, the authors found it highly impractical to provide SVCB
+      ground work without having the actual registrations (it would have
+      worked only because DNS discovery acts on a separate _dns prefix
+      anyway), and chose the consistent approach of allowing SVCB
+      lookups.
+
+   *  Material from the DNS and DNR for CoAP documents was moved in (and
+      overhauled in the process):
+
+      -  Constructing CoAP requests from Service Parameters that did not
+         result from a host name lookup is described.
+
+      -  The coaptransport SVCB parameter is defined.
+
+      -  SVCB hints for ACE/OAuth are defined.
+
+   *  Section on how a host can tell that Uri-Host is optional was moved
+      from Open Questions into a section.
+
+      This had been around for ages, and gathering some more experience
+      with the matter, looks like the obvious approach.
+
+   *  Editorial:
+
+      -  Style for unallocated registrations changed from TBD to CPA
+
+      -  References updated
+
+      -  Tooling updates
+
+      -  Minor fixes
 
    Since draft-ietf-core-transport-indication-04:
 
