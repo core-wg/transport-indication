@@ -346,10 +346,9 @@ Payload:
 ~~~~~
 {: #fig-has-proxy title='Discovery and follow-up request through a has-proxy relation'}
 
-[^examplelb]
-
-[^examplelb]: When not 100% familiar with the format the linebreak under Payload in the first
-    response is a bit confusing. I thought at first, it was advertising two resources -- ML
+The discovery process yields two links:
+The first describes the resource,
+the second describes that an additional (TCP) endpoint is available for all resources on this host.
 
 Note that generating this discovery file needs to be dynamic based on its available addresses;
 only if queried using a link-local source address, the server may also respond with a link-local address in the authority component of the proxy URI.
