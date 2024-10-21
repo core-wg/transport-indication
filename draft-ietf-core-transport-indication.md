@@ -93,10 +93,10 @@ and to optimize exchanges using these.
 
 # Introduction {#introduction}
 
-The Constrained Application Protocol (CoAP) provides transports mechanisms
-(UDP and DTLS since {{?RFC7252}}, TCP, TLS and WebSockets since {{?RFC8323}}),
-with some additional being used in LwM2M {{lwm2m}}
-and even more being explored ({{?I-D.bormann-t2trg-slipmux}}, {{?I-D.amsuess-core-coap-over-gatt}}).
+The Constrained Application Protocol (CoAP) provides multiple transports mechanisms:
+UDP and DTLS since {{?RFC7252}}, and TCP, TLS and WebSockets since {{?RFC8323}}.
+Some additional transports being used in LwM2M {{lwm2m}},
+and even more being explored ({{?I-D.bormann-t2trg-slipmux}}, {{?I-D.amsuess-core-coap-over-gatt}}.
 These are mutually incompatible on the wire,
 but CoAP implementations commonly support several of them,
 and proxies can translate between them.
@@ -675,7 +675,7 @@ and independently of whether they apply to the `_coap` / `_coaps` service or ano
 * `port`: The CoAP service using the transport described in this parameter is reachable on this port
   (described in {{RFC9460}}).
 
-* `alpn`: The ALPN "coap" has been defined for CoAP-over-TLS {{?RFC8323}}, and "co" for CoAP-over-DTLS in {{?I-D.lenders-core-coap-dtls-svcb}}.
+* `alpn`: The ALPN "coap" has been defined for CoAP-over-TLS {{?RFC8323}}, and "co" for CoAP-over-DTLS in {{?I-D.ietf-core-coap-dtls-alpn}}.
 
   If an ALPN service parameter is found, this indicates that the ALPN(s) and thus the CoAP transport that can be used on this address / port.
   For example, "co" indicates that DTLS (and thus UDP) is used.
@@ -802,7 +802,7 @@ for example an x5chain containing a Let's Encrypt certificate.
 If a service's discovery process does not produce a URI but an address, host name and/or Service Binding Parameters,
 those can be converted to a CoAP URI,
 for which transport hints are already encoded in the parameters the URI is constructed from.
-An example of this is DNS server discovery {{?I-D.ietf-core-coap-dtls-svcb}}.
+An example of this is DNS server discovery {{?I-D.ietf-core-coap-dtls-alpn}}.
 
 While it is up to the service to define the service's semantics,
 this section applies to any service
