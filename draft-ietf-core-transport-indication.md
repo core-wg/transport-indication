@@ -238,6 +238,7 @@ a client decides to use a forward proxy to access the resource.
 In that case, it relays all the URI components to the proxy,
 which then decides on an endpoint to which to forward the request
 using the tools described in this section.
+{{actualproxies}} describes this in more detail.
 
 The endpoint (and thus transport)
 used to access a resource does not alter the resource's URI.
