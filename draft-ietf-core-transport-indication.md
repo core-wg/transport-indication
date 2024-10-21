@@ -1428,6 +1428,13 @@ The client may then decide to discontinue using the proxy,
 or to use more extensive padding options to sidestep the attack.
 Both the client and the server may alert their administrators of a possible traffic misdirection.
 
+\[ While using an EDHOC EAD is suitable for connection setup,
+   such a mechanism may also be useful at a later time,
+   eg. to re-check a server's address after a name change;
+   establishing an equivalent CoAP option is being considered,
+   also oin light of the discussion around https://github.com/core-wg/corrclar/pull/40 and https://github.com/core-wg/groupcomm-proxy/issues/3.
+   \]
+
 # Literals beyond IP addresses {#newlit}
 
 \[
