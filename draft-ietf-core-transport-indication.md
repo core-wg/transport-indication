@@ -1173,6 +1173,18 @@ similar to the "HTTPS" RR would be preferable.
 
 # Change log
 
+Since draft-ietf-core-transport-indication-06:
+
+* Split introduction into terminology (with new definitions), goals and concepts.
+* Add principle of operation into abstract, elevating SVCB and has-proxy to equally ranked sources of endpoint information.
+* Restructure document to split overview and operations from the concrete methods of obtaining endpoints.
+* Add is-unique-proxy SVCB parameter equivalent to has-unique-proxy relation.
+* Remove `_coaps` service, describing `_coap` as applying to all CoAP transports.
+* Add SVCB to abstract.
+* Remove distracting text on URIs identifying transports/endpoints.
+* Editorial changes.
+* IANA considerations: Set change controller to IETF.
+
 Since draft-ietf-core-transport-indication-05:
 
 * Semantics for where a has-proxy applies were changed from "wherever there is a `hosts` relation" to "across the same origin".
