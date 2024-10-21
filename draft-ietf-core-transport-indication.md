@@ -85,6 +85,7 @@ The Constrained Application Protocol (CoAP, {{!RFC7252}}) is available over diff
 (UDP, DTLS, TCP, TLS, WebSockets),
 but lacks a way to unify these addresses.
 This document provides terminology and provisions based on Web Linking {{?RFC8288}}
+and Service Bindings (SVCB, {{RFC9460}})
 to express alternative transports available to a device,
 and to optimize exchanges using these.
 
