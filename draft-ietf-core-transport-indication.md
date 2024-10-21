@@ -120,6 +120,35 @@ described in CoAP {{RFC7252}}
 and link format {{!RFC6690}}
 (or, equivalently, web links as described in {{RFC8288}}).
 
+The phrase "the transport indicated by (a URI)" is used as described in {{identifying}}.
+
+## Goals
+
+This document introduces provisions for the seamless use of different transport mechanisms for CoAP.
+Combined, these provide:
+
+1. Enablement: Inform clients of the availability of other transports of servers.
+
+2. No Aliasing: Any URI aliasing must be opt-in by the server. Any defined mechanisms must allow applications to keep working on the canonical URIs given by the server.
+
+3. Optimization: Do not incur per-request overhead from switching transports. This may depend on the server's willingness to create aliased URIs.
+
+4. Proxy usability: All information provided must be usable by aware proxies to reduce the need for duplicate cache entries.
+
+5. Proxy announcement: Allow third parties to announce that they provide alternative transports to a host.
+
+For all these functions, security policies must be described that allow the client to use them as securely as the original transport.
+
+This document will not concern itself with changes in transport availability over time,
+neither in causing them ("Please take up your TCP interface, I'm going to send a firmware update")
+nor in advertising their availability in advance.
+Hosts whose transport's availability changes over time can utilize
+any suitable mechanism to keep client updated,
+such as placing a suitable Max-Age value on their resources
+or having them observable.
+
+## Concepts
+
 Same-host proxy:
 
 : A CoAP server that accepts forward proxy requests (i.e., requests carrying the Proxy-Scheme option)
@@ -166,31 +195,6 @@ is applying the Happy Eyeballs mechanism {{?RFC8305}} to establish a TCP connect
 when a name resolves to both IPv4 and IPv6 addresses,
 
 \[ TBD: Do we want to extend this to HTTP proxies? Probably just not, and if so, only to those that can just take coap://... for a URI. \]
-
-## Goals
-
-This document introduces provisions for the seamless use of different transport mechanisms for CoAP.
-Combined, these provide:
-
-1. Enablement: Inform clients of the availability of other transports of servers.
-
-2. No Aliasing: Any URI aliasing must be opt-in by the server. Any defined mechanisms must allow applications to keep working on the canonical URIs given by the server.
-
-3. Optimization: Do not incur per-request overhead from switching transports. This may depend on the server's willingness to create aliased URIs.
-
-4. Proxy usability: All information provided must be usable by aware proxies to reduce the need for duplicate cache entries.
-
-5. Proxy announcement: Allow third parties to announce that they provide alternative transports to a host.
-
-For all these functions, security policies must be described that allow the client to use them as securely as the original transport.
-
-This document will not concern itself with changes in transport availability over time,
-neither in causing them ("Please take up your TCP interface, I'm going to send a firmware update")
-nor in advertising their availability in advance.
-Hosts whose transport's availability changes over time can utilize
-any suitable mechanism to keep client updated,
-such as placing a suitable Max-Age value on their resources
-or having them observable.
 
 # Indicating alternative transports
 
