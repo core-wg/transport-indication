@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-05-18T01:26:25.866960+00:00",
+  "timestamp": "2024-10-22T01:19:50.563164+00:00",
   "repo": "core-wg/transport-indication",
   "labels": [
     {
@@ -105,15 +105,15 @@
       "id": "I_kwDOHa3Jsc5PB6DE",
       "title": "link example seems confused",
       "url": "https://github.com/core-wg/transport-indication/issues/4",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "mcr",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "\r\n````\r\n  For resources discovered via CoAP's discovery interface,\r\n  a hosting statement is typically provided by the defaults implied by {{?RFC6690}}\r\n  where a link like `</sensor/temp>` is implied to have the relation \"hosts\" and the anchor `/`,\r\n  such that a statement \"coap://hostname hosts coap://hostname/sensor/temp\" is implied in the link.\r\n````\r\nI don't understand this statement.  It feels like something is unstated, or maybe there are 6690 stuff I don't get.\r\n",
       "createdAt": "2022-08-02T13:56:40Z",
-      "updatedAt": "2022-08-02T15:07:12Z",
-      "closedAt": null,
+      "updatedAt": "2024-07-08T22:21:39Z",
+      "closedAt": "2024-07-08T22:21:39Z",
       "comments": [
         {
           "author": "chrysn",
@@ -135,9 +135,257 @@
           "body": "It doesn't have any meaning on its own, it's just something 6690 defined. It evokes all kinds of associations, but really it's just a label associating these with each other.",
           "createdAt": "2022-08-02T15:07:11Z",
           "updatedAt": "2022-08-02T15:07:11Z"
+        },
+        {
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "body": "With the \"hosts\" terminology removed in https://github.com/core-wg/transport-indication/pull/10, I think this can be closed.",
+          "createdAt": "2024-07-08T22:21:39Z",
+          "updatedAt": "2024-07-08T22:21:39Z"
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "id": "I_kwDOHa3Jsc55KvSe",
+      "title": "Advertise properties of proxies",
+      "url": "https://github.com/core-wg/transport-indication/issues/5",
+      "state": "OPEN",
+      "author": "chrysn",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "As we do advertise proxies here (even though not fully spec'd out yet?), we should also consider their porperties.\r\nOptions around https://github.com/core-wg/href/pull/81/files#r1420635660 (no matter what comes of it):\r\n* State that a thusly advertised proxy also needs to be able to process Proxy-Cri (preferred?)\r\n* Define a way to state support explicitly.",
+      "createdAt": "2023-12-08T15:25:45Z",
+      "updatedAt": "2023-12-08T15:25:45Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 6,
+      "id": "I_kwDOHa3Jsc55K3I7",
+      "title": "Per-resource preferences",
+      "url": "https://github.com/core-wg/transport-indication/issues/6",
+      "state": "OPEN",
+      "author": "chrysn",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "Discussion around location-scheme in https://github.com/core-wg/href/pull/81/files indicated that there might indeed be a need for per-resource preferences for particular transports.\r\n\r\nI'm not convinced this is something that should be ever advertised, but @cabo, you seem to have use cases in mind, so let's discuss this here: Is there a concrete example you think of, if not to fix my lack of imagination then at least to have a concrete example?",
+      "createdAt": "2023-12-08T15:43:31Z",
+      "updatedAt": "2023-12-08T15:48:00Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "body": "Personally, I don't think Location-Scheme (and -Host and -Port) is how it should be done, but if discussions wind up with having Location-* be preferred, this document can add them (and, given the time lines, already in a CRI fashion)",
+          "createdAt": "2023-12-08T15:47:59Z",
+          "updatedAt": "2023-12-08T15:47:59Z"
+        }
+      ]
+    },
+    {
+      "number": 9,
+      "id": "I_kwDOHa3Jsc6I7KJm",
+      "title": "Move in SVCBish address",
+      "url": "https://github.com/core-wg/transport-indication/issues/9",
+      "state": "CLOSED",
+      "author": "chrysn",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "... and when we do, our TLSA equivalent is Cose Header Parameters, which allows kccs for the \"onion style\" addresses and \"kid\" for mutually agreed on random discovery points. (as used by onion CoAP's extended setup with two double circuits)\r\n\r\nMore precisely, the value that is part of the address would be a \"COSE header_map, as defined in [Section 3](https://rfc-editor.org/rfc/rfc9052#section-3) of [[RFC9052](https://datatracker.ietf.org/doc/html/rfc9052)]\", and thus directly compatible with the ID_CRED_x: When an EDHOC initiator contacts `coap://tlsalike.hexhexcose.service.arpa` and places that value in the Uri-Host (or some equivalent binary option), the responder can know which credential it is expected to use; sadly, EDHOC forbids the use of the empty ID_CRED_R that the responder could otherwise use here, so it may make sense to allow the use of the empty kid (which is just as compact as an empty ID_CRED_R map) there.\r\n\r\nCC @marco-tiloca-sics @rikard-sics @miri64",
+      "createdAt": "2024-05-15T08:28:33Z",
+      "updatedAt": "2024-07-08T22:20:28Z",
+      "closedAt": "2024-07-08T22:20:28Z",
+      "comments": [
+        {
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "body": "Closed with https://github.com/core-wg/transport-indication/pull/12\r\n\r\n(the tlsalike became edhoc-cred)",
+          "createdAt": "2024-07-08T22:20:28Z",
+          "updatedAt": "2024-07-08T22:20:28Z"
         }
       ]
     }
   ],
-  "pulls": []
+  "pulls": [
+    {
+      "number": 7,
+      "id": "PR_kwDOHa3Jsc5oo--c",
+      "title": "SVCB appendices",
+      "url": "https://github.com/core-wg/transport-indication/pull/7",
+      "state": "MERGED",
+      "author": "chrysn",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-03-04T21:19:21Z",
+      "updatedAt": "2024-03-15T13:46:47Z",
+      "baseRepository": "core-wg/transport-indication",
+      "baseRefName": "master",
+      "baseRefOid": "c45c069f2847e4eb49fa684ac41508358a5308aa",
+      "headRepository": "core-wg/transport-indication",
+      "headRefName": "svcb-stuff",
+      "headRefOid": "a4a6b376a0c0ec79d362800f811d2b0ece6c4a21",
+      "closedAt": "2024-03-04T23:56:38Z",
+      "mergedAt": "2024-03-04T23:56:38Z",
+      "mergedBy": "chrysn",
+      "mergeCommit": {
+        "oid": "7da98f7f8e6b0b2324b9095be850e08a6dbe5093"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 8,
+      "id": "PR_kwDOHa3Jsc5up9sf",
+      "title": "Introduce `coaptransport` SvcParamKey",
+      "url": "https://github.com/core-wg/transport-indication/pull/8",
+      "state": "MERGED",
+      "author": "miri64",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "IMHO there should be its own dedicated section on this, but this way we have a discussion starter and it integrates somewhat intrusively into the current structure.",
+      "createdAt": "2024-05-06T16:09:19Z",
+      "updatedAt": "2024-07-07T20:17:04Z",
+      "baseRepository": "core-wg/transport-indication",
+      "baseRefName": "master",
+      "baseRefOid": "e444a89cfce0ec11e2793563505c18d10fb5a75a",
+      "headRepository": "miri64/draft-ietf-transport-indication",
+      "headRefName": "coaptransfer-svcb",
+      "headRefOid": "6a3da894c7bcf126d28167a2af5e4fac5804b630",
+      "closedAt": "2024-07-05T12:00:57Z",
+      "mergedAt": "2024-07-05T12:00:57Z",
+      "mergedBy": "chrysn",
+      "mergeCommit": {
+        "oid": "a6d89053165751601eed6fbfcd1c79d9edb63126"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 10,
+      "id": "PR_kwDOHa3Jsc50eNRh",
+      "title": "Same-origin rather than rel=hosts",
+      "url": "https://github.com/core-wg/transport-indication/pull/10",
+      "state": "MERGED",
+      "author": "chrysn",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "I proposed this at IETF119 in an open question, and nobody had opinions.\r\n\r\n@mcr, you had comments about the \"hosts\" part being confusing; you may be happy to see that basically all that stuff can go out if we pick the easier (albeit not as theoretically beautiful) approach, which is also based on a widely established concept.\r\n\r\n(It is not as theoretically beautiful because it looks into structure of URIs which should ideally be opaque).",
+      "createdAt": "2024-07-04T19:01:31Z",
+      "updatedAt": "2024-07-05T09:57:33Z",
+      "baseRepository": "core-wg/transport-indication",
+      "baseRefName": "master",
+      "baseRefOid": "ebf4ee60e417e8fe8a5b87383c1357c8c11270e8",
+      "headRepository": "core-wg/transport-indication",
+      "headRefName": "same-origin-rather-than-rel-hosts",
+      "headRefOid": "c40f35e32c35b28b1b0044224dfcfa3ad29a040f",
+      "closedAt": "2024-07-05T09:57:29Z",
+      "mergedAt": "2024-07-05T09:57:29Z",
+      "mergedBy": "chrysn",
+      "mergeCommit": {
+        "oid": "c40f35e32c35b28b1b0044224dfcfa3ad29a040f"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 11,
+      "id": "PR_kwDOHa3Jsc50h3DV",
+      "title": "Move short description to avoid sending Uri-Host from open questions into text",
+      "url": "https://github.com/core-wg/transport-indication/pull/11",
+      "state": "MERGED",
+      "author": "chrysn",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "The ability of the server to tell the client that it doesn't require a Uri-Host sent that follows from the has-unique-proxy relation has been uncontroversial and appears to be practical.\r\n\r\nThis has been sitting in the appendix way too long.",
+      "createdAt": "2024-07-05T11:36:29Z",
+      "updatedAt": "2024-07-05T11:54:16Z",
+      "baseRepository": "core-wg/transport-indication",
+      "baseRefName": "master",
+      "baseRefOid": "d87307c94ac02df65f2df96918172d731d1a37d3",
+      "headRepository": "core-wg/transport-indication",
+      "headRefName": "no-uri-host-from-open-questions",
+      "headRefOid": "8a972f14979ae8fbac43ffe35e887a715949e30e",
+      "closedAt": "2024-07-05T11:54:08Z",
+      "mergedAt": "2024-07-05T11:54:07Z",
+      "mergedBy": "chrysn",
+      "mergeCommit": {
+        "oid": "42667641382b9912c3c1f7273e5cc14b9ec1ac82"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 12,
+      "id": "PR_kwDOHa3Jsc50mOV3",
+      "title": "SVCB overhaul",
+      "url": "https://github.com/core-wg/transport-indication/pull/12",
+      "state": "MERGED",
+      "author": "chrysn",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "This moves <del>(incomplete: will move)</del> speculative content into just registering in the relevant registries (without, of course, retroactively making CoAP-over-TCP work that way automatically), and will also move content that was dropped in https://github.com/anr-bmbf-pivot/draft-lenders-core-dnr/pull/6 in here.",
+      "createdAt": "2024-07-06T21:48:15Z",
+      "updatedAt": "2024-07-08T22:19:33Z",
+      "baseRepository": "core-wg/transport-indication",
+      "baseRefName": "master",
+      "baseRefOid": "633e159b340978283967915c7f06f385244797eb",
+      "headRepository": "core-wg/transport-indication",
+      "headRefName": "svcb-overhaul",
+      "headRefOid": "1377d2c7ad236a3ff190f28445dd5ad9a9ae4528",
+      "closedAt": "2024-07-08T22:19:26Z",
+      "mergedAt": "2024-07-08T22:19:26Z",
+      "mergedBy": "chrysn",
+      "mergeCommit": {
+        "oid": "fdf82f039b9dff761379108fbf8bba99f27f3c4b"
+      },
+      "comments": [
+        {
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "body": "The motto of the PR, as in the autors' latest video chat, was \"more solid, less h\u00e4tt'-I-war-I\" (which is German roughly for coulda-shoulda-woulda)",
+          "createdAt": "2024-07-06T21:49:43Z",
+          "updatedAt": "2024-07-06T21:49:43Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 13,
+      "id": "PR_kwDOHa3Jsc5_Vx2a",
+      "title": "Overhaul for IETF121",
+      "url": "https://github.com/core-wg/transport-indication/pull/13",
+      "state": "MERGED",
+      "author": "chrysn",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-10-21T15:34:29Z",
+      "updatedAt": "2024-10-21T22:09:02Z",
+      "baseRepository": "core-wg/transport-indication",
+      "baseRefName": "master",
+      "baseRefOid": "30f87d7e01b24ea5ea15288176400650eb675909",
+      "headRepository": "core-wg/transport-indication",
+      "headRefName": "chrysn-overhaul",
+      "headRefOid": "e53e848673a4ae2ac21b0e401973d4e8b38777da",
+      "closedAt": "2024-10-21T22:09:01Z",
+      "mergedAt": "2024-10-21T22:09:01Z",
+      "mergedBy": "chrysn",
+      "mergeCommit": {
+        "oid": "c61b6a1d072340f4d038a486e87ad714d3c3afe8"
+      },
+      "comments": [],
+      "reviews": []
+    }
+  ]
 }
