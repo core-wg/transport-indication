@@ -1,0 +1,88 @@
+\input{shared/ietf-slides.tex}
+
+% about the presentation
+\title{CoAP Transport Indication}
+\subtitle{\texttt{ietf-core-transport-indication-07}}
+\author{\textit{Christian~Amsüss}, Martine~Lenders}
+\date{IETF121 Dublin, CoRE, 2024-11-05}
+
+\begin{document}
+
+\frame{\titlepage}
+
+\begin{frame}{What this document is about}\Large
+    \begin{itemize}
+        \item Describe how different CoAP transports can be used (automatically).
+        \item Describe path forward on \texttt{coap+…} schemes.
+
+            \bigskip
+
+            This is a prerequisite for new standardized transports!\footnote{WIP: CoAP-over-GATT. Pondering in RIOT OS: CoAP-over-CAN. In use: CoAP-over-MQTT.}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Recent changes}\Large
+    \begin{itemize}
+        \item Restructuring
+        \item Proxies are key; discoverable through
+            \begin{itemize}\Large
+                \item Links
+                \item SVCB (now claimed more boldly)
+                \item … or whatever else is around for a transport
+            \end{itemize}
+        \item Unified \texttt{\_coap} service (was \texttt{\_coaps} and \texttt{\_coap})
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Steps to completion}\Large
+    \begin{itemize}
+        \item Find input for what are toss-up questions so far
+            \begin{itemize}\Large
+                \item \texttt{\_coap.dev.example.com IN SVCB} or \\ \texttt{dev.example.com IN COAP}?
+                \item \texttt{alpn} or new \texttt{coaptransport} for non-TLS transports?
+            \end{itemize}
+        \item Jettison parts that slow it down?
+            \begin{itemize}\Large
+                \item SVCB parameters \texttt{edhoc-cred}/\texttt{-info} and \texttt{oauth-hints}
+                \item ``IP literal with extra data'' appendix
+
+                    Would leave small gap in future IP based transport story.
+                \item ``Related applications'' appendix
+            \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Where should literals go?}\Large
+    Currently in appendix.
+    
+    \bigskip
+
+    Examples\footnote{Precise syntax is not fixed or even fully consistent.}:
+
+    \normalsize
+
+    \bigskip
+
+    \texttt{https://tlsa.amaqckrkfivcukrkfivcukrkfivcukrkfivcukrkfivcukrkfivcukrk\\\qquad.service.arpa/}
+
+    \bigskip
+
+    ``has no A/AAAA record but a TLSA record with certificate usage 3'' (no CA/PKIX needed)
+
+    \vspace{1cm}
+
+    \texttt{coap://svcb.alpn\_coapquic.6.2001-db8--1.service.arpa/temperature}
+
+    \bigskip
+
+    ``has an AAAA record and SVCB parameters''
+\end{frame}
+
+\begin{frame}{Next steps}\Large
+    \begin{itemize}
+        \item Gather WG input.
+        \item Finalize down document based on that.
+    \end{itemize}
+\end{frame}
+
+\end{document}
