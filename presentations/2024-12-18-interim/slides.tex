@@ -1,0 +1,119 @@
+\input{shared/ietf-slides.tex}
+
+% about the presentation
+\title{CoAP Transport Indication}
+\subtitle{\texttt{ietf-core-transport-indication-07}}
+\author{\textit{Christian~Amsüss}, Martine~Lenders}
+\date{CoRE interim, 2024-12-18}
+
+\begin{document}
+
+\frame{\titlepage}
+
+\begin{frame}{Topic for today}\Large
+    IETF121: ``lots of questions being asked here, and to be frank, I don't understand any of them''
+
+    \vspace{2cm}
+
+    Let's change that.
+\end{frame}
+
+\begin{frame}{What this document is about}\Large
+    \begin{itemize}
+        \item {\color{gray} Describe how different CoAP transports can be used (automatically).}
+        \item Describe path forward on \texttt{coap+…} schemes.
+
+            \bigskip
+
+            This is a prerequisite for new standardized transports!
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{How do we address in-band advertising?}\Large
+    \texttt{<coap+tcp://[2001:db8::1]>;rel=has-proxy;anchor="/"}
+
+    \bigskip
+
+    Alternative transports are viewed as proxies that enable dereferencing the actual URI.
+
+    \bigskip
+
+    Proxies can be advertised using a new link relation.
+\end{frame}
+
+\begin{frame}{Why did \texttt{coap+tcp} need \texttt{+tcp} when \texttt{HTTP/2} and \texttt{HTTP/3} did not?}\Large
+    \begin{itemize}
+        \item HTTP/2 has built-in ``101 Switching Protocols''.
+        \item HTTP can affort just sending Alt-Svc all the time.
+        \item Most of HTTP runs on TLS which has ALPN.
+        \item \textit{HTTP/3 can be started without fallback using \rfc{9460} HTTPS/SVCB records.}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{What are SVCB records}\Large
+    For a known service (maybe with port), instead of looking up A/AAAA, look up SVCB
+
+    \bigskip
+
+    \texttt{\_1234.\_bar.example.com. 300 IN \textbf{SVCB} 1 svc1.example.net. (\\
+    port=1234 \textbf{ech}=AEj+DQBEAQAgACAd…)}
+
+    \texttt{example.com. IN \textbf{HTTPS} 1 alt3.example. (
+    port=9443 \textbf{alpn=h2,h3} foo=... )}
+\end{frame}
+
+\begin{frame}{But we don't always use DNS}\Large
+    SVCB parameters are a usable model even outside of DNS.
+
+    \begin{itemize}
+        \item Other resolution mechanisms could provide equivalent data.
+        \item \texttt{/etc/hosts} / nslookup can't. (But is that our model?)
+        \item IP literals can't\footnote{They can not do a lot of things -- convey zone identifiers, convey multiple simultaneous addresses, have web PKI certificates, distinguish TCP/UDP.} -- but extended literals could.
+
+            For example, mapping the proposed \texttt{coap://aabbccddeeff.ble.arpa} to CoAP-over-GATT versions
+            goes through its service discovery that tells you which draft version is supported.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Open questions}
+    \begin{itemize}
+        \item SVCB: \texttt{\_coap.foo IN SVCB} or \texttt{foo IN COAP}?
+        \item Should \texttt{coap+tcp} \& co be indicated in an ALPN or a parallel SVCB parameter?
+        \item Jettison parts that slow it down?
+            \begin{itemize}\Large
+                \item SVCB parameters \texttt{edhoc-cred}/\texttt{-info} and \texttt{oauth-hints}
+                \item ``IP literal with extra data'' appendix
+
+                    Would leave small gap in future IP based transport story.
+                \item ``Related applications'' appendix
+            \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Backup slide: Literals}\Large
+    Currently in appendix.
+    
+    \bigskip
+
+    Examples\footnote{Precise syntax is not fixed or even fully consistent.}:
+
+    \normalsize
+
+    \bigskip
+
+    \texttt{https://tlsa.amaqckrkfivcukrkfivcukrkfivcukrkfivcukrkfivcukrkfivcukrk\\\qquad.service.arpa/}
+
+    \bigskip
+
+    ``has no A/AAAA record but a TLSA record with certificate usage 3'' (no CA/PKIX needed)
+
+    \vspace{1cm}
+
+    \texttt{coap://svcb.alpn\_coapquic.6.2001-db8--1.service.arpa/temperature}
+
+    \bigskip
+
+    ``has an AAAA record and SVCB parameters''
+\end{frame}
+
+\end{document}

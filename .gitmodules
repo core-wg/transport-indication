@@ -10,3 +10,6 @@
 [submodule "presentations/2024-11-05-ietf121/shared"]
 	path = presentations/2024-11-05-ietf121/shared
 	url = https://codeberg.org/chrysn/presentation-shared
+[submodule "presentations/2024-12-18-interim/shared"]
+	path = presentations/2024-12-18-interim/shared
+	url = https://codeberg.org/chrysn/presentation-shared
