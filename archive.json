@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-02-20T01:19:35.876827+00:00",
+  "timestamp": "2025-02-23T01:24:47.288324+00:00",
   "repo": "core-wg/transport-indication",
   "labels": [
     {
@@ -206,6 +206,30 @@
           "body": "Closed with https://github.com/core-wg/transport-indication/pull/12\r\n\r\n(the tlsalike became edhoc-cred)",
           "createdAt": "2024-07-08T22:20:28Z",
           "updatedAt": "2024-07-08T22:20:28Z"
+        }
+      ]
+    },
+    {
+      "number": 14,
+      "id": "I_kwDOHa3Jsc6qzkHO",
+      "title": "Notes for .service.arpa from Onion OSCORE indication",
+      "url": "https://github.com/core-wg/transport-indication/issues/14",
+      "state": "OPEN",
+      "author": "chrysn",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "```\ncoap://2001-db8--1.6.uli2xegkc.b2qqriibumaqeiabefmcaaaaaaafkdk5lvnyge7fnnialbdcb2hxkkiaqmj6vsk-.cnf.service.arpa/ \n\narpa\nservice\ncnf\nb2qqriibumaqeiabefmcaaaaaaafkdk5lvnyge7fnnialbdcb2hxkkiaqmj6vsk-\nuli2xegkc\n6\n2001-db8--1 \n```\n\nCRI:\n```cbor-edn\n[-1, 1234/service.arpa/({14: {8: {...}}}), [\"path\", \"path\"]] \n```",
+      "createdAt": "2025-02-20T09:50:31Z",
+      "updatedAt": "2025-02-20T10:03:26Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "body": "wording hints: .service.arpa gives \"an authority by value rather than by reference\" (with any associated metadata).",
+          "createdAt": "2025-02-20T10:03:24Z",
+          "updatedAt": "2025-02-20T10:03:24Z"
         }
       ]
     }
