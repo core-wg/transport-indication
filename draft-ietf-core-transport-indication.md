@@ -897,7 +897,7 @@ or to use either of the TLS based options.
 
 #### Application mandating SVCB
 
-An application's policy is to mandate client support for SVCB records,
+An example application's policy is to mandate client support for SVCB records,
 and to require that a security mechanism must be used where credentials are backed either by DNSSEC or by the Web PKI.
 
 A server operator is running in a legacy network that only provides an IPv4 address behind NAT with a dynamic public address,
