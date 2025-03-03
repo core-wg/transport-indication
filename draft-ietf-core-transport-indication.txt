@@ -5,8 +5,8 @@
 CoRE                                                           C. Amsüss
 Internet-Draft                                                          
 Intended status: Standards Track                           M. S. Lenders
-Expires: 21 June 2025                                         TU Dresden
-                                                        18 December 2024
+Expires: 4 September 2025                                     TU Dresden
+                                                            3 March 2025
 
 
                        CoAP Transport Indication
@@ -53,11 +53,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 21 June 2025.
+   This Internet-Draft will expire on 4 September 2025.
 
 Copyright Notice
 
-   Copyright (c) 2024 IETF Trust and the persons identified as the
+   Copyright (c) 2025 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -75,8 +75,9 @@ Table of Contents
      1.1.  Terminology
      1.2.  Goals
      1.3.  Core principle: Transport endpoints are proxies
-     1.4.  Concepts
-       1.4.1.  Using URIs to identify transport endpoints
+     1.4.  Registered names and transport setup
+     1.5.  Concepts
+       1.5.1.  Using URIs to identify transport endpoints
    2.  Finding suitable endpoints for a URI
      2.1.  Processing scheme and authority
        2.1.1.  Transport-unaware resolution
@@ -102,7 +103,7 @@ Table of Contents
      7.2.  Service Parameters
        7.2.1.  Examples of using name resolution discovery and
                parameters
-     7.3.  Producing request for a discovered service
+     7.3.  Producing requests for a discovered service
      7.4.  Expressing Service Parameters as literals
    8.  Guidance to upcoming transports
    9.  Security considerations
@@ -128,9 +129,8 @@ Table of Contents
    Appendix E.  Literals beyond IP addresses
      E.1.  Motivation for new literal-ish names
      E.2.  Structure of service.arpa
-     E.3.  Syntax of service.arpa
-     E.4.  Processing service.arpa
-     E.5.  Examples
+     E.3.  Processing service.arpa
+     E.4.  Examples
    Appendix F.  Acknowledgements
    Authors' Addresses
 
@@ -162,7 +162,7 @@ Table of Contents
    equivalently, web links as described in [RFC8288]).
 
    The phrase "the transport indicated by (a URI)" is used as described
-   in Section 1.4.1.
+   in Section 1.5.1.
 
    A protocol that implements CoAP request-response semantics for a
    lower layer is called a "(CoAP) transport".
@@ -222,7 +222,21 @@ Table of Contents
    whose URIs including loopback addresses or partially-qualified domain
    names.
 
-1.4.  Concepts
+1.4.  Registered names and transport setup
+
+   The CoAP specification is intentionally open about the resolution
+   services by which indirect identifiers in the host portion of a CoAP
+   URI are resolved, giving DNS as one example without going into
+   details (Section 6.1 of [RFC7252]).
+
+   This document does not change any of that, but it does point out in
+   Section 2 the breadth of information that such a service can provide
+   (e.g. providing multiple addresses, or metadata on services used on
+   them), and gives a concrete example of the information that modern
+   DNS idioms deliver (which it enables by performing a registration in
+   Section 10.4).
+
+1.5.  Concepts
 
    Same-host proxy:  A CoAP server that accepts forward proxy requests
       (i.e., requests carrying the Proxy-Scheme option) exclusively for
@@ -241,7 +255,7 @@ Table of Contents
    option should never arise.  The Proxy-URI option is still equivalent
    to the decomposed options, and can be used if the server supports it.
 
-1.4.1.  Using URIs to identify transport endpoints
+1.5.1.  Using URIs to identify transport endpoints
 
    The URI coap://[2001:db8::1] identifies a particular resource,
    possibly a "welcome" text.  It is, colloquially, also used to
@@ -249,60 +263,66 @@ Table of Contents
    specific details.
 
    For precision, this document uses the term "the transport address
-   indicated by (a URI)" to refer to the transport and its details (in
-   the example, CoAP over UDP with an IPv6 address and the default
-   port), but otherwise no big deal is made of it.
+   indicated by (a URI)" to refer to the transport and its details, but
+   otherwise no big deal is made of it.
 
-   The transport indicated by a URI is not only influenced by the URI
-   scheme, but also by the authority component.  The transports and
-   resolution mechanisms currently specified make little use of this
-   possibility, mainly because the most prominent resolution mechanism
-   (SVCB records) has not been available when [RFC8323] was published
-   and because it can not be expressed in IP literals.  The provisions
-   of this document enable this opportunistically for registered names
-   (Section 7.1) and for literals using the mechanism in Appendix E.
-
-   When the resolution mechanism used for a registered name authority
-   component yields multiple addresses, all of those are possible ways
-   to interact with the resource.  The resolution mechanism or other
-   underlying transport can give guidance on how to find the best usable
-   one.  With the currently specified transports and resolution
-   mechanisms, the most prominent example of making use of that
-   information is applying the Happy Eyeballs mechanism [RFC8305] to
-   establish a TCP connection when a name resolves to both IPv4 and IPv6
-   addresses,
+   Note that as such a URI may contain a registered name: as with any
+   CoAP URI, resolution services apply.  Therefore, it may indicate
+   multiple transport endpoints.
 
    [ TBD: Do we want to extend this to HTTP proxies?  Probably just not,
    and if so, only to those that can just take coap://... for a URI. ]
 
 2.  Finding suitable endpoints for a URI
 
-   When a CoAP request is created, a typical starting point is the URI
-   of the request's target resource.  To send the request, a suitable
-   endpoint needs to be discovered.  This section lists the ways one or
-   more such endpoints can be found.
+   When a CoAP request is created by a client, a typical starting point
+   is the URI of the request's target resource.  To send the request, a
+   suitable endpoint needs to be discovered.  This section lists the
+   ways one or more such endpoints can be found.
 
    In some situations, a client decides to use a forward proxy to access
-   the resource.  In that case, it relays all the URI components to the
-   proxy, which then decides on an endpoint to which to forward the
-   request using the tools described in this section.  Section 6
-   describes this in more detail.
+   the resource: either because it is explicitly configured to do so
+   (Section 6), or because it has discovered a preferred proxy
+   (Section 2.2).  In that case, it finds the endpoint of the configured
+   proxy (using Section 2.1}, if not given explicitly).  The proxy then
+   decides on an endpoint to which to forward the request for its own,
+   (again using the tools described in this section).  Otherwise, it
+   uses the information of scheme and authority, often through a
+   resolution service (Section 2.1).
 
-   The endpoint (and thus transport) used to access a resource does not
-   alter the resource's URI.  If the URI scheme associated with the
-   selected transport differs from the request URI's scheme, a different
-   host name is encountered as part of the resolution process (e.g. due
-   to a DNS CNAME or an explicit SVCB target name) or a different port
-   is used (as possible through SVCB), the Proxy-Scheme, Uri-Host and
-   Uri-Port options are set as needed to ensure that the request keeps
-   targetting the requested resource.  For servers that follow the
-   common pattern of exposing the same resources on all transports (and
-   thus having multiple aliased URIs for the same resource) and that do
-   not act as proxies for other systems, the presence of the Proxy-
-   Scheme option has little practical consequence: such servers become
-   same-host proxies, and can ignore the Proxy-Scheme option as long as
-   they recognize the Uri-Host value (which they already have been
-   required to process).
+   No matter how the endpoint (and thus transport) was discovered and
+   whether a proxy is involved, it does not alter the URI of the
+   resource being requested.  The Proxy-Scheme, Uri-Host and Uri-Port
+   options are set as needed to ensure that the request keeps targetting
+   the requested resource.  This happens, respectively, if the URI
+   scheme associated with the selected transport differs from the
+   request URI's scheme (or a proxy is used), when the host name is not
+   the default one for the transport (e.g. if it is not an IP literal in
+   the UDP or TCP cases, or a proxy is used; DNS CNAME entries or SVCB
+   target do not alter the URI's host name at all) or a different port
+   is used (as possible through SVCB), (Outside of proxy cases,
+   Section 6.4 of [RFC7252] only talks of setting the Uri-Host to
+   preserve the URI, and not of setting Proxy-Scheme or Uri-Port.  That
+   is because at the time of writing, no mechanisms were available to
+   select a different transport or port).
+
+   Note that there is no meaningful difference in a client's behavior
+   between when it is configured with a proxy, has discovered a proxy
+   through links or has discovered a completely different transport:
+   this is the essence of "transport endpoints are proxis" Section 1.3.
+
+
+   // The following two paragraphs may need a new home eventually to
+   // keep this section to the point. --CA
+
+   For servers that follow the common pattern of exposing the same
+   resources on all transports (and thus having multiple aliased URIs
+   for the same resource) and that do not act as proxies for other
+   systems, the presence of the Proxy-Scheme option introduced by using
+   alternative transports has little practical consequence: such servers
+   become same-host proxies, and can ignore the Proxy-Scheme option as
+   long as they recognize the Uri-Host value (which they already have
+   been required to process).
 
    While a server is at liberty to create aliases, clients can not infer
    from the presence of a transport for a host that URIs created from
@@ -319,15 +339,29 @@ Table of Contents
 2.1.  Processing scheme and authority
 
    To discover endpoints for a given URI, the scheme and the authority
-   component of the URI are typical starting points.
+   component of the URI are typical starting points for resolution
+   services.
+
+   The outcome of any resolution service is a list.  It may be partially
+   sorted, and may arrive piece by piece.
+
+   Conceptually, each entry contains:
+
+   *  Which CoAP transport is used (e.g. CoAP-over-TCP).
+
+   *  The transport's address details (e.g. an IP address and port
+      number).
+
+   *  Any additional metadata that facilitates communication (e.g.
+      public keys for [I-D.ietf-tls-esni]).
 
 2.1.1.  Transport-unaware resolution
 
    The IP based transports specified so far (CoAP over UDP, DTLS, TCP,
    TLS and WebSockets) all indicate the transport in their scheme, and
-   have a default port.  The only remaining details of multiplexing
-   information required are the IP version(s) and IP address(es) of the
-   server.
+   either use their default port or indicate the port explicitly.  The
+   only remaining details of multiplexing information required are the
+   IP version(s) and IP address(es) of the server.
 
    If the host component of the URI is a literal, that information is
    already available.
@@ -335,13 +369,14 @@ Table of Contents
    If the host component of the URI is a registered name, a name
    resolution service is used for a simple name lookup: When DNS is used
    as a resolution service, AAAA (or A) records of the name are looked
-   up.
+   up.  The /etc/hosts file and nsswitch "host" database can provide
+   that same information.
 
-   Beyond the IP address, the resolution service may provide some
-   additional information, such as the zone identifier (implied in DNS
-   by using the zone the DNS response was obtained through) or TLSA
-   records (which can guide the (D)TLS certificate validation process
-   but are out of scope for this document).
+   Additional metadata provided by this resolution service are the zone
+   identifier (implied in DNS by using the zone the DNS response was
+   obtained through) or TLSA records (which can guide the (D)TLS
+   certificate validation process but are out of scope for this
+   document).
 
    Simple resolution services do not indicate which transports are
    available on the address.  Servers reached that way can resort to
@@ -819,7 +854,7 @@ Payload:
    the context of CoAP transport indication.
 
    [ The following paragraph is outdated, but its replacement will
-   depend on the outcome of IETF121 discussions. ]
+   depend on the outcome of IETF122 discussions. ]
 
    The subsections in this section are arranged to describe a consistent
    sequential full picture.  The capabilities of this big picture are
@@ -875,15 +910,14 @@ Payload:
    instead of additional schemes).
 
    [ The following paragraph may need to be revisited depending on the
-   outcome of IETF121 discussions. ]
+   outcome of IETF122 discussions. ]
 
    The effects on a client of seeing SVCB parameters are similar to
    those of seeing a "has-proxy" link from the origin to the URI built
-   using {#svcblit}. They differ in that SVCB parameters describe the
-   server itself: Credentials expressed apply end to end (as opposed to
-   credentials that describe the proxy in a "has-proxy" link), and the
-   client could conclude that the implied proxy is a same-host proxy (if
-   that had any impact on the client, which it does not).
+   using {#svcblit}. The precise implications of any DNSSec-backed
+   applicable credentials expressed in SVCB parameters are subject to
+   ongoing discussion (especially with regard to whether they apply to
+   the proxy or the origin server).
 
 7.2.  Service Parameters
 
@@ -924,16 +958,15 @@ Payload:
 
       Its value is empty.
 
-   *  edhoc-cred: This is a new parameter defined in this document, and
-      describes that EDHOC can be used with the server, and which
-      credentials can authenticate the server.
+   *  cred: This is a new parameter defined in this document, and
+      describes COSE credentials that can authenticate the server, eg.
+      when used with EDHOC.
 
-      The edhoc-cred parameter's value is a CBOR sequence of COSE Header
-      maps as defined in [RFC9052].  If the parameter is present, it
-      indicates that EDHOC [RFC9528] can be used on the transport, and
-      that the server can be authenticated by any credential expressed
-      in the sequence.  This is similar to the TLSA records specified in
-      [RFC6698].
+      The cred parameter's value is a CBOR sequence of COSE Header maps
+      as defined in [RFC9052].  If the parameter is present, it
+      indicates that the server can be authenticated by any credential
+      expressed in the sequence.  This is similar to the TLSA records
+      specified in [RFC6698].
 
       A COSE Header map can express many properties, not all of which
       are sufficient to authenticate a peer on any given security
@@ -949,13 +982,13 @@ Payload:
       certificate the server presents by a thumbprint (hash).
 
       It is up to the application to define requirements for the
-      provenance of the edhoc-cred parameter, whether it needs to be
-      provided through secure mechanism, or whether the server is
-      strictly required to present that credential.
+      provenance of the cred parameter, whether it needs to be provided
+      through secure mechanism, or whether the server is strictly
+      required to present that credential.
 
       This is unlike TLSA, which needs to be transported through DNSSEC,
-      because a edhoc-cred parameter may be sent using other means than
-      DNS (for example in DHCPv6 responses or Router Advertisements).
+      because a cred parameter may be sent using other means than DNS
+      (for example in DHCPv6 responses or Router Advertisements).
 
    *  edhoc-info: This is a new parameter defined in this document,
       describing how EDHOC can be used on the server.
@@ -1018,7 +1051,7 @@ Payload:
 
 7.2.1.2.  Application mandating SVCB
 
-   An application's policy is to mandate client support for SVCB
+   An example application's policy is to mandate client support for SVCB
    records, and to require that a security mechanism must be used where
    credentials are backed either by DNSSEC or by the Web PKI.
 
@@ -1031,20 +1064,19 @@ Payload:
 
  _coap.host.example.net 600 IN SVCB 1 publicudp.host.example.net       \
                         port=5678                                      \
-                        edhoc-cred={14:{... /KCCS with its public key/}}
+                        cred={14:{... /KCCS with its public key/}}
 
    When a client starts using coap://host.example.net/interactive, it
    looks up that record and verifies it using DNSSEC.  It then proceeds
    to send EDHOC requests over CoAP to 1.2.3.4 port 5678, setting the
    Uri-Host option to "host.example.net".
 
-   The client could also have initiated an EDHOC session if no edhoc-
-   cred parameter had been present, but then, it would have required
-   that the server present some credential that could be verified
-   through the Web PKI, for example an x5chain containing a Let's
-   Encrypt certificate.
+   The client could also have initiated an EDHOC session if no cred
+   parameter had been present, but then, it would have required that the
+   server present some credential that could be verified through the Web
+   PKI, for example an x5chain containing a Let's Encrypt certificate.
 
-7.3.  Producing request for a discovered service
+7.3.  Producing requests for a discovered service
 
    If a service's discovery process does not produce a URI but an
    address, host name and/or Service Binding Parameters, those can be
@@ -1179,7 +1211,7 @@ Payload:
 
    URIs created from such names may not indicate the protocol uniquely:
    Additional transports specified later may also provide CoAP services
-   for the same name.  In the sense of Section 1.4.1, both transport
+   for the same name.  In the sense of Section 1.5.1, both transport
    would be identified by that URI.  That is not an issue as long as the
    protocols underneath the CoAP transport provide a means of
    advertising the precise protocol used.  For example, a hypothetical
@@ -1306,7 +1338,7 @@ Payload:
    +================+===============+=================================+
    | 10 (suggested) | coaptransport | CoAP transport protocol         |
    +----------------+---------------+---------------------------------+
-   | to be assigned | edhoc-cred    | EDHOC credentials identifying   |
+   | to be assigned | cred          | COSE credentials identifying    |
    |                |               | the server                      |
    +----------------+---------------+---------------------------------+
    | to be assigned | edhoc-info    | EDHOC profile information       |
@@ -1340,9 +1372,9 @@ Payload:
    [I-D.ietf-core-href]
               Bormann, C. and H. Birkholz, "Constrained Resource
               Identifiers", Work in Progress, Internet-Draft, draft-
-              ietf-core-href-16, 24 July 2024,
+              ietf-core-href-19, 3 March 2025,
               <https://datatracker.ietf.org/doc/html/draft-ietf-core-
-              href-16>.
+              href-19>.
 
    [RFC6690]  Shelby, Z., "Constrained RESTful Environments (CoRE) Link
               Format", RFC 6690, DOI 10.17487/RFC6690, August 2012,
@@ -1370,11 +1402,6 @@ Payload:
               and Parameter Specification via the DNS (SVCB and HTTPS
               Resource Records)", RFC 9460, DOI 10.17487/RFC9460,
               November 2023, <https://www.rfc-editor.org/rfc/rfc9460>.
-
-   [RFC9528]  Selander, G., Preuß Mattsson, J., and F. Palombini,
-              "Ephemeral Diffie-Hellman Over COSE (EDHOC)", RFC 9528,
-              DOI 10.17487/RFC9528, March 2024,
-              <https://www.rfc-editor.org/rfc/rfc9528>.
 
 11.2.  Informative References
 
@@ -1430,31 +1457,31 @@ Payload:
               Security for Constrained Environments (OSCORE) Profile for
               Authentication and Authorization for Constrained
               Environments (ACE)", Work in Progress, Internet-Draft,
-              draft-ietf-ace-edhoc-oscore-profile-06, 21 October 2024,
+              draft-ietf-ace-edhoc-oscore-profile-07, 3 March 2025,
               <https://datatracker.ietf.org/doc/html/draft-ietf-ace-
-              edhoc-oscore-profile-06>.
+              edhoc-oscore-profile-07>.
 
    [I-D.ietf-cbor-edn-literals]
               Bormann, C., "CBOR Extended Diagnostic Notation (EDN)",
               Work in Progress, Internet-Draft, draft-ietf-cbor-edn-
-              literals-14, 9 December 2024,
+              literals-16, 8 January 2025,
               <https://datatracker.ietf.org/doc/html/draft-ietf-cbor-
-              edn-literals-14>.
+              edn-literals-16>.
 
    [I-D.ietf-core-coap-dtls-alpn]
               Lenders, M. S., Amsüss, C., Schmidt, T. C., and M.
               Wählisch, "ALPN ID Specification for CoAP over DTLS", Work
               in Progress, Internet-Draft, draft-ietf-core-coap-dtls-
-              alpn-01, 16 December 2024,
+              alpn-02, 3 March 2025,
               <https://datatracker.ietf.org/doc/html/draft-ietf-core-
-              coap-dtls-alpn-01>.
+              coap-dtls-alpn-02>.
 
    [I-D.ietf-core-dns-over-coap]
               Lenders, M. S., Amsüss, C., Gündoğan, C., Schmidt, T. C.,
               and M. Wählisch, "DNS over CoAP (DoC)", Work in Progress,
-              Internet-Draft, draft-ietf-core-dns-over-coap-09, 21
-              October 2024, <https://datatracker.ietf.org/doc/html/
-              draft-ietf-core-dns-over-coap-09>.
+              Internet-Draft, draft-ietf-core-dns-over-coap-13, 3 March
+              2025, <https://datatracker.ietf.org/doc/html/draft-ietf-
+              core-dns-over-coap-13>.
 
    [I-D.ietf-lake-edhoc]
               Selander, G., Mattsson, J. P., and F. Palombini,
@@ -1471,13 +1498,20 @@ Payload:
               2021, <https://datatracker.ietf.org/doc/html/draft-ietf-
               lpwan-coap-static-context-hc-19>.
 
+   [I-D.ietf-tls-esni]
+              Rescorla, E., Oku, K., Sullivan, N., and C. A. Wood, "TLS
+              Encrypted Client Hello", Work in Progress, Internet-Draft,
+              draft-ietf-tls-esni-23, 19 February 2025,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-tls-
+              esni-23>.
+
    [I-D.lenders-core-dnr]
               Lenders, M. S., Amsüss, C., Schmidt, T. C., and M.
               Wählisch, "Discovery of Network-designated OSCORE-based
               Resolvers: Problem Statement", Work in Progress, Internet-
-              Draft, draft-lenders-core-dnr-03, 8 July 2024,
+              Draft, draft-lenders-core-dnr-05, 3 March 2025,
               <https://datatracker.ietf.org/doc/html/draft-lenders-core-
-              dnr-03>.
+              dnr-05>.
 
    [I-D.silverajan-core-coap-protocol-negotiation]
               Silverajan, B. and M. Ocak, "CoAP Protocol Negotiation",
@@ -1554,11 +1588,6 @@ Payload:
               Alternative Services", RFC 7838, DOI 10.17487/RFC7838,
               April 2016, <https://www.rfc-editor.org/rfc/rfc7838>.
 
-   [RFC8305]  Schinazi, D. and T. Pauly, "Happy Eyeballs Version 2:
-              Better Connectivity Using Concurrency", RFC 8305,
-              DOI 10.17487/RFC8305, December 2017,
-              <https://www.rfc-editor.org/rfc/rfc8305>.
-
    [RFC8323]  Bormann, C., Lemay, S., Tschofenig, H., Hartke, K.,
               Silverajan, B., and B. Raymor, Ed., "CoAP (Constrained
               Application Protocol) over TCP, TLS, and WebSockets",
@@ -1615,6 +1644,34 @@ Payload:
               BNF.html#43>.
 
 Appendix A.  Change log
+
+
+   // This section is to be removed before publication.
+
+   Since draft-ietf-core-transport-indication-07:
+
+   *  Update sections 1 and 2:
+
+      -  Work more explicitly with 7252's resolution services.
+
+      -  List (coarsely) the information received from resolution
+         services.
+
+      -  Homogenize treatment of proxy URIs and other resolution service
+         outcomes.
+
+      -  Point out parallels to /etc/hosts.
+
+   *  Phrase possible differences w/rt hop-to-hop vs. end-to-end
+      encryption more carefully.
+
+   *  SVCB: Rename edhoc-cred to cred.
+
+   *  Rework literals following discussion around onion-coap.
+
+   *  Point out the fates of appendices.
+
+   *  Editorial fixes.
 
    Since draft-ietf-core-transport-indication-06:
 
@@ -1826,6 +1883,10 @@ Appendix A.  Change log
 
 Appendix B.  Related work and applicability to related fields
 
+
+   // This section is to be removed before submission to the IESG, with
+   // at least the MP-TCP section worked into corr-clar.
+
 B.1.  On HTTP
 
    The mechanisms introduced here are similar to the Alt-Svc header of
@@ -1931,6 +1992,10 @@ B.4.  Multipath TCP
 
 Appendix C.  Open Questions / further ideas
 
+
+   // This section is to be either converted into concrete guidance, or
+   // removed before submission to the IESG.
+
   *  Advertising under a stable name:
 
      If a host wants to advertise its host name rather than its IP
@@ -1967,6 +2032,10 @@ Appendix C.  Open Questions / further ideas
      relation to has-unique-proxy would make this easier.
 
 Appendix D.  EDHOC EAD for verifying legitimate proxies
+
+
+   // This section is to be moved into another document, possibly
+   // groupcomm-proxy.
 
    This document sketches an extension to [I-D.ietf-lake-edhoc] that
    informs the server of the public address the client is using,
@@ -2043,23 +2112,25 @@ E.1.  Motivation for new literal-ish names
 
 E.2.  Structure of service.arpa
 
-   Names under service.arpa are structured into an optional custom
-   prefix, an ordered list of key-value component pairs, and the common
-   suffix service.arpa.
+   Names under service.arpa are structured into an ordered list of key-
+   value component pairs, and the common suffix service.arpa.
 
-   The custom prefix can contain user defined components.  The intended
-   use is labelling, and to differentiate services provided by a single
-   host.  Any data is allowed within the structure of a URI (ABNF reg-
-   name) and DNS name rules (63 bytes per segment).  (While not ever
-   carried by DNS, this upholds the constraints of DNS for names.  That
-   decision may be revised later, but is upheld while demonstrating that
-   the desired properties can be obtained).
+   These pairs represent the very items also produced by Section 2.1.
+   In the current version, they can _not_ express multiple entries with
+   different structures.  They can express different entries, but any
+   repeated items (eg. different ALPNs and IP addresses) only produce
+   their product (i.e., no "TCP on this or that address, TLS on
+   another").
 
-   Component pairs consist of a registered component type (no precise
-   registry is proposed at this early point) followed by encoded data.
-   The component type "--" is special in that it concatenates the values
-   to its left and to its right, creating component values that may
-   exceed 63 bytes in length.
+   Keeping with the style of DNS (least significant component first),
+   pairs are expressed with their data a first label, followed by the
+   key in a separate label.  Data items ending with a "-" character are
+   concatenated with their previous label to avoid overflowing the
+   63-octet limit of DNS (even though those do not wind up in DNS
+   serialization).
+
+   For example, "world.hello-.label.8080.port" contains, in that order,
+   information about port 8080 and the label "helloworld".
 
    Initial component types are:
 
@@ -2086,44 +2157,12 @@ E.2.  Structure of service.arpa
       If present, a client MUST establish a secure connection, and MUST
       fail the connection if the TLSA record's requirements are not met.
 
-   *  "edhoc-cred", "edhoc-info", "oauth-info": SvcbParams in base32
-      encoding of their wire format.
+   *  "cred", "edhoc-info", "oauth-info": SvcbParams in base32 encoding
+      of their wire format.
 
    *  "coaptransport": SvcbParam in its text encoding.
 
-   *  "s": Other Service Parameters that do not have an explicit
-      component type.  SvcbParams in base32 encoding of their wire
-      format.
-
-      TBD: There is likely a transformation of the parameters'
-      presentation format that is compatible with the requirements of
-      the authority component, but this will require some more work on
-      the syntax.
-
-      If present, a client SHOULD use these hints to establish a
-      connection.
-
-      TBD: Encoding only the SvcParams and not priorities and targets
-      appears to be the right thing to do for the immediate record, but
-      does not enable load balancing and failover.  Further work is
-      required to explore how those can be expressed, and how data
-      pertaining to the target can be expressed, possibly in a nested
-      structure.
-
-E.3.  Syntax of service.arpa
-
-   name = [ custom ".-." ] *(component) "service.arpa"
-
-   custom = reg-name
-   component = 1*63nodot "." comptype "."
-   comptype = nodotnodash /  2*63nodot
-
-   ; unreserved/subdelims without dot
-   nodot  = nodotnodash / "-"
-   ; unreserved/subdelims without dot or dash
-   nodotnodash = ALPHA / DIGIT / "_" / "~" / sub-delims
-
-   ; reg-name and sub-delims as in RFC3986
+   *  "alpn": The ALPN(s) in hexadecimal encoding, separated by dashes.
 
    Due to [RFC3986]'s rules, all components are case insensitive and
    canonically lowercase.
@@ -2133,7 +2172,7 @@ E.3.  Syntax of service.arpa
    the character restrictions, it would not resolve the larger
    limitation of case insensitivity.
 
-E.4.  Processing service.arpa
+E.3.  Processing service.arpa
 
    A client accessing a resource under a service.arpa name does not
    consult DNS, but obtains information equivalent to the results of a
@@ -2144,35 +2183,33 @@ E.4.  Processing service.arpa
    but operational aspects would need a lot of consideration; future
    versions of this document may revise this).
 
-E.5.  Examples
+E.4.  Examples
 
    TBD: For SvcParams, the examples are inconsistent with the base32
    recommendation; they serve to explore the possible alternatives.
 
-   *  http://s.alpn_h2c.6.2001-db8--1.service.arpa/ -- The server is
-      reachable on 2001:db8::1 using HTTP/2
+   *  http://683263.alpn.2001-db8--1.6.service.arpa/ -- The server is
+      reachable on 2001:db8::1 using HTTP/2 (h2c is 683263 in hex)
 
-   *  https://mail.-
-      .tlsa.amaqckrkfivcukrkfivcukrkfivcukrkfivcukrkfivcukrkfivcukrk.ser
-      vice.arpa/ -- No address information is provided, the client needs
-      to resort to other discovery mechanisms.  Any server is eligible
-      to serve the resource if it can present a (possibly self-signed)
-      certificate whose public key SHA256 matches the encoded value.
-      The "mail.-." part is provided to the server as part of the Host
-      header, and can be used for name based virtual hosting.
+   *  https://amaqckrkfivcukrkfivcukrkfivcukrkfivcukrkfivcukrkfivcukrk.t
+      lsa.service.arpa/ -- No address information is provided, the
+      client needs to resort to other discovery mechanisms.  Any server
+      is eligible to serve the resource if it can present a (possibly
+      self-signed) certificate whose public key SHA256 matches the
+      encoded value.
 
-   *  coap://coaptransport.tcp.edhoc-cred.ueekcandaeasabbblaqlxq2jmbjg5j
-      gtf2kazljkenaurxocc6i2ckx3zowjgyr.--.ai3ouj4a.6.2001-db8--
-      1.service.arpa/ -- The server is reachable using CoAP over TCP
-      with EDHOC security at 2001:db8::1, and the service is
-      identifiable by the use of a KCCS credential describing an X25519
-      public key.
+   *  coap://tcp.coaptransport.2001-db8--1.6.rai3ouj4a.ueekcandaeasabbbl
+      aqlxq2jmbjg5jgtf2kazljkenaurxocc6i2ckx3zowjgy-.cred.service.arpa/
+      -- The server is reachable using CoAP over TCP with any security
+      mechanism at 2001:db8::1, and the service is identifiable by the
+      use of a KCCS credential describing an X25519 public key (which is
+      currently only usable with EDHOC).
 
-   *  coap://edhoc-cred.ueekcandaeasabbblaqlxq2jmbjg5jgtf2kazljkenaurxoc
-      c6i2ckx3zowjgyr.--.ai3ouj4a.service.arpa/ -- The same server
-      without any discoverability hints; it is up to the client to
-      discover a (possibly short-lived) connection opportunities to the
-      server identified by that key.
+   *  coap://rai3ouj4a.ueekcandaeasabbblaqlxq2jmbjg5jgtf2kazljkenaurxocc
+      6i2ckx3zowjgyr-.cred.service.arpa/ -- The same server without any
+      discoverability hints; it is up to the client to discover a
+      (possibly short-lived) connection opportunities to the server
+      identified by that key.
 
 Appendix F.  Acknowledgements
 

@@ -16,20 +16,20 @@ and Service Bindings (SVCB,  )
 to express alternative transports available to a device,
 and to optimize exchanges using these. 
     " name="description">
-<meta content="xml2rfc 3.25.0" name="generator">
+<meta content="xml2rfc 3.28.0" name="generator">
 <meta content="CoRE, Web Linking, Proxy, URI, aliasing" name="keyword">
 <meta content="draft-ietf-core-transport-indication-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.25.0
-    Python 3.12.7
+  xml2rfc 3.28.0
+    Python 3.12.9
     ConfigArgParse 1.7
     google-i18n-address 3.1.1
     intervaltree 3.1.0
-    Jinja2 3.1.4
+    Jinja2 3.1.5
     lxml 5.3.0
     platformdirs 4.3.6
-    pycountry 22.3.5
-    PyYAML 6.0.1
+    pycountry 24.6.1
+    PyYAML 6.0.2
     requests 2.32.3
     setuptools 70.3.0
     wcwidth 0.2.13
@@ -1031,11 +1031,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">CoAP Transport Indication</td>
-<td class="right">December 2024</td>
+<td class="right">March 2025</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Amsüss &amp; Lenders</td>
-<td class="center">Expires 21 June 2025</td>
+<td class="center">Expires 4 September 2025</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1048,12 +1048,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-core-transport-indication-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2024-12-18" class="published">18 December 2024</time>
+<time datetime="2025-03-03" class="published">3 March 2025</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2025-06-21">21 June 2025</time></dd>
+<dd class="expires"><time datetime="2025-09-04">4 September 2025</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1112,7 +1112,7 @@ and to optimize exchanges using these.<a href="#section-abstract-1" class="pilcr
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 21 June 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 4 September 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1121,7 +1121,7 @@ and to optimize exchanges using these.<a href="#section-abstract-1" class="pilcr
 <a href="#name-copyright-notice" class="section-name selfRef">Copyright Notice</a>
         </h2>
 <p id="section-boilerplate.2-1">
-            Copyright (c) 2024 IETF Trust and the persons identified as the
+            Copyright (c) 2025 IETF Trust and the persons identified as the
             document authors. All rights reserved.<a href="#section-boilerplate.2-1" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.2-2">
             This document is subject to BCP 78 and the IETF Trust's Legal
@@ -1154,10 +1154,13 @@ and to optimize exchanges using these.<a href="#section-abstract-1" class="pilcr
                 <p id="section-toc.1-1.1.2.3.1" class="keepWithNext"><a href="#section-1.3" class="auto internal xref">1.3</a>.  <a href="#name-core-principle-transport-en" class="internal xref">Core principle: Transport endpoints are proxies</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.4">
-                <p id="section-toc.1-1.1.2.4.1"><a href="#section-1.4" class="auto internal xref">1.4</a>.  <a href="#name-concepts" class="internal xref">Concepts</a></p>
+                <p id="section-toc.1-1.1.2.4.1"><a href="#section-1.4" class="auto internal xref">1.4</a>.  <a href="#name-registered-names-and-transp" class="internal xref">Registered names and transport setup</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.5">
+                <p id="section-toc.1-1.1.2.5.1"><a href="#section-1.5" class="auto internal xref">1.5</a>.  <a href="#name-concepts" class="internal xref">Concepts</a></p>
 <ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.4.2.1">
-                    <p id="section-toc.1-1.1.2.4.2.1.1"><a href="#section-1.4.1" class="auto internal xref">1.4.1</a>.  <a href="#name-using-uris-to-identify-tran" class="internal xref">Using URIs to identify transport endpoints</a></p>
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.5.2.1">
+                    <p id="section-toc.1-1.1.2.5.2.1.1"><a href="#section-1.5.1" class="auto internal xref">1.5.1</a>.  <a href="#name-using-uris-to-identify-tran" class="internal xref">Using URIs to identify transport endpoints</a></p>
 </li>
                 </ul>
 </li>
@@ -1249,7 +1252,7 @@ and to optimize exchanges using these.<a href="#section-abstract-1" class="pilcr
                 </ul>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.3">
-                <p id="section-toc.1-1.7.2.3.1"><a href="#section-7.3" class="auto internal xref">7.3</a>.  <a href="#name-producing-request-for-a-dis" class="internal xref">Producing request for a discovered service</a></p>
+                <p id="section-toc.1-1.7.2.3.1"><a href="#section-7.3" class="auto internal xref">7.3</a>.  <a href="#name-producing-requests-for-a-di" class="internal xref">Producing requests for a discovered service</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.4">
                 <p id="section-toc.1-1.7.2.4.1"><a href="#section-7.4" class="auto internal xref">7.4</a>.  <a href="#name-expressing-service-paramete" class="internal xref">Expressing Service Parameters as literals</a></p>
@@ -1337,13 +1340,10 @@ and to optimize exchanges using these.<a href="#section-abstract-1" class="pilcr
                 <p id="section-toc.1-1.16.2.2.1"><a href="#appendix-E.2" class="auto internal xref">E.2</a>.  <a href="#name-structure-of-servicearpa" class="internal xref">Structure of <code>service.arpa</code></a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.16.2.3">
-                <p id="section-toc.1-1.16.2.3.1"><a href="#appendix-E.3" class="auto internal xref">E.3</a>.  <a href="#name-syntax-of-servicearpa" class="internal xref">Syntax of <code>service.arpa</code></a></p>
+                <p id="section-toc.1-1.16.2.3.1"><a href="#appendix-E.3" class="auto internal xref">E.3</a>.  <a href="#name-processing-servicearpa" class="internal xref">Processing <code>service.arpa</code></a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.16.2.4">
-                <p id="section-toc.1-1.16.2.4.1"><a href="#appendix-E.4" class="auto internal xref">E.4</a>.  <a href="#name-processing-servicearpa" class="internal xref">Processing <code>service.arpa</code></a></p>
-</li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.16.2.5">
-                <p id="section-toc.1-1.16.2.5.1"><a href="#appendix-E.5" class="auto internal xref">E.5</a>.  <a href="#name-examples" class="internal xref">Examples</a></p>
+                <p id="section-toc.1-1.16.2.4.1"><a href="#appendix-E.4" class="auto internal xref">E.4</a>.  <a href="#name-examples" class="internal xref">Examples</a></p>
 </li>
             </ul>
 </li>
@@ -1387,7 +1387,7 @@ and advertise other transports in addition.<a href="#section-1-3" class="pilcrow
 described in CoAP <span>[<a href="#RFC7252" class="cite xref">RFC7252</a>]</span>
 and link format <span>[<a href="#RFC6690" class="cite xref">RFC6690</a>]</span>
 (or, equivalently, web links as described in <span>[<a href="#RFC8288" class="cite xref">RFC8288</a>]</span>).<a href="#section-1.1-1" class="pilcrow">¶</a></p>
-<p id="section-1.1-2">The phrase "the transport indicated by (a URI)" is used as described in <a href="#identifying" class="auto internal xref">Section 1.4.1</a>.<a href="#section-1.1-2" class="pilcrow">¶</a></p>
+<p id="section-1.1-2">The phrase "the transport indicated by (a URI)" is used as described in <a href="#identifying" class="auto internal xref">Section 1.5.1</a>.<a href="#section-1.1-2" class="pilcrow">¶</a></p>
 <p id="section-1.1-3">A protocol that implements CoAP request-response semantics for a lower layer
 is called a "(CoAP) transport".<a href="#section-1.1-3" class="pilcrow">¶</a></p>
 <p id="section-1.1-4">When the term "endpoint" is used in this document,
@@ -1429,7 +1429,7 @@ such as placing a suitable Max-Age value on their resources
 or having them observable.<a href="#section-1.2-4" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="core-principle-transport-endpoints-are-proxies">
+<div id="endpoints-are-proxies">
 <section id="section-1.3">
         <h3 id="name-core-principle-transport-en">
 <a href="#section-1.3" class="section-number selfRef">1.3. </a><a href="#name-core-principle-transport-en" class="section-name selfRef">Core principle: Transport endpoints are proxies</a>
@@ -1452,98 +1452,115 @@ the applicability of this document is limited.
 Examples of such resources are those whose URIs including loopback addresses or partially-qualified domain names.<a href="#section-1.3-3" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="concepts">
+<div id="registered-names-and-transport-setup">
 <section id="section-1.4">
-        <h3 id="name-concepts">
-<a href="#section-1.4" class="section-number selfRef">1.4. </a><a href="#name-concepts" class="section-name selfRef">Concepts</a>
+        <h3 id="name-registered-names-and-transp">
+<a href="#section-1.4" class="section-number selfRef">1.4. </a><a href="#name-registered-names-and-transp" class="section-name selfRef">Registered names and transport setup</a>
         </h3>
-<span class="break"></span><dl class="dlParallel" id="section-1.4-1">
-          <dt id="section-1.4-1.1">Same-host proxy:</dt>
-          <dd style="margin-left: 1.5em" id="section-1.4-1.2">
-            <p id="section-1.4-1.2.1">A CoAP server that accepts forward proxy requests (i.e., requests carrying the Proxy-Scheme option)
-exclusively for URIs that it is also the authoritative server for is defined as a "same-host proxy".<a href="#section-1.4-1.2.1" class="pilcrow">¶</a></p>
+<p id="section-1.4-1">The CoAP specification is intentionally open about the resolution services
+by which indirect identifiers in the host portion of a CoAP URI are resolved,
+giving DNS as one example without going into details (<span><a href="https://rfc-editor.org/rfc/rfc7252#section-6.1" class="relref">Section 6.1</a> of [<a href="#RFC7252" class="cite xref">RFC7252</a>]</span>).<a href="#section-1.4-1" class="pilcrow">¶</a></p>
+<p id="section-1.4-2">This document does not change any of that,
+but it does point out in <a href="#findendpoint" class="auto internal xref">Section 2</a> the breadth of information that such a service can provide
+(e.g. providing multiple addresses, or metadata on services used on them),
+and gives a concrete example of the information that modern DNS idioms deliver
+(which it enables by performing a registration in <a href="#iana-underscored" class="auto internal xref">Section 10.4</a>).<a href="#section-1.4-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="concepts">
+<section id="section-1.5">
+        <h3 id="name-concepts">
+<a href="#section-1.5" class="section-number selfRef">1.5. </a><a href="#name-concepts" class="section-name selfRef">Concepts</a>
+        </h3>
+<span class="break"></span><dl class="dlParallel" id="section-1.5-1">
+          <dt id="section-1.5-1.1">Same-host proxy:</dt>
+          <dd style="margin-left: 1.5em" id="section-1.5-1.2">
+            <p id="section-1.5-1.2.1">A CoAP server that accepts forward proxy requests (i.e., requests carrying the Proxy-Scheme option)
+exclusively for URIs that it is also the authoritative server for is defined as a "same-host proxy".<a href="#section-1.5-1.2.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
-<dt id="section-1.4-1.3"></dt>
-          <dd style="margin-left: 1.5em" id="section-1.4-1.4">
-            <p id="section-1.4-1.4.1">The distinction between a same-host and any other proxy is only relevant on a practical, server-implementation and illustrative level;
+<dt id="section-1.5-1.3"></dt>
+          <dd style="margin-left: 1.5em" id="section-1.5-1.4">
+            <p id="section-1.5-1.4.1">The distinction between a same-host and any other proxy is only relevant on a practical, server-implementation and illustrative level;
 this specification does not use the distinction in normative requirements,
-and clients need not make the distinction at all.<a href="#section-1.4-1.4.1" class="pilcrow">¶</a></p>
+and clients need not make the distinction at all.<a href="#section-1.5-1.4.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
 </dl>
-<p id="section-1.4-2">When talking of proxy requests,
+<p id="section-1.5-2">When talking of proxy requests,
 this document only talks of the Proxy-Scheme option.
 Given that all URIs this is usable with can be expressed in decomposed CoAP URIs,
 the need for using the Proxy-URI option should never arise.
 The Proxy-URI option is still equivalent to the decomposed options,
-and can be used if the server supports it.<a href="#section-1.4-2" class="pilcrow">¶</a></p>
+and can be used if the server supports it.<a href="#section-1.5-2" class="pilcrow">¶</a></p>
 <div id="identifying">
-<section id="section-1.4.1">
+<section id="section-1.5.1">
           <h4 id="name-using-uris-to-identify-tran">
-<a href="#section-1.4.1" class="section-number selfRef">1.4.1. </a><a href="#name-using-uris-to-identify-tran" class="section-name selfRef">Using URIs to identify transport endpoints</a>
+<a href="#section-1.5.1" class="section-number selfRef">1.5.1. </a><a href="#name-using-uris-to-identify-tran" class="section-name selfRef">Using URIs to identify transport endpoints</a>
           </h4>
-<p id="section-1.4.1-1">The URI <code>coap://[2001:db8::1]</code> identifies a particular resource, possibly a "welcome" text.
+<p id="section-1.5.1-1">The URI <code>coap://[2001:db8::1]</code> identifies a particular resource, possibly a "welcome" text.
 It is, colloquially, also used to identify the combination
-of a CoAP transport and the transport specific details.<a href="#section-1.4.1-1" class="pilcrow">¶</a></p>
-<p id="section-1.4.1-2">For precision, this document uses the term
-"the transport address indicated by (a URI)" to refer to the transport and its details (in the example, CoAP over UDP with an IPv6 address and the default port),
-but otherwise no big deal is made of it.<a href="#section-1.4.1-2" class="pilcrow">¶</a></p>
-<p id="section-1.4.1-3">The transport indicated by a URI is not only influenced by the URI scheme,
-but also by the authority component.
-The transports and resolution mechanisms currently specified
-make little use of this possibility,
-mainly because the most prominent resolution mechanism (SVCB records) has not been available when <span>[<a href="#RFC8323" class="cite xref">RFC8323</a>]</span> was published
-and because it can not be expressed in IP literals.
-The provisions of this document
-enable this opportunistically for registered names
-(<a href="#svcb-discovery" class="auto internal xref">Section 7.1</a>)
-and for literals using the mechanism in <a href="#newlit" class="auto internal xref">Appendix E</a>.<a href="#section-1.4.1-3" class="pilcrow">¶</a></p>
-<p id="section-1.4.1-4">When the resolution mechanism used for a registered name authority component yields multiple addresses,
-all of those are possible ways to interact with the resource.
-The resolution mechanism or other underlying transport can give guidance on how to find the best usable one.
-With the currently specified transports and resolution mechanisms,
-the most prominent example of making use of that information
-is applying the Happy Eyeballs mechanism <span>[<a href="#RFC8305" class="cite xref">RFC8305</a>]</span> to establish a TCP connection
-when a name resolves to both IPv4 and IPv6 addresses,<a href="#section-1.4.1-4" class="pilcrow">¶</a></p>
-<p id="section-1.4.1-5">[ TBD: Do we want to extend this to HTTP proxies? Probably just not, and if so, only to those that can just take coap://... for a URI. ]<a href="#section-1.4.1-5" class="pilcrow">¶</a></p>
+of a CoAP transport and the transport specific details.<a href="#section-1.5.1-1" class="pilcrow">¶</a></p>
+<p id="section-1.5.1-2">For precision, this document uses the term
+"the transport address indicated by (a URI)" to refer to the transport and its details,
+but otherwise no big deal is made of it.<a href="#section-1.5.1-2" class="pilcrow">¶</a></p>
+<p id="section-1.5.1-3">Note that as such a URI may contain a registered name:
+as with any CoAP URI, resolution services apply.
+Therefore, it may indicate multiple transport endpoints.<a href="#section-1.5.1-3" class="pilcrow">¶</a></p>
+<p id="section-1.5.1-4">[ TBD: Do we want to extend this to HTTP proxies? Probably just not, and if so, only to those that can just take coap://... for a URI. ]<a href="#section-1.5.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
 </div>
 </section>
 </div>
-<div id="finding-suitable-endpoints-for-a-uri">
+<div id="findendpoint">
 <section id="section-2">
       <h2 id="name-finding-suitable-endpoints-">
 <a href="#section-2" class="section-number selfRef">2. </a><a href="#name-finding-suitable-endpoints-" class="section-name selfRef">Finding suitable endpoints for a URI</a>
       </h2>
-<p id="section-2-1">When a CoAP request is created,
+<p id="section-2-1">When a CoAP request is created by a client,
 a typical starting point is the URI of the request's target resource.
 To send the request,
 a suitable endpoint needs to be discovered.
 This section lists the ways one or more such endpoints can be found.<a href="#section-2-1" class="pilcrow">¶</a></p>
 <p id="section-2-2">In some situations,
-a client decides to use a forward proxy to access the resource.
-In that case, it relays all the URI components to the proxy,
-which then decides on an endpoint to which to forward the request
-using the tools described in this section.
-<a href="#actualproxies" class="auto internal xref">Section 6</a> describes this in more detail.<a href="#section-2-2" class="pilcrow">¶</a></p>
-<p id="section-2-3">The endpoint (and thus transport)
-used to access a resource does not alter the resource's URI.
-If the URI scheme associated with the selected transport differs from the request URI's scheme,
-a different host name is encountered as part of the resolution process
-(e.g. due to a DNS CNAME or an explicit SVCB target name)
-or a different port is used (as possible through SVCB),
-the Proxy-Scheme, Uri-Host and Uri-Port options are set as needed
+a client decides to use a forward proxy to access the resource:
+either because it is explicitly configured to do so (<a href="#actualproxies" class="auto internal xref">Section 6</a>),
+or because it has discovered a preferred proxy (<a href="#hasproxy" class="auto internal xref">Section 2.2</a>).
+In that case, it
+finds the endpoint of the configured proxy (using <a href="#processing-scheme-authority" class="auto internal xref">Section 2.1</a>}, if not given explicitly).
+The proxy then decides on an endpoint to which to forward the request for its own,
+(again using the tools described in this section).
+Otherwise, it uses the information of scheme and authority,
+often through a resolution service (<a href="#processing-scheme-authority" class="auto internal xref">Section 2.1</a>).<a href="#section-2-2" class="pilcrow">¶</a></p>
+<p id="section-2-3">No matter how the endpoint (and thus transport) was discovered and whether a proxy is involved,
+it does not alter the URI of the resource being requested.
+The Proxy-Scheme, Uri-Host and Uri-Port options are set as needed
 to ensure that the request keeps targetting the requested resource.
-For servers that follow the common pattern of exposing the same resources on all transports (and thus having multiple aliased URIs for the same resource)
+This happens, respectively,
+if the URI scheme associated with the selected transport differs from the request URI's scheme
+(or a proxy is used),
+when the host name is not the default one for the transport
+(e.g. if it is not an IP literal in the UDP or TCP cases, or a proxy is used;
+DNS CNAME entries or SVCB target do not alter the URI's host name at all)
+or a different port is used (as possible through SVCB),
+(Outside of proxy cases,
+<span><a href="https://rfc-editor.org/rfc/rfc7252#section-6.4" class="relref">Section 6.4</a> of [<a href="#RFC7252" class="cite xref">RFC7252</a>]</span> only talks of setting the Uri-Host to preserve the URI, and not of setting Proxy-Scheme or Uri-Port.
+That is because at the time of writing, no mechanisms were available to select a different transport or port).<a href="#section-2-3" class="pilcrow">¶</a></p>
+<p id="section-2-4">Note that there is no meaningful difference in a client's behavior between
+when it is configured with a proxy,
+has discovered a proxy through links
+or has discovered a completely different transport:
+this is the essence of "transport endpoints are proxis" <a href="#endpoints-are-proxies" class="auto internal xref">Section 1.3</a>.<a href="#section-2-4" class="pilcrow">¶</a></p>
+<p id="section-2-5"><span class="cref" id="moveme">The following two paragraphs may need a new home eventually to keep this section to the point. --CA</span><a href="#section-2-5" class="pilcrow">¶</a></p>
+<p id="section-2-6">For servers that follow the common pattern of exposing the same resources on all transports (and thus having multiple aliased URIs for the same resource)
 and that do not act as proxies for other systems,
-the presence of the Proxy-Scheme option has little practical consequence:
+the presence of the Proxy-Scheme option introduced by using alternative transports has little practical consequence:
 such servers become same-host proxies,
 and can ignore the Proxy-Scheme option as long as they recognize the Uri-Host value
-(which they already have been required to process).<a href="#section-2-3" class="pilcrow">¶</a></p>
-<p id="section-2-4">While a server is at liberty to create aliases,
+(which they already have been required to process).<a href="#section-2-6" class="pilcrow">¶</a></p>
+<p id="section-2-7">While a server is at liberty to create aliases,
 clients can not infer from the presence of a transport for a host
 that URIs created from addressing that transport are present.
 For example, if <code>coap://h.example.net/sensors/temp</code> is a known resource,
@@ -1552,15 +1569,29 @@ there is no reason for the client to assume that <code>coap+tcp://[2001:db8::1]/
 let alone is the same resource:
 Clients that access the known resource by establishing a TCP connection
 need to send the options Proxy-Scheme value "coap", the Uri-Host value "h.example.net"
-and the Uri-Path values "sensors" and "temp".<a href="#section-2-4" class="pilcrow">¶</a></p>
-<div id="processing-scheme-and-authority">
+and the Uri-Path values "sensors" and "temp".<a href="#section-2-7" class="pilcrow">¶</a></p>
+<div id="processing-scheme-authority">
 <section id="section-2.1">
         <h3 id="name-processing-scheme-and-autho">
 <a href="#section-2.1" class="section-number selfRef">2.1. </a><a href="#name-processing-scheme-and-autho" class="section-name selfRef">Processing scheme and authority</a>
         </h3>
 <p id="section-2.1-1">To discover endpoints for a given URI,
 the scheme and the authority component of the URI
-are typical starting points.<a href="#section-2.1-1" class="pilcrow">¶</a></p>
+are typical starting points for resolution services.<a href="#section-2.1-1" class="pilcrow">¶</a></p>
+<p id="section-2.1-2">The outcome of any resolution service is a list.
+It may be partially sorted, and may arrive piece by piece.<a href="#section-2.1-2" class="pilcrow">¶</a></p>
+<p id="section-2.1-3">Conceptually, each entry contains:<a href="#section-2.1-3" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-2.1-4.1">
+            <p id="section-2.1-4.1.1">Which CoAP transport is used (e.g. CoAP-over-TCP).<a href="#section-2.1-4.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-2.1-4.2">
+            <p id="section-2.1-4.2.1">The transport's address details (e.g. an IP address and port number).<a href="#section-2.1-4.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-2.1-4.3">
+            <p id="section-2.1-4.3.1">Any additional metadata that facilitates communication (e.g. public keys for <span>[<a href="#I-D.ietf-tls-esni" class="cite xref">I-D.ietf-tls-esni</a>]</span>).<a href="#section-2.1-4.3.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
 <div id="transport-unaware-resolution">
 <section id="section-2.1.1">
           <h4 id="name-transport-unaware-resolutio">
@@ -1568,17 +1599,17 @@ are typical starting points.<a href="#section-2.1-1" class="pilcrow">¶</a></p>
           </h4>
 <p id="section-2.1.1-1">The IP based transports specified so far (CoAP over UDP, DTLS, TCP, TLS and WebSockets)
 all indicate the transport in their scheme,
-and have a default port.
+and either use their default port or indicate the port explicitly.
 The only remaining details of multiplexing information required are the IP version(s) and IP address(es) of the server.<a href="#section-2.1.1-1" class="pilcrow">¶</a></p>
 <p id="section-2.1.1-2">If the host component of the URI is a literal,
 that information is already available.<a href="#section-2.1.1-2" class="pilcrow">¶</a></p>
 <p id="section-2.1.1-3">If the host component of the URI is a registered name,
 a name resolution service is used for a simple name lookup:
 When DNS is used as a resolution service,
-AAAA (or A) records of the name are looked up.<a href="#section-2.1.1-3" class="pilcrow">¶</a></p>
-<p id="section-2.1.1-4">Beyond the IP address,
-the resolution service may provide some additional information,
-such as the zone identifier (implied in DNS by using the zone the DNS response was obtained through)
+AAAA (or A) records of the name are looked up.
+The /etc/hosts file and nsswitch "host" database can provide that same information.<a href="#section-2.1.1-3" class="pilcrow">¶</a></p>
+<p id="section-2.1.1-4">Additional metadata provided by this resolution service
+are the zone identifier (implied in DNS by using the zone the DNS response was obtained through)
 or TLSA records (which can guide the (D)TLS certificate validation process but are out of scope for this document).<a href="#section-2.1.1-4" class="pilcrow">¶</a></p>
 <p id="section-2.1.1-5">Simple resolution services do not indicate which transports are available on the address.
 Servers reached that way can resort to <a href="#hasproxy" class="auto internal xref">Section 2.2</a> to indicate alternative transports while exchanging initial data through the original transport,
@@ -2044,7 +2075,7 @@ it can be practical for the client to use the advertised proxy instead.<a href="
 can provide details already that would otherwise only be discovered later through proxy links.
 For when those details are provided in the shape of Service Binding Parameters,
 this section describes their interpretation in the context of CoAP transport indication.<a href="#section-7-1" class="pilcrow">¶</a></p>
-<p id="section-7-2">[ The following paragraph is outdated, but its replacement will depend on the outcome of IETF121 discussions. ]<a href="#section-7-2" class="pilcrow">¶</a></p>
+<p id="section-7-2">[ The following paragraph is outdated, but its replacement will depend on the outcome of IETF122 discussions. ]<a href="#section-7-2" class="pilcrow">¶</a></p>
 <p id="section-7-3">The subsections in this section are arranged to describe a consistent sequential full picture.
 The capabilities of this big picture are not exercised by any application known at the time of draft publication.
 It is instead backed by many small-scope use cases
@@ -2091,14 +2122,11 @@ Adding such a requirement is particularly useful if the application frequently a
 or when the application makes use of functionality afforded by <span>[<a href="#RFC9460" class="cite xref">RFC9460</a>]</span> such as apex domain redirection.
 (Had the SVCB specification predated the first new CoAP transports,
 that mechanism might have been used in the first place instead of additional schemes).<a href="#section-7.1-6" class="pilcrow">¶</a></p>
-<p id="section-7.1-7">[ The following paragraph may need to be revisited depending on the outcome of IETF121 discussions. ]<a href="#section-7.1-7" class="pilcrow">¶</a></p>
+<p id="section-7.1-7">[ The following paragraph may need to be revisited depending on the outcome of IETF122 discussions. ]<a href="#section-7.1-7" class="pilcrow">¶</a></p>
 <p id="section-7.1-8">The effects on a client of seeing SVCB parameters are similar
 to those of seeing a "has-proxy" link from the origin to the URI built using {#svcblit}.
-They differ in that SVCB parameters describe the server itself:
-Credentials expressed apply end to end
-(as opposed to credentials that describe the proxy in a "has-proxy" link),
-and the client could conclude that the implied proxy is a same-host proxy
-(if that had any impact on the client, which it does not).<a href="#section-7.1-8" class="pilcrow">¶</a></p>
+The precise implications of any DNSSec-backed applicable credentials expressed in SVCB parameters
+are subject to ongoing discussion (especially with regard to whether they apply to the proxy or the origin server).<a href="#section-7.1-8" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="svcparams">
@@ -2136,11 +2164,11 @@ and equivalent to the <code>has-unique-proxy</code> in its semantics.<a href="#s
 Its value is empty.<a href="#section-7.2-2.4.2" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-7.2-2.5">
-            <p id="section-7.2-2.5.1"><code>edhoc-cred</code>: This is a new parameter defined in this document, and describes that EDHOC can be used with the server, and which credentials can authenticate the server.<a href="#section-7.2-2.5.1" class="pilcrow">¶</a></p>
+            <p id="section-7.2-2.5.1"><code>cred</code>: This is a new parameter defined in this document, and describes COSE credentials that can authenticate the server, eg. when used with EDHOC.<a href="#section-7.2-2.5.1" class="pilcrow">¶</a></p>
 <p id="section-7.2-2.5.2">
-The <code>edhoc-cred</code> parameter's value is a CBOR sequence of COSE Header maps as defined in <span>[<a href="#RFC9052" class="cite xref">RFC9052</a>]</span>.
-If the parameter is present, it indicates that EDHOC <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span> can be used on the transport,
-and that the server can be authenticated by any credential expressed in the sequence.
+The <code>cred</code> parameter's value is a CBOR sequence of COSE Header maps as defined in <span>[<a href="#RFC9052" class="cite xref">RFC9052</a>]</span>.
+If the parameter is present, it indicates that
+the server can be authenticated by any credential expressed in the sequence.
 This is similar to the TLSA records specified in <span>[<a href="#RFC6698" class="cite xref">RFC6698</a>]</span>.<a href="#section-7.2-2.5.2" class="pilcrow">¶</a></p>
 <p id="section-7.2-2.5.3">
 A COSE Header map can express many properties, not all of which are sufficient to authenticate a peer on any given security mechanism.
@@ -2152,12 +2180,12 @@ For example, a header map with a <code>kccs</code> entry can be used to indicate
 and that public key does not need to be sent during the EDHOC exchange.
 Alternatively, a header map with an <code>x5t</code> identifies the end entity certificate the server presents by a thumbprint (hash).<a href="#section-7.2-2.5.4" class="pilcrow">¶</a></p>
 <p id="section-7.2-2.5.5">
-It is up to the application to define requirements for the provenance of the <code>edhoc-cred</code> parameter,
+It is up to the application to define requirements for the provenance of the <code>cred</code> parameter,
 whether it needs to be provided through secure mechanism,
 or whether the server is strictly required to present that credential.<a href="#section-7.2-2.5.5" class="pilcrow">¶</a></p>
 <p id="section-7.2-2.5.6">
 This is unlike TLSA, which needs to be transported through DNSSEC,
-because a <code>edhoc-cred</code> parameter may be sent using other means than DNS
+because a <code>cred</code> parameter may be sent using other means than DNS
 (for example in DHCPv6 responses or Router Advertisements).<a href="#section-7.2-2.5.6" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-7.2-2.6">
@@ -2231,7 +2259,7 @@ or to use either of the TLS based options.<a href="#section-7.2.1.1-5" class="pi
             <h5 id="name-application-mandating-svcb">
 <a href="#section-7.2.1.2" class="section-number selfRef">7.2.1.2. </a><a href="#name-application-mandating-svcb" class="section-name selfRef">Application mandating SVCB</a>
             </h5>
-<p id="section-7.2.1.2-1">An application's policy is to mandate client support for SVCB records,
+<p id="section-7.2.1.2-1">An example application's policy is to mandate client support for SVCB records,
 and to require that a security mechanism must be used where credentials are backed either by DNSSEC or by the Web PKI.<a href="#section-7.2.1.2-1" class="pilcrow">¶</a></p>
 <p id="section-7.2.1.2-2">A server operator is running in a legacy network that only provides an IPv4 address behind NAT with a dynamic public address,
 but has PCP <span>[<a href="#RFC7291" class="cite xref">RFC7291</a>]</span> available.
@@ -2242,14 +2270,14 @@ it learns that 1.2.3.4:5678 will be available for some time.<a href="#section-7.
 <pre>
 _coap.host.example.net 600 IN SVCB 1 publicudp.host.example.net       \
                        port=5678                                      \
-                       edhoc-cred={14:{... /KCCS with its public key/}}
+                       cred={14:{... /KCCS with its public key/}}
 </pre><a href="#section-7.2.1.2-4" class="pilcrow">¶</a>
 </div>
 <p id="section-7.2.1.2-5">When a client starts using <code>coap://host.example.net/interactive</code>,
 it looks up that record and verifies it using DNSSEC.
 It then proceeds to send EDHOC requests over CoAP to 1.2.3.4 port 5678,
 setting the Uri-Host option to "host.example.net".<a href="#section-7.2.1.2-5" class="pilcrow">¶</a></p>
-<p id="section-7.2.1.2-6">The client could also have initiated an EDHOC session if no edhoc-cred parameter had been present,
+<p id="section-7.2.1.2-6">The client could also have initiated an EDHOC session if no cred parameter had been present,
 but then,
 it would have required that the server present some credential that could be verified through the Web PKI,
 for example an x5chain containing a Let's Encrypt certificate.<a href="#section-7.2.1.2-6" class="pilcrow">¶</a></p>
@@ -2261,8 +2289,8 @@ for example an x5chain containing a Let's Encrypt certificate.<a href="#section-
 </div>
 <div id="svcb2uri">
 <section id="section-7.3">
-        <h3 id="name-producing-request-for-a-dis">
-<a href="#section-7.3" class="section-number selfRef">7.3. </a><a href="#name-producing-request-for-a-dis" class="section-name selfRef">Producing request for a discovered service</a>
+        <h3 id="name-producing-requests-for-a-di">
+<a href="#section-7.3" class="section-number selfRef">7.3. </a><a href="#name-producing-requests-for-a-di" class="section-name selfRef">Producing requests for a discovered service</a>
         </h3>
 <p id="section-7.3-1">If a service's discovery process does not produce a URI but an address, host name and/or Service Binding Parameters,
 those can be converted to a CoAP URI,
@@ -2403,7 +2431,7 @@ might use the locally significant device name <code>/dev/ttyUSB0</code>
 as <code>coap://ttyUSB0.dev.alt/</code>.<a href="#section-8-7" class="pilcrow">¶</a></p>
 <p id="section-8-8">URIs created from such names may not indicate the protocol uniquely:
 Additional transports specified later may also provide CoAP services for the same name.
-In the sense of <a href="#identifying" class="auto internal xref">Section 1.4.1</a>,
+In the sense of <a href="#identifying" class="auto internal xref">Section 1.5.1</a>,
 both transport would be identified by that URI.
 That is not an issue as long as the protocols underneath the CoAP transport
 provide a means of advertising the precise protocol used.
@@ -2566,8 +2594,8 @@ registry (<span>[<a href="#RFC9460" class="cite xref">RFC9460</a>]</span>). The 
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">to be assigned</td>
-              <td class="text-left" rowspan="1" colspan="1">edhoc-cred</td>
-              <td class="text-left" rowspan="1" colspan="1">EDHOC credentials identifying the server</td>
+              <td class="text-left" rowspan="1" colspan="1">cred</td>
+              <td class="text-left" rowspan="1" colspan="1">COSE credentials identifying the server</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">to be assigned</td>
@@ -2619,7 +2647,7 @@ similar to the "HTTPS" RR would be preferable.<a href="#section-10.4-3" class="p
 <dl class="references">
 <dt id="I-D.ietf-core-href">[I-D.ietf-core-href]</dt>
         <dd>
-<span class="refAuthor">Bormann, C.</span> and <span class="refAuthor">H. Birkholz</span>, <span class="refTitle">"Constrained Resource Identifiers"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-core-href-16</span>, <time datetime="2024-07-24" class="refDate">24 July 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-core-href-16">https://datatracker.ietf.org/doc/html/draft-ietf-core-href-16</a>&gt;</span>. </dd>
+<span class="refAuthor">Bormann, C.</span> and <span class="refAuthor">H. Birkholz</span>, <span class="refTitle">"Constrained Resource Identifiers"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-core-href-19</span>, <time datetime="2025-03-03" class="refDate">3 March 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-core-href-19">https://datatracker.ietf.org/doc/html/draft-ietf-core-href-19</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC6690">[RFC6690]</dt>
         <dd>
@@ -2642,12 +2670,8 @@ similar to the "HTTPS" RR would be preferable.<a href="#section-10.4-3" class="p
 <span class="refAuthor">Schaad, J.</span>, <span class="refTitle">"CBOR Object Signing and Encryption (COSE): Structures and Process"</span>, <span class="seriesInfo">STD 96</span>, <span class="seriesInfo">RFC 9052</span>, <span class="seriesInfo">DOI 10.17487/RFC9052</span>, <time datetime="2022-08" class="refDate">August 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9052">https://www.rfc-editor.org/rfc/rfc9052</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC9460">[RFC9460]</dt>
-        <dd>
-<span class="refAuthor">Schwartz, B.</span>, <span class="refAuthor">Bishop, M.</span>, and <span class="refAuthor">E. Nygren</span>, <span class="refTitle">"Service Binding and Parameter Specification via the DNS (SVCB and HTTPS Resource Records)"</span>, <span class="seriesInfo">RFC 9460</span>, <span class="seriesInfo">DOI 10.17487/RFC9460</span>, <time datetime="2023-11" class="refDate">November 2023</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9460">https://www.rfc-editor.org/rfc/rfc9460</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="RFC9528">[RFC9528]</dt>
       <dd>
-<span class="refAuthor">Selander, G.</span>, <span class="refAuthor">Preuß Mattsson, J.</span>, and <span class="refAuthor">F. Palombini</span>, <span class="refTitle">"Ephemeral Diffie-Hellman Over COSE (EDHOC)"</span>, <span class="seriesInfo">RFC 9528</span>, <span class="seriesInfo">DOI 10.17487/RFC9528</span>, <time datetime="2024-03" class="refDate">March 2024</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9528">https://www.rfc-editor.org/rfc/rfc9528</a>&gt;</span>. </dd>
+<span class="refAuthor">Schwartz, B.</span>, <span class="refAuthor">Bishop, M.</span>, and <span class="refAuthor">E. Nygren</span>, <span class="refTitle">"Service Binding and Parameter Specification via the DNS (SVCB and HTTPS Resource Records)"</span>, <span class="seriesInfo">RFC 9460</span>, <span class="seriesInfo">DOI 10.17487/RFC9460</span>, <time datetime="2023-11" class="refDate">November 2023</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9460">https://www.rfc-editor.org/rfc/rfc9460</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
@@ -2692,19 +2716,19 @@ similar to the "HTTPS" RR would be preferable.<a href="#section-10.4-3" class="p
 <dd class="break"></dd>
 <dt id="I-D.ietf-ace-edhoc-oscore-profile">[I-D.ietf-ace-edhoc-oscore-profile]</dt>
         <dd>
-<span class="refAuthor">Selander, G.</span>, <span class="refAuthor">Mattsson, J. P.</span>, <span class="refAuthor">Tiloca, M.</span>, and <span class="refAuthor">R. Höglund</span>, <span class="refTitle">"Ephemeral Diffie-Hellman Over COSE (EDHOC) and Object Security for Constrained Environments (OSCORE) Profile for Authentication and Authorization for Constrained Environments (ACE)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-ace-edhoc-oscore-profile-06</span>, <time datetime="2024-10-21" class="refDate">21 October 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-ace-edhoc-oscore-profile-06">https://datatracker.ietf.org/doc/html/draft-ietf-ace-edhoc-oscore-profile-06</a>&gt;</span>. </dd>
+<span class="refAuthor">Selander, G.</span>, <span class="refAuthor">Mattsson, J. P.</span>, <span class="refAuthor">Tiloca, M.</span>, and <span class="refAuthor">R. Höglund</span>, <span class="refTitle">"Ephemeral Diffie-Hellman Over COSE (EDHOC) and Object Security for Constrained Environments (OSCORE) Profile for Authentication and Authorization for Constrained Environments (ACE)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-ace-edhoc-oscore-profile-07</span>, <time datetime="2025-03-03" class="refDate">3 March 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-ace-edhoc-oscore-profile-07">https://datatracker.ietf.org/doc/html/draft-ietf-ace-edhoc-oscore-profile-07</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.ietf-cbor-edn-literals">[I-D.ietf-cbor-edn-literals]</dt>
         <dd>
-<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"CBOR Extended Diagnostic Notation (EDN)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-edn-literals-14</span>, <time datetime="2024-12-09" class="refDate">9 December 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-literals-14">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-literals-14</a>&gt;</span>. </dd>
+<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"CBOR Extended Diagnostic Notation (EDN)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-edn-literals-16</span>, <time datetime="2025-01-08" class="refDate">8 January 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-literals-16">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-literals-16</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.ietf-core-coap-dtls-alpn">[I-D.ietf-core-coap-dtls-alpn]</dt>
         <dd>
-<span class="refAuthor">Lenders, M. S.</span>, <span class="refAuthor">Amsüss, C.</span>, <span class="refAuthor">Schmidt, T. C.</span>, and <span class="refAuthor">M. Wählisch</span>, <span class="refTitle">"ALPN ID Specification for CoAP over DTLS"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-core-coap-dtls-alpn-01</span>, <time datetime="2024-12-16" class="refDate">16 December 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-core-coap-dtls-alpn-01">https://datatracker.ietf.org/doc/html/draft-ietf-core-coap-dtls-alpn-01</a>&gt;</span>. </dd>
+<span class="refAuthor">Lenders, M. S.</span>, <span class="refAuthor">Amsüss, C.</span>, <span class="refAuthor">Schmidt, T. C.</span>, and <span class="refAuthor">M. Wählisch</span>, <span class="refTitle">"ALPN ID Specification for CoAP over DTLS"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-core-coap-dtls-alpn-02</span>, <time datetime="2025-03-03" class="refDate">3 March 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-core-coap-dtls-alpn-02">https://datatracker.ietf.org/doc/html/draft-ietf-core-coap-dtls-alpn-02</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.ietf-core-dns-over-coap">[I-D.ietf-core-dns-over-coap]</dt>
         <dd>
-<span class="refAuthor">Lenders, M. S.</span>, <span class="refAuthor">Amsüss, C.</span>, <span class="refAuthor">Gündoğan, C.</span>, <span class="refAuthor">Schmidt, T. C.</span>, and <span class="refAuthor">M. Wählisch</span>, <span class="refTitle">"DNS over CoAP (DoC)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-core-dns-over-coap-09</span>, <time datetime="2024-10-21" class="refDate">21 October 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-core-dns-over-coap-09">https://datatracker.ietf.org/doc/html/draft-ietf-core-dns-over-coap-09</a>&gt;</span>. </dd>
+<span class="refAuthor">Lenders, M. S.</span>, <span class="refAuthor">Amsüss, C.</span>, <span class="refAuthor">Gündoğan, C.</span>, <span class="refAuthor">Schmidt, T. C.</span>, and <span class="refAuthor">M. Wählisch</span>, <span class="refTitle">"DNS over CoAP (DoC)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-core-dns-over-coap-13</span>, <time datetime="2025-03-03" class="refDate">3 March 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-core-dns-over-coap-13">https://datatracker.ietf.org/doc/html/draft-ietf-core-dns-over-coap-13</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.ietf-lake-edhoc">[I-D.ietf-lake-edhoc]</dt>
         <dd>
@@ -2714,9 +2738,13 @@ similar to the "HTTPS" RR would be preferable.<a href="#section-10.4-3" class="p
         <dd>
 <span class="refAuthor">Minaburo, A.</span>, <span class="refAuthor">Toutain, L.</span>, and <span class="refAuthor">R. Andreasen</span>, <span class="refTitle">"Static Context Header Compression (SCHC) for the Constrained Application Protocol (CoAP)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-lpwan-coap-static-context-hc-19</span>, <time datetime="2021-03-08" class="refDate">8 March 2021</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-lpwan-coap-static-context-hc-19">https://datatracker.ietf.org/doc/html/draft-ietf-lpwan-coap-static-context-hc-19</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="I-D.ietf-tls-esni">[I-D.ietf-tls-esni]</dt>
+        <dd>
+<span class="refAuthor">Rescorla, E.</span>, <span class="refAuthor">Oku, K.</span>, <span class="refAuthor">Sullivan, N.</span>, and <span class="refAuthor">C. A. Wood</span>, <span class="refTitle">"TLS Encrypted Client Hello"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-tls-esni-23</span>, <time datetime="2025-02-19" class="refDate">19 February 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-tls-esni-23">https://datatracker.ietf.org/doc/html/draft-ietf-tls-esni-23</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="I-D.lenders-core-dnr">[I-D.lenders-core-dnr]</dt>
         <dd>
-<span class="refAuthor">Lenders, M. S.</span>, <span class="refAuthor">Amsüss, C.</span>, <span class="refAuthor">Schmidt, T. C.</span>, and <span class="refAuthor">M. Wählisch</span>, <span class="refTitle">"Discovery of Network-designated OSCORE-based Resolvers: Problem Statement"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-lenders-core-dnr-03</span>, <time datetime="2024-07-08" class="refDate">8 July 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-lenders-core-dnr-03">https://datatracker.ietf.org/doc/html/draft-lenders-core-dnr-03</a>&gt;</span>. </dd>
+<span class="refAuthor">Lenders, M. S.</span>, <span class="refAuthor">Amsüss, C.</span>, <span class="refAuthor">Schmidt, T. C.</span>, and <span class="refAuthor">M. Wählisch</span>, <span class="refTitle">"Discovery of Network-designated OSCORE-based Resolvers: Problem Statement"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-lenders-core-dnr-05</span>, <time datetime="2025-03-03" class="refDate">3 March 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-lenders-core-dnr-05">https://datatracker.ietf.org/doc/html/draft-lenders-core-dnr-05</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.silverajan-core-coap-protocol-negotiation">[I-D.silverajan-core-coap-protocol-negotiation]</dt>
         <dd>
@@ -2774,10 +2802,6 @@ similar to the "HTTPS" RR would be preferable.<a href="#section-10.4-3" class="p
         <dd>
 <span class="refAuthor">Nottingham, M.</span>, <span class="refAuthor">McManus, P.</span>, and <span class="refAuthor">J. Reschke</span>, <span class="refTitle">"HTTP Alternative Services"</span>, <span class="seriesInfo">RFC 7838</span>, <span class="seriesInfo">DOI 10.17487/RFC7838</span>, <time datetime="2016-04" class="refDate">April 2016</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7838">https://www.rfc-editor.org/rfc/rfc7838</a>&gt;</span>. </dd>
 <dd class="break"></dd>
-<dt id="RFC8305">[RFC8305]</dt>
-        <dd>
-<span class="refAuthor">Schinazi, D.</span> and <span class="refAuthor">T. Pauly</span>, <span class="refTitle">"Happy Eyeballs Version 2: Better Connectivity Using Concurrency"</span>, <span class="seriesInfo">RFC 8305</span>, <span class="seriesInfo">DOI 10.17487/RFC8305</span>, <time datetime="2017-12" class="refDate">December 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8305">https://www.rfc-editor.org/rfc/rfc8305</a>&gt;</span>. </dd>
-<dd class="break"></dd>
 <dt id="RFC8323">[RFC8323]</dt>
         <dd>
 <span class="refAuthor">Bormann, C.</span>, <span class="refAuthor">Lemay, S.</span>, <span class="refAuthor">Tschofenig, H.</span>, <span class="refAuthor">Hartke, K.</span>, <span class="refAuthor">Silverajan, B.</span>, and <span class="refAuthor">B. Raymor, Ed.</span>, <span class="refTitle">"CoAP (Constrained Application Protocol) over TCP, TLS, and WebSockets"</span>, <span class="seriesInfo">RFC 8323</span>, <span class="seriesInfo">DOI 10.17487/RFC8323</span>, <time datetime="2018-02" class="refDate">February 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8323">https://www.rfc-editor.org/rfc/rfc8323</a>&gt;</span>. </dd>
@@ -2832,262 +2856,298 @@ similar to the "HTTPS" RR would be preferable.<a href="#section-10.4-3" class="p
       <h2 id="name-change-log">
 <a href="#appendix-A" class="section-number selfRef">Appendix A. </a><a href="#name-change-log" class="section-name selfRef">Change log</a>
       </h2>
-<p id="appendix-A-1">Since draft-ietf-core-transport-indication-06:<a href="#appendix-A-1" class="pilcrow">¶</a></p>
+<p id="appendix-A-1"><span class="cref" id="remove-changelog">This section is to be removed before publication.</span><a href="#appendix-A-1" class="pilcrow">¶</a></p>
+<p id="appendix-A-2">Since draft-ietf-core-transport-indication-07:<a href="#appendix-A-2" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-A-2.1">
-          <p id="appendix-A-2.1.1">Split introduction into terminology (with new definitions), goals and concepts.<a href="#appendix-A-2.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-A-3.1">
+          <p id="appendix-A-3.1.1">Update sections 1 and 2:<a href="#appendix-A-3.1.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A-3.1.2.1">
+              <p id="appendix-A-3.1.2.1.1">Work more explicitly with 7252's resolution services.<a href="#appendix-A-3.1.2.1.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-A-2.2">
-          <p id="appendix-A-2.2.1">Add principle of operation into abstract, elevating SVCB and has-proxy to equally ranked sources of endpoint information.<a href="#appendix-A-2.2.1" class="pilcrow">¶</a></p>
+            <li class="normal" id="appendix-A-3.1.2.2">
+              <p id="appendix-A-3.1.2.2.1">List (coarsely) the information received from resolution services.<a href="#appendix-A-3.1.2.2.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-A-2.3">
-          <p id="appendix-A-2.3.1">Restructure document to split overview and operations from the concrete methods of obtaining endpoints.<a href="#appendix-A-2.3.1" class="pilcrow">¶</a></p>
+            <li class="normal" id="appendix-A-3.1.2.3">
+              <p id="appendix-A-3.1.2.3.1">Homogenize treatment of proxy URIs and other resolution service outcomes.<a href="#appendix-A-3.1.2.3.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-A-2.4">
-          <p id="appendix-A-2.4.1">Add is-unique-proxy SVCB parameter equivalent to has-unique-proxy relation.<a href="#appendix-A-2.4.1" class="pilcrow">¶</a></p>
+            <li class="normal" id="appendix-A-3.1.2.4">
+              <p id="appendix-A-3.1.2.4.1">Point out parallels to /etc/hosts.<a href="#appendix-A-3.1.2.4.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-A-2.5">
-          <p id="appendix-A-2.5.1">Remove <code>_coaps</code> service, describing <code>_coap</code> as applying to all CoAP transports.<a href="#appendix-A-2.5.1" class="pilcrow">¶</a></p>
+          </ul>
 </li>
-        <li class="normal" id="appendix-A-2.6">
-          <p id="appendix-A-2.6.1">Add SVCB to abstract.<a href="#appendix-A-2.6.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="appendix-A-3.2">
+          <p id="appendix-A-3.2.1">Phrase possible differences w/rt hop-to-hop vs. end-to-end encryption more carefully.<a href="#appendix-A-3.2.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-A-2.7">
-          <p id="appendix-A-2.7.1">Remove distracting text on URIs identifying transports/endpoints.<a href="#appendix-A-2.7.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="appendix-A-3.3">
+          <p id="appendix-A-3.3.1">SVCB: Rename edhoc-cred to cred.<a href="#appendix-A-3.3.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-A-2.8">
-          <p id="appendix-A-2.8.1">Editorial changes.<a href="#appendix-A-2.8.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="appendix-A-3.4">
+          <p id="appendix-A-3.4.1">Rework literals following discussion around onion-coap.<a href="#appendix-A-3.4.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-A-2.9">
-          <p id="appendix-A-2.9.1">IANA considerations: Set change controller to IETF.<a href="#appendix-A-2.9.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="appendix-A-3.5">
+          <p id="appendix-A-3.5.1">Point out the fates of appendices.<a href="#appendix-A-3.5.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-A-3.6">
+          <p id="appendix-A-3.6.1">Editorial fixes.<a href="#appendix-A-3.6.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-A-3">Since draft-ietf-core-transport-indication-05:<a href="#appendix-A-3" class="pilcrow">¶</a></p>
+<p id="appendix-A-4">Since draft-ietf-core-transport-indication-06:<a href="#appendix-A-4" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-A-4.1">
-          <p id="appendix-A-4.1.1">Semantics for where a has-proxy applies were changed from "wherever there is a <code>hosts</code> relation" to "across the same origin".<a href="#appendix-A-4.1.1" class="pilcrow">¶</a></p>
-<p id="appendix-A-4.1.2">
+<li class="normal" id="appendix-A-5.1">
+          <p id="appendix-A-5.1.1">Split introduction into terminology (with new definitions), goals and concepts.<a href="#appendix-A-5.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-A-5.2">
+          <p id="appendix-A-5.2.1">Add principle of operation into abstract, elevating SVCB and has-proxy to equally ranked sources of endpoint information.<a href="#appendix-A-5.2.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-A-5.3">
+          <p id="appendix-A-5.3.1">Restructure document to split overview and operations from the concrete methods of obtaining endpoints.<a href="#appendix-A-5.3.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-A-5.4">
+          <p id="appendix-A-5.4.1">Add is-unique-proxy SVCB parameter equivalent to has-unique-proxy relation.<a href="#appendix-A-5.4.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-A-5.5">
+          <p id="appendix-A-5.5.1">Remove <code>_coaps</code> service, describing <code>_coap</code> as applying to all CoAP transports.<a href="#appendix-A-5.5.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-A-5.6">
+          <p id="appendix-A-5.6.1">Add SVCB to abstract.<a href="#appendix-A-5.6.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-A-5.7">
+          <p id="appendix-A-5.7.1">Remove distracting text on URIs identifying transports/endpoints.<a href="#appendix-A-5.7.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-A-5.8">
+          <p id="appendix-A-5.8.1">Editorial changes.<a href="#appendix-A-5.8.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-A-5.9">
+          <p id="appendix-A-5.9.1">IANA considerations: Set change controller to IETF.<a href="#appendix-A-5.9.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
+<p id="appendix-A-6">Since draft-ietf-core-transport-indication-05:<a href="#appendix-A-6" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A-7.1">
+          <p id="appendix-A-7.1.1">Semantics for where a has-proxy applies were changed from "wherever there is a <code>hosts</code> relation" to "across the same origin".<a href="#appendix-A-7.1.1" class="pilcrow">¶</a></p>
+<p id="appendix-A-7.1.2">
 The <code>hosts</code> relation has received complaints about its complexity,
 and there were no strong voices in either direction during or after IETF119 when the question has been asked;
-going for the easier version.<a href="#appendix-A-4.1.2" class="pilcrow">¶</a></p>
+going for the easier version.<a href="#appendix-A-7.1.2" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-A-4.2">
-          <p id="appendix-A-4.2.1">Use of SVCB is added as a section. Underscore prefixes are registered for CoAP, enabling the use of SVCB DNS records for applications that opt in to it (rather than processing it as an alternative history).<a href="#appendix-A-4.2.1" class="pilcrow">¶</a></p>
-<p id="appendix-A-4.2.2">
+        <li class="normal" id="appendix-A-7.2">
+          <p id="appendix-A-7.2.1">Use of SVCB is added as a section. Underscore prefixes are registered for CoAP, enabling the use of SVCB DNS records for applications that opt in to it (rather than processing it as an alternative history).<a href="#appendix-A-7.2.1" class="pilcrow">¶</a></p>
+<p id="appendix-A-7.2.2">
 While the alternative history section was appreciated during IETF119,
 the authors found it highly impractical to provide SVCB ground work without having the actual registrations
 (it would have worked only because DNS discovery acts on a separate <code>_dns</code> prefix anyway),
-and chose the consistent approach of allowing SVCB lookups.<a href="#appendix-A-4.2.2" class="pilcrow">¶</a></p>
+and chose the consistent approach of allowing SVCB lookups.<a href="#appendix-A-7.2.2" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-A-4.3">
-          <p id="appendix-A-4.3.1">Material from the DNS and DNR for CoAP documents was moved in (and overhauled in the process):<a href="#appendix-A-4.3.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="appendix-A-7.3">
+          <p id="appendix-A-7.3.1">Material from the DNS and DNR for CoAP documents was moved in (and overhauled in the process):<a href="#appendix-A-7.3.1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-A-4.3.2.1">
-              <p id="appendix-A-4.3.2.1.1">Constructing CoAP requests from Service Parameters that did not result from a host name lookup is described.<a href="#appendix-A-4.3.2.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-A-7.3.2.1">
+              <p id="appendix-A-7.3.2.1.1">Constructing CoAP requests from Service Parameters that did not result from a host name lookup is described.<a href="#appendix-A-7.3.2.1.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="appendix-A-4.3.2.2">
-              <p id="appendix-A-4.3.2.2.1">The coaptransport SVCB parameter is defined.<a href="#appendix-A-4.3.2.2.1" class="pilcrow">¶</a></p>
+            <li class="normal" id="appendix-A-7.3.2.2">
+              <p id="appendix-A-7.3.2.2.1">The coaptransport SVCB parameter is defined.<a href="#appendix-A-7.3.2.2.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="appendix-A-4.3.2.3">
-              <p id="appendix-A-4.3.2.3.1">SVCB hints for ACE/OAuth are defined.<a href="#appendix-A-4.3.2.3.1" class="pilcrow">¶</a></p>
+            <li class="normal" id="appendix-A-7.3.2.3">
+              <p id="appendix-A-7.3.2.3.1">SVCB hints for ACE/OAuth are defined.<a href="#appendix-A-7.3.2.3.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 </li>
-        <li class="normal" id="appendix-A-4.4">
-          <p id="appendix-A-4.4.1">Section on how a host can tell that Uri-Host is optional was moved from Open Questions into a section.<a href="#appendix-A-4.4.1" class="pilcrow">¶</a></p>
-<p id="appendix-A-4.4.2">
+        <li class="normal" id="appendix-A-7.4">
+          <p id="appendix-A-7.4.1">Section on how a host can tell that Uri-Host is optional was moved from Open Questions into a section.<a href="#appendix-A-7.4.1" class="pilcrow">¶</a></p>
+<p id="appendix-A-7.4.2">
 This had been around for ages,
 and gathering some more experience with the matter,
-looks like the obvious approach.<a href="#appendix-A-4.4.2" class="pilcrow">¶</a></p>
+looks like the obvious approach.<a href="#appendix-A-7.4.2" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-A-4.5">
-          <p id="appendix-A-4.5.1">Editorial:<a href="#appendix-A-4.5.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="appendix-A-7.5">
+          <p id="appendix-A-7.5.1">Editorial:<a href="#appendix-A-7.5.1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-A-4.5.2.1">
-              <p id="appendix-A-4.5.2.1.1">Style for unallocated registrations changed from TBD to CPA<a href="#appendix-A-4.5.2.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-A-7.5.2.1">
+              <p id="appendix-A-7.5.2.1.1">Style for unallocated registrations changed from TBD to CPA<a href="#appendix-A-7.5.2.1.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="appendix-A-4.5.2.2">
-              <p id="appendix-A-4.5.2.2.1">References updated<a href="#appendix-A-4.5.2.2.1" class="pilcrow">¶</a></p>
+            <li class="normal" id="appendix-A-7.5.2.2">
+              <p id="appendix-A-7.5.2.2.1">References updated<a href="#appendix-A-7.5.2.2.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="appendix-A-4.5.2.3">
-              <p id="appendix-A-4.5.2.3.1">Tooling updates<a href="#appendix-A-4.5.2.3.1" class="pilcrow">¶</a></p>
+            <li class="normal" id="appendix-A-7.5.2.3">
+              <p id="appendix-A-7.5.2.3.1">Tooling updates<a href="#appendix-A-7.5.2.3.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="appendix-A-4.5.2.4">
-              <p id="appendix-A-4.5.2.4.1">Minor fixes<a href="#appendix-A-4.5.2.4.1" class="pilcrow">¶</a></p>
+            <li class="normal" id="appendix-A-7.5.2.4">
+              <p id="appendix-A-7.5.2.4.1">Minor fixes<a href="#appendix-A-7.5.2.4.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 </li>
       </ul>
-<p id="appendix-A-5">Since draft-ietf-core-transport-indication-04:<a href="#appendix-A-5" class="pilcrow">¶</a></p>
+<p id="appendix-A-8">Since draft-ietf-core-transport-indication-04:<a href="#appendix-A-8" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-A-6.1">
-          <p id="appendix-A-6.1.1">Not just the scheme, but also the authority value influences the transport selection.<a href="#appendix-A-6.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-A-9.1">
+          <p id="appendix-A-9.1.1">Not just the scheme, but also the authority value influences the transport selection.<a href="#appendix-A-9.1.1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-A-6.1.2.1">
-              <p id="appendix-A-6.1.2.1.1">Add guidance section for new transports.<a href="#appendix-A-6.1.2.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-A-9.1.2.1">
+              <p id="appendix-A-9.1.2.1.1">Add guidance section for new transports.<a href="#appendix-A-9.1.2.1.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="appendix-A-6.1.2.2">
-              <p id="appendix-A-6.1.2.2.1">Point out that registerd names already can fan out to different addresses.<a href="#appendix-A-6.1.2.2.1" class="pilcrow">¶</a></p>
+            <li class="normal" id="appendix-A-9.1.2.2">
+              <p id="appendix-A-9.1.2.2.1">Point out that registerd names already can fan out to different addresses.<a href="#appendix-A-9.1.2.2.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 </li>
-        <li class="normal" id="appendix-A-6.2">
-          <p id="appendix-A-6.2.1">Rephrase and simplify security considerations, especially by limiting unique proxying for TLS.<a href="#appendix-A-6.2.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="appendix-A-9.2">
+          <p id="appendix-A-9.2.1">Rephrase and simplify security considerations, especially by limiting unique proxying for TLS.<a href="#appendix-A-9.2.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-A-6.3">
-          <p id="appendix-A-6.3.1">Add recommendation to new scheme authors to use "coap"/"coaps" and let the resolution process guide the selection.<a href="#appendix-A-6.3.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="appendix-A-9.3">
+          <p id="appendix-A-9.3.1">Add recommendation to new scheme authors to use "coap"/"coaps" and let the resolution process guide the selection.<a href="#appendix-A-9.3.1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-A-6.3.2.1">
-              <p id="appendix-A-6.3.2.1.1">Remove proxy-schemes attribute from core.proxy because of its greatly reduced value.<a href="#appendix-A-6.3.2.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-A-9.3.2.1">
+              <p id="appendix-A-9.3.2.1.1">Remove proxy-schemes attribute from core.proxy because of its greatly reduced value.<a href="#appendix-A-9.3.2.1.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 </li>
-        <li class="normal" id="appendix-A-6.4">
-          <p id="appendix-A-6.4.1">Update "Related work" appendix to cover SVCB instead of SRV records<a href="#appendix-A-6.4.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="appendix-A-9.4">
+          <p id="appendix-A-9.4.1">Update "Related work" appendix to cover SVCB instead of SRV records<a href="#appendix-A-9.4.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-A-6.5">
-          <p id="appendix-A-6.5.1">Rename to "Transport Indication", using "protocol" only for other protocols, in established phrases, or when referring to CoAP as a general protocol.<a href="#appendix-A-6.5.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="appendix-A-9.5">
+          <p id="appendix-A-9.5.1">Rename to "Transport Indication", using "protocol" only for other protocols, in established phrases, or when referring to CoAP as a general protocol.<a href="#appendix-A-9.5.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-A-6.6">
-          <p id="appendix-A-6.6.1">Add note linking CoAP-over-WS's .well-known/coap to dohpath<a href="#appendix-A-6.6.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="appendix-A-9.6">
+          <p id="appendix-A-9.6.1">Add note linking CoAP-over-WS's .well-known/coap to dohpath<a href="#appendix-A-9.6.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-A-6.7">
-          <p id="appendix-A-6.7.1">Remove OSCORE vs. unique-proxy open point<a href="#appendix-A-6.7.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="appendix-A-9.7">
+          <p id="appendix-A-9.7.1">Remove OSCORE vs. unique-proxy open point<a href="#appendix-A-9.7.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-A-6.8">
-          <p id="appendix-A-6.8.1">EDHOC EAD: Describe response option content<a href="#appendix-A-6.8.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="appendix-A-9.8">
+          <p id="appendix-A-9.8.1">EDHOC EAD: Describe response option content<a href="#appendix-A-9.8.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-A-6.9">
-          <p id="appendix-A-6.9.1">Editorial updates<a href="#appendix-A-6.9.1" class="pilcrow">¶</a></p>
-</li>
-      </ul>
-<p id="appendix-A-7">Since draft-ietf-core-transport-indication-03:<a href="#appendix-A-7" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="appendix-A-8.1">
-          <p id="appendix-A-8.1.1">Added appendices on alternative history and Literals beyond IP addresses.
-The remaining document was not brought in sync with those new parts.<a href="#appendix-A-8.1.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="appendix-A-9.9">
+          <p id="appendix-A-9.9.1">Editorial updates<a href="#appendix-A-9.9.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-A-9">Since draft-ietf-core-transport-indication-02:<a href="#appendix-A-9" class="pilcrow">¶</a></p>
+<p id="appendix-A-10">Since draft-ietf-core-transport-indication-03:<a href="#appendix-A-10" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-A-10.1">
-          <p id="appendix-A-10.1.1">Added EAD appendix, adjusted security considerations to match.<a href="#appendix-A-10.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-A-11.1">
+          <p id="appendix-A-11.1.1">Added appendices on alternative history and Literals beyond IP addresses.
+The remaining document was not brought in sync with those new parts.<a href="#appendix-A-11.1.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-A-11">Since draft-ietf-core-transport-indication-01:<a href="#appendix-A-11" class="pilcrow">¶</a></p>
+<p id="appendix-A-12">Since draft-ietf-core-transport-indication-02:<a href="#appendix-A-12" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-A-12.1">
-          <p id="appendix-A-12.1.1">Simplify same-host proxy behavior by referring to existing RFC7252 mandate.<a href="#appendix-A-12.1.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-A-12.2">
-          <p id="appendix-A-12.2.1">proxy-links= lookup: Refer to prior art.<a href="#appendix-A-12.2.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-A-13.1">
+          <p id="appendix-A-13.1.1">Added EAD appendix, adjusted security considerations to match.<a href="#appendix-A-13.1.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-A-13">Since draft-ietf-core-transport-indication-00:<a href="#appendix-A-13" class="pilcrow">¶</a></p>
+<p id="appendix-A-14">Since draft-ietf-core-transport-indication-01:<a href="#appendix-A-14" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-A-14.1">
-          <p id="appendix-A-14.1.1">Add section on canonical URIs that are not necessarily reachable.<a href="#appendix-A-14.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-A-15.1">
+          <p id="appendix-A-15.1.1">Simplify same-host proxy behavior by referring to existing RFC7252 mandate.<a href="#appendix-A-15.1.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-A-14.2">
-          <p id="appendix-A-14.2.1">Clarify that the the "hosts" relation is followed transitively.<a href="#appendix-A-14.2.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-A-14.3">
-          <p id="appendix-A-14.3.1">Cross reference with compatible multicast-notifications concept.<a href="#appendix-A-14.3.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="appendix-A-15.2">
+          <p id="appendix-A-15.2.1">proxy-links= lookup: Refer to prior art.<a href="#appendix-A-15.2.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-A-15">Since draft-amsuess-core-transport-indication-03:<a href="#appendix-A-15" class="pilcrow">¶</a></p>
+<p id="appendix-A-16">Since draft-ietf-core-transport-indication-00:<a href="#appendix-A-16" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-A-16.1">
-          <p id="appendix-A-16.1.1">No changes (merely changing the name after WG adoption)<a href="#appendix-A-16.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-A-17.1">
+          <p id="appendix-A-17.1.1">Add section on canonical URIs that are not necessarily reachable.<a href="#appendix-A-17.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-A-17.2">
+          <p id="appendix-A-17.2.1">Clarify that the the "hosts" relation is followed transitively.<a href="#appendix-A-17.2.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-A-17.3">
+          <p id="appendix-A-17.3.1">Cross reference with compatible multicast-notifications concept.<a href="#appendix-A-17.3.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-A-17">Since -02 (mainly processing reviews from Marco and Klaus):<a href="#appendix-A-17" class="pilcrow">¶</a></p>
+<p id="appendix-A-18">Since draft-amsuess-core-transport-indication-03:<a href="#appendix-A-18" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-A-18.1">
-          <p id="appendix-A-18.1.1">Acknowledge that 'coap://hostname/' is not the proxy but a URI that (in a particular phrasing) is used to stand in for the proxy's address (while it regularly identifies a resurce on the server)<a href="#appendix-A-18.1.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-A-18.2">
-          <p id="appendix-A-18.2.1">Security: Referencing traffic misdirection already in the first security block.<a href="#appendix-A-18.2.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-A-18.3">
-          <p id="appendix-A-18.3.1">Security: Add (incomplete) considerations for unique-proxy case.<a href="#appendix-A-18.3.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-A-18.4">
-          <p id="appendix-A-18.4.1">Narrow down "unique" proxy semantics to those properties used by the client, allowing unique proxies to be co-hosted with forward proxies.<a href="#appendix-A-18.4.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-A-18.5">
-          <p id="appendix-A-18.5.1">"Client picked proxies" clarified to merely illustrate how this is compatible with them.<a href="#appendix-A-18.5.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-A-18.6">
-          <p id="appendix-A-18.6.1">Use of "hosts" relation sharpened.<a href="#appendix-A-18.6.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-A-18.7">
-          <p id="appendix-A-18.7.1">Precision on how this does and does not consider changing transports.<a href="#appendix-A-18.7.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-A-18.8">
-          <p id="appendix-A-18.8.1">"Related work" section demoted to appendix.<a href="#appendix-A-18.8.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-A-18.9">
-          <p id="appendix-A-18.9.1">Add note on DTLS session resumption.<a href="#appendix-A-18.9.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-A-18.10">
-          <p id="appendix-A-18.10.1">Variable renaming.<a href="#appendix-A-18.10.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-A-18.11">
-          <p id="appendix-A-18.11.1">Various editorial fixes.<a href="#appendix-A-18.11.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-A-19.1">
+          <p id="appendix-A-19.1.1">No changes (merely changing the name after WG adoption)<a href="#appendix-A-19.1.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-A-19">Since -01:<a href="#appendix-A-19" class="pilcrow">¶</a></p>
+<p id="appendix-A-20">Since -02 (mainly processing reviews from Marco and Klaus):<a href="#appendix-A-20" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-A-20.1">
-          <p id="appendix-A-20.1.1">Removed suggestion for generally trusted proxies;
+<li class="normal" id="appendix-A-21.1">
+          <p id="appendix-A-21.1.1">Acknowledge that 'coap://hostname/' is not the proxy but a URI that (in a particular phrasing) is used to stand in for the proxy's address (while it regularly identifies a resurce on the server)<a href="#appendix-A-21.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-A-21.2">
+          <p id="appendix-A-21.2.1">Security: Referencing traffic misdirection already in the first security block.<a href="#appendix-A-21.2.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-A-21.3">
+          <p id="appendix-A-21.3.1">Security: Add (incomplete) considerations for unique-proxy case.<a href="#appendix-A-21.3.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-A-21.4">
+          <p id="appendix-A-21.4.1">Narrow down "unique" proxy semantics to those properties used by the client, allowing unique proxies to be co-hosted with forward proxies.<a href="#appendix-A-21.4.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-A-21.5">
+          <p id="appendix-A-21.5.1">"Client picked proxies" clarified to merely illustrate how this is compatible with them.<a href="#appendix-A-21.5.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-A-21.6">
+          <p id="appendix-A-21.6.1">Use of "hosts" relation sharpened.<a href="#appendix-A-21.6.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-A-21.7">
+          <p id="appendix-A-21.7.1">Precision on how this does and does not consider changing transports.<a href="#appendix-A-21.7.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-A-21.8">
+          <p id="appendix-A-21.8.1">"Related work" section demoted to appendix.<a href="#appendix-A-21.8.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-A-21.9">
+          <p id="appendix-A-21.9.1">Add note on DTLS session resumption.<a href="#appendix-A-21.9.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-A-21.10">
+          <p id="appendix-A-21.10.1">Variable renaming.<a href="#appendix-A-21.10.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-A-21.11">
+          <p id="appendix-A-21.11.1">Various editorial fixes.<a href="#appendix-A-21.11.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
+<p id="appendix-A-22">Since -01:<a href="#appendix-A-22" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-A-23.1">
+          <p id="appendix-A-23.1.1">Removed suggestion for generally trusted proxies;
 now stating that with (D)TLS,
-"a third party proxy can usually not satisfy [the security context propagation requirement]".<a href="#appendix-A-20.1.1" class="pilcrow">¶</a></p>
+"a third party proxy can usually not satisfy [the security context propagation requirement]".<a href="#appendix-A-23.1.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-A-20.2">
-          <p id="appendix-A-20.2.1">State more clearly that valid cache entries for resources aliased through has-unique-proxy can be used.<a href="#appendix-A-20.2.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="appendix-A-23.2">
+          <p id="appendix-A-23.2.1">State more clearly that valid cache entries for resources aliased through has-unique-proxy can be used.<a href="#appendix-A-23.2.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-A-20.3">
-          <p id="appendix-A-20.3.1">Added considerations for Multipath TCP.<a href="#appendix-A-20.3.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="appendix-A-23.3">
+          <p id="appendix-A-23.3.1">Added considerations for Multipath TCP.<a href="#appendix-A-23.3.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-A-20.4">
-          <p id="appendix-A-20.4.1">Added concrete suggestion and example for advertisement of general proxies.<a href="#appendix-A-20.4.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="appendix-A-23.4">
+          <p id="appendix-A-23.4.1">Added concrete suggestion and example for advertisement of general proxies.<a href="#appendix-A-23.4.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-A-20.5">
-          <p id="appendix-A-20.5.1">Added concrete suggestion for RD lookup extension that provides proxies.<a href="#appendix-A-20.5.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="appendix-A-23.5">
+          <p id="appendix-A-23.5.1">Added concrete suggestion for RD lookup extension that provides proxies.<a href="#appendix-A-23.5.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-A-20.6">
-          <p id="appendix-A-20.6.1">Minor editorial and example changes.<a href="#appendix-A-20.6.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="appendix-A-23.6">
+          <p id="appendix-A-23.6.1">Minor editorial and example changes.<a href="#appendix-A-23.6.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-A-21">Since -00:<a href="#appendix-A-21" class="pilcrow">¶</a></p>
+<p id="appendix-A-24">Since -00:<a href="#appendix-A-24" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-A-22.1">
-          <p id="appendix-A-22.1.1">Added introduction<a href="#appendix-A-22.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-A-25.1">
+          <p id="appendix-A-25.1.1">Added introduction<a href="#appendix-A-25.1.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-A-22.2">
-          <p id="appendix-A-22.2.1">Added examples<a href="#appendix-A-22.2.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="appendix-A-25.2">
+          <p id="appendix-A-25.2.1">Added examples<a href="#appendix-A-25.2.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-A-22.3">
-          <p id="appendix-A-22.3.1">Added SCHC analogy<a href="#appendix-A-22.3.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="appendix-A-25.3">
+          <p id="appendix-A-25.3.1">Added SCHC analogy<a href="#appendix-A-25.3.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-A-22.4">
-          <p id="appendix-A-22.4.1">Expanded security considerations<a href="#appendix-A-22.4.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="appendix-A-25.4">
+          <p id="appendix-A-25.4.1">Expanded security considerations<a href="#appendix-A-25.4.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-A-22.5">
-          <p id="appendix-A-22.5.1">Added guidance on choice of transport, and canonical addresses<a href="#appendix-A-22.5.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="appendix-A-25.5">
+          <p id="appendix-A-25.5.1">Added guidance on choice of transport, and canonical addresses<a href="#appendix-A-25.5.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-A-22.6">
-          <p id="appendix-A-22.6.1">Added subsection on interaction with a Resource Directory<a href="#appendix-A-22.6.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="appendix-A-25.6">
+          <p id="appendix-A-25.6.1">Added subsection on interaction with a Resource Directory<a href="#appendix-A-25.6.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-A-22.7">
-          <p id="appendix-A-22.7.1">Added comparisons with related work, including rdlink and DNS-SD sketches<a href="#appendix-A-22.7.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="appendix-A-25.7">
+          <p id="appendix-A-25.7.1">Added comparisons with related work, including rdlink and DNS-SD sketches<a href="#appendix-A-25.7.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-A-22.8">
-          <p id="appendix-A-22.8.1">Added IANA considerations<a href="#appendix-A-22.8.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="appendix-A-25.8">
+          <p id="appendix-A-25.8.1">Added IANA considerations<a href="#appendix-A-25.8.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="appendix-A-22.9">
-          <p id="appendix-A-22.9.1">Added section on open questions<a href="#appendix-A-22.9.1" class="pilcrow">¶</a></p>
+        <li class="normal" id="appendix-A-25.9">
+          <p id="appendix-A-25.9.1">Added section on open questions<a href="#appendix-A-25.9.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 </section>
@@ -3097,6 +3157,7 @@ now stating that with (D)TLS,
       <h2 id="name-related-work-and-applicabil">
 <a href="#appendix-B" class="section-number selfRef">Appendix B. </a><a href="#name-related-work-and-applicabil" class="section-name selfRef">Related work and applicability to related fields</a>
       </h2>
+<p id="appendix-B-1"><span class="cref" id="remove-relatedwork">This section is to be removed before submission to the IESG, with at least the MP-TCP section worked into corr-clar.</span><a href="#appendix-B-1" class="pilcrow">¶</a></p>
 <div id="on-http">
 <section id="appendix-B.1">
         <h3 id="name-on-http">
@@ -3207,46 +3268,47 @@ maybe something like "has the default value of any of the associated addresses, 
       <h2 id="name-open-questions-further-idea">
 <a href="#appendix-C" class="section-number selfRef">Appendix C. </a><a href="#name-open-questions-further-idea" class="section-name selfRef">Open Questions / further ideas</a>
       </h2>
+<p id="appendix-C-1"><span class="cref" id="remove-openquestions">This section is to be either converted into concrete guidance, or removed before submission to the IESG.</span><a href="#appendix-C-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-C-1.1">
-          <p id="appendix-C-1.1.1">Advertising under a stable name:<a href="#appendix-C-1.1.1" class="pilcrow">¶</a></p>
-<p id="appendix-C-1.1.2">
-If a host wants to advertise its host name rather than its IP address during multicast, how does it best do that?<a href="#appendix-C-1.1.2" class="pilcrow">¶</a></p>
-<p id="appendix-C-1.1.3">
-Options, when answering from 2001:db8::1 to a request to ff02::fd are:<a href="#appendix-C-1.1.3" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="appendix-C-1.1.4">
+<li class="normal" id="appendix-C-2.1">
+          <p id="appendix-C-2.1.1">Advertising under a stable name:<a href="#appendix-C-2.1.1" class="pilcrow">¶</a></p>
+<p id="appendix-C-2.1.2">
+If a host wants to advertise its host name rather than its IP address during multicast, how does it best do that?<a href="#appendix-C-2.1.2" class="pilcrow">¶</a></p>
+<p id="appendix-C-2.1.3">
+Options, when answering from 2001:db8::1 to a request to ff02::fd are:<a href="#appendix-C-2.1.3" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="appendix-C-2.1.4">
 <pre>
 &lt;coap://myhostname/foo&gt;,...,
 &lt;coap://[2001:db8::1]&gt;;rel=has-unique-proxy;anchor="coap://myhostname"
-</pre><a href="#appendix-C-1.1.4" class="pilcrow">¶</a>
+</pre><a href="#appendix-C-2.1.4" class="pilcrow">¶</a>
 </div>
-<p id="appendix-C-1.1.5">
-which is verbose but formally clear, and<a href="#appendix-C-1.1.5" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="appendix-C-1.1.6">
+<p id="appendix-C-2.1.5">
+which is verbose but formally clear, and<a href="#appendix-C-2.1.5" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="appendix-C-2.1.6">
 <pre>
 &lt;/foo&gt;,...,
 &lt;coap://[2001:db8::1]&gt;;rel=has-unique-proxy;anchor="coap://myhostname"
-</pre><a href="#appendix-C-1.1.6" class="pilcrow">¶</a>
+</pre><a href="#appendix-C-2.1.6" class="pilcrow">¶</a>
 </div>
-<p id="appendix-C-1.1.7">
+<p id="appendix-C-2.1.7">
 which is compatible with unaware clients,
-but its correctness with respect to canonical URIs needs to be argued by the client, in this sequence<a href="#appendix-C-1.1.7" class="pilcrow">¶</a></p>
+but its correctness with respect to canonical URIs needs to be argued by the client, in this sequence<a href="#appendix-C-2.1.7" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-C-1.1.8.1">
-              <p id="appendix-C-1.1.8.1.1">understanding the has-unique-proxy line,<a href="#appendix-C-1.1.8.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-C-2.1.8.1">
+              <p id="appendix-C-2.1.8.1.1">understanding the has-unique-proxy line,<a href="#appendix-C-2.1.8.1.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="appendix-C-1.1.8.2">
-              <p id="appendix-C-1.1.8.2.1">understanding that the request that went to 2001:db8::1 was really a Proxy-Scheme/Uri-Host-elided version of a request to coap://myhostname, and then<a href="#appendix-C-1.1.8.2.1" class="pilcrow">¶</a></p>
+            <li class="normal" id="appendix-C-2.1.8.2">
+              <p id="appendix-C-2.1.8.2.1">understanding that the request that went to 2001:db8::1 was really a Proxy-Scheme/Uri-Host-elided version of a request to coap://myhostname, and then<a href="#appendix-C-2.1.8.2.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="appendix-C-1.1.8.3">
-              <p id="appendix-C-1.1.8.3.1">processing any relative reference with this new base in mind.<a href="#appendix-C-1.1.8.3.1" class="pilcrow">¶</a></p>
+            <li class="normal" id="appendix-C-2.1.8.3">
+              <p id="appendix-C-2.1.8.3.1">processing any relative reference with this new base in mind.<a href="#appendix-C-2.1.8.3.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
-<p id="appendix-C-1.1.9">
+<p id="appendix-C-2.1.9">
 (Not that it'd need to happen in software in that sequence,
-but that's the sequence needed to understand how the <code>/foo</code> here is really <code>coap://myhostname/foo</code>).<a href="#appendix-C-1.1.9" class="pilcrow">¶</a></p>
-<p id="appendix-C-1.1.10">
-If CoRAL is used during discovery, a base directive or reverse relation to has-unique-proxy would make this easier.<a href="#appendix-C-1.1.10" class="pilcrow">¶</a></p>
+but that's the sequence needed to understand how the <code>/foo</code> here is really <code>coap://myhostname/foo</code>).<a href="#appendix-C-2.1.9" class="pilcrow">¶</a></p>
+<p id="appendix-C-2.1.10">
+If CoRAL is used during discovery, a base directive or reverse relation to has-unique-proxy would make this easier.<a href="#appendix-C-2.1.10" class="pilcrow">¶</a></p>
 </li>
       </ul>
 </section>
@@ -3256,26 +3318,27 @@ If CoRAL is used during discovery, a base directive or reverse relation to has-u
       <h2 id="name-edhoc-ead-for-verifying-leg">
 <a href="#appendix-D" class="section-number selfRef">Appendix D. </a><a href="#name-edhoc-ead-for-verifying-leg" class="section-name selfRef">EDHOC EAD for verifying legitimate proxies</a>
       </h2>
-<p id="appendix-D-1">This document sketches an extension to <span>[<a href="#I-D.ietf-lake-edhoc" class="cite xref">I-D.ietf-lake-edhoc</a>]</span> that informs the server of the public address the client is using,
-allowing it to detect undesired reverse proxies.<a href="#appendix-D-1" class="pilcrow">¶</a></p>
-<p id="appendix-D-2">[ This section is immature, and written up as a discussion starting point. Further research into prior art is still necessary. ]<a href="#appendix-D-2" class="pilcrow">¶</a></p>
-<p id="appendix-D-3">The External Authorization Data (EAD) item with name "Proxy CRI", label 24-CPA, is defined for use with messages 1, 2 and 3.<a href="#appendix-D-3" class="pilcrow">¶</a></p>
-<p id="appendix-D-4">A client can set this label in uncritical form, followed by a CRI (<span>[<a href="#I-D.ietf-core-href" class="cite xref">I-D.ietf-core-href</a>]</span>) that is CBOR-encoded in a byte string as a CBOR sequence.
-The transport indicated by the URI is the proxy the client chose from information advertised about the server.<a href="#appendix-D-4" class="pilcrow">¶</a></p>
-<p id="appendix-D-5">If a server can not determine its set of legitimate proxies,
-it ignores the option (as does any EDHOC implementation that is unaware of it).<a href="#appendix-D-5" class="pilcrow">¶</a></p>
-<p id="appendix-D-6">If it recognizes the CRI as belonging to a legitimate proxy,
+<p id="appendix-D-1"><span class="cref" id="remove-edhocead">This section is to be moved into another document, possibly <code>groupcomm-proxy</code>.</span><a href="#appendix-D-1" class="pilcrow">¶</a></p>
+<p id="appendix-D-2">This document sketches an extension to <span>[<a href="#I-D.ietf-lake-edhoc" class="cite xref">I-D.ietf-lake-edhoc</a>]</span> that informs the server of the public address the client is using,
+allowing it to detect undesired reverse proxies.<a href="#appendix-D-2" class="pilcrow">¶</a></p>
+<p id="appendix-D-3">[ This section is immature, and written up as a discussion starting point. Further research into prior art is still necessary. ]<a href="#appendix-D-3" class="pilcrow">¶</a></p>
+<p id="appendix-D-4">The External Authorization Data (EAD) item with name "Proxy CRI", label 24-CPA, is defined for use with messages 1, 2 and 3.<a href="#appendix-D-4" class="pilcrow">¶</a></p>
+<p id="appendix-D-5">A client can set this label in uncritical form, followed by a CRI (<span>[<a href="#I-D.ietf-core-href" class="cite xref">I-D.ietf-core-href</a>]</span>) that is CBOR-encoded in a byte string as a CBOR sequence.
+The transport indicated by the URI is the proxy the client chose from information advertised about the server.<a href="#appendix-D-5" class="pilcrow">¶</a></p>
+<p id="appendix-D-6">If a server can not determine its set of legitimate proxies,
+it ignores the option (as does any EDHOC implementation that is unaware of it).<a href="#appendix-D-6" class="pilcrow">¶</a></p>
+<p id="appendix-D-7">If it recognizes the CRI as belonging to a legitimate proxy,
 it places the empty label in its non-critical form in the next message to confirm the proxy choice.
 Otherwise, it places the label in its critical form, either empty or containing a recommended CRI.
 The client may then decide to discontinue using the proxy,
 or to use more extensive padding options to sidestep the attack.
-Both the client and the server may alert their administrators of a possible traffic misdirection.<a href="#appendix-D-6" class="pilcrow">¶</a></p>
-<p id="appendix-D-7">[ While using an EDHOC EAD is suitable for connection setup,
+Both the client and the server may alert their administrators of a possible traffic misdirection.<a href="#appendix-D-7" class="pilcrow">¶</a></p>
+<p id="appendix-D-8">[ While using an EDHOC EAD is suitable for connection setup,
    such a mechanism may also be useful at a later time,
    eg. to re-check a server's address after a name change;
    establishing an equivalent CoAP option is being considered,
    also oin light of the discussion around https://github.com/core-wg/corrclar/pull/40 and https://github.com/core-wg/groupcomm-proxy/issues/3.
-   ]<a href="#appendix-D-7" class="pilcrow">¶</a></p>
+   ]<a href="#appendix-D-8" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="newlit">
@@ -3326,136 +3389,97 @@ and for internationalization.</span><a href="#appendix-E.1-4" class="pilcrow">¶
 <a href="#appendix-E.2" class="section-number selfRef">E.2. </a><a href="#name-structure-of-servicearpa" class="section-name selfRef">Structure of <code>service.arpa</code></a>
         </h3>
 <p id="appendix-E.2-1">Names under service.arpa are structured into
-an optional custom prefix,
 an ordered list of key-value component pairs,
 and the common suffix <code>service.arpa</code>.<a href="#appendix-E.2-1" class="pilcrow">¶</a></p>
-<p id="appendix-E.2-2">The custom prefix can contain user defined components.
-The intended use is labelling, and to differentiate services provided by a single host.
-Any data is allowed within the structure of a URI (ABNF reg-name) and DNS name rules (63 bytes per segment).
-(While not ever carried by DNS,
-this upholds the constraints of DNS for names.
-That decision may be revised later,
-but is upheld while demonstrating that the desired properties can be obtained).<a href="#appendix-E.2-2" class="pilcrow">¶</a></p>
-<p id="appendix-E.2-3">Component pairs consist of a registered component type
-(no precise registry is proposed at this early point)
-followed by encoded data.
-The component type "--" is special in that it concatenates the values to its left and to its right,
-creating component values that may exceed 63 bytes in length.<a href="#appendix-E.2-3" class="pilcrow">¶</a></p>
-<p id="appendix-E.2-4">Initial component types are:<a href="#appendix-E.2-4" class="pilcrow">¶</a></p>
+<p id="appendix-E.2-2">These pairs represent the very items also produced by <a href="#processing-scheme-authority" class="auto internal xref">Section 2.1</a>.
+In the current version, they can <em>not</em> express multiple entries with different structures.
+They can express different entries, but any repeated items (eg. different ALPNs and IP addresses)
+only produce their product
+(i.e., no "TCP on this or that address, TLS on another").<a href="#appendix-E.2-2" class="pilcrow">¶</a></p>
+<p id="appendix-E.2-3">Keeping with the style of DNS (least significant component first),
+pairs are expressed with their data a first label, followed by the key in a separate label.
+Data items ending with a "-" character are concatenated with their previous label to avoid overflowing the 63-octet limit of DNS
+(even though those do not wind up in DNS serialization).<a href="#appendix-E.2-3" class="pilcrow">¶</a></p>
+<p id="appendix-E.2-4">For example, "world.hello-.label.8080.port" contains,
+in that order,
+information about port 8080 and the label "helloworld".<a href="#appendix-E.2-4" class="pilcrow">¶</a></p>
+<p id="appendix-E.2-5">Initial component types are:<a href="#appendix-E.2-5" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-E.2-5.1">
-            <p id="appendix-E.2-5.1.1">"6": The value encodes an IPv6 address
-in <span>[<a href="#RFC5952" class="cite xref">RFC5952</a>]</span> format, with the colon character (":") replaced with a dash ("-").<a href="#appendix-E.2-5.1.1" class="pilcrow">¶</a></p>
-<p id="appendix-E.2-5.1.2">
-It indicates an address of a host providing the service.<a href="#appendix-E.2-5.1.2" class="pilcrow">¶</a></p>
-<p id="appendix-E.2-5.1.3">
+<li class="normal" id="appendix-E.2-6.1">
+            <p id="appendix-E.2-6.1.1">"6": The value encodes an IPv6 address
+in <span>[<a href="#RFC5952" class="cite xref">RFC5952</a>]</span> format, with the colon character (":") replaced with a dash ("-").<a href="#appendix-E.2-6.1.1" class="pilcrow">¶</a></p>
+<p id="appendix-E.2-6.1.2">
+It indicates an address of a host providing the service.<a href="#appendix-E.2-6.1.2" class="pilcrow">¶</a></p>
+<p id="appendix-E.2-6.1.3">
 If any address information is present,
-a client SHOULD use that information to access the service.<a href="#appendix-E.2-5.1.3" class="pilcrow">¶</a></p>
+a client SHOULD use that information to access the service.<a href="#appendix-E.2-6.1.3" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-E.2-5.2">
-            <p id="appendix-E.2-5.2.1">"4": The value encodes an IPv4 address
-in dotted decimal format <span>[<a href="#RFC1123" class="cite xref">RFC1123</a>]</span>, with the dot character (".") replaced with a dash ("-").<a href="#appendix-E.2-5.2.1" class="pilcrow">¶</a></p>
-<p id="appendix-E.2-5.2.2">
-It indicates an address of a host providing the service.<a href="#appendix-E.2-5.2.2" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-E.2-6.2">
+            <p id="appendix-E.2-6.2.1">"4": The value encodes an IPv4 address
+in dotted decimal format <span>[<a href="#RFC1123" class="cite xref">RFC1123</a>]</span>, with the dot character (".") replaced with a dash ("-").<a href="#appendix-E.2-6.2.1" class="pilcrow">¶</a></p>
+<p id="appendix-E.2-6.2.2">
+It indicates an address of a host providing the service.<a href="#appendix-E.2-6.2.2" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-E.2-5.3">
-            <p id="appendix-E.2-5.3.1">"tlsa": The data of a DNS TLSA record <span>[<a href="#RFC6698" class="cite xref">RFC6698</a>]</span> encoded in base32 <span>[<a href="#RFC4648" class="cite xref">RFC4648</a>]</span>.<a href="#appendix-E.2-5.3.1" class="pilcrow">¶</a></p>
-<p id="appendix-E.2-5.3.2">
-Depending on the usage, this describes TLS credentials through which the service can be authenticated.<a href="#appendix-E.2-5.3.2" class="pilcrow">¶</a></p>
-<p id="appendix-E.2-5.3.3">
+          <li class="normal" id="appendix-E.2-6.3">
+            <p id="appendix-E.2-6.3.1">"tlsa": The data of a DNS TLSA record <span>[<a href="#RFC6698" class="cite xref">RFC6698</a>]</span> encoded in base32 <span>[<a href="#RFC4648" class="cite xref">RFC4648</a>]</span>.<a href="#appendix-E.2-6.3.1" class="pilcrow">¶</a></p>
+<p id="appendix-E.2-6.3.2">
+Depending on the usage, this describes TLS credentials through which the service can be authenticated.<a href="#appendix-E.2-6.3.2" class="pilcrow">¶</a></p>
+<p id="appendix-E.2-6.3.3">
 If present,
 a client MUST establish a secure connection,
-and MUST fail the connection if the TLSA record's requirements are not met.<a href="#appendix-E.2-5.3.3" class="pilcrow">¶</a></p>
+and MUST fail the connection if the TLSA record's requirements are not met.<a href="#appendix-E.2-6.3.3" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-E.2-5.4">
-            <p id="appendix-E.2-5.4.1">"edhoc-cred", "edhoc-info", "oauth-info": SvcbParams in base32 encoding of their wire format.<a href="#appendix-E.2-5.4.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-E.2-6.4">
+            <p id="appendix-E.2-6.4.1">"cred", "edhoc-info", "oauth-info": SvcbParams in base32 encoding of their wire format.<a href="#appendix-E.2-6.4.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-E.2-5.5">
-            <p id="appendix-E.2-5.5.1">"coaptransport": SvcbParam in its text encoding.<a href="#appendix-E.2-5.5.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-E.2-6.5">
+            <p id="appendix-E.2-6.5.1">"coaptransport": SvcbParam in its text encoding.<a href="#appendix-E.2-6.5.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-E.2-5.6">
-            <p id="appendix-E.2-5.6.1">"s": Other Service Parameters that do not have an explicit component type.
-SvcbParams in base32 encoding of their wire format.<a href="#appendix-E.2-5.6.1" class="pilcrow">¶</a></p>
-<p id="appendix-E.2-5.6.2">
-TBD: There is likely a transformation of the parameters' presentation format that is compatible with the requirements of the authority component,
-but this will require some more work on the syntax.<a href="#appendix-E.2-5.6.2" class="pilcrow">¶</a></p>
-<p id="appendix-E.2-5.6.3">
-If present,
-a client SHOULD use these hints to establish a connection.<a href="#appendix-E.2-5.6.3" class="pilcrow">¶</a></p>
-<p id="appendix-E.2-5.6.4">
-TBD: Encoding only the SvcParams and not priorities and targets appears to be the right thing to do for the immediate record,
-but does not enable load balancing and failover.
-Further work is required to explore how those can be expressed,
-and how data pertaining to the target can be expressed,
-possibly in a nested structure.<a href="#appendix-E.2-5.6.4" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-E.2-6.6">
+            <p id="appendix-E.2-6.6.1">"alpn": The ALPN(s) in hexadecimal encoding, separated by dashes.<a href="#appendix-E.2-6.6.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-</section>
-</div>
-<div id="syntax-of-servicearpa">
-<section id="appendix-E.3">
-        <h3 id="name-syntax-of-servicearpa">
-<a href="#appendix-E.3" class="section-number selfRef">E.3. </a><a href="#name-syntax-of-servicearpa" class="section-name selfRef">Syntax of <code>service.arpa</code></a>
-        </h3>
-<div class="lang-abnf sourcecode" id="appendix-E.3-1">
-<pre>
-name = [ custom ".-." ] *(component) "service.arpa"
-
-custom = reg-name
-component = 1*63nodot "." comptype "."
-comptype = nodotnodash /  2*63nodot
-
-; unreserved/subdelims without dot
-nodot  = nodotnodash / "-"
-; unreserved/subdelims without dot or dash
-nodotnodash = ALPHA / DIGIT / "_" / "~" / sub-delims
-
-; reg-name and sub-delims as in RFC3986
-</pre><a href="#appendix-E.3-1" class="pilcrow">¶</a>
-</div>
-<p id="appendix-E.3-2">Due to <span>[<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>'s rules,
-all components are case insensitive and canonically lowercase.<a href="#appendix-E.3-2" class="pilcrow">¶</a></p>
-<p id="appendix-E.3-3">Note that while using the IPvFuture mechanism of <span>[<a href="#RFC3986" class="cite xref">RFC3986</a>]</span> would avoid compatibility issues around the 63 character limit
+<p id="appendix-E.2-7">Due to <span>[<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>'s rules,
+all components are case insensitive and canonically lowercase.<a href="#appendix-E.2-7" class="pilcrow">¶</a></p>
+<p id="appendix-E.2-8">Note that while using the IPvFuture mechanism of <span>[<a href="#RFC3986" class="cite xref">RFC3986</a>]</span> would avoid compatibility issues around the 63 character limit
 and some of the character restrictions,
-it would not resolve the larger limitation of case insensitivity.<a href="#appendix-E.3-3" class="pilcrow">¶</a></p>
+it would not resolve the larger limitation of case insensitivity.<a href="#appendix-E.2-8" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="processing-servicearpa">
-<section id="appendix-E.4">
+<section id="appendix-E.3">
         <h3 id="name-processing-servicearpa">
-<a href="#appendix-E.4" class="section-number selfRef">E.4. </a><a href="#name-processing-servicearpa" class="section-name selfRef">Processing <code>service.arpa</code></a>
+<a href="#appendix-E.3" class="section-number selfRef">E.3. </a><a href="#name-processing-servicearpa" class="section-name selfRef">Processing <code>service.arpa</code></a>
         </h3>
-<p id="appendix-E.4-1">A client accessing a resource under a service.arpa name
+<p id="appendix-E.3-1">A client accessing a resource under a service.arpa name
 does not consult DNS,
-but obtains information equivalent to the results of a DNS query from parsing the name.<a href="#appendix-E.4-1" class="pilcrow">¶</a></p>
-<p id="appendix-E.4-2">DNS resolvers should refuse to resolve service.arpa names.
+but obtains information equivalent to the results of a DNS query from parsing the name.<a href="#appendix-E.3-1" class="pilcrow">¶</a></p>
+<p id="appendix-E.3-2">DNS resolvers should refuse to resolve service.arpa names.
 (They would have all the information needed to produce sensible results,
 but operational aspects would need a lot of consideration;
-future versions of this document may revise this).<a href="#appendix-E.4-2" class="pilcrow">¶</a></p>
+future versions of this document may revise this).<a href="#appendix-E.3-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="examples">
-<section id="appendix-E.5">
+<section id="appendix-E.4">
         <h3 id="name-examples">
-<a href="#appendix-E.5" class="section-number selfRef">E.5. </a><a href="#name-examples" class="section-name selfRef">Examples</a>
+<a href="#appendix-E.4" class="section-number selfRef">E.4. </a><a href="#name-examples" class="section-name selfRef">Examples</a>
         </h3>
-<p id="appendix-E.5-1">TBD: For SvcParams, the examples are inconsistent with the base32 recommendation;
-they serve to explore the possible alternatives.<a href="#appendix-E.5-1" class="pilcrow">¶</a></p>
+<p id="appendix-E.4-1">TBD: For SvcParams, the examples are inconsistent with the base32 recommendation;
+they serve to explore the possible alternatives.<a href="#appendix-E.4-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-E.5-2.1">
-            <p id="appendix-E.5-2.1.1">http://s.alpn_h2c.6.2001-db8--1.service.arpa/ -- The server is reachable on 2001:db8::1 using HTTP/2<a href="#appendix-E.5-2.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-E.4-2.1">
+            <p id="appendix-E.4-2.1.1">http://683263.alpn.2001-db8--1.6.service.arpa/ -- The server is reachable on 2001:db8::1 using HTTP/2 (h2c is 683263 in hex)<a href="#appendix-E.4-2.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-E.5-2.2">
-            <p id="appendix-E.5-2.2.1">https://mail.-.tlsa.amaqckrkfivcukrkfivcukrkfivcukrkfivcukrkfivcukrkfivcukrk.service.arpa/ -- No address information is provided, the client needs to resort to other discovery mechanisms.
-Any server is eligible to serve the resource if it can present a (possibly self-signed) certificate whose public key SHA256 matches the encoded value.
-The "mail.-." part is provided to the server as part of the Host header,
-and can be used for name based virtual hosting.<a href="#appendix-E.5-2.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-E.4-2.2">
+            <p id="appendix-E.4-2.2.1">https://amaqckrkfivcukrkfivcukrkfivcukrkfivcukrkfivcukrkfivcukrk.tlsa.service.arpa/ -- No address information is provided, the client needs to resort to other discovery mechanisms.
+Any server is eligible to serve the resource if it can present a (possibly self-signed) certificate whose public key SHA256 matches the encoded value.<a href="#appendix-E.4-2.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-E.5-2.3">
-            <p id="appendix-E.5-2.3.1">coap://coaptransport.tcp.edhoc-cred.ueekcandaeasabbblaqlxq2jmbjg5jgtf2kazljkenaurxocc6i2ckx3zowjgyr.--.ai3ouj4a.6.2001-db8--1.service.arpa/ -- The server is reachable using CoAP over TCP with EDHOC security at 2001:db8::1, and the service is identifiable by the use of a KCCS credential describing an X25519 public key.<a href="#appendix-E.5-2.3.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-E.4-2.3">
+            <p id="appendix-E.4-2.3.1">coap://tcp.coaptransport.2001-db8--1.6.rai3ouj4a.ueekcandaeasabbblaqlxq2jmbjg5jgtf2kazljkenaurxocc6i2ckx3zowjgy-.cred.service.arpa/ -- The server is reachable using CoAP over TCP with any security mechanism at 2001:db8::1, and the service is identifiable by the use of a KCCS credential describing an X25519 public key (which is currently only usable with EDHOC).<a href="#appendix-E.4-2.3.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-E.5-2.4">
-            <p id="appendix-E.5-2.4.1">coap://edhoc-cred.ueekcandaeasabbblaqlxq2jmbjg5jgtf2kazljkenaurxocc6i2ckx3zowjgyr.--.ai3ouj4a.service.arpa/ -- The same server without any discoverability hints; it is up to the client to discover a (possibly short-lived) connection opportunities to the server identified by that key.<a href="#appendix-E.5-2.4.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-E.4-2.4">
+            <p id="appendix-E.4-2.4.1">coap://rai3ouj4a.ueekcandaeasabbblaqlxq2jmbjg5jgtf2kazljkenaurxocc6i2ckx3zowjgyr-.cred.service.arpa/ -- The same server without any discoverability hints; it is up to the client to discover a (possibly short-lived) connection opportunities to the server identified by that key.<a href="#appendix-E.4-2.4.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
