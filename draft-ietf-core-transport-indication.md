@@ -235,7 +235,7 @@ a client decides to use a forward proxy to access the resource:
 either because it is explicitly configured to do so ({{actualproxies}}),
 or because it has discovered a preferred proxy ({{hasproxy}}).
 In that case, it
-finds the endpoint of the configured proxy (using {{processing-scheme-authority}}}, if not given explicitly).
+finds the endpoint of the configured proxy (using {{processing-scheme-authority}}, if not given explicitly).
 The proxy then decides on an endpoint to which to forward the request for its own,
 (again using the tools described in this section).
 Otherwise, it uses the information of scheme and authority,
@@ -244,7 +244,7 @@ often through a resolution service ({{processing-scheme-authority}}).
 No matter how the endpoint (and thus transport) was discovered and whether a proxy is involved,
 it does not alter the URI of the resource being requested.
 The Proxy-Scheme, Uri-Host and Uri-Port options are set as needed
-to ensure that the request keeps targetting the requested resource.
+to ensure that the request keeps targeting the requested resource.
 This happens, respectively,
 if the URI scheme associated with the selected transport differs from the request URI's scheme
 (or a proxy is used),
@@ -252,7 +252,7 @@ when the host name is not the default one for the transport
 (e.g. if it is not an IP literal in the UDP or TCP cases, or a proxy is used;
 DNS CNAME entries or SVCB target do not alter the URI's host name at all)
 or a different port is used (as possible through SVCB),
-(Outside of proxy cases,
+(Outside proxy cases,
 {{Section 6.4 of RFC7252}} only talks of setting the Uri-Host to preserve the URI, and not of setting Proxy-Scheme or Uri-Port.
 That is because at the time of writing, no mechanisms were available to select a different transport or port).
 
@@ -419,7 +419,7 @@ Clients MAY switch between endpoints as long as the source describing them is fr
 they may even do so per request.
 (For example, they may perform individual requests using CoAP-over-UDP,
 but choose CoAP-over-TCP for requests with large expected responses).
-When the information about endpoints is obtained through CoAP (eg. as a `has-proxy` link),
+When the information about endpoints is obtained through CoAP (e.g. as a `has-proxy` link),
 the client can use the describing representation's ETag to efficiently renew its justification for using the alternative transport.
 
 ## Selection of a canonical origin
@@ -763,7 +763,7 @@ Any resource is still accessed at its original URI through the advertised proxy 
 
 It is possible through this to advertise transports without transport layer security
 for URIs with the schemes "coaps", "coaps+tcp" and "coaps+ws".
-Unless the applications explicitly regards an object layer security mechanism as a sufficient replacement for transport layer security,
+Unless the application explicitly regards an object layer security mechanism as a sufficient replacement for transport layer security,
 those transports can not be selected for operations on such URIs as per {{secctx-propagation}}.
 
 Some SVCB parameters have defaults; for "_coap", these are:
@@ -791,7 +791,7 @@ are subject to ongoing discussion (especially with regard to whether they apply 
 ## Service Parameters {#svcparams}
 
 Several parameters are relevant in the context of CoAP,
-independently of whether they are used with SVCB records or Service Binding Parameters transported outside of SVCB records,
+independently of whether they are used with SVCB records or Service Binding Parameters transported outside SVCB records,
 and independently of whether they apply to the `_coap` service or another service that can be used on top of CoAP (such as `_dns`):
 
 * `port`: The CoAP service using the transport described in this parameter is reachable on this port
@@ -808,14 +808,14 @@ and independently of whether they apply to the `_coap` service or another servic
 
   The names registered for existing transports are identical to the URI schemes that indicate their use in the absence of Service Binding Parameters.
 
-  \[ It is left for review by SVCB experts whether these are a separate parameter space or we should just take ALPNs for them, like eg. h2c does. \]
+  \[ It is left for review by SVCB experts whether these are a separate parameter space or we should just take ALPNs for them, like e.g. h2c does. \]
 
 * `is-unique-proxy`: This is a new parameter defined in this document,
   and equivalent to the `has-unique-proxy` in its semantics.
 
   Its value is empty.
 
-* `cred`: This is a new parameter defined in this document, and describes COSE credentials that can authenticate the server, eg. when used with EDHOC.
+* `cred`: This is a new parameter defined in this document, and describes COSE credentials that can authenticate the server, e.g. when used with EDHOC.
 
   The `cred` parameter's value is a CBOR sequence of COSE Header maps as defined in {{!RFC9052}}.
   If the parameter is present, it indicates that
@@ -857,7 +857,7 @@ and independently of whether they apply to the `_coap` service or another servic
   and 9 (scope, when discovering a particular service rather than just getting transport information for a host).
   That data is using the same shape the server might use when responding to an attempt at an unencrypted connection,
   and can not only speed up the discovery of the right AS,
-  but can also protect that information (eg. when DNSSEC is used),
+  but can also protect that information (e.g. when DNSSEC is used),
   and avoids the need for an unprotected first request.
 
   It is up to the application to define requirements for the use of such data.
@@ -1058,7 +1058,7 @@ the zone .alt {{?rfc9476}} may be used instead.
 For example,
 CoAP over GATT {{?I-D.amsuess-core-coap-over-gatt}}
 removes the colons from Bluetooth Low Energy MAC addresses like 00:11:22:33:44:55
-and combines them into authority compoennts such as `001122334455.ble.arpa`.
+and combines them into authority components such as `001122334455.ble.arpa`.
 Slipmux {{?I-D.bormann-t2trg-slipmux}}
 might use the locally significant device name `/dev/ttyUSB0`
 as `coap://ttyUSB0.dev.alt/`.
@@ -1495,7 +1495,7 @@ Both the client and the server may alert their administrators of a possible traf
 
 \[ While using an EDHOC EAD is suitable for connection setup,
    such a mechanism may also be useful at a later time,
-   eg. to re-check a server's address after a name change;
+   e.g. to re-check a server's address after a name change;
    establishing an equivalent CoAP option is being considered,
    also oin light of the discussion around https://github.com/core-wg/corrclar/pull/40 and https://github.com/core-wg/groupcomm-proxy/issues/3.
    \]
@@ -1550,7 +1550,7 @@ and the common suffix `service.arpa`.
 
 These pairs represent the very items also produced by {{processing-scheme-authority}}.
 In the current version, they can *not* express multiple entries with different structures.
-They can express different entries, but any repeated items (eg. different ALPNs and IP addresses)
+They can express different entries, but any repeated items (e.g. different ALPNs and IP addresses)
 only produce their product
 (i.e., no "TCP on this or that address, TLS on another").
 
