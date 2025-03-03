@@ -1201,6 +1201,19 @@ similar to the "HTTPS" RR would be preferable.
 
 [^remove-changelog]: This section is to be removed before publication.
 
+Since draft-ietf-core-transport-indication-07:
+
+* Update sections 1 and 2:
+    - Work more explicitly with 7252's resolution services.
+    - List (coarsely) the information received from resolution services.
+    - Homogenize treatment of proxy URIs and other resolution service outcomes.
+    - Point out parallels to /etc/hosts.
+* Phrase possible differences w/rt hop-to-hop vs. end-to-end encryption more carefully.
+* SVCB: Rename edhoc-cred to cred.
+* Rework literals following discussion around onion-coap.
+* Point out the fates of appendices.
+* Editorial fixes.
+
 Since draft-ietf-core-transport-indication-06:
 
 * Split introduction into terminology (with new definitions), goals and concepts.
