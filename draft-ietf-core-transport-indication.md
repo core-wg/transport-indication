@@ -1532,23 +1532,23 @@ that name is used only for the purpose of discussion.
 ## Structure of `service.arpa`
 
 Names under service.arpa are structured into
-an optional custom prefix,
 an ordered list of key-value component pairs,
 and the common suffix `service.arpa`.
 
-The custom prefix can contain user defined components.
-The intended use is labelling, and to differentiate services provided by a single host.
-Any data is allowed within the structure of a URI (ABNF reg-name) and DNS name rules (63 bytes per segment).
-(While not ever carried by DNS,
-this upholds the constraints of DNS for names.
-That decision may be revised later,
-but is upheld while demonstrating that the desired properties can be obtained).
+These pairs represent the very items also produced by {{processing-scheme-authority}}.
+In the current version, they can *not* express multiple entries with different structures.
+They can express different entries, but any repeated items (eg. different ALPNs and IP addresses)
+only produce their product
+(i.e., no "TCP on this or that address, TLS on another").
 
-Component pairs consist of a registered component type
-(no precise registry is proposed at this early point)
-followed by encoded data.
-The component type "--" is special in that it concatenates the values to its left and to its right,
-creating component values that may exceed 63 bytes in length.
+Keeping with the style of DNS (least significant component first),
+pairs are expressed with their data a first label, followed by the key in a separate label.
+Data items ending with a "-" character are concatenated with their previous label to avoid overflowing the 63-octet limit of DNS
+(even though those do not wind up in DNS serialization).
+
+For example, "world.hello-.label.8080.port" contains,
+in that order,
+information about port 8080 and the label "helloworld".
 
 Initial component types are:
 
@@ -1577,37 +1577,7 @@ Initial component types are:
 
 * "coaptransport": SvcbParam in its text encoding.
 
-* "s": Other Service Parameters that do not have an explicit component type.
-  SvcbParams in base32 encoding of their wire format.
-
-  TBD: There is likely a transformation of the parameters' presentation format that is compatible with the requirements of the authority component,
-  but this will require some more work on the syntax.
-
-  If present,
-  a client SHOULD use these hints to establish a connection.
-
-  TBD: Encoding only the SvcParams and not priorities and targets appears to be the right thing to do for the immediate record,
-  but does not enable load balancing and failover.
-  Further work is required to explore how those can be expressed,
-  and how data pertaining to the target can be expressed,
-  possibly in a nested structure.
-
-## Syntax of `service.arpa`
-
-~~~abnf
-name = [ custom ".-." ] *(component) "service.arpa"
-
-custom = reg-name
-component = 1*63nodot "." comptype "."
-comptype = nodotnodash /  2*63nodot
-
-; unreserved/subdelims without dot
-nodot  = nodotnodash / "-"
-; unreserved/subdelims without dot or dash
-nodotnodash = ALPHA / DIGIT / "_" / "~" / sub-delims
-
-; reg-name and sub-delims as in RFC3986
-~~~
+* "alpn": The ALPN(s) in hexadecimal encoding, separated by dashes.
 
 Due to {{?RFC3986}}'s rules,
 all components are case insensitive and canonically lowercase.
@@ -1632,16 +1602,14 @@ future versions of this document may revise this).
 TBD: For SvcParams, the examples are inconsistent with the base32 recommendation;
 they serve to explore the possible alternatives.
 
-* http://s.alpn_h2c.6.2001-db8--1.service.arpa/ -- The server is reachable on 2001:db8::1 using HTTP/2
+* http://683263.alpn.2001-db8--1.6.service.arpa/ -- The server is reachable on 2001:db8::1 using HTTP/2 (h2c is 683263 in hex)
 
-* https://mail.-.tlsa.amaqckrkfivcukrkfivcukrkfivcukrkfivcukrkfivcukrkfivcukrk.service.arpa/ -- No address information is provided, the client needs to resort to other discovery mechanisms.
+* https://amaqckrkfivcukrkfivcukrkfivcukrkfivcukrkfivcukrkfivcukrk.tlsa.service.arpa/ -- No address information is provided, the client needs to resort to other discovery mechanisms.
   Any server is eligible to serve the resource if it can present a (possibly self-signed) certificate whose public key SHA256 matches the encoded value.
-  The "mail.-." part is provided to the server as part of the Host header,
-  and can be used for name based virtual hosting.
 
-* coap://coaptransport.tcp.cred.ueekcandaeasabbblaqlxq2jmbjg5jgtf2kazljkenaurxocc6i2ckx3zowjgyr.--.ai3ouj4a.6.2001-db8--1.service.arpa/ -- The server is reachable using CoAP over TCP with EDHOC security at 2001:db8::1, and the service is identifiable by the use of a KCCS credential describing an X25519 public key.
+* coap://tcp.coaptransport.2001-db8--1.6.rai3ouj4a.ueekcandaeasabbblaqlxq2jmbjg5jgtf2kazljkenaurxocc6i2ckx3zowjgy-.cred.service.arpa/ -- The server is reachable using CoAP over TCP with any security mechanism at 2001:db8::1, and the service is identifiable by the use of a KCCS credential describing an X25519 public key (which is currently only usable with EDHOC).
 
-* coap://cred.ueekcandaeasabbblaqlxq2jmbjg5jgtf2kazljkenaurxocc6i2ckx3zowjgyr.--.ai3ouj4a.service.arpa/ -- The same server without any discoverability hints; it is up to the client to discover a (possibly short-lived) connection opportunities to the server identified by that key.
+* coap://rai3ouj4a.ueekcandaeasabbblaqlxq2jmbjg5jgtf2kazljkenaurxocc6i2ckx3zowjgyr-.cred.service.arpa/ -- The same server without any discoverability hints; it is up to the client to discover a (possibly short-lived) connection opportunities to the server identified by that key.
 
 # Acknowledgements
 
