@@ -153,7 +153,7 @@ any suitable mechanism to keep client updated,
 such as placing a suitable Max-Age value on their resources
 or having them observable.
 
-## Core principle: Transport endpoints are proxies
+## Core principle: Transport endpoints are proxies {#endpoints-are-proxies}
 
 CoAP does not need any special provisions to send the same request for a single resource through different transports:
 A request to any globally addressable resource
@@ -175,6 +175,18 @@ the applicability of this document is limited.
 Examples of such resources are those whose URIs including loopback addresses or partially-qualified domain names.
 
 [^applicabilitylimited]: Possibly not limited a lot, but we have not looked into those cases in detail yet. --CA
+
+## Registered names and transport setup
+
+The CoAP specification is intentionally open about the resolution services
+by which indirect identifiers in the host portion of a CoAP URI are resolved,
+giving DNS as one example without going into details ({{Section 6.1 of RFC7252}}).
+
+This document does not change any of that,
+but it does point out in {{findendpoint}} the breadth of information that such a service can provide
+(e.g. providing multiple addresses, or metadata on services used on them),
+and gives a concrete example of the information that modern DNS idioms deliver
+(which it enables by performing a registration in {{iana-underscored}}).
 
 ## Concepts
 
@@ -201,56 +213,62 @@ It is, colloquially, also used to identify the combination
 of a CoAP transport and the transport specific details.
 
 For precision, this document uses the term
-"the transport address indicated by (a URI)" to refer to the transport and its details (in the example, CoAP over UDP with an IPv6 address and the default port),
+"the transport address indicated by (a URI)" to refer to the transport and its details,
 but otherwise no big deal is made of it.
 
-The transport indicated by a URI is not only influenced by the URI scheme,
-but also by the authority component.
-The transports and resolution mechanisms currently specified
-make little use of this possibility,
-mainly because the most prominent resolution mechanism (SVCB records) has not been available when {{?RFC8323}} was published
-and because it can not be expressed in IP literals.
-The provisions of this document
-enable this opportunistically for registered names
-({{svcb-discovery}})
-and for literals using the mechanism in {{newlit}}.
-
-When the resolution mechanism used for a registered name authority component yields multiple addresses,
-all of those are possible ways to interact with the resource.
-The resolution mechanism or other underlying transport can give guidance on how to find the best usable one.
-With the currently specified transports and resolution mechanisms,
-the most prominent example of making use of that information
-is applying the Happy Eyeballs mechanism {{?RFC8305}} to establish a TCP connection
-when a name resolves to both IPv4 and IPv6 addresses,
+Note that as such a URI may contain a registered name:
+as with any CoAP URI, resolution services apply.
+Therefore, it may indicate multiple transport endpoints.
 
 \[ TBD: Do we want to extend this to HTTP proxies? Probably just not, and if so, only to those that can just take coap://... for a URI. \]
 
-# Finding suitable endpoints for a URI
+# Finding suitable endpoints for a URI {#findendpoint}
 
-When a CoAP request is created,
+When a CoAP request is created by a client,
 a typical starting point is the URI of the request's target resource.
 To send the request,
 a suitable endpoint needs to be discovered.
 This section lists the ways one or more such endpoints can be found.
 
 In some situations,
-a client decides to use a forward proxy to access the resource.
-In that case, it relays all the URI components to the proxy,
-which then decides on an endpoint to which to forward the request
-using the tools described in this section.
-{{actualproxies}} describes this in more detail.
+a client decides to use a forward proxy to access the resource:
+either because it is explicitly configured to do so ({{actualproxies}}),
+or because it has discovered a preferred proxy ({{hasproxy}}).
+In that case, it
+finds the endpoint of the configured proxy (using {{processing-scheme-authority}}}, if not given explicitly).
+The proxy then decides on an endpoint to which to forward the request for its own,
+(again using the tools described in this section).
+Otherwise, it uses the information of scheme and authority,
+often through a resolution service ({{processing-scheme-authority}}).
 
-The endpoint (and thus transport)
-used to access a resource does not alter the resource's URI.
-If the URI scheme associated with the selected transport differs from the request URI's scheme,
-a different host name is encountered as part of the resolution process
-(e.g. due to a DNS CNAME or an explicit SVCB target name)
-or a different port is used (as possible through SVCB),
-the Proxy-Scheme, Uri-Host and Uri-Port options are set as needed
+No matter how the endpoint (and thus transport) was discovered and whether a proxy is involved,
+it does not alter the URI of the resource being requested.
+The Proxy-Scheme, Uri-Host and Uri-Port options are set as needed
 to ensure that the request keeps targetting the requested resource.
+This happens, respectively,
+if the URI scheme associated with the selected transport differs from the request URI's scheme
+(or a proxy is used),
+when the host name is not the default one for the transport
+(e.g. if it is not an IP literal in the UDP or TCP cases, or a proxy is used;
+DNS CNAME entries or SVCB target do not alter the URI's host name at all)
+or a different port is used (as possible through SVCB),
+(Outside of proxy cases,
+{{Section 6.4 of RFC7252}} only talks of setting the Uri-Host to preserve the URI, and not of setting Proxy-Scheme or Uri-Port.
+That is because at the time of writing, no mechanisms were available to select a different transport or port).
+
+Note that there is no meaningful difference in a client's behavior between
+when it is configured with a proxy,
+has discovered a proxy through links
+or has discovered a completely different transport:
+this is the essence of "transport endpoints are proxis" {{endpoints-are-proxies}}.
+
+[^moveme]
+
+[^moveme]: The following two paragraphs may need a new home eventually to keep this section to the point. --CA
+
 For servers that follow the common pattern of exposing the same resources on all transports (and thus having multiple aliased URIs for the same resource)
 and that do not act as proxies for other systems,
-the presence of the Proxy-Scheme option has little practical consequence:
+the presence of the Proxy-Scheme option introduced by using alternative transports has little practical consequence:
 such servers become same-host proxies,
 and can ignore the Proxy-Scheme option as long as they recognize the Uri-Host value
 (which they already have been required to process).
@@ -266,17 +284,26 @@ Clients that access the known resource by establishing a TCP connection
 need to send the options Proxy-Scheme value "coap", the Uri-Host value "h.example.net"
 and the Uri-Path values "sensors" and "temp".
 
-## Processing scheme and authority
+## Processing scheme and authority {#processing-scheme-authority}
 
 To discover endpoints for a given URI,
 the scheme and the authority component of the URI
-are typical starting points.
+are typical starting points for resolution services.
+
+The outcome of any resolution service is a list.
+It may be partially sorted, and may arrive piece by piece.
+
+Conceptually, each entry contains:
+
+* Which CoAP transport is used (e.g. CoAP-over-TCP).
+* The transport's address details (e.g. an IP address and port number).
+* Any additional metadata that facilitates communication (e.g. public keys for {{?I-D.ietf-tls-esni}}).
 
 ### Transport-unaware resolution
 
 The IP based transports specified so far (CoAP over UDP, DTLS, TCP, TLS and WebSockets)
 all indicate the transport in their scheme,
-and have a default port.
+and either use their default port or indicate the port explicitly.
 The only remaining details of multiplexing information required are the IP version(s) and IP address(es) of the server.
 
 If the host component of the URI is a literal,
@@ -286,10 +313,10 @@ If the host component of the URI is a registered name,
 a name resolution service is used for a simple name lookup:
 When DNS is used as a resolution service,
 AAAA (or A) records of the name are looked up.
+The /etc/hosts file and nsswitch "host" database can provide that same information.
 
-Beyond the IP address,
-the resolution service may provide some additional information,
-such as the zone identifier (implied in DNS by using the zone the DNS response was obtained through)
+Additional metadata provided by this resolution service
+are the zone identifier (implied in DNS by using the zone the DNS response was obtained through)
 or TLSA records (which can guide the (D)TLS certificate validation process but are out of scope for this document).
 
 Simple resolution services do not indicate which transports are available on the address.
