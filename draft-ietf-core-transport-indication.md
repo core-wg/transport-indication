@@ -924,7 +924,7 @@ it would have required that the server present some credential that could be ver
 for example an x5chain containing a Let's Encrypt certificate.
 
 
-## Producing request for a discovered service {#svcb2uri}
+## Producing requests for a discovered service {#svcb2uri}
 
 If a service's discovery process does not produce a URI but an address, host name and/or Service Binding Parameters,
 those can be converted to a CoAP URI,
