@@ -735,7 +735,7 @@ can provide details already that would otherwise only be discovered later throug
 For when those details are provided in the shape of Service Binding Parameters,
 this section describes their interpretation in the context of CoAP transport indication.
 
-\[ The following paragraph is outdated, but its replacement will depend on the outcome of IETF121 discussions. \]
+\[ The following paragraph is outdated, but its replacement will depend on the outcome of IETF122 discussions. \]
 
 The subsections in this section are arranged to describe a consistent sequential full picture.
 The capabilities of this big picture are not exercised by any application known at the time of draft publication.
@@ -781,15 +781,12 @@ or when the application makes use of functionality afforded by {{?RFC9460}} such
 (Had the SVCB specification predated the first new CoAP transports,
 that mechanism might have been used in the first place instead of additional schemes).
 
-\[ The following paragraph may need to be revisited depending on the outcome of IETF121 discussions. \]
+\[ The following paragraph may need to be revisited depending on the outcome of IETF122 discussions. \]
 
 The effects on a client of seeing SVCB parameters are similar
 to those of seeing a "has-proxy" link from the origin to the URI built using {#svcblit}.
-They differ in that SVCB parameters describe the server itself:
-Credentials expressed apply end to end
-(as opposed to credentials that describe the proxy in a "has-proxy" link),
-and the client could conclude that the implied proxy is a same-host proxy
-(if that had any impact on the client, which it does not).
+The precise implications of any DNSSec-backed applicable credentials expressed in SVCB parameters
+are subject to ongoing discussion (especially with regard to whether they apply to the proxy or the origin server).
 
 ## Service Parameters {#svcparams}
 
