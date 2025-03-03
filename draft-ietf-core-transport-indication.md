@@ -815,11 +815,11 @@ and independently of whether they apply to the `_coap` service or another servic
 
   Its value is empty.
 
-* `edhoc-cred`: This is a new parameter defined in this document, and describes that EDHOC can be used with the server, and which credentials can authenticate the server.
+* `cred`: This is a new parameter defined in this document, and describes COSE credentials that can authenticate the server, eg. when used with EDHOC.
 
-  The `edhoc-cred` parameter's value is a CBOR sequence of COSE Header maps as defined in {{!RFC9052}}.
-  If the parameter is present, it indicates that EDHOC {{!RFC9528}} can be used on the transport,
-  and that the server can be authenticated by any credential expressed in the sequence.
+  The `cred` parameter's value is a CBOR sequence of COSE Header maps as defined in {{!RFC9052}}.
+  If the parameter is present, it indicates that
+  the server can be authenticated by any credential expressed in the sequence.
   This is similar to the TLSA records specified in {{?RFC6698}}.
 
   A COSE Header map can express many properties, not all of which are sufficient to authenticate a peer on any given security mechanism.
@@ -831,12 +831,12 @@ and independently of whether they apply to the `_coap` service or another servic
   and that public key does not need to be sent during the EDHOC exchange.
   Alternatively, a header map with an `x5t` identifies the end entity certificate the server presents by a thumbprint (hash).
 
-  It is up to the application to define requirements for the provenance of the `edhoc-cred` parameter,
+  It is up to the application to define requirements for the provenance of the `cred` parameter,
   whether it needs to be provided through secure mechanism,
   or whether the server is strictly required to present that credential.
 
   This is unlike TLSA, which needs to be transported through DNSSEC,
-  because a `edhoc-cred` parameter may be sent using other means than DNS
+  because a `cred` parameter may be sent using other means than DNS
   (for example in DHCPv6 responses or Router Advertisements).
 
 * `edhoc-info`: This is a new parameter defined in this document, describing how EDHOC can be used on the server.
@@ -910,7 +910,7 @@ It therefore updates its DNS record like this:
 ~~~
 _coap.host.example.net 600 IN SVCB 1 publicudp.host.example.net       \
                        port=5678                                      \
-                       edhoc-cred={14:{... /KCCS with its public key/}}
+                       cred={14:{... /KCCS with its public key/}}
 ~~~
 
 When a client starts using `coap://host.example.net/interactive`,
@@ -918,7 +918,7 @@ it looks up that record and verifies it using DNSSEC.
 It then proceeds to send EDHOC requests over CoAP to 1.2.3.4 port 5678,
 setting the Uri-Host option to "host.example.net".
 
-The client could also have initiated an EDHOC session if no edhoc-cred parameter had been present,
+The client could also have initiated an EDHOC session if no cred parameter had been present,
 but then,
 it would have required that the server present some credential that could be verified through the Web PKI,
 for example an x5chain containing a Let's Encrypt certificate.
@@ -1173,7 +1173,7 @@ registry ({{?RFC9460}}). The definition of this parameter can be found in {{upco
 | Number  | Name           | Meaning                            |
 | ------- | -------------- | ---------------------------------- |
 | 10 (suggested)      | coaptransport        | CoAP transport protocol |
-| to be assigned      | edhoc-cred           | EDHOC credentials identifying the server |
+| to be assigned      | cred                 | COSE credentials identifying the server |
 | to be assigned      | edhoc-info           | EDHOC profile information |
 | to be assigned      | oauth-hints          | Describes how to obtain a token at an ACE Authorization Server |
 
@@ -1557,7 +1557,7 @@ Initial component types are:
   a client MUST establish a secure connection,
   and MUST fail the connection if the TLSA record's requirements are not met.
 
-* "edhoc-cred", "edhoc-info", "oauth-info": SvcbParams in base32 encoding of their wire format.
+* "cred", "edhoc-info", "oauth-info": SvcbParams in base32 encoding of their wire format.
 
 * "coaptransport": SvcbParam in its text encoding.
 
@@ -1623,9 +1623,9 @@ they serve to explore the possible alternatives.
   The "mail.-." part is provided to the server as part of the Host header,
   and can be used for name based virtual hosting.
 
-* coap://coaptransport.tcp.edhoc-cred.ueekcandaeasabbblaqlxq2jmbjg5jgtf2kazljkenaurxocc6i2ckx3zowjgyr.--.ai3ouj4a.6.2001-db8--1.service.arpa/ -- The server is reachable using CoAP over TCP with EDHOC security at 2001:db8::1, and the service is identifiable by the use of a KCCS credential describing an X25519 public key.
+* coap://coaptransport.tcp.cred.ueekcandaeasabbblaqlxq2jmbjg5jgtf2kazljkenaurxocc6i2ckx3zowjgyr.--.ai3ouj4a.6.2001-db8--1.service.arpa/ -- The server is reachable using CoAP over TCP with EDHOC security at 2001:db8::1, and the service is identifiable by the use of a KCCS credential describing an X25519 public key.
 
-* coap://edhoc-cred.ueekcandaeasabbblaqlxq2jmbjg5jgtf2kazljkenaurxocc6i2ckx3zowjgyr.--.ai3ouj4a.service.arpa/ -- The same server without any discoverability hints; it is up to the client to discover a (possibly short-lived) connection opportunities to the server identified by that key.
+* coap://cred.ueekcandaeasabbblaqlxq2jmbjg5jgtf2kazljkenaurxocc6i2ckx3zowjgyr.--.ai3ouj4a.service.arpa/ -- The same server without any discoverability hints; it is up to the client to discover a (possibly short-lived) connection opportunities to the server identified by that key.
 
 # Acknowledgements
 
