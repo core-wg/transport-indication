@@ -1197,6 +1197,10 @@ similar to the "HTTPS" RR would be preferable.
 
 # Change log
 
+[^remove-changelog]
+
+[^remove-changelog]: This section is to be removed before publication.
+
 Since draft-ietf-core-transport-indication-06:
 
 * Split introduction into terminology (with new definitions), goals and concepts.
@@ -1320,6 +1324,10 @@ Since -00:
 
 # Related work and applicability to related fields
 
+[^remove-relatedwork]
+
+[^remove-relatedwork]: This section is to be removed before submission to the IESG, with at least the MP-TCP section worked into corr-clar.
+
 ## On HTTP
 
 The mechanisms introduced here are similar to the Alt-Svc header of {{?RFC7838}}
@@ -1412,6 +1420,10 @@ maybe something like "has the default value of any of the associated addresses, 
 
 # Open Questions / further ideas
 
+[^remove-openquestions]
+
+[^remove-openquestions]: This section is to be either converted into concrete guidance, or removed before submission to the IESG.
+
 * Advertising under a stable name:
 
   If a host wants to advertise its host name rather than its IP address during multicast, how does it best do that?
@@ -1443,6 +1455,10 @@ maybe something like "has the default value of any of the associated addresses, 
   If CoRAL is used during discovery, a base directive or reverse relation to has-unique-proxy would make this easier.
 
 # EDHOC EAD for verifying legitimate proxies {#ead}
+
+[^remove-edhocead]
+
+[^remove-edhocead]: This section is to be moved into another document, possibly `groupcomm-proxy`.
 
 This document sketches an extension to {{I-D.ietf-lake-edhoc}} that informs the server of the public address the client is using,
 allowing it to detect undesired reverse proxies.
