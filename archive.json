@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-03-02T01:25:51.327169+00:00",
+  "timestamp": "2025-03-04T01:22:20.953920+00:00",
   "repo": "core-wg/transport-indication",
   "labels": [
     {
@@ -232,6 +232,22 @@
           "updatedAt": "2025-02-20T10:03:24Z"
         }
       ]
+    },
+    {
+      "number": 15,
+      "id": "I_kwDOHa3Jsc6sRhc0",
+      "title": "Process 2024-12 interim notes",
+      "url": "https://github.com/core-wg/transport-indication/issues/15",
+      "state": "OPEN",
+      "author": "chrysn",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "https://datatracker.ietf.org/doc/minutes-interim-2024-core-16-202412181500/\n\n> Next step: Describe better \"set of things you need to have before starting a request\"?\nCB: I am thinking about this as a link, and the URI is just a part of the link.\nCA: We can close that gap by putting that information into the URI again, only after we have found the exact way to do it and for what pieces of information.",
+      "createdAt": "2025-03-03T06:14:43Z",
+      "updatedAt": "2025-03-03T06:14:43Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
@@ -395,7 +411,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2024-10-21T15:34:29Z",
-      "updatedAt": "2024-10-21T22:09:02Z",
+      "updatedAt": "2025-03-03T12:09:13Z",
       "baseRepository": "core-wg/transport-indication",
       "baseRefName": "master",
       "baseRefOid": "30f87d7e01b24ea5ea15288176400650eb675909",
