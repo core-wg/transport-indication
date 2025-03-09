@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-03-06T01:22:44.616482+00:00",
+  "timestamp": "2025-03-09T01:12:06.247690+00:00",
   "repo": "core-wg/transport-indication",
   "labels": [
     {
@@ -221,7 +221,7 @@
       "labels": [],
       "body": "```\ncoap://2001-db8--1.6.uli2xegkc.b2qqriibumaqeiabefmcaaaaaaafkdk5lvnyge7fnnialbdcb2hxkkiaqmj6vsk-.cnf.service.arpa/ \n\narpa\nservice\ncnf\nb2qqriibumaqeiabefmcaaaaaaafkdk5lvnyge7fnnialbdcb2hxkkiaqmj6vsk-\nuli2xegkc\n6\n2001-db8--1 \n```\n\nCRI:\n```cbor-edn\n[-1, 1234/service.arpa/({14: {8: {...}}}), [\"path\", \"path\"]] \n```",
       "createdAt": "2025-02-20T09:50:31Z",
-      "updatedAt": "2025-02-20T10:03:26Z",
+      "updatedAt": "2025-03-08T11:37:57Z",
       "closedAt": null,
       "comments": [
         {
@@ -230,6 +230,13 @@
           "body": "wording hints: .service.arpa gives \"an authority by value rather than by reference\" (with any associated metadata).",
           "createdAt": "2025-02-20T10:03:24Z",
           "updatedAt": "2025-02-20T10:03:24Z"
+        },
+        {
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "body": "-08 now has the updated .service.arpa syntax, but not the wording hints or the CRI tag.",
+          "createdAt": "2025-03-08T11:37:57Z",
+          "updatedAt": "2025-03-08T11:37:57Z"
         }
       ]
     },
@@ -245,7 +252,31 @@
       "labels": [],
       "body": "https://datatracker.ietf.org/doc/minutes-interim-2024-core-16-202412181500/\n\n> Next step: Describe better \"set of things you need to have before starting a request\"?\nCB: I am thinking about this as a link, and the URI is just a part of the link.\nCA: We can close that gap by putting that information into the URI again, only after we have found the exact way to do it and for what pieces of information.",
       "createdAt": "2025-03-03T06:14:43Z",
-      "updatedAt": "2025-03-03T06:14:43Z",
+      "updatedAt": "2025-03-08T11:37:20Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "body": "Mostly done in -08; should we formalize this more?",
+          "createdAt": "2025-03-08T11:37:20Z",
+          "updatedAt": "2025-03-08T11:37:20Z"
+        }
+      ]
+    },
+    {
+      "number": 16,
+      "id": "I_kwDOHa3Jsc6tIs-R",
+      "title": "What applies to all proxies vs. what to endpoints?",
+      "url": "https://github.com/core-wg/transport-indication/issues/16",
+      "state": "OPEN",
+      "author": "chrysn",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "In -08, a concrete point about how SVCB records differ from announced proxies has been removed, but there is remaining unclarity (in parts because it's not quite sure how `cred` would work on DTLS).\n\nAn easier question to consider might help get some scaffolding up:\n\n> Why does a \"has-unique-proxy\" self-link mean one thing for DNS records but another for explicitly indicates proxies?\n\nThe answer is probably somewhere around the \"URIs indicating endpoints\": The \"has-unique-proxy\" says something about the target endpoint (that it forwards all requests to the link source), and SVCB is part of \"finding an endpoint identified by a URI\" while following a proxy link is not. Therefore, a client may send a Uri-Host-less request to any endpoint discovered through SVCB, but not necessarily to a proxy (unless that proxy is also has-unique-proxy linked).",
+      "createdAt": "2025-03-08T11:43:26Z",
+      "updatedAt": "2025-03-08T11:43:26Z",
       "closedAt": null,
       "comments": []
     }
