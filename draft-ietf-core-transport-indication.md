@@ -841,8 +841,7 @@ and independently of whether they apply to the `_coap` service or another servic
 
 * `edhoc-info`: This is a new parameter defined in this document, describing how EDHOC can be used on the server.
 
-  The value of the parameter is a CBOR map following the `EDHOC_Information` structure defined in {{?I-D.ietf-ace-edhoc-oscore-profile}}
-  and extended in {{?I-D.tiloca-lake-app-profiles}}.
+  The value of the parameter is a CBOR array following the `APP_PROF_SEQ` structure defined in {{?I-D.tiloca-lake-app-profiles}}.
 
   It is optional to provide and optional to process, but can help speed up the establishment of a security context.
 
