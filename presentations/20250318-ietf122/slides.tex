@@ -1,0 +1,99 @@
+\input{shared/ietf-slides.tex}
+
+% about the presentation
+\title{CoAP Transport Indication}
+\subtitle{\texttt{ietf-core-transport-indication-08}}
+\author{\textit{Christian~Amsüss}, Martine~Lenders}
+\date{CoRE interim, 2024-12-18}
+\date{CoRE at IETF122 / Bangkok, 2025-03-18}
+
+\begin{document}
+
+\frame{\titlepage}
+
+\begin{frame}{Recap: Mission}\Large
+    \begin{itemize}
+        \item Enable discovery of alternative transports
+
+        \item Build a plan how new transports avoid new \texttt{coap+…}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Changes on enable-discovery}\framesubtitle{Following December interim}\Large
+    \begin{itemize}
+        \item Described more general components to use an endpoint:
+            \begin{enumerate}\Large
+                \item CoAP transport (eg. ``over TCP'')
+                \item Address (eg. IP and port)
+                \item Additional metadata
+            \end{enumerate}
+            \bigskip
+        \item Describe available endpoint sources in those terms:
+            \begin{enumerate}\Large
+                \item Proxies
+                \item Resolution service, in particular DNS with A/AAAA and SVCB
+                \item \color{gray}Explicit configuration\footnote{not described}
+            \end{enumerate}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Changes in plan for new transports}\Large
+    {\color{gray}
+    ``Ensure that all components of endpoint are looked up''
+
+    \bigskip
+
+    For IP transports: Needs SVCB records.
+
+    \bigskip
+
+    Gap: Literals. \texttt{coap://[2001:db8::1]} misses lookup result.\footnote{
+        \texttt{\_coap1.0…1.0.0.2.ip6.arpa IN SVCB alpn="coapquic"} is funny but not helpful.}
+    }
+
+    \vspace{1cm}
+
+    Update to syntax; examples:
+    \texttt{coap://636f617071756963.alpn.2001-db8--1.6.service.arpa/}
+    \texttt{coap://rai3ouj4a.ueekca…zowjgyr-.cred.service.arpa/}
+\end{frame}
+
+\begin{frame}{Question: Fate of parts}\Large
+    \begin{itemize}
+        \item Some SVCB registrations being picked up elsewhere.
+            \bigskip
+
+            \texttt{edhoc-info} might move to \ietfdraft{tiloca-lake-app-profiles}
+
+            \texttt{cred} needed to solve \ietfdraft{draft-lenders-core-dnr}\footnote{a problem statement document}
+
+            \bigskip
+        \item Do we need literals here? Who needs it?
+            \begin{itemize}\Large
+                \item Next IP-based transport.
+                \item Onion CoAP \ietfdraft{amsuess-t2trg-onion-coap}.
+            \end{itemize}
+            \bigskip
+
+        \item Can this complete without registered \texttt{.service.arpa}?
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Other open points}\Large
+    \begin{itemize}
+        \item (Even) More precision needed on properties of SVCB records vs. properties of proxies.\footnote{Proxies can have properties independent of endpoint, might chain; SVCB has priorities.}
+            \bigskip
+        \item SVCB best practice (\texttt{\_coap SVCB} vs. \texttt{COAP} record, ALPN for non-TLS)
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Next steps}\Huge
+    Review.
+
+    \vspace{2cm}
+    
+    \large
+    Yes, we have more work to do; nonetheless, almost flying blind.
+\end{frame}
+
+\end{document}
