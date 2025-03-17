@@ -5,8 +5,8 @@
 CoRE                                                           C. Amsüss
 Internet-Draft                                                          
 Intended status: Standards Track                           M. S. Lenders
-Expires: 4 September 2025                                     TU Dresden
-                                                            3 March 2025
+Expires: 18 September 2025                                    TU Dresden
+                                                           17 March 2025
 
 
                        CoAP Transport Indication
@@ -53,7 +53,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 4 September 2025.
+   This Internet-Draft will expire on 18 September 2025.
 
 Copyright Notice
 
@@ -993,10 +993,8 @@ Payload:
    *  edhoc-info: This is a new parameter defined in this document,
       describing how EDHOC can be used on the server.
 
-      The value of the parameter is a CBOR map following the
-      EDHOC_Information structure defined in
-      [I-D.ietf-ace-edhoc-oscore-profile] and extended in
-      [I-D.tiloca-lake-app-profiles].
+      The value of the parameter is a CBOR array following the
+      APP_PROF_SEQ structure defined in [I-D.tiloca-lake-app-profiles].
 
       It is optional to provide and optional to process, but can help
       speed up the establishment of a security context.
@@ -1372,9 +1370,9 @@ Payload:
    [I-D.ietf-core-href]
               Bormann, C. and H. Birkholz, "Constrained Resource
               Identifiers", Work in Progress, Internet-Draft, draft-
-              ietf-core-href-19, 3 March 2025,
+              ietf-core-href-20, 16 March 2025,
               <https://datatracker.ietf.org/doc/html/draft-ietf-core-
-              href-19>.
+              href-20>.
 
    [RFC6690]  Shelby, Z., "Constrained RESTful Environments (CoRE) Link
               Format", RFC 6690, DOI 10.17487/RFC6690, August 2012,
@@ -1450,16 +1448,6 @@ Payload:
               bormann-t2trg-slipmux-03, 4 November 2019,
               <https://datatracker.ietf.org/doc/html/draft-bormann-
               t2trg-slipmux-03>.
-
-   [I-D.ietf-ace-edhoc-oscore-profile]
-              Selander, G., Mattsson, J. P., Tiloca, M., and R. Höglund,
-              "Ephemeral Diffie-Hellman Over COSE (EDHOC) and Object
-              Security for Constrained Environments (OSCORE) Profile for
-              Authentication and Authorization for Constrained
-              Environments (ACE)", Work in Progress, Internet-Draft,
-              draft-ietf-ace-edhoc-oscore-profile-07, 3 March 2025,
-              <https://datatracker.ietf.org/doc/html/draft-ietf-ace-
-              edhoc-oscore-profile-07>.
 
    [I-D.ietf-cbor-edn-literals]
               Bormann, C., "CBOR Extended Diagnostic Notation (EDN)",
