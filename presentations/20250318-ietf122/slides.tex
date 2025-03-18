@@ -30,14 +30,14 @@
             \bigskip
         \item Describe available endpoint sources in those terms:
             \begin{enumerate}\Large
-                \item Proxies
-                \item Resolution service, in particular DNS with A/AAAA and SVCB
+                \item Explicit links to proxies
+                \item Resolution service, in particular DNS with A/AAAA and SVCB (\rfc{9460})
                 \item \color{gray}Explicit configuration\footnote{not described}
             \end{enumerate}
     \end{itemize}
 \end{frame}
 
-\begin{frame}{Changes in plan for new transports}\Large
+\begin{frame}{Plan for new transports}\Large
     {\color{gray}
     ``Ensure that all components of endpoint are looked up''
 
@@ -68,7 +68,7 @@
             \texttt{cred} needed to solve \ietfdraft{draft-lenders-core-dnr}\footnote{a problem statement document}
 
             \bigskip
-        \item Do we need literals here? Who needs it?
+        \item Do we need literals here? Who needs it now?\footnote{Why hard and slow? Needs explicit information model.}
             \begin{itemize}\Large
                 \item Next IP-based transport.
                 \item Onion CoAP \ietfdraft{amsuess-t2trg-onion-coap}.
@@ -81,7 +81,8 @@
 
 \begin{frame}{Other open points}\Large
     \begin{itemize}
-        \item (Even) More precision needed on properties of SVCB records vs. properties of proxies.\footnote{Proxies can have properties independent of endpoint, might chain; SVCB has priorities.}
+        \item (Even) More precision needed on properties of SVCB records vs. properties of proxies.\footnote{Proxies can have properties independent of endpoint, might chain; SVCB has priorities and different fan-out.}
+            % if need full details: SVCB can have multiple A/AAAA records and/or CNAME, proxy can have full set in chain that'd indicate an onion path
             \bigskip
         \item SVCB best practice (\texttt{\_coap SVCB} vs. \texttt{COAP} record, ALPN for non-TLS)
     \end{itemize}
