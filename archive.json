@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-03-18T01:23:21.971118+00:00",
+  "timestamp": "2025-03-20T01:23:00.900556+00:00",
   "repo": "core-wg/transport-indication",
   "labels": [
     {
@@ -277,6 +277,38 @@
       "body": "In -08, a concrete point about how SVCB records differ from announced proxies has been removed, but there is remaining unclarity (in parts because it's not quite sure how `cred` would work on DTLS).\n\nAn easier question to consider might help get some scaffolding up:\n\n> Why does a \"has-unique-proxy\" self-link mean one thing for DNS records but another for explicitly indicates proxies?\n\nThe answer is probably somewhere around the \"URIs indicating endpoints\": The \"has-unique-proxy\" says something about the target endpoint (that it forwards all requests to the link source), and SVCB is part of \"finding an endpoint identified by a URI\" while following a proxy link is not. Therefore, a client may send a Uri-Host-less request to any endpoint discovered through SVCB, but not necessarily to a proxy (unless that proxy is also has-unique-proxy linked).",
       "createdAt": "2025-03-08T11:43:26Z",
       "updatedAt": "2025-03-08T11:43:26Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 17,
+      "id": "I_kwDOHa3Jsc6ufNqz",
+      "title": "Endpoint discovery: What should be in this document",
+      "url": "https://github.com/core-wg/transport-indication/issues/17",
+      "state": "OPEN",
+      "author": "chrysn",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "From IETF122 on \"do we need to solve all this here\":\n\n> CB: we need to understand the information model, what we expect from literal form or other forms. But no need to define this in the same doc. Would be nice, but no need to.\n> CA: you think we need an information model, not a data model, right? (I.e., prose typing suffices as compared to formal or serializable typing).\n> CB: Yes. Sometimes a data model specification can clarify an information model, but the reg-name based data model is going to be weird so let\u2019s talk about an information model",
+      "createdAt": "2025-03-18T07:12:44Z",
+      "updatedAt": "2025-03-18T07:12:44Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 18,
+      "id": "I_kwDOHa3Jsc6ufZpm",
+      "title": "Endpoint discovery: Highlander mode",
+      "url": "https://github.com/core-wg/transport-indication/issues/18",
+      "state": "OPEN",
+      "author": "chrysn",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "There are consumers of endpoint discovery (eg. the informative response of multicast-notifications) that need a unique endpoint outcome.\n\nThis is probably not something we need to use normative language on, but it can be useful to shape expectations that in some cases there SHOULD REALLY be only one outcome. This is trivial for IP literals, but already not for DNS names, where it'd be the shared responsibility of the party using a name there and the name authority to ensure it only resolves to one endpoint. It'd also mean that there is only one ALPN (possibly disabling any default ALPNs), \n\n\u2026 or does not even that use case there have the requirement to produce a single one (because resolving to multiple endpoints just means that they are all broadcasting)?\n\n\u2026 and while we're at it, is an informative references to happy-eyeballs due? (After all, something like that is typically going to happen, at least on transports to which this applies.)",
+      "createdAt": "2025-03-18T07:33:27Z",
+      "updatedAt": "2025-03-18T07:33:27Z",
       "closedAt": null,
       "comments": []
     }
