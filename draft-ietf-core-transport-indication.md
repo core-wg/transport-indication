@@ -1171,7 +1171,7 @@ registry ({{?RFC9460}}). The definition of this parameter can be found in {{upco
 
 | Number  | Name           | Meaning                            |
 | ------- | -------------- | ---------------------------------- |
-| 10 (suggested)      | coaptransport        | CoAP transport protocol |
+| 11 (suggested)      | coaptransport        | CoAP transport protocol |
 | to be assigned      | cred                 | COSE credentials identifying the server |
 | to be assigned      | edhoc-info           | EDHOC profile information |
 | to be assigned      | oauth-hints          | Describes how to obtain a token at an ACE Authorization Server |
