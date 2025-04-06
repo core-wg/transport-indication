@@ -1,0 +1,520 @@
+{
+  "magic": "E!vIA5L86J2I",
+  "timestamp": "2025-04-06T01:37:34.809882+00:00",
+  "repo": "core-wg/transport-indication",
+  "labels": [
+    {
+      "name": "bug",
+      "description": "Something isn't working",
+      "color": "d73a4a"
+    },
+    {
+      "name": "documentation",
+      "description": "Improvements or additions to documentation",
+      "color": "0075ca"
+    },
+    {
+      "name": "duplicate",
+      "description": "This issue or pull request already exists",
+      "color": "cfd3d7"
+    },
+    {
+      "name": "enhancement",
+      "description": "New feature or request",
+      "color": "a2eeef"
+    },
+    {
+      "name": "good first issue",
+      "description": "Good for newcomers",
+      "color": "7057ff"
+    },
+    {
+      "name": "help wanted",
+      "description": "Extra attention is needed",
+      "color": "008672"
+    },
+    {
+      "name": "invalid",
+      "description": "This doesn't seem right",
+      "color": "e4e669"
+    },
+    {
+      "name": "question",
+      "description": "Further information is requested",
+      "color": "d876e3"
+    },
+    {
+      "name": "wontfix",
+      "description": "This will not be worked on",
+      "color": "ffffff"
+    }
+  ],
+  "issues": [
+    {
+      "number": 1,
+      "id": "I_kwDOHa3Jsc5Kqhmu",
+      "title": "device0815 example lacks introduction",
+      "url": "https://github.com/core-wg/transport-indication/issues/1",
+      "state": "OPEN",
+      "author": "chrysn",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "(From Marco's review)\r\n\r\n> [Section 3]\r\n> \r\n> * Perhaps introduce the device name device0815.example.com before the\r\n> example begins?\r\n> \r\n> * In the last paragraph, at least some of the text starting from \"A\r\n> simplistic client ...\" seems to actually refer to the example shown in\r\n> Figure 3 of Section 4.\r\n\r\n(Originally https://gitlab.com/chrysn/transport-indication/-/issues/1)",
+      "createdAt": "2022-05-30T12:20:42Z",
+      "updatedAt": "2022-05-30T12:20:42Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 2,
+      "id": "I_kwDOHa3Jsc5Kqh2p",
+      "title": "Process notes from -02-24 interim",
+      "url": "https://github.com/core-wg/transport-indication/issues/2",
+      "state": "OPEN",
+      "author": "chrysn",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "much of which is about applying Klaus's review comments.\r\n\r\nLargely addressed in -03; one TBD remains on 'While CoAP can indicate the authority component' from Klaus' mail.\r\n\r\n(Originally https://gitlab.com/chrysn/transport-indication/-/issues/2)",
+      "createdAt": "2022-05-30T12:21:31Z",
+      "updatedAt": "2022-05-30T12:21:31Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 3,
+      "id": "I_kwDOHa3Jsc5KqiBR",
+      "title": "\"hosts\": Work on transitive closure of hosting",
+      "url": "https://github.com/core-wg/transport-indication/issues/3",
+      "state": "CLOSED",
+      "author": "chrysn",
+      "authorAssociation": "MEMBER",
+      "assignees": [
+        "chrysn"
+      ],
+      "labels": [],
+      "body": "It's kind of implied in the current text, but it's nowhere explicit.\r\n\r\n(Originally https://gitlab.com/chrysn/transport-indication/-/issues/3)",
+      "createdAt": "2022-05-30T12:22:05Z",
+      "updatedAt": "2022-07-11T23:06:04Z",
+      "closedAt": "2022-07-11T23:06:04Z",
+      "comments": []
+    },
+    {
+      "number": 4,
+      "id": "I_kwDOHa3Jsc5PB6DE",
+      "title": "link example seems confused",
+      "url": "https://github.com/core-wg/transport-indication/issues/4",
+      "state": "CLOSED",
+      "author": "mcr",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "\r\n````\r\n  For resources discovered via CoAP's discovery interface,\r\n  a hosting statement is typically provided by the defaults implied by {{?RFC6690}}\r\n  where a link like `</sensor/temp>` is implied to have the relation \"hosts\" and the anchor `/`,\r\n  such that a statement \"coap://hostname hosts coap://hostname/sensor/temp\" is implied in the link.\r\n````\r\nI don't understand this statement.  It feels like something is unstated, or maybe there are 6690 stuff I don't get.\r\n",
+      "createdAt": "2022-08-02T13:56:40Z",
+      "updatedAt": "2024-07-08T22:21:39Z",
+      "closedAt": "2024-07-08T22:21:39Z",
+      "comments": [
+        {
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "body": "Link format has default values for both rel and anchor.\r\n\r\nIf a resource registers its working resource `</sensor/temp>`, and in addition a generic statement about proxying (that there is a proxy for `</>`), then all that is needed to make the connection, i.e., that `</sensors/temp>;rel=hosts;anchor=\"/\"`, are already in place due to these defaults, and never need to be written down.",
+          "createdAt": "2022-08-02T14:14:52Z",
+          "updatedAt": "2022-08-02T14:14:52Z"
+        },
+        {
+          "author": "mcr",
+          "authorAssociation": "NONE",
+          "body": "It's the \"coap://hostname hosts coap://hostname/sensor/temp\" that I'm having problems with.",
+          "createdAt": "2022-08-02T14:15:51Z",
+          "updatedAt": "2022-08-02T14:15:51Z"
+        },
+        {
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "body": "It doesn't have any meaning on its own, it's just something 6690 defined. It evokes all kinds of associations, but really it's just a label associating these with each other.",
+          "createdAt": "2022-08-02T15:07:11Z",
+          "updatedAt": "2022-08-02T15:07:11Z"
+        },
+        {
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "body": "With the \"hosts\" terminology removed in https://github.com/core-wg/transport-indication/pull/10, I think this can be closed.",
+          "createdAt": "2024-07-08T22:21:39Z",
+          "updatedAt": "2024-07-08T22:21:39Z"
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "id": "I_kwDOHa3Jsc55KvSe",
+      "title": "Advertise properties of proxies",
+      "url": "https://github.com/core-wg/transport-indication/issues/5",
+      "state": "OPEN",
+      "author": "chrysn",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "As we do advertise proxies here (even though not fully spec'd out yet?), we should also consider their porperties.\r\nOptions around https://github.com/core-wg/href/pull/81/files#r1420635660 (no matter what comes of it):\r\n* State that a thusly advertised proxy also needs to be able to process Proxy-Cri (preferred?)\r\n* Define a way to state support explicitly.",
+      "createdAt": "2023-12-08T15:25:45Z",
+      "updatedAt": "2023-12-08T15:25:45Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 6,
+      "id": "I_kwDOHa3Jsc55K3I7",
+      "title": "Per-resource preferences",
+      "url": "https://github.com/core-wg/transport-indication/issues/6",
+      "state": "OPEN",
+      "author": "chrysn",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "Discussion around location-scheme in https://github.com/core-wg/href/pull/81/files indicated that there might indeed be a need for per-resource preferences for particular transports.\r\n\r\nI'm not convinced this is something that should be ever advertised, but @cabo, you seem to have use cases in mind, so let's discuss this here: Is there a concrete example you think of, if not to fix my lack of imagination then at least to have a concrete example?",
+      "createdAt": "2023-12-08T15:43:31Z",
+      "updatedAt": "2023-12-08T15:48:00Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "body": "Personally, I don't think Location-Scheme (and -Host and -Port) is how it should be done, but if discussions wind up with having Location-* be preferred, this document can add them (and, given the time lines, already in a CRI fashion)",
+          "createdAt": "2023-12-08T15:47:59Z",
+          "updatedAt": "2023-12-08T15:47:59Z"
+        }
+      ]
+    },
+    {
+      "number": 9,
+      "id": "I_kwDOHa3Jsc6I7KJm",
+      "title": "Move in SVCBish address",
+      "url": "https://github.com/core-wg/transport-indication/issues/9",
+      "state": "CLOSED",
+      "author": "chrysn",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "... and when we do, our TLSA equivalent is Cose Header Parameters, which allows kccs for the \"onion style\" addresses and \"kid\" for mutually agreed on random discovery points. (as used by onion CoAP's extended setup with two double circuits)\r\n\r\nMore precisely, the value that is part of the address would be a \"COSE header_map, as defined in [Section 3](https://rfc-editor.org/rfc/rfc9052#section-3) of [[RFC9052](https://datatracker.ietf.org/doc/html/rfc9052)]\", and thus directly compatible with the ID_CRED_x: When an EDHOC initiator contacts `coap://tlsalike.hexhexcose.service.arpa` and places that value in the Uri-Host (or some equivalent binary option), the responder can know which credential it is expected to use; sadly, EDHOC forbids the use of the empty ID_CRED_R that the responder could otherwise use here, so it may make sense to allow the use of the empty kid (which is just as compact as an empty ID_CRED_R map) there.\r\n\r\nCC @marco-tiloca-sics @rikard-sics @miri64",
+      "createdAt": "2024-05-15T08:28:33Z",
+      "updatedAt": "2024-07-08T22:20:28Z",
+      "closedAt": "2024-07-08T22:20:28Z",
+      "comments": [
+        {
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "body": "Closed with https://github.com/core-wg/transport-indication/pull/12\r\n\r\n(the tlsalike became edhoc-cred)",
+          "createdAt": "2024-07-08T22:20:28Z",
+          "updatedAt": "2024-07-08T22:20:28Z"
+        }
+      ]
+    },
+    {
+      "number": 14,
+      "id": "I_kwDOHa3Jsc6qzkHO",
+      "title": "Notes for .service.arpa from Onion OSCORE indication",
+      "url": "https://github.com/core-wg/transport-indication/issues/14",
+      "state": "OPEN",
+      "author": "chrysn",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "```\ncoap://2001-db8--1.6.uli2xegkc.b2qqriibumaqeiabefmcaaaaaaafkdk5lvnyge7fnnialbdcb2hxkkiaqmj6vsk-.cnf.service.arpa/ \n\narpa\nservice\ncnf\nb2qqriibumaqeiabefmcaaaaaaafkdk5lvnyge7fnnialbdcb2hxkkiaqmj6vsk-\nuli2xegkc\n6\n2001-db8--1 \n```\n\nCRI:\n```cbor-edn\n[-1, 1234/service.arpa/({14: {8: {...}}}), [\"path\", \"path\"]] \n```",
+      "createdAt": "2025-02-20T09:50:31Z",
+      "updatedAt": "2025-03-08T11:37:57Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "body": "wording hints: .service.arpa gives \"an authority by value rather than by reference\" (with any associated metadata).",
+          "createdAt": "2025-02-20T10:03:24Z",
+          "updatedAt": "2025-02-20T10:03:24Z"
+        },
+        {
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "body": "-08 now has the updated .service.arpa syntax, but not the wording hints or the CRI tag.",
+          "createdAt": "2025-03-08T11:37:57Z",
+          "updatedAt": "2025-03-08T11:37:57Z"
+        }
+      ]
+    },
+    {
+      "number": 15,
+      "id": "I_kwDOHa3Jsc6sRhc0",
+      "title": "Process 2024-12 interim notes",
+      "url": "https://github.com/core-wg/transport-indication/issues/15",
+      "state": "OPEN",
+      "author": "chrysn",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "https://datatracker.ietf.org/doc/minutes-interim-2024-core-16-202412181500/\n\n> Next step: Describe better \"set of things you need to have before starting a request\"?\nCB: I am thinking about this as a link, and the URI is just a part of the link.\nCA: We can close that gap by putting that information into the URI again, only after we have found the exact way to do it and for what pieces of information.",
+      "createdAt": "2025-03-03T06:14:43Z",
+      "updatedAt": "2025-03-08T11:37:20Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "body": "Mostly done in -08; should we formalize this more?",
+          "createdAt": "2025-03-08T11:37:20Z",
+          "updatedAt": "2025-03-08T11:37:20Z"
+        }
+      ]
+    },
+    {
+      "number": 16,
+      "id": "I_kwDOHa3Jsc6tIs-R",
+      "title": "What applies to all proxies vs. what to endpoints?",
+      "url": "https://github.com/core-wg/transport-indication/issues/16",
+      "state": "OPEN",
+      "author": "chrysn",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "In -08, a concrete point about how SVCB records differ from announced proxies has been removed, but there is remaining unclarity (in parts because it's not quite sure how `cred` would work on DTLS).\n\nAn easier question to consider might help get some scaffolding up:\n\n> Why does a \"has-unique-proxy\" self-link mean one thing for DNS records but another for explicitly indicates proxies?\n\nThe answer is probably somewhere around the \"URIs indicating endpoints\": The \"has-unique-proxy\" says something about the target endpoint (that it forwards all requests to the link source), and SVCB is part of \"finding an endpoint identified by a URI\" while following a proxy link is not. Therefore, a client may send a Uri-Host-less request to any endpoint discovered through SVCB, but not necessarily to a proxy (unless that proxy is also has-unique-proxy linked).",
+      "createdAt": "2025-03-08T11:43:26Z",
+      "updatedAt": "2025-03-08T11:43:26Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 17,
+      "id": "I_kwDOHa3Jsc6ufNqz",
+      "title": "Endpoint discovery: What should be in this document",
+      "url": "https://github.com/core-wg/transport-indication/issues/17",
+      "state": "OPEN",
+      "author": "chrysn",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "From IETF122 on \"do we need to solve all this here\":\n\n> CB: we need to understand the information model, what we expect from literal form or other forms. But no need to define this in the same doc. Would be nice, but no need to.\n> CA: you think we need an information model, not a data model, right? (I.e., prose typing suffices as compared to formal or serializable typing).\n> CB: Yes. Sometimes a data model specification can clarify an information model, but the reg-name based data model is going to be weird so let\u2019s talk about an information model",
+      "createdAt": "2025-03-18T07:12:44Z",
+      "updatedAt": "2025-03-18T07:12:44Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 18,
+      "id": "I_kwDOHa3Jsc6ufZpm",
+      "title": "Endpoint discovery: Highlander mode",
+      "url": "https://github.com/core-wg/transport-indication/issues/18",
+      "state": "OPEN",
+      "author": "chrysn",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "There are consumers of endpoint discovery (eg. the informative response of multicast-notifications) that need a unique endpoint outcome.\n\nThis is probably not something we need to use normative language on, but it can be useful to shape expectations that in some cases there SHOULD REALLY be only one outcome. This is trivial for IP literals, but already not for DNS names, where it'd be the shared responsibility of the party using a name there and the name authority to ensure it only resolves to one endpoint. It'd also mean that there is only one ALPN (possibly disabling any default ALPNs), \n\n\u2026 or does not even that use case there have the requirement to produce a single one (because resolving to multiple endpoints just means that they are all broadcasting)?\n\n\u2026 and while we're at it, is an informative references to happy-eyeballs due? (After all, something like that is typically going to happen, at least on transports to which this applies.)",
+      "createdAt": "2025-03-18T07:33:27Z",
+      "updatedAt": "2025-03-18T07:33:27Z",
+      "closedAt": null,
+      "comments": []
+    }
+  ],
+  "pulls": [
+    {
+      "number": 7,
+      "id": "PR_kwDOHa3Jsc5oo--c",
+      "title": "SVCB appendices",
+      "url": "https://github.com/core-wg/transport-indication/pull/7",
+      "state": "MERGED",
+      "author": "chrysn",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-03-04T21:19:21Z",
+      "updatedAt": "2024-03-15T13:46:47Z",
+      "baseRepository": "core-wg/transport-indication",
+      "baseRefName": "master",
+      "baseRefOid": "c45c069f2847e4eb49fa684ac41508358a5308aa",
+      "headRepository": "core-wg/transport-indication",
+      "headRefName": "svcb-stuff",
+      "headRefOid": "a4a6b376a0c0ec79d362800f811d2b0ece6c4a21",
+      "closedAt": "2024-03-04T23:56:38Z",
+      "mergedAt": "2024-03-04T23:56:38Z",
+      "mergedBy": "chrysn",
+      "mergeCommit": {
+        "oid": "7da98f7f8e6b0b2324b9095be850e08a6dbe5093"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 8,
+      "id": "PR_kwDOHa3Jsc5up9sf",
+      "title": "Introduce `coaptransport` SvcParamKey",
+      "url": "https://github.com/core-wg/transport-indication/pull/8",
+      "state": "MERGED",
+      "author": "miri64",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "IMHO there should be its own dedicated section on this, but this way we have a discussion starter and it integrates somewhat intrusively into the current structure.",
+      "createdAt": "2024-05-06T16:09:19Z",
+      "updatedAt": "2024-07-07T20:17:04Z",
+      "baseRepository": "core-wg/transport-indication",
+      "baseRefName": "master",
+      "baseRefOid": "e444a89cfce0ec11e2793563505c18d10fb5a75a",
+      "headRepository": "miri64/draft-ietf-transport-indication",
+      "headRefName": "coaptransfer-svcb",
+      "headRefOid": "6a3da894c7bcf126d28167a2af5e4fac5804b630",
+      "closedAt": "2024-07-05T12:00:57Z",
+      "mergedAt": "2024-07-05T12:00:57Z",
+      "mergedBy": "chrysn",
+      "mergeCommit": {
+        "oid": "a6d89053165751601eed6fbfcd1c79d9edb63126"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 10,
+      "id": "PR_kwDOHa3Jsc50eNRh",
+      "title": "Same-origin rather than rel=hosts",
+      "url": "https://github.com/core-wg/transport-indication/pull/10",
+      "state": "MERGED",
+      "author": "chrysn",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "I proposed this at IETF119 in an open question, and nobody had opinions.\r\n\r\n@mcr, you had comments about the \"hosts\" part being confusing; you may be happy to see that basically all that stuff can go out if we pick the easier (albeit not as theoretically beautiful) approach, which is also based on a widely established concept.\r\n\r\n(It is not as theoretically beautiful because it looks into structure of URIs which should ideally be opaque).",
+      "createdAt": "2024-07-04T19:01:31Z",
+      "updatedAt": "2024-07-05T09:57:33Z",
+      "baseRepository": "core-wg/transport-indication",
+      "baseRefName": "master",
+      "baseRefOid": "ebf4ee60e417e8fe8a5b87383c1357c8c11270e8",
+      "headRepository": "core-wg/transport-indication",
+      "headRefName": "same-origin-rather-than-rel-hosts",
+      "headRefOid": "c40f35e32c35b28b1b0044224dfcfa3ad29a040f",
+      "closedAt": "2024-07-05T09:57:29Z",
+      "mergedAt": "2024-07-05T09:57:29Z",
+      "mergedBy": "chrysn",
+      "mergeCommit": {
+        "oid": "c40f35e32c35b28b1b0044224dfcfa3ad29a040f"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 11,
+      "id": "PR_kwDOHa3Jsc50h3DV",
+      "title": "Move short description to avoid sending Uri-Host from open questions into text",
+      "url": "https://github.com/core-wg/transport-indication/pull/11",
+      "state": "MERGED",
+      "author": "chrysn",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "The ability of the server to tell the client that it doesn't require a Uri-Host sent that follows from the has-unique-proxy relation has been uncontroversial and appears to be practical.\r\n\r\nThis has been sitting in the appendix way too long.",
+      "createdAt": "2024-07-05T11:36:29Z",
+      "updatedAt": "2024-07-05T11:54:16Z",
+      "baseRepository": "core-wg/transport-indication",
+      "baseRefName": "master",
+      "baseRefOid": "d87307c94ac02df65f2df96918172d731d1a37d3",
+      "headRepository": "core-wg/transport-indication",
+      "headRefName": "no-uri-host-from-open-questions",
+      "headRefOid": "8a972f14979ae8fbac43ffe35e887a715949e30e",
+      "closedAt": "2024-07-05T11:54:08Z",
+      "mergedAt": "2024-07-05T11:54:07Z",
+      "mergedBy": "chrysn",
+      "mergeCommit": {
+        "oid": "42667641382b9912c3c1f7273e5cc14b9ec1ac82"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 12,
+      "id": "PR_kwDOHa3Jsc50mOV3",
+      "title": "SVCB overhaul",
+      "url": "https://github.com/core-wg/transport-indication/pull/12",
+      "state": "MERGED",
+      "author": "chrysn",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "This moves <del>(incomplete: will move)</del> speculative content into just registering in the relevant registries (without, of course, retroactively making CoAP-over-TCP work that way automatically), and will also move content that was dropped in https://github.com/anr-bmbf-pivot/draft-lenders-core-dnr/pull/6 in here.",
+      "createdAt": "2024-07-06T21:48:15Z",
+      "updatedAt": "2024-07-08T22:19:33Z",
+      "baseRepository": "core-wg/transport-indication",
+      "baseRefName": "master",
+      "baseRefOid": "633e159b340978283967915c7f06f385244797eb",
+      "headRepository": "core-wg/transport-indication",
+      "headRefName": "svcb-overhaul",
+      "headRefOid": "1377d2c7ad236a3ff190f28445dd5ad9a9ae4528",
+      "closedAt": "2024-07-08T22:19:26Z",
+      "mergedAt": "2024-07-08T22:19:26Z",
+      "mergedBy": "chrysn",
+      "mergeCommit": {
+        "oid": "fdf82f039b9dff761379108fbf8bba99f27f3c4b"
+      },
+      "comments": [
+        {
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "body": "The motto of the PR, as in the autors' latest video chat, was \"more solid, less h\u00e4tt'-I-war-I\" (which is German roughly for coulda-shoulda-woulda)",
+          "createdAt": "2024-07-06T21:49:43Z",
+          "updatedAt": "2024-07-06T21:49:43Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 13,
+      "id": "PR_kwDOHa3Jsc5_Vx2a",
+      "title": "Overhaul for IETF121",
+      "url": "https://github.com/core-wg/transport-indication/pull/13",
+      "state": "MERGED",
+      "author": "chrysn",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-10-21T15:34:29Z",
+      "updatedAt": "2025-03-03T12:09:13Z",
+      "baseRepository": "core-wg/transport-indication",
+      "baseRefName": "master",
+      "baseRefOid": "30f87d7e01b24ea5ea15288176400650eb675909",
+      "headRepository": "core-wg/transport-indication",
+      "headRefName": "chrysn-overhaul",
+      "headRefOid": "e53e848673a4ae2ac21b0e401973d4e8b38777da",
+      "closedAt": "2024-10-21T22:09:01Z",
+      "mergedAt": "2024-10-21T22:09:01Z",
+      "mergedBy": "chrysn",
+      "mergeCommit": {
+        "oid": "c61b6a1d072340f4d038a486e87ad714d3c3afe8"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 19,
+      "id": "PR_kwDOHa3Jsc6RYcIe",
+      "title": "Remove SvcParamKeys clash with DoC",
+      "url": "https://github.com/core-wg/transport-indication/pull/19",
+      "state": "OPEN",
+      "author": "cabo",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "DoC takes precedence, as we are submitting this to IESG now",
+      "createdAt": "2025-04-04T10:03:33Z",
+      "updatedAt": "2025-04-04T10:03:46Z",
+      "baseRepository": "core-wg/transport-indication",
+      "baseRefName": "master",
+      "baseRefOid": "ed71ef2f057ed87cca3074b152f863cb84616d96",
+      "headRepository": "core-wg/transport-indication",
+      "headRefName": "cabo-patch-1",
+      "headRefOid": "d7991bc12ef74880ea12ccf8f87b317176ff6ea6",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    }
+  ]
+}
