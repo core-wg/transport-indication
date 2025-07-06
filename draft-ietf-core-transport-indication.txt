@@ -5,8 +5,8 @@
 CoRE                                                           C. Amsüss
 Internet-Draft                                                          
 Intended status: Standards Track                           M. S. Lenders
-Expires: 19 September 2025                                    TU Dresden
-                                                           18 March 2025
+Expires: 7 January 2026                                       TU Dresden
+                                                             6 July 2025
 
 
                        CoAP Transport Indication
@@ -53,7 +53,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 19 September 2025.
+   This Internet-Draft will expire on 7 January 2026.
 
 Copyright Notice
 
@@ -1334,7 +1334,7 @@ Payload:
    +================+===============+=================================+
    | Number         | Name          | Meaning                         |
    +================+===============+=================================+
-   | 10 (suggested) | coaptransport | CoAP transport protocol         |
+   | 11 (suggested) | coaptransport | CoAP transport protocol         |
    +----------------+---------------+---------------------------------+
    | to be assigned | cred          | COSE credentials identifying    |
    |                |               | the server                      |
@@ -1370,9 +1370,9 @@ Payload:
    [I-D.ietf-core-href]
               Bormann, C. and H. Birkholz, "Constrained Resource
               Identifiers", Work in Progress, Internet-Draft, draft-
-              ietf-core-href-20, 16 March 2025,
+              ietf-core-href-22, 20 March 2025,
               <https://datatracker.ietf.org/doc/html/draft-ietf-core-
-              href-20>.
+              href-22>.
 
    [RFC6690]  Shelby, Z., "Constrained RESTful Environments (CoRE) Link
               Format", RFC 6690, DOI 10.17487/RFC6690, August 2012,
@@ -1452,24 +1452,24 @@ Payload:
    [I-D.ietf-cbor-edn-literals]
               Bormann, C., "CBOR Extended Diagnostic Notation (EDN)",
               Work in Progress, Internet-Draft, draft-ietf-cbor-edn-
-              literals-16, 8 January 2025,
+              literals-17, 12 May 2025,
               <https://datatracker.ietf.org/doc/html/draft-ietf-cbor-
-              edn-literals-16>.
+              edn-literals-17>.
 
    [I-D.ietf-core-coap-dtls-alpn]
               Lenders, M. S., Amsüss, C., Schmidt, T. C., and M.
               Wählisch, "ALPN ID Specification for CoAP over DTLS", Work
               in Progress, Internet-Draft, draft-ietf-core-coap-dtls-
-              alpn-02, 3 March 2025,
+              alpn-04, 1 April 2025,
               <https://datatracker.ietf.org/doc/html/draft-ietf-core-
-              coap-dtls-alpn-02>.
+              coap-dtls-alpn-04>.
 
    [I-D.ietf-core-dns-over-coap]
               Lenders, M. S., Amsüss, C., Gündoğan, C., Schmidt, T. C.,
               and M. Wählisch, "DNS over CoAP (DoC)", Work in Progress,
-              Internet-Draft, draft-ietf-core-dns-over-coap-13, 3 March
+              Internet-Draft, draft-ietf-core-dns-over-coap-15, 19 June
               2025, <https://datatracker.ietf.org/doc/html/draft-ietf-
-              core-dns-over-coap-13>.
+              core-dns-over-coap-15>.
 
    [I-D.ietf-lake-edhoc]
               Selander, G., Mattsson, J. P., and F. Palombini,
@@ -1489,9 +1489,9 @@ Payload:
    [I-D.ietf-tls-esni]
               Rescorla, E., Oku, K., Sullivan, N., and C. A. Wood, "TLS
               Encrypted Client Hello", Work in Progress, Internet-Draft,
-              draft-ietf-tls-esni-23, 19 February 2025,
+              draft-ietf-tls-esni-25, 14 June 2025,
               <https://datatracker.ietf.org/doc/html/draft-ietf-tls-
-              esni-23>.
+              esni-25>.
 
    [I-D.lenders-core-dnr]
               Lenders, M. S., Amsüss, C., Schmidt, T. C., and M.
