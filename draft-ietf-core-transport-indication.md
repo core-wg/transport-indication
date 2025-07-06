@@ -115,9 +115,12 @@ and advertise other transports in addition.
 ## Terminology
 
 Readers are expected to be familiar with the terms and concepts
-described in CoAP {{RFC7252}}
-and link format {{!RFC6690}}
-(or, equivalently, web links as described in {{RFC8288}}).
+described in CoAP {{RFC7252}}.
+For web link based discovery,
+terminology introduced for link format {{!RFC6690}} is used
+(or, equivalently, web links as described in {{RFC8288}});
+for DNS based discovery,
+{{!RFC9460}} provides the relevant definitions.
 
 The phrase "the transport indicated by (a URI)" is used as described in {{identifying}}.
 
