@@ -96,7 +96,7 @@ and to optimize exchanges using these.
 The Constrained Application Protocol (CoAP) provides multiple transports mechanisms:
 UDP and DTLS since {{?RFC7252}}, and TCP, TLS and WebSockets since {{?RFC8323}}.
 Some additional transports being used in LwM2M {{lwm2m}},
-and even more being explored ({{?I-D.bormann-t2trg-slipmux}}, {{?I-D.amsuess-core-coap-over-gatt}}.
+and even more being explored ({{?I-D.bormann-t2trg-slipmux}}, {{?I-D.amsuess-core-coap-over-gatt}}).
 These are mutually incompatible on the wire,
 but CoAP implementations commonly support several of them,
 and proxies can translate between them.
