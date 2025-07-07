@@ -425,6 +425,19 @@ a sufficient (but maybe needlessly strict) requirement for `has-proxy` statement
 that are part of the same resource that advertises the link currently being followed.
 Section {{proxy-foreign-advertisement}} adds further considerations.
 
+### Exception: Narrowing security requirements
+
+If a concrete application starts with a minimal set of security requirements,
+has no means of discovering security properties of the endpoint
+and can only discovery security properties of a transport,
+it MAY describe how a first step of transport discovery narrows the security requirements.
+
+An example of this is {{Section 3.2 of ?I-D.ietf-core-dns-over-coap}}
+where the target name of the SVCB record is used to set the hostname component of a URI and thus set security requirements.
+
+Before making use of this option,
+alternatives such as using TLSA records should be exhausted.
+
 ## Choice of endpoints
 
 It is up to the client whether to use an advertised endpoint,
