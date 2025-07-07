@@ -312,6 +312,11 @@ From that partial information,
 further resolution may be performed,
 or the information may already suffice to send a request based on other known proxy information.
 
+Resolution services may have more structure in that list,
+may provide multiple choices in a single result
+or may branch out in multiple layers.
+At a conceptual level, those are reduced to an expanded list of individual candidates.
+
 ### Transport-unaware resolution
 
 The IP based transports specified so far (CoAP over UDP, DTLS, TCP, TLS and WebSockets)
