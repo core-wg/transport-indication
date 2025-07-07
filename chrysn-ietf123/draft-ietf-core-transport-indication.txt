@@ -86,6 +86,7 @@ Table of Contents
        2.2.1.  Example
    3.  Operational concerns of discovered transport endpoints
      3.1.  Security context propagation
+       3.1.1.  Exception: Narrowing security requirements
      3.2.  Choice of endpoints
      3.3.  Selection of a canonical origin
        3.3.1.  Unreachable canonical origin addresses
@@ -500,6 +501,21 @@ Table of Contents
    same resource that advertises the link currently being followed.
    Section Section 9.2 adds further considerations.
 
+3.1.1.  Exception: Narrowing security requirements
+
+   If a concrete application starts with a minimal set of security
+   requirements, has no means of discovering security properties of the
+   endpoint and can only discovery security properties of a transport,
+   it MAY describe how a first step of transport discovery narrows the
+   security requirements.
+
+   An example of this is Section 3.2 of [I-D.ietf-core-dns-over-coap]
+   where the target name of the SVCB record is used to set the hostname
+   component of a URI and thus set security requirements.
+
+   Before making use of this option, alternatives such as using TLSA
+   records should be exhausted.
+
 3.2.  Choice of endpoints
 
    It is up to the client whether to use an advertised endpoint, or (if
@@ -875,6 +891,35 @@ Payload:
    Binding Parameters, this section describes their interpretation in
    the context of CoAP transport indication.
 
+   This document is an SVCB mapping document as described in [RFC9460].
+   As a non-normative overview, the mapping summary (following the
+   template of Appendix B of [RFC9460]) is as follows:
+
+        +====================+====================================+
+        +====================+====================================+
+        | *Mapped schemes*   | "coap", "coaps", "coap+tcp",       |
+        |                    | "coaps+tcp", "coap+ws", "coaps+ws" |
+        +--------------------+------------------------------------+
+        | *RR type*          | SVCB (64)                          |
+        +--------------------+------------------------------------+
+        | *Name prefix*      | _coap for the scheme's default     |
+        |                    | port, else _$PORT._coap            |
+        +--------------------+------------------------------------+
+        | *Automatically     | port, no-default-alpn              |
+        | Mandatory Keys*    |                                    |
+        +--------------------+------------------------------------+
+        | *SvcParam          | alpn: according to scheme (or      |
+        | defaults*          | empty)                             |
+        +--------------------+------------------------------------+
+        | *Special           | Multiple mapped schemes; alpn      |
+        | behaviors*         | default influenced by initial URI. |
+        +--------------------+------------------------------------+
+        | *Keys that records | None                               |
+        | must include*      |                                    |
+        +--------------------+------------------------------------+
+
+                                  Table 1
+
    [ The following paragraph is outdated, but its replacement will
    depend on the outcome of IETF122 discussions. ]
 
@@ -950,7 +995,10 @@ Payload:
    be used on top of CoAP (such as _dns):
 
    *  port: The CoAP service using the transport described in this
-      parameter is reachable on this port (described in [RFC9460]).
+      parameter is reachable on this port (described in [RFC9460]).  It
+      is automatically mandatory.
+
+      This document does not limit which ports can be used with CoAP.
 
    *  alpn: The ALPN "coap" has been defined for CoAP-over-TLS
       [RFC8323], and "co" for CoAP-over-DTLS in
@@ -965,10 +1013,28 @@ Payload:
       [I-D.ietf-core-coap-dtls-alpn] for the CoAP transports that had no
       such identifier when they were specified.
 
+      The default value of alpn when processing a URI (as in
+      Section 2.1) is the ALPN corresponding to the used scheme.  The
+      default value when not processing a URI (e.g. when processing
+      service parameters from DNR [RFC9463]) is empty.
+
+   *  no-default-alpn, mandatory, ipv4hint, ipv6hint: Used as described
+      in Section 7 of [RFC9460].
+
    *  is-unique-proxy: This is a new parameter defined in this document,
       and equivalent to the has-unique-proxy in its semantics.
 
       Its value is empty.
+
+   *  Applications may extend the supported parameters.  In particular,
+      [I-D.ietf-core-dns-over-coap] has already introduced the docpath
+      parameter which indicates a path at which DNS-over-CoAP is
+      available at the given address.
+
+   The following parameters are under consideration for inclusion in
+   this list, but it is unsure whether they are suitable.  Those
+   parameters would describe the origin server and not the individual
+   (proxy) transport through which it can be reached.
 
    *  cred: This is a new parameter defined in this document, and
       describes COSE credentials that can authenticate the server, e.g.
@@ -1309,7 +1375,7 @@ Payload:
     |                  | of the target.                  |           |
     +------------------+---------------------------------+-----------+
 
-                     Table 1: New Link Relation types
+                     Table 2: New Link Relation types
 
 10.2.  Resource Types
 
@@ -1343,7 +1409,7 @@ Payload:
       | CoAP (over TCP) | 0x43 0x4f 0x41 0x50 ("COAP") | [RFC8323] |
       +-----------------+------------------------------+-----------+
 
-                                 Table 2
+                                 Table 3
 
 10.4.  Service Parameter Key (SvcParamKey)
 
@@ -1363,7 +1429,7 @@ Payload:
     |                |             | at an ACE Authorization Server  |
     +----------------+-------------+---------------------------------+
 
-                                 Table 3
+                                 Table 4
 
    All entries have in common that their Reference is this this
    document, Section 7.2}, and that their change controller is IETF.
@@ -1388,9 +1454,9 @@ Payload:
    [I-D.ietf-core-href]
               Bormann, C. and H. Birkholz, "Constrained Resource
               Identifiers", Work in Progress, Internet-Draft, draft-
-              ietf-core-href-22, 20 March 2025,
+              ietf-core-href-23, 7 July 2025,
               <https://datatracker.ietf.org/doc/html/draft-ietf-core-
-              href-22>.
+              href-23>.
 
    [RFC6690]  Shelby, Z., "Constrained RESTful Environments (CoRE) Link
               Format", RFC 6690, DOI 10.17487/RFC6690, August 2012,
