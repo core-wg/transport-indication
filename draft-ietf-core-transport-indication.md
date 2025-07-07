@@ -840,6 +840,11 @@ and independently of whether they apply to the `_coap` service or another servic
 
   Its value is empty.
 
+The following parameters are under consideration for inclusion in this list,
+but it is unsure whether they are suitable.
+Those parameters would describe the origin server
+and not the individual (proxy) transport through which it can be reached.
+
 * `cred`: This is a new parameter defined in this document, and describes COSE credentials that can authenticate the server, e.g. when used with EDHOC.
 
   The `cred` parameter's value is a CBOR sequence of COSE Header maps as defined in {{!RFC9052}}.
