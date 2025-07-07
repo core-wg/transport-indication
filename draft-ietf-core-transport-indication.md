@@ -293,14 +293,24 @@ To discover endpoints for a given URI,
 the scheme and the authority component of the URI
 are typical starting points for resolution services.
 
-The outcome of any resolution service is a list.
+The outcome of any resolution service is a list of transport candidates.
 It may be partially sorted, and may arrive piece by piece.
+
+In addition to the list of transport candidates,
+a resolution service may also provide general metadata of the endpoint
+(e.g. necessary or sufficient requirements on the endpoint's credentials,
+such as they are present in TLSA records).
 
 Conceptually, each entry contains:
 
 * Which CoAP transport is used (e.g. CoAP-over-TCP; typically expressed as an ALPN).
 * The transport's address details (e.g. an IP address and port number).
 * Any additional metadata that facilitates communication (e.g. public keys for {{?I-D.ietf-tls-esni}}).
+
+While it is generally preferable for the lookup result to be complete, it might manage only partial information.
+From that partial information,
+further resolution may be performed,
+or the information may already suffice to send a request based on other known proxy information.
 
 ### Transport-unaware resolution
 
@@ -320,7 +330,7 @@ The /etc/hosts file and nsswitch "host" database can provide that same informati
 
 Additional metadata provided by this resolution service
 are the zone identifier (implied in DNS by using the zone the DNS response was obtained through)
-or TLSA records (which can guide the (D)TLS certificate validation process but are out of scope for this document).
+or additional records (such as khe aforementionened TLSA records).
 
 Simple resolution services do not indicate which transports are available on the address.
 Servers reached that way can resort to {{hasproxy}} to indicate alternative transports while exchanging initial data through the original transport,
@@ -329,7 +339,7 @@ or to store information in link format / web-link based information systems (suc
 ### Transport-aware resolution mechanisms
 
 Advanced resolution services
-provide information about which transports are available.
+provide information about which transports are available in addition to those of the previous section.
 
 For the DNS resolution mechanism, SVCB lookups described in {{svcb-discovery}}
 provide that information.
