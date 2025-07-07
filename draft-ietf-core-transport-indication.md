@@ -1256,6 +1256,15 @@ similar to the "HTTPS" RR would be preferable.
 
 [^remove-changelog]: This section is to be removed before publication.
 
+Since draft-ietf-core-transport-indication-08:
+
+* Explicitly become an SVCB mapping document for the CoAP schemes.
+* Remove coaptransport parameter; instead, request ALPNs for remaining protocols.
+* Point out issue about some metadata pertaining to transport choices and some metadata pertaining to the server itself.
+* Acknowledge that there is structure (eg. in SVCB lookups) that is conceptually flattened.
+* Sulkily accept DNS-over-CoAP reaching into target names as an exception in security requirements.
+* Editorial updates.
+
 Since draft-ietf-core-transport-indication-07:
 
 * Update sections 1 and 2:
