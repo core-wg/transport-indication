@@ -254,7 +254,7 @@ if the URI scheme associated with the selected transport differs from the reques
 when the host name is not the default one for the transport
 (e.g. if it is not an IP literal in the UDP or TCP cases, or a proxy is used;
 DNS CNAME entries or SVCB target do not alter the URI's host name at all)
-or a different port is used (as possible through SVCB),
+or a different port is used (as possible through SVCB).
 (Outside proxy cases,
 {{Section 6.4 of RFC7252}} only talks of setting the Uri-Host to preserve the URI, and not of setting Proxy-Scheme or Uri-Port.
 That is because at the time of writing, no mechanisms were available to select a different transport or port).
@@ -263,7 +263,7 @@ Note that there is no meaningful difference in a client's behavior between
 when it is configured with a proxy,
 has discovered a proxy through links
 or has discovered a completely different transport:
-this is the essence of "transport endpoints are proxis" {{endpoints-are-proxies}}.
+this is the essence of "transport endpoints are proxies" {{endpoints-are-proxies}}.
 
 [^moveme]
 
