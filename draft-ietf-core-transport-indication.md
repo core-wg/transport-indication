@@ -165,7 +165,7 @@ by phrasing it as a proxy request.
 
 Whether that endpoint is
 trusted to,
-capable to
+capable of
 and willing to
 relay that request,
 and how to find suitable endpoints
