@@ -298,7 +298,7 @@ It may be partially sorted, and may arrive piece by piece.
 
 Conceptually, each entry contains:
 
-* Which CoAP transport is used (e.g. CoAP-over-TCP).
+* Which CoAP transport is used (e.g. CoAP-over-TCP; typically expressed as an ALPN).
 * The transport's address details (e.g. an IP address and port number).
 * Any additional metadata that facilitates communication (e.g. public keys for {{?I-D.ietf-tls-esni}}).
 
@@ -805,13 +805,7 @@ and independently of whether they apply to the `_coap` service or another servic
   If an ALPN service parameter is found, this indicates that the ALPN(s) and thus the CoAP transport that can be used on this address / port.
   For example, "co" indicates that DTLS (and thus UDP) is used.
 
-* `coaptransport`: This is a new parameter defined in this document, and similar to the ALPN parameter.
-
-  If a `coaptransport` parameter is present, the indicated transport(s) can be used on this address / port.
-
-  The names registered for existing transports are identical to the URI schemes that indicate their use in the absence of Service Binding Parameters.
-
-  \[ It is left for review by SVCB experts whether these are a separate parameter space or we should just take ALPNs for them, like e.g. h2c does. \]
+  ALPN IDs are defined in this document and in {{I-D.ietf-core-coap-dtls-alpn}} for the CoAP transports that had no such identifier when they were specified.
 
 * `is-unique-proxy`: This is a new parameter defined in this document,
   and equivalent to the `has-unique-proxy` in its semantics.
@@ -886,9 +880,9 @@ dev1.example.com       IN AAAA
 The following records are returned:
 
 ~~~
-_coap.dev1.example.com IN SVCB 1 . coaptransport=tcp,udp
+_coap.dev1.example.com IN SVCB 1 . alpn=COAP,CO
 _coap.dev1.example.com IN SVCB 1 . alpn=co,coap port=5684
-_coap.dev1.example.com IN SVCB 1 . coaptransport=udp port=61616
+_coap.dev1.example.com IN SVCB 1 . alpn=CO port=61616
 dev1.example.com       IN AAAA 2001:db8:1::1
 ~~~
 
@@ -1028,8 +1022,8 @@ it is recommended to use the "coap" scheme
 {:ml: source="Martine"}
 
 If the transport's identifiers are IP based and have identifiers typically resolved through DNS,
-authors of new transports are encouraged to specify Service Binding records ({{?RFC9460}}) for CoAP,
-e.g., using an `alpn` or `coaptransport` parameter.
+authors of new transports are encouraged to specify how they are expressed in Service Binding records ({{?RFC9460}}),
+e.g., using an `alpn` parameter (which does not necessarily indicate the use of a TLS based transport),
 and if IP literals are relevant to the transport, to follow up on {{newlit}}.
 
 If the transport's native identifiers are compatible with the structure of the authority component of a URI,
@@ -1038,17 +1032,6 @@ To help the host decide the resolution mechanism,
 it may be helpful to register a subdomain of .arpa as described in {{?rfc3172}}.
 The guidence for users is to never attempt to resolve such a name,
 and for the zone's implementation is to return NXDOMAIN unconditionally.
-
-For the purpose of specifying a transport protocol via Service Binding records, and to encourage
-future authors more, this document specifies the `coaptransport` Service Parameter Key (SvcParamKey)
-with the initial legal values "udp" and "tcp" which indicate either CoAP over UDP and CoAP over
-TCP as the transport. The present of transport security is indicated by the `alpn` SvcParamKey. If
-it the `alpn` SvcParamKey is not provided, but `coaptransport` is, the transport is unencrypted.[^1]{:ml:}
-
-[^1]: Wondering if "udp" or "tcp" should be strings or numeric representations as value. The later
-      would need an extra table or is there something we could reuse, e.g. from
-      {{?I-D.ietf-core-href}}?
-
 
 If the transport's native identifiers are incompatible with that structure
 (e.g. because they contain colons),
@@ -1167,6 +1150,18 @@ Description: Forward proxying services
 
 Reference: \[ this document \]
 
+## TLS Application-Layer Protocol Negotiation (ALPN) Protocol IDs
+
+IANA is requested to add the following entries to the TLS Application-Layer Protocol Negotiation (ALPN) Protocol IDs
+registry ({{?RFC7301}}).
+
+The identification sequences are suggestions to be approvded by the reviewers
+
+| Protocol  | Identification sequence  | Reference |
+| --- | --- | --- |
+| CoAP (over UDP) | 0x43 0x4f ("CO") | {{RFC7252}} |
+| CoAP (over TCP) | 0x43 0x4f 0x41 0x50 ("COAP") | {{RFC8323}} |
+
 ## Service Parameter Key (SvcParamKey)
 
 IANA is NOT YET requested to add the following entries to the SVCB Service Parameters
@@ -1174,7 +1169,6 @@ registry ({{?RFC9460}}). The definition of this parameter can be found in {{upco
 
 | Number  | Name           | Meaning                            |
 | ------- | -------------- | ---------------------------------- |
-| 11 (suggested)      | coaptransport        | CoAP transport protocol |
 | to be assigned      | cred                 | COSE credentials identifying the server |
 | to be assigned      | edhoc-info           | EDHOC profile information |
 | to be assigned      | oauth-hints          | Describes how to obtain a token at an ACE Authorization Server |
@@ -1590,8 +1584,6 @@ Initial component types are:
 
 * "cred", "edhoc-info", "oauth-info": SvcbParams in base32 encoding of their wire format.
 
-* "coaptransport": SvcbParam in its text encoding.
-
 * "alpn": The ALPN(s) in hexadecimal encoding, separated by dashes.
 
 Due to {{?RFC3986}}'s rules,
@@ -1622,7 +1614,7 @@ they serve to explore the possible alternatives.
 * https://amaqckrkfivcukrkfivcukrkfivcukrkfivcukrkfivcukrkfivcukrk.tlsa.service.arpa/ -- No address information is provided, the client needs to resort to other discovery mechanisms.
   Any server is eligible to serve the resource if it can present a (possibly self-signed) certificate whose public key SHA256 matches the encoded value.
 
-* coap://tcp.coaptransport.2001-db8--1.6.rai3ouj4a.ueekcandaeasabbblaqlxq2jmbjg5jgtf2kazljkenaurxocc6i2ckx3zowjgy-.cred.service.arpa/ -- The server is reachable using CoAP over TCP with any security mechanism at 2001:db8::1, and the service is identifiable by the use of a KCCS credential describing an X25519 public key (which is currently only usable with EDHOC).
+* coap://434f4150.alpn.2001-db8--1.6.rai3ouj4a.ueekcandaeasabbblaqlxq2jmbjg5jgtf2kazljkenaurxocc6i2ckx3zowjgy-.cred.service.arpa/ -- The server is reachable using CoAP over TCP with any security mechanism at 2001:db8::1, and the service is identifiable by the use of a KCCS credential describing an X25519 public key (which is currently only usable with EDHOC).
 
 * coap://rai3ouj4a.ueekcandaeasabbblaqlxq2jmbjg5jgtf2kazljkenaurxocc6i2ckx3zowjgyr-.cred.service.arpa/ -- The same server without any discoverability hints; it is up to the client to discover a (possibly short-lived) connection opportunities to the server identified by that key.
 
