@@ -766,6 +766,20 @@ can provide details already that would otherwise only be discovered later throug
 For when those details are provided in the shape of Service Binding Parameters,
 this section describes their interpretation in the context of CoAP transport indication.
 
+This document is an SVCB mapping document as described in {{!RFC9460}}.
+As a non-normative overview, the mapping summary (following the template of {{Appendix B of RFC9460}})
+is as follows:
+
+|                                          |                                          |
+| ---------------------------------------- | ---------------------------------------- |
+| **Mapped schemes**                       | "coap", "coaps", "coap+tcp", "coaps+tcp", "coap+ws", "coaps+ws" |
+| **RR type**                              | SVCB (64)                                |
+| **Name prefix**                          | `_coap` for the scheme's default port, else `_$PORT._coap`    |
+| **Automatically Mandatory Keys**         | `port`, `no-default-alpn`                |
+| **SvcParam defaults**                    | `alpn`: according to scheme (or empty)   |
+| **Special behaviors**                    | Multiple mapped schemes; `alpn` default influenced by initial URI. |
+| **Keys that records must include**       | None                                     |
+
 \[ The following paragraph is outdated, but its replacement will depend on the outcome of IETF122 discussions. \]
 
 The subsections in this section are arranged to describe a consistent sequential full picture.
@@ -826,7 +840,9 @@ independently of whether they are used with SVCB records or Service Binding Para
 and independently of whether they apply to the `_coap` service or another service that can be used on top of CoAP (such as `_dns`):
 
 * `port`: The CoAP service using the transport described in this parameter is reachable on this port
-  (described in {{RFC9460}}).
+  (described in {{RFC9460}}). It is automatically mandatory.
+
+  This document does not limit which ports can be used with CoAP.
 
 * `alpn`: The ALPN "coap" has been defined for CoAP-over-TLS {{?RFC8323}}, and "co" for CoAP-over-DTLS in {{?I-D.ietf-core-coap-dtls-alpn}}.
 
@@ -835,10 +851,20 @@ and independently of whether they apply to the `_coap` service or another servic
 
   ALPN IDs are defined in this document and in {{I-D.ietf-core-coap-dtls-alpn}} for the CoAP transports that had no such identifier when they were specified.
 
+  The default value of `alpn` when processing a URI (as in {{processing-scheme-authority}}) is the ALPN corresponding to the used scheme.
+  The default value when not processing a URI (e.g. when processing service parameters from DNR {{?RFC9463}}) is empty.
+
+* `no-default-alpn`, `mandatory`, `ipv4hint`, `ipv6hint`:
+  Used as described in {{Section 7 of RFC9460}}.
+
 * `is-unique-proxy`: This is a new parameter defined in this document,
   and equivalent to the `has-unique-proxy` in its semantics.
 
   Its value is empty.
+
+* Applications may extend the supported parameters.
+  In particular, {{?I-D.ietf-core-dns-over-coap}} has already introduced the `docpath` parameter
+  which indicates a path at which DNS-over-CoAP is available at the given address.
 
 The following parameters are under consideration for inclusion in this list,
 but it is unsure whether they are suitable.
