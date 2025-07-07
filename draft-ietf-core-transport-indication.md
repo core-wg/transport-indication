@@ -96,7 +96,7 @@ and to optimize exchanges using these.
 The Constrained Application Protocol (CoAP) provides multiple transports mechanisms:
 UDP and DTLS since {{?RFC7252}}, and TCP, TLS and WebSockets since {{?RFC8323}}.
 Some additional transports being used in LwM2M {{lwm2m}},
-and even more being explored ({{?I-D.bormann-t2trg-slipmux}}, {{?I-D.amsuess-core-coap-over-gatt}}.
+and even more being explored ({{?I-D.bormann-t2trg-slipmux}}, {{?I-D.amsuess-core-coap-over-gatt}}).
 These are mutually incompatible on the wire,
 but CoAP implementations commonly support several of them,
 and proxies can translate between them.
@@ -115,9 +115,12 @@ and advertise other transports in addition.
 ## Terminology
 
 Readers are expected to be familiar with the terms and concepts
-described in CoAP {{RFC7252}}
-and link format {{!RFC6690}}
-(or, equivalently, web links as described in {{RFC8288}}).
+described in CoAP {{RFC7252}}.
+For web link based discovery,
+terminology introduced for link format {{!RFC6690}} is used
+(or, equivalently, web links as described in {{RFC8288}});
+for DNS based discovery,
+{{!RFC9460}} provides the relevant definitions.
 
 The phrase "the transport indicated by (a URI)" is used as described in {{identifying}}.
 
@@ -162,7 +165,7 @@ by phrasing it as a proxy request.
 
 Whether that endpoint is
 trusted to,
-capable to
+capable of
 and willing to
 relay that request,
 and how to find suitable endpoints
@@ -251,7 +254,7 @@ if the URI scheme associated with the selected transport differs from the reques
 when the host name is not the default one for the transport
 (e.g. if it is not an IP literal in the UDP or TCP cases, or a proxy is used;
 DNS CNAME entries or SVCB target do not alter the URI's host name at all)
-or a different port is used (as possible through SVCB),
+or a different port is used (as possible through SVCB).
 (Outside proxy cases,
 {{Section 6.4 of RFC7252}} only talks of setting the Uri-Host to preserve the URI, and not of setting Proxy-Scheme or Uri-Port.
 That is because at the time of writing, no mechanisms were available to select a different transport or port).
@@ -260,7 +263,7 @@ Note that there is no meaningful difference in a client's behavior between
 when it is configured with a proxy,
 has discovered a proxy through links
 or has discovered a completely different transport:
-this is the essence of "transport endpoints are proxis" {{endpoints-are-proxies}}.
+this is the essence of "transport endpoints are proxies" {{endpoints-are-proxies}}.
 
 [^moveme]
 
@@ -290,14 +293,29 @@ To discover endpoints for a given URI,
 the scheme and the authority component of the URI
 are typical starting points for resolution services.
 
-The outcome of any resolution service is a list.
+The outcome of any resolution service is a list of transport candidates.
 It may be partially sorted, and may arrive piece by piece.
+
+In addition to the list of transport candidates,
+a resolution service may also provide general metadata of the endpoint
+(e.g. necessary or sufficient requirements on the endpoint's credentials,
+such as they are present in TLSA records).
 
 Conceptually, each entry contains:
 
-* Which CoAP transport is used (e.g. CoAP-over-TCP).
+* Which CoAP transport is used (e.g. CoAP-over-TCP; typically expressed as an ALPN).
 * The transport's address details (e.g. an IP address and port number).
 * Any additional metadata that facilitates communication (e.g. public keys for {{?I-D.ietf-tls-esni}}).
+
+While it is generally preferable for the lookup result to be complete, it might manage only partial information.
+From that partial information,
+further resolution may be performed,
+or the information may already suffice to send a request based on other known proxy information.
+
+Resolution services may have more structure in that list,
+may provide multiple choices in a single result
+or may branch out in multiple layers.
+At a conceptual level, those are reduced to an expanded list of individual candidates.
 
 ### Transport-unaware resolution
 
@@ -317,7 +335,7 @@ The /etc/hosts file and nsswitch "host" database can provide that same informati
 
 Additional metadata provided by this resolution service
 are the zone identifier (implied in DNS by using the zone the DNS response was obtained through)
-or TLSA records (which can guide the (D)TLS certificate validation process but are out of scope for this document).
+or additional records (such as khe aforementionened TLSA records).
 
 Simple resolution services do not indicate which transports are available on the address.
 Servers reached that way can resort to {{hasproxy}} to indicate alternative transports while exchanging initial data through the original transport,
@@ -326,7 +344,7 @@ or to store information in link format / web-link based information systems (suc
 ### Transport-aware resolution mechanisms
 
 Advanced resolution services
-provide information about which transports are available.
+provide information about which transports are available in addition to those of the previous section.
 
 For the DNS resolution mechanism, SVCB lookups described in {{svcb-discovery}}
 provide that information.
@@ -406,6 +424,19 @@ Such applications need to extend their requirements to the the sources used to o
 a sufficient (but maybe needlessly strict) requirement for `has-proxy` statements is to only follow those
 that are part of the same resource that advertises the link currently being followed.
 Section {{proxy-foreign-advertisement}} adds further considerations.
+
+### Exception: Narrowing security requirements
+
+If a concrete application starts with a minimal set of security requirements,
+has no means of discovering security properties of the endpoint
+and can only discovery security properties of a transport,
+it MAY describe how a first step of transport discovery narrows the security requirements.
+
+An example of this is {{Section 3.2 of ?I-D.ietf-core-dns-over-coap}}
+where the target name of the SVCB record is used to set the hostname component of a URI and thus set security requirements.
+
+Before making use of this option,
+alternatives such as using TLSA records should be exhausted.
 
 ## Choice of endpoints
 
@@ -735,6 +766,20 @@ can provide details already that would otherwise only be discovered later throug
 For when those details are provided in the shape of Service Binding Parameters,
 this section describes their interpretation in the context of CoAP transport indication.
 
+This document is an SVCB mapping document as described in {{!RFC9460}}.
+As a non-normative overview, the mapping summary (following the template of {{Appendix B of RFC9460}})
+is as follows:
+
+|                                          |                                          |
+| ---------------------------------------- | ---------------------------------------- |
+| **Mapped schemes**                       | "coap", "coaps", "coap+tcp", "coaps+tcp", "coap+ws", "coaps+ws" |
+| **RR type**                              | SVCB (64)                                |
+| **Name prefix**                          | `_coap` for the scheme's default port, else `_$PORT._coap`    |
+| **Automatically Mandatory Keys**         | `port`, `no-default-alpn`                |
+| **SvcParam defaults**                    | `alpn`: according to scheme (or empty)   |
+| **Special behaviors**                    | Multiple mapped schemes; `alpn` default influenced by initial URI. |
+| **Keys that records must include**       | None                                     |
+
 \[ The following paragraph is outdated, but its replacement will depend on the outcome of IETF122 discussions. \]
 
 The subsections in this section are arranged to describe a consistent sequential full picture.
@@ -795,25 +840,36 @@ independently of whether they are used with SVCB records or Service Binding Para
 and independently of whether they apply to the `_coap` service or another service that can be used on top of CoAP (such as `_dns`):
 
 * `port`: The CoAP service using the transport described in this parameter is reachable on this port
-  (described in {{RFC9460}}).
+  (described in {{RFC9460}}). It is automatically mandatory.
+
+  This document does not limit which ports can be used with CoAP.
 
 * `alpn`: The ALPN "coap" has been defined for CoAP-over-TLS {{?RFC8323}}, and "co" for CoAP-over-DTLS in {{?I-D.ietf-core-coap-dtls-alpn}}.
 
   If an ALPN service parameter is found, this indicates that the ALPN(s) and thus the CoAP transport that can be used on this address / port.
   For example, "co" indicates that DTLS (and thus UDP) is used.
 
-* `coaptransport`: This is a new parameter defined in this document, and similar to the ALPN parameter.
+  ALPN IDs are defined in this document and in {{I-D.ietf-core-coap-dtls-alpn}} for the CoAP transports that had no such identifier when they were specified.
 
-  If a `coaptransport` parameter is present, the indicated transport(s) can be used on this address / port.
+  The default value of `alpn` when processing a URI (as in {{processing-scheme-authority}}) is the ALPN corresponding to the used scheme.
+  The default value when not processing a URI (e.g. when processing service parameters from DNR {{?RFC9463}}) is empty.
 
-  The names registered for existing transports are identical to the URI schemes that indicate their use in the absence of Service Binding Parameters.
-
-  \[ It is left for review by SVCB experts whether these are a separate parameter space or we should just take ALPNs for them, like e.g. h2c does. \]
+* `no-default-alpn`, `mandatory`, `ipv4hint`, `ipv6hint`:
+  Used as described in {{Section 7 of RFC9460}}.
 
 * `is-unique-proxy`: This is a new parameter defined in this document,
   and equivalent to the `has-unique-proxy` in its semantics.
 
   Its value is empty.
+
+* Applications may extend the supported parameters.
+  In particular, {{?I-D.ietf-core-dns-over-coap}} has already introduced the `docpath` parameter
+  which indicates a path at which DNS-over-CoAP is available at the given address.
+
+The following parameters are under consideration for inclusion in this list,
+but it is unsure whether they are suitable.
+Those parameters would describe the origin server
+and not the individual (proxy) transport through which it can be reached.
 
 * `cred`: This is a new parameter defined in this document, and describes COSE credentials that can authenticate the server, e.g. when used with EDHOC.
 
@@ -883,9 +939,9 @@ dev1.example.com       IN AAAA
 The following records are returned:
 
 ~~~
-_coap.dev1.example.com IN SVCB 1 . coaptransport=tcp,udp
+_coap.dev1.example.com IN SVCB 1 . alpn=COAP,CO
 _coap.dev1.example.com IN SVCB 1 . alpn=co,coap port=5684
-_coap.dev1.example.com IN SVCB 1 . coaptransport=udp port=61616
+_coap.dev1.example.com IN SVCB 1 . alpn=CO port=61616
 dev1.example.com       IN AAAA 2001:db8:1::1
 ~~~
 
@@ -1025,8 +1081,8 @@ it is recommended to use the "coap" scheme
 {:ml: source="Martine"}
 
 If the transport's identifiers are IP based and have identifiers typically resolved through DNS,
-authors of new transports are encouraged to specify Service Binding records ({{?RFC9460}}) for CoAP,
-e.g., using an `alpn` or `coaptransport` parameter.
+authors of new transports are encouraged to specify how they are expressed in Service Binding records ({{?RFC9460}}),
+e.g., using an `alpn` parameter (which does not necessarily indicate the use of a TLS based transport),
 and if IP literals are relevant to the transport, to follow up on {{newlit}}.
 
 If the transport's native identifiers are compatible with the structure of the authority component of a URI,
@@ -1035,17 +1091,6 @@ To help the host decide the resolution mechanism,
 it may be helpful to register a subdomain of .arpa as described in {{?rfc3172}}.
 The guidence for users is to never attempt to resolve such a name,
 and for the zone's implementation is to return NXDOMAIN unconditionally.
-
-For the purpose of specifying a transport protocol via Service Binding records, and to encourage
-future authors more, this document specifies the `coaptransport` Service Parameter Key (SvcParamKey)
-with the initial legal values "udp" and "tcp" which indicate either CoAP over UDP and CoAP over
-TCP as the transport. The present of transport security is indicated by the `alpn` SvcParamKey. If
-it the `alpn` SvcParamKey is not provided, but `coaptransport` is, the transport is unencrypted.[^1]{:ml:}
-
-[^1]: Wondering if "udp" or "tcp" should be strings or numeric representations as value. The later
-      would need an extra table or is there something we could reuse, e.g. from
-      {{?I-D.ietf-core-href}}?
-
 
 If the transport's native identifiers are incompatible with that structure
 (e.g. because they contain colons),
@@ -1164,6 +1209,18 @@ Description: Forward proxying services
 
 Reference: \[ this document \]
 
+## TLS Application-Layer Protocol Negotiation (ALPN) Protocol IDs
+
+IANA is requested to add the following entries to the TLS Application-Layer Protocol Negotiation (ALPN) Protocol IDs
+registry ({{?RFC7301}}).
+
+The identification sequences are suggestions to be approvded by the reviewers
+
+| Protocol  | Identification sequence  | Reference |
+| --- | --- | --- |
+| CoAP (over UDP) | 0x43 0x4f ("CO") | {{RFC7252}} |
+| CoAP (over TCP) | 0x43 0x4f 0x41 0x50 ("COAP") | {{RFC8323}} |
+
 ## Service Parameter Key (SvcParamKey)
 
 IANA is NOT YET requested to add the following entries to the SVCB Service Parameters
@@ -1171,7 +1228,6 @@ registry ({{?RFC9460}}). The definition of this parameter can be found in {{upco
 
 | Number  | Name           | Meaning                            |
 | ------- | -------------- | ---------------------------------- |
-| 11 (suggested)      | coaptransport        | CoAP transport protocol |
 | to be assigned      | cred                 | COSE credentials identifying the server |
 | to be assigned      | edhoc-info           | EDHOC profile information |
 | to be assigned      | oauth-hints          | Describes how to obtain a token at an ACE Authorization Server |
@@ -1587,8 +1643,6 @@ Initial component types are:
 
 * "cred", "edhoc-info", "oauth-info": SvcbParams in base32 encoding of their wire format.
 
-* "coaptransport": SvcbParam in its text encoding.
-
 * "alpn": The ALPN(s) in hexadecimal encoding, separated by dashes.
 
 Due to {{?RFC3986}}'s rules,
@@ -1619,7 +1673,7 @@ they serve to explore the possible alternatives.
 * https://amaqckrkfivcukrkfivcukrkfivcukrkfivcukrkfivcukrkfivcukrk.tlsa.service.arpa/ -- No address information is provided, the client needs to resort to other discovery mechanisms.
   Any server is eligible to serve the resource if it can present a (possibly self-signed) certificate whose public key SHA256 matches the encoded value.
 
-* coap://tcp.coaptransport.2001-db8--1.6.rai3ouj4a.ueekcandaeasabbblaqlxq2jmbjg5jgtf2kazljkenaurxocc6i2ckx3zowjgy-.cred.service.arpa/ -- The server is reachable using CoAP over TCP with any security mechanism at 2001:db8::1, and the service is identifiable by the use of a KCCS credential describing an X25519 public key (which is currently only usable with EDHOC).
+* coap://434f4150.alpn.2001-db8--1.6.rai3ouj4a.ueekcandaeasabbblaqlxq2jmbjg5jgtf2kazljkenaurxocc6i2ckx3zowjgy-.cred.service.arpa/ -- The server is reachable using CoAP over TCP with any security mechanism at 2001:db8::1, and the service is identifiable by the use of a KCCS credential describing an X25519 public key (which is currently only usable with EDHOC).
 
 * coap://rai3ouj4a.ueekcandaeasabbblaqlxq2jmbjg5jgtf2kazljkenaurxocc6i2ckx3zowjgyr-.cred.service.arpa/ -- The same server without any discoverability hints; it is up to the client to discover a (possibly short-lived) connection opportunities to the server identified by that key.
 
