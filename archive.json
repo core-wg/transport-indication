@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-07-06T01:50:46.887042+00:00",
+  "timestamp": "2025-07-08T01:44:03.720390+00:00",
   "repo": "core-wg/transport-indication",
   "labels": [
     {
@@ -276,9 +276,17 @@
       "labels": [],
       "body": "In -08, a concrete point about how SVCB records differ from announced proxies has been removed, but there is remaining unclarity (in parts because it's not quite sure how `cred` would work on DTLS).\n\nAn easier question to consider might help get some scaffolding up:\n\n> Why does a \"has-unique-proxy\" self-link mean one thing for DNS records but another for explicitly indicates proxies?\n\nThe answer is probably somewhere around the \"URIs indicating endpoints\": The \"has-unique-proxy\" says something about the target endpoint (that it forwards all requests to the link source), and SVCB is part of \"finding an endpoint identified by a URI\" while following a proxy link is not. Therefore, a client may send a Uri-Host-less request to any endpoint discovered through SVCB, but not necessarily to a proxy (unless that proxy is also has-unique-proxy linked).",
       "createdAt": "2025-03-08T11:43:26Z",
-      "updatedAt": "2025-03-08T11:43:26Z",
+      "updatedAt": "2025-07-06T20:39:45Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "body": "Thinking this through with an Onion CoAP example helps.",
+          "createdAt": "2025-07-06T20:39:45Z",
+          "updatedAt": "2025-07-06T20:39:45Z"
+        }
+      ]
     },
     {
       "number": 17,
@@ -495,24 +503,54 @@
       "id": "PR_kwDOHa3Jsc6RYcIe",
       "title": "Remove SvcParamKeys clash with DoC",
       "url": "https://github.com/core-wg/transport-indication/pull/19",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "cabo",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "DoC takes precedence, as we are submitting this to IESG now",
       "createdAt": "2025-04-04T10:03:33Z",
-      "updatedAt": "2025-04-04T10:03:46Z",
+      "updatedAt": "2025-07-06T20:38:53Z",
       "baseRepository": "core-wg/transport-indication",
       "baseRefName": "master",
       "baseRefOid": "ed71ef2f057ed87cca3074b152f863cb84616d96",
       "headRepository": "core-wg/transport-indication",
       "headRefName": "cabo-patch-1",
       "headRefOid": "d7991bc12ef74880ea12ccf8f87b317176ff6ea6",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2025-07-06T20:38:53Z",
+      "mergedAt": "2025-07-06T20:38:53Z",
+      "mergedBy": "chrysn",
+      "mergeCommit": {
+        "oid": "b3837a9c76f9dacf523198d35613210f2976ef8e"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 20,
+      "id": "PR_kwDOHa3Jsc6d1Ln2",
+      "title": "Changes for IETF123",
+      "url": "https://github.com/core-wg/transport-indication/pull/20",
+      "state": "MERGED",
+      "author": "chrysn",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-07-07T21:59:28Z",
+      "updatedAt": "2025-07-07T23:28:59Z",
+      "baseRepository": "core-wg/transport-indication",
+      "baseRefName": "master",
+      "baseRefOid": "f7b7bd40d9ebdaba081c5000e2b987a27a6f62dd",
+      "headRepository": "core-wg/transport-indication",
+      "headRefName": "chrysn-ietf123",
+      "headRefOid": "af8116413a8bbf1d1523b37318974c29ab3f6ff8",
+      "closedAt": "2025-07-07T23:28:48Z",
+      "mergedAt": "2025-07-07T23:28:48Z",
+      "mergedBy": "chrysn",
+      "mergeCommit": {
+        "oid": "df6231aa7953541ed78ef14d5e2a83c4de3ceb70"
+      },
       "comments": [],
       "reviews": []
     }
