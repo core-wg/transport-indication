@@ -5,8 +5,8 @@
 CoRE                                                           C. Amsüss
 Internet-Draft                                                          
 Intended status: Standards Track                           M. S. Lenders
-Expires: 8 January 2026                                       TU Dresden
-                                                             7 July 2025
+Expires: 20 January 2026                                      TU Dresden
+                                                            19 July 2025
 
 
                        CoAP Transport Indication
@@ -53,7 +53,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 8 January 2026.
+   This Internet-Draft will expire on 20 January 2026.
 
 Copyright Notice
 
@@ -1068,14 +1068,9 @@ Payload:
       because a cred parameter may be sent using other means than DNS
       (for example in DHCPv6 responses or Router Advertisements).
 
-   *  edhoc-info: This is a new parameter defined in this document,
-      describing how EDHOC can be used on the server.
-
-      The value of the parameter is a CBOR array following the
-      APP_PROF_SEQ structure defined in [I-D.tiloca-lake-app-profiles].
-
-      It is optional to provide and optional to process, but can help
-      speed up the establishment of a security context.
+   *  edhoc-app-prof and edhocpath: The parameters describe how EDHOC
+      can be used on the server; they are specified in
+      [I-D.-ietf-lake-app-profiles].
 
    *  oauth-hints: This is a new parameter defined in this document,
       describing how ACE-OAuth [RFC9200] can be used with this service.
@@ -1423,8 +1418,6 @@ Payload:
     | to be assigned | cred        | COSE credentials identifying    |
     |                |             | the server                      |
     +----------------+-------------+---------------------------------+
-    | to be assigned | edhoc-info  | EDHOC profile information       |
-    +----------------+-------------+---------------------------------+
     | to be assigned | oauth-hints | Describes how to obtain a token |
     |                |             | at an ACE Authorization Server  |
     +----------------+-------------+---------------------------------+
@@ -1497,6 +1490,9 @@ Payload:
    [evossl]   Baier, E., "The Evolution of SSL and TLS", 2 February
               2015, <https://www.digicert.com/blog/evolution-of-ssl>.
 
+   [I-D.-ietf-lake-app-profiles]
+              "*** BROKEN REFERENCE ***".
+
    [I-D.amsuess-core-coap-over-gatt]
               Amsüss, C., "CoAP over GATT (Bluetooth Low Energy Generic
               Attributes)", Work in Progress, Internet-Draft, draft-
@@ -1514,9 +1510,9 @@ Payload:
    [I-D.amsuess-t2trg-onion-coap]
               Amsüss, C., Tiloca, M., and R. Höglund, "Using onion
               routing with CoAP", Work in Progress, Internet-Draft,
-              draft-amsuess-t2trg-onion-coap-03, 17 November 2024,
+              draft-amsuess-t2trg-onion-coap-04, 7 July 2025,
               <https://datatracker.ietf.org/doc/html/draft-amsuess-
-              t2trg-onion-coap-03>.
+              t2trg-onion-coap-04>.
 
    [I-D.amsuess-t2trg-rdlink]
               Amsüss, C., "rdlink: Robust distributed links to
@@ -1598,14 +1594,6 @@ Payload:
               capable-proxies-07, 10 July 2023,
               <https://datatracker.ietf.org/doc/html/draft-tiloca-core-
               oscore-capable-proxies-07>.
-
-   [I-D.tiloca-lake-app-profiles]
-              Tiloca, M. and R. Höglund, "Coordinating the Use of
-              Application Profiles for Ephemeral Diffie-Hellman Over
-              COSE (EDHOC)", Work in Progress, Internet-Draft, draft-
-              tiloca-lake-app-profiles-03, 21 October 2024,
-              <https://datatracker.ietf.org/doc/html/draft-tiloca-lake-
-              app-profiles-03>.
 
    [lwm2m]    OMA SpecWorks, "White Paper – Lightweight M2M 1.1", n.d.,
               <https://omaspecworks.org/white-paper-lightweight-m2m-
@@ -1724,6 +1712,10 @@ Appendix A.  Change log
 
 
    // This section is to be removed before publication.
+
+   Since draft-ietf-core-transport-indication-09:
+
+   *  edhoc-info replaced with app-profiles' edhoc-app-prof.
 
    Since draft-ietf-core-transport-indication-08:
 
@@ -2252,8 +2244,8 @@ E.2.  Structure of service.arpa
       If present, a client MUST establish a secure connection, and MUST
       fail the connection if the TLSA record's requirements are not met.
 
-   *  "cred", "edhoc-info", "oauth-info": SvcbParams in base32 encoding
-      of their wire format.
+   *  "cred", "edhoc-app-prof", "edhocpath", "oauth-info": SvcbParams in
+      base32 encoding of their wire format.
 
    *  "alpn": The ALPN(s) in hexadecimal encoding, separated by dashes.
 
