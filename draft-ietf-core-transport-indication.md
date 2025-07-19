@@ -895,11 +895,8 @@ and not the individual (proxy) transport through which it can be reached.
   because a `cred` parameter may be sent using other means than DNS
   (for example in DHCPv6 responses or Router Advertisements).
 
-* `edhoc-info`: This is a new parameter defined in this document, describing how EDHOC can be used on the server.
-
-  The value of the parameter is a CBOR array following the `APP_PROF_SEQ` structure defined in {{?I-D.tiloca-lake-app-profiles}}.
-
-  It is optional to provide and optional to process, but can help speed up the establishment of a security context.
+* `edhoc-app-prof` and `edhocpath`: The parameters describe how EDHOC can be used on the server;
+  they are specified in {{?I-D.-ietf-lake-app-profiles}}.
 
 * `oauth-hints`: This is a new parameter defined in this document,
   describing how ACE-OAuth {{?RFC9200}} can be used with this service.
@@ -1229,7 +1226,6 @@ registry ({{?RFC9460}}). The definition of this parameter can be found in {{upco
 | Number  | Name           | Meaning                            |
 | ------- | -------------- | ---------------------------------- |
 | to be assigned      | cred                 | COSE credentials identifying the server |
-| to be assigned      | edhoc-info           | EDHOC profile information |
 | to be assigned      | oauth-hints          | Describes how to obtain a token at an ACE Authorization Server |
 
 All entries have in common that their Reference is this this document, {{svcparams}}},
@@ -1255,6 +1251,10 @@ similar to the "HTTPS" RR would be preferable.
 [^remove-changelog]
 
 [^remove-changelog]: This section is to be removed before publication.
+
+Since draft-ietf-core-transport-indication-09:
+
+* edhoc-info replaced with app-profiles' edhoc-app-prof.
 
 Since draft-ietf-core-transport-indication-08:
 
@@ -1650,7 +1650,7 @@ Initial component types are:
   a client MUST establish a secure connection,
   and MUST fail the connection if the TLSA record's requirements are not met.
 
-* "cred", "edhoc-info", "oauth-info": SvcbParams in base32 encoding of their wire format.
+* "cred", "edhoc-app-prof", "edhocpath", "oauth-info": SvcbParams in base32 encoding of their wire format.
 
 * "alpn": The ALPN(s) in hexadecimal encoding, separated by dashes.
 
