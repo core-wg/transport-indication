@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-07-08T01:44:03.720390+00:00",
+  "timestamp": "2025-07-20T01:57:06.487066+00:00",
   "repo": "core-wg/transport-indication",
   "labels": [
     {
@@ -553,6 +553,89 @@
       },
       "comments": [],
       "reviews": []
+    },
+    {
+      "number": 21,
+      "id": "PR_kwDOHa3Jsc6fmU0E",
+      "title": "SVCB: Don't specify edhoc-info when app-profiles already registeres an equivalent parameter",
+      "url": "https://github.com/core-wg/transport-indication/pull/21",
+      "state": "MERGED",
+      "author": "chrysn",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "Relinquishing this registration as per https://mailarchive.ietf.org/arch/msg/core/1fEkwlyd4GFTGN85DPv9EAn_Acw",
+      "createdAt": "2025-07-18T15:49:53Z",
+      "updatedAt": "2025-07-19T13:37:00Z",
+      "baseRepository": "core-wg/transport-indication",
+      "baseRefName": "master",
+      "baseRefOid": "7a1b224ddbcbb118496d2511ff0bb31033302516",
+      "headRepository": "core-wg/transport-indication",
+      "headRefName": "coordinate-with-marco",
+      "headRefOid": "bed3b18fea28e5c539e85505b9d301bbb130b76c",
+      "closedAt": "2025-07-19T13:36:50Z",
+      "mergedAt": "2025-07-19T13:36:50Z",
+      "mergedBy": "chrysn",
+      "mergeCommit": {
+        "oid": "01c2c493d7a0cd9cb2bf9d87beb97919a03663c3"
+      },
+      "comments": [
+        {
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "body": "Pinging @miri64 manually b/c her invite to the repo is still pending.",
+          "createdAt": "2025-07-18T15:51:16Z",
+          "updatedAt": "2025-07-18T15:51:16Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOHa3Jsc605PQb",
+          "commit": {
+            "abbreviatedOid": "35daa5f"
+          },
+          "author": "miri64",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-07-18T21:59:58Z",
+          "updatedAt": "2025-07-18T21:59:58Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHa3Jsc606T6F",
+          "commit": {
+            "abbreviatedOid": "35daa5f"
+          },
+          "author": "marco-tiloca-sics",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-07-19T06:43:07Z",
+          "updatedAt": "2025-07-19T06:43:07Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOHa3Jsc606yJy",
+          "commit": {
+            "abbreviatedOid": "35daa5f"
+          },
+          "author": "miri64",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-07-19T09:31:46Z",
+          "updatedAt": "2025-07-19T09:31:47Z",
+          "comments": [
+            {
+              "originalPosition": 28,
+              "body": "I noticed before hitting merge:\r\n\r\n```suggestion\r\n* edhoc-info replaced with app-profiles' edhoc-app-prof.\r\n```",
+              "createdAt": "2025-07-19T09:31:46Z",
+              "updatedAt": "2025-07-19T09:31:47Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
