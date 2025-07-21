@@ -160,14 +160,14 @@ _coap.sensor1.example.com IN SVCB 1 . ( alpn=coqu )
 \texttt{<coap+tcp://[2001:db8::1]>;rel=has-proxy;}\\
 \texttt{\qquad{}anchor="coap://hexhexhex.cred.service.arpa"}
             \footnote{Questionable name switch, but enables using established sessions.}
-            \footnote{What would this look like for an TLSA or SSHFP record? Unsure.}
            
             \vspace{1cm}
 
-\begin{verbatim}
-_coap.sensor1.example.com IN SVCB 1 . \
-  ( alpn="COAP" cred="hexhexhex" )
-\end{verbatim}
+\texttt{\_coap.sensor1.example.com IN SVCB 1 . \\}
+\texttt{\qquad{}( alpn="COAP" cred="hexhexhex" )}
+            % sorry tex folks, but this *is* just the most discoverable way to make the footnote span both columns
+            \footnote{\mbox{DNS gets away without a name switch, but needs DNSSEC to make this really count.}}
+            \footnote{What would this look like for an TLSA or SSHFP record? Unsure.}
             \vspace{1cm}
         \end{column}
         \begin{column}{0.3\textwidth}
