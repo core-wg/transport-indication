@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="40mm"
+   height="40mm"
+   viewBox="0 0 40 39.999998"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4 (e7c3feb100, 2024-10-09)"
+   sodipodi:docname="model.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="3.8885774"
+     inkscape:cx="69.048388"
+     inkscape:cy="50.789783"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1">
+    <marker
+       style="overflow:visible"
+       id="ArrowWideRounded"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="Wide, rounded arrow"
+       markerWidth="1"
+       markerHeight="1"
+       viewBox="0 0 1 1"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         style="fill:none;stroke:context-stroke;stroke-width:1;stroke-linecap:round"
+         d="M 3,-3 0,0 3,3"
+         transform="rotate(180,0.125,0)"
+         sodipodi:nodetypes="ccc"
+         id="path5" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="ArrowWideRounded-6"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="Wide, rounded arrow"
+       markerWidth="1"
+       markerHeight="1"
+       viewBox="0 0 1 1"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         style="fill:none;stroke:context-stroke;stroke-width:1;stroke-linecap:round"
+         d="M 3,-3 0,0 3,3"
+         transform="rotate(180,0.125,0)"
+         sodipodi:nodetypes="ccc"
+         id="path5-5" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="ArrowWideRounded-6-4"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="Wide, rounded arrow"
+       markerWidth="1"
+       markerHeight="1"
+       viewBox="0 0 1 1"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         style="fill:none;stroke:context-stroke;stroke-width:1;stroke-linecap:round"
+         d="M 3,-3 0,0 3,3"
+         transform="rotate(180,0.125,0)"
+         sodipodi:nodetypes="ccc"
+         id="path5-5-5" />
+    </marker>
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       style="stroke:#000000;stroke-width:0.4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;marker-end:url(#ArrowWideRounded);fill:none"
+       d="m 22.181419,17.690703 1.428865,-1.70103"
+       id="path6" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.175px;font-family:'TeX Gyre Cursor';-inkscape-font-specification:'TeX Gyre Cursor Bold';text-align:center;text-anchor:middle;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;-inkscape-stroke:none;stop-color:#000000"
+       x="6.2809496"
+       y="6.2010489"
+       id="text1"><tspan
+         sodipodi:role="line"
+         id="tspan1"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'TeX Gyre Cursor';-inkscape-font-specification:'TeX Gyre Cursor Bold';text-align:center;text-anchor:middle;fill:#000000;stroke-width:0.264583px;stroke:none"
+         x="7.8462253"
+         y="6.2010489">/t</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.175px;font-family:'TeX Gyre Cursor';-inkscape-font-specification:'TeX Gyre Cursor Bold';text-align:center;text-anchor:middle;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;-inkscape-stroke:none;stop-color:#000000"
+       x="19.877762"
+       y="20.777876"
+       id="text1-9"><tspan
+         sodipodi:role="line"
+         id="tspan1-4"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'TeX Gyre Cursor';-inkscape-font-specification:'TeX Gyre Cursor Bold';text-align:center;text-anchor:middle;fill:#000000;stroke:none;stroke-width:0.264583px"
+         x="19.877762"
+         y="20.777876">coap://sensor1…com</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.175px;font-family:'TeX Gyre Cursor';-inkscape-font-specification:'TeX Gyre Cursor Bold';text-align:start;text-anchor:start;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;-inkscape-stroke:none;stop-color:#000000"
+       x="5.6524172"
+       y="27.553745"
+       id="text1-9-3"><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'TeX Gyre Cursor';-inkscape-font-specification:'TeX Gyre Cursor Bold';text-align:start;text-anchor:start;fill:#000000;stroke:none;stroke-width:0.264583px"
+         x="5.6524172"
+         y="27.553745"
+         id="tspan7">via 2001:db8::1</tspan><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'TeX Gyre Cursor';-inkscape-font-specification:'TeX Gyre Cursor Bold';text-align:start;text-anchor:start;fill:#000000;stroke:none;stroke-width:0.264583px"
+         x="5.6524172"
+         y="31.522495"
+         id="tspan8" /></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.175px;font-family:'TeX Gyre Cursor';-inkscape-font-specification:'TeX Gyre Cursor Bold';text-align:start;text-anchor:start;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;-inkscape-stroke:none;stop-color:#000000"
+       x="5.6524172"
+       y="34.348881"
+       id="text1-9-3-5"><tspan
+         sodipodi:role="line"
+         id="tspan1-4-2-5"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'TeX Gyre Cursor';-inkscape-font-specification:'TeX Gyre Cursor Bold';text-align:start;text-anchor:start;fill:#000000;stroke:none;stroke-width:0.264583px"
+         x="5.6524172"
+         y="34.348881">via fda9:…</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.175px;font-family:'TeX Gyre Cursor';-inkscape-font-specification:'TeX Gyre Cursor Bold';text-align:start;text-anchor:start;fill:#000000;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;-inkscape-stroke:none;stop-color:#000000"
+       x="20.292179"
+       y="5.895699"
+       id="text1-9-5"><tspan
+         sodipodi:role="line"
+         id="tspan1-4-0"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'TeX Gyre Cursor';-inkscape-font-specification:'TeX Gyre Cursor Bold';text-align:start;text-anchor:start;fill:#000000;stroke:none;stroke-width:0.264583px"
+         x="20.292179"
+         y="5.895699">ALPN<tspan
+   style="font-size:65%;text-align:start;baseline-shift:sub;text-anchor:start"
+   id="tspan6">def</tspan>:CO</tspan><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'TeX Gyre Cursor';-inkscape-font-specification:'TeX Gyre Cursor Bold';text-align:start;text-anchor:start;fill:#000000;stroke:none;stroke-width:0.264583px"
+         x="20.292179"
+         y="10.070824"
+         id="tspan9">cred: ⚿</tspan></text>
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:0.529167;stroke-linecap:round;stroke-linejoin:round"
+       id="rect2"
+       width="19.861967"
+       height="13.455057"
+       x="18.623222"
+       y="1.3365951" />
+    <path
+       style="stroke:#000000;stroke-width:0.4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;marker-end:url(#ArrowWideRounded);fill:none"
+       d="M 6.4156563,8.0195702 C 9.0589819,10.663098 10.186363,11.642535 10.425441,17.553948"
+       id="path2"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;marker-end:url(#ArrowWideRounded-6)"
+       d="m 3.7162022,21.9942 c -0.5340495,3.596104 -1.1851424,4.439459 0.8891792,5.043661"
+       id="path2-9"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;marker-end:url(#ArrowWideRounded-6-4)"
+       d="M 3.7162022,21.9942 C 0.73267078,29.944939 0.89807185,32.557364 4.1971344,32.82136"
+       id="path2-9-5"
+       sodipodi:nodetypes="cc" />
+  </g>
+</svg>

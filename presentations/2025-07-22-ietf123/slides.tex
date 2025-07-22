@@ -34,13 +34,7 @@
             Using DNS
         \end{column}
         \begin{column}{0.3\textwidth}
-            How it is modelled:
-            
-            (image here)
-% - list of
-%   - which transport is used
-%   - transport's details
-% - metadata
+            \includegraphics{model-principle.pdf}
         \end{column}
     \end{columns}
 \end{frame}
@@ -57,7 +51,7 @@
     \begin{enumerate}
         \item Where is that?
         \item Which transport can I use?
-        \item Which security mechanism should use?
+        \item Which security mechanism should I use?
     \end{enumerate}
 \end{frame}
 
@@ -80,12 +74,7 @@ sensor1.example.com IN AAAA fda9:7eb0:78db::1
 \end{verbatim}
         \end{column}
         \begin{column}{0.3\textwidth}
-            How it is modelled:
-            
-            (image here)
-% visual:
-% []--- 2001:db8::1 (with CoAP over UDP as that's default for coap://)
-%   \-- fda9... etc
+            \includegraphics{model-aaaa.pdf}
         \end{column}
     \end{columns}
 \end{frame}
@@ -104,13 +93,11 @@ sensor1.example.com IN AAAA fda9:7eb0:78db::1
 % as mentioned: now using alpn consistently with other non-TLS protocols registered there
 \begin{verbatim}
 _coap.sensor1.example.com IN SVCB 1 . ( alpn=COAP )
+      sensor1.example.com IN AAAA 2001:db8::1
 \end{verbatim}
         \end{column}
         \begin{column}{0.3\textwidth}
-            How it is modelled:
-            
-            (image here)
-% []--- 2001:b8::1 CoAP-over-TCP
+            \includegraphics{model-tcp.pdf}
         \end{column}
     \end{columns}
 \end{frame}
@@ -130,13 +117,11 @@ _coap.sensor1.example.com IN SVCB 1 . ( alpn=COAP )
 
 \begin{verbatim}
 _coap.sensor1.example.com IN SVCB 1 . ( alpn=coqu )
+      sensor1.example.com IN AAAA 2001:db8::1
 \end{verbatim}
         \end{column}
         \begin{column}{0.3\textwidth}
-            How it is modelled:
-            
-            (image here)
-% []--- 2001:b8::1 CoAP-over-QUIC
+            \includegraphics{model-quic.pdf}
         \end{column}
     \end{columns}
 \end{frame}
@@ -151,7 +136,7 @@ _coap.sensor1.example.com IN SVCB 1 . ( alpn=coqu )
 % _5684._tcp.sensor1.example.com IN TLSA 3 1 0 hexhexhex
 
 \begin{frame}[fragile]{How do I know whom to talk to?}
-    \framesubtitle{Only matters unles there is policy, such as ``we use WebPKI''}
+    \framesubtitle{Only matters unless there is policy, such as ``we use WebPKI''}
     \begin{columns}
         \begin{column}{0.7\textwidth}
             \vspace{1cm}
@@ -163,17 +148,20 @@ _coap.sensor1.example.com IN SVCB 1 . ( alpn=coqu )
            
             \vspace{1cm}
 
-\texttt{\_coap.sensor1.example.com IN SVCB 1 . \\}
+\texttt{\_coap.sensor1.example.com IN SVCB 1 . \textbackslash}\\
 \texttt{\qquad{}( alpn="COAP" cred="hexhexhex" )}
             % sorry tex folks, but this *is* just the most discoverable way to make the footnote span both columns
             \footnote{\mbox{DNS gets away without a name switch, but needs DNSSEC to make this really count.}}
-            \footnote{What would this look like for an TLSA or SSHFP record? Unsure.}
+            \footnote{What would this look like for an TLSA or SSHFP record? Unsure.}\\
+\texttt{sensor1.example.com IN AAAA 2001:db8::1}
             \vspace{1cm}
         \end{column}
         \begin{column}{0.3\textwidth}
-            How it is modelled:
-            
-            (image here)
+          \mbox{}\vspace{-1.5cm}
+
+            \includegraphics{model-cred-link.pdf}
+
+            \includegraphics{model-cred-svcb.pdf}
         \end{column}
     \end{columns}
 \end{frame}
@@ -183,8 +171,12 @@ _coap.sensor1.example.com IN SVCB 1 . ( alpn=coqu )
     \begin{itemize}
         \item Address of the host? 3rd party proxy? Matters not.
             \bigskip
+        \item Non-IP transports are easy (e.\,g. CoAP-over-GATT, slipmux).
+
+          {\footnotesize{Metadata from BLE or USB characteristics.}}
+            \bigskip
         \item  Recent changes:
-        \begin{itemize}\Large
+        \begin{itemize}\large
             \item This now states that it is an SVCB mapping document.
             \item \texttt{coaptransport} dissolved into \texttt{alpn}.
             \item Modelling tweaks.
@@ -197,13 +189,13 @@ _coap.sensor1.example.com IN SVCB 1 . ( alpn=coqu )
         \item Is the modelling sufficient and suitable?
         \item What are shared properties, what are properties of a transport? % dohpath and TLSA vs ip6hint and alpn
 
-           In particular, what can we do for the name switch announcing a cryptographic ID?
+          {\footnotesize In particular, what can we do for the name switch announcing a cryptographic ID?}
         \item Does this fit with the SVCB architecture?
 
-            Will ask Ben Schwartz for review, whose input from DoC shaped recent changes.
+          {\footnotesize Will ask Ben Schwartz for review, whose input from DoC shaped recent changes.}
         \item How does DANE fit SVCB? % different crowds, still all IETF
 
-            Ask … whom?
+          {\footnotesize Ask … whom?}
         \item Bikeshedding. (\texttt{.service.arpa}?)
     \end{itemize}
 \end{frame}
