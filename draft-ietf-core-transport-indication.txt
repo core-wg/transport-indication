@@ -5,8 +5,8 @@
 CoRE                                                           C. Amsüss
 Internet-Draft                                                          
 Intended status: Standards Track                           M. S. Lenders
-Expires: 20 January 2026                                      TU Dresden
-                                                            19 July 2025
+Expires: 23 January 2026                                      TU Dresden
+                                                            22 July 2025
 
 
                        CoAP Transport Indication
@@ -53,7 +53,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 20 January 2026.
+   This Internet-Draft will expire on 23 January 2026.
 
 Copyright Notice
 
