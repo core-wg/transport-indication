@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-07-20T01:57:06.487066+00:00",
+  "timestamp": "2025-07-24T01:49:15.048443+00:00",
   "repo": "core-wg/transport-indication",
   "labels": [
     {
@@ -317,6 +317,22 @@
       "body": "There are consumers of endpoint discovery (eg. the informative response of multicast-notifications) that need a unique endpoint outcome.\n\nThis is probably not something we need to use normative language on, but it can be useful to shape expectations that in some cases there SHOULD REALLY be only one outcome. This is trivial for IP literals, but already not for DNS names, where it'd be the shared responsibility of the party using a name there and the name authority to ensure it only resolves to one endpoint. It'd also mean that there is only one ALPN (possibly disabling any default ALPNs), \n\n\u2026 or does not even that use case there have the requirement to produce a single one (because resolving to multiple endpoints just means that they are all broadcasting)?\n\n\u2026 and while we're at it, is an informative references to happy-eyeballs due? (After all, something like that is typically going to happen, at least on transports to which this applies.)",
       "createdAt": "2025-03-18T07:33:27Z",
       "updatedAt": "2025-03-18T07:33:27Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 22,
+      "id": "I_kwDOHa3Jsc7B34cz",
+      "title": "Note for non-TLS protocols",
+      "url": "https://github.com/core-wg/transport-indication/issues/22",
+      "state": "OPEN",
+      "author": "MikeBishop",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "I wanted to confirm whether there's precedent for allocating an ALPN token to a protocol that doesn't use TLS. It turns out that there is -- `h2c` is defined to represent clear-text HTTP/2. It includes this note:\n\n> This entry reserves an identifier for use within a cleartext version of a protocol and is not allowed to appear in a TLS ALPN negotiation.\n\nConsider placing a similar note on your non-TLS ALPN entries.",
+      "createdAt": "2025-07-22T13:13:59Z",
+      "updatedAt": "2025-07-22T13:13:59Z",
       "closedAt": null,
       "comments": []
     }
