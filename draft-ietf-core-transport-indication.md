@@ -55,19 +55,13 @@ informative:
     author:
       org: OMA SpecWorks
     target: https://omaspecworks.org/white-paper-lightweight-m2m-1-1/
-  I-D.ietf-lake-edhoc:
+  RFC9528:
   w3address:
     title: "W3 address syntax: BNF"
     author:
       name: Tim BL
     target: http://info.cern.ch/hypertext/WWW/Addressing/BNF.html#43
     date: 1992-06-29
-  noproxy:
-    title: "We need to talk: Can we standardize NO_PROXY?"
-    author:
-      name: Stan Hu
-    target: https://about.gitlab.com/blog/2021/01/27/we-need-to-talk-no-proxy/
-    date: 2021-01-27
   evossl:
     title: The Evolution of SSL and TLS
     author:
@@ -83,7 +77,7 @@ informative:
 
 The Constrained Application Protocol (CoAP, {{!RFC7252}}) is available over different transports
 (UDP, DTLS, TCP, TLS, WebSockets),
-but lacks a way to unify these addresses.
+but lacks a way to unify the addresses of these transports.
 This document provides terminology and provisions based on Web Linking {{?RFC8288}}
 and Service Bindings (SVCB, {{RFC9460}})
 to express alternative transports available to a device,
@@ -93,17 +87,17 @@ and to optimize exchanges using these.
 
 # Introduction {#introduction}
 
-The Constrained Application Protocol (CoAP) provides multiple transports mechanisms:
-UDP and DTLS since {{?RFC7252}}, and TCP, TLS and WebSockets since {{?RFC8323}}.
-Some additional transports being used in LwM2M {{lwm2m}},
-and even more being explored ({{?I-D.bormann-t2trg-slipmux}}, {{?I-D.amsuess-core-coap-over-gatt}}).
-These are mutually incompatible on the wire,
+The Constrained Application Protocol (CoAP) provides multiple transport mechanisms:
+UDP and DTLS since {{?RFC7252}}, and TCP, TLS, and WebSockets since {{!RFC8323}}.
+Some additional transports are used in LwM2M {{lwm2m}},
+and even more are explored ({{?I-D.bormann-t2trg-slipmux}}, {{?I-D.ietf-core-coap-over-gatt}}).
+These are mutually incompatible in their wire format,
 but CoAP implementations commonly support several of them,
 and proxies can translate between them.
 
 CoAP currently lacks a way to indicate which transports are available for a given resource,
 and which endpoints are available for them.
-This document introduces ways to discover
+This document introduces ways to discover transports
 and how to use them.
 
 CoAP also lacks a unified scheme to label a resource in a transport-independent way.
@@ -118,9 +112,10 @@ Readers are expected to be familiar with the terms and concepts
 described in CoAP {{RFC7252}}.
 For web link based discovery,
 terminology introduced for link format {{!RFC6690}} is used
-(or, equivalently, web links as described in {{RFC8288}});
-for DNS based discovery,
-{{!RFC9460}} provides the relevant definitions.
+(or, equivalently, web links as described in {{RFC8288}}).
+{{!RFC9176}} provides definitions for CoRE Resource Discovery.
+For DNS-based discovery,
+{{!RFC9460}} and {{!RFC9461}} provide the relevant definitions.
 
 The phrase "the transport indicated by (a URI)" is used as described in {{identifying}}.
 
@@ -131,12 +126,16 @@ When the term "endpoint" is used in this document,
 it is generalized from the {{RFC7252}} definition
 to mean the transport and any multiplexing information particular to that transport.
 
+[^missing-terminology]
+
+[^missing-terminology]: TBD List with source: "origin", "link context" "anchor" {{RFC6698}}, "resolution service", "cross proxy" {{RFC7252}}, "unique proxy" (this document), "canonical URI", "URI aliasing", ... --ML
+
 ## Goals
 
 This document introduces provisions for the seamless use of different transport mechanisms for CoAP.
 Combined, these provide:
 
-1. Enablement: Inform clients of the availability of other transports of servers.
+1. Enablement: Inform clients of the availability of other transports offered by servers.
 
 2. No Aliasing: Any URI aliasing must be opt-in by the server. Any defined mechanisms must allow applications to keep working on the canonical URIs given by the server.
 
@@ -152,7 +151,7 @@ This document will not concern itself with changes in transport availability ove
 neither in causing them ("Please take up your TCP interface, I'm going to send a firmware update")
 nor in advertising their availability in advance.
 Hosts whose transport's availability changes over time can utilize
-any suitable mechanism to keep client updated,
+any suitable mechanism to keep clients updated,
 such as placing a suitable Max-Age value on their resources
 or having them observable.
 
@@ -165,17 +164,17 @@ by phrasing it as a proxy request.
 
 Whether that endpoint is
 trusted to,
-capable of
+capable of,
 and willing to
 relay that request,
 and how to find suitable endpoints
 to serve as a proxy for a request
 is discussed in this document.
 
-When resource identifiers have different meanings depending on the host.
+When resource identifiers have different meanings depending on the host,
 the applicability of this document is limited.
 [^applicabilitylimited]
-Examples of such resources are those whose URIs including loopback addresses or partially-qualified domain names.
+Examples of such resources are those whose URIs include the loopback addresses or partially-qualified domain names.
 
 [^applicabilitylimited]: Possibly not limited a lot, but we have not looked into those cases in detail yet. --CA
 
@@ -187,7 +186,7 @@ giving DNS as one example without going into details ({{Section 6.1 of RFC7252}}
 
 This document does not change any of that,
 but it does point out in {{findendpoint}} the breadth of information that such a service can provide
-(e.g. providing multiple addresses, or metadata on services used on them),
+(e.g., providing multiple addresses, or metadata on services used on them),
 and gives a concrete example of the information that modern DNS idioms deliver
 (which it enables by performing a registration in {{iana-underscored}}).
 
@@ -198,9 +197,13 @@ Same-host proxy:
 : A CoAP server that accepts forward proxy requests (i.e., requests carrying the Proxy-Scheme option)
   exclusively for URIs that it is also the authoritative server for is defined as a "same-host proxy".
 
-: The distinction between a same-host and any other proxy is only relevant on a practical, server-implementation and illustrative level;
+: The distinction between a same-host proxy and any other proxy is only relevant on a practical, server-implementation and illustrative level;
   this specification does not use the distinction in normative requirements,
   and clients need not make the distinction at all.
+
+Recommended proxy:
+
+: A proxy indicated by a server to be useful for accessing that server.
 
 When talking of proxy requests,
 this document only talks of the Proxy-Scheme option.
@@ -216,11 +219,12 @@ It is, colloquially, also used to identify the combination
 of a CoAP transport and the transport specific details.
 
 For precision, this document uses the term
-"the transport address indicated by (a URI)" to refer to the transport and its details,
-but otherwise no big deal is made of it.
+"the transport address indicated by (a URI)" to refer to the transport and its details that can be inferred by the scheme and origin of a URI;
+URIs that have empty and absent paths, queries and fragment identifiers are used in places where a URI is used for the transport address indicated by it.
+For many practical purposes, the distinction between a URI and the transport address indicated by it is irrelevant.
 
-Note that as such a URI may contain a registered name:
-as with any CoAP URI, resolution services apply.
+Note that as such a URI may contain a registered name.
+As with any CoAP URI, resolution services apply.
 Therefore, it may indicate multiple transport endpoints.
 
 \[ TBD: Do we want to extend this to HTTP proxies? Probably just not, and if so, only to those that can just take coap://... for a URI. \]
@@ -228,42 +232,44 @@ Therefore, it may indicate multiple transport endpoints.
 # Finding suitable endpoints for a URI {#findendpoint}
 
 When a CoAP request is created by a client,
-a typical starting point is the URI of the request's target resource.
+a typical starting point is the URI of the target resource of the request.
 To send the request,
 a suitable endpoint needs to be discovered.
-This section lists the ways one or more such endpoints can be found.
+This section lists how one or more such endpoints can be discovered.
 
 In some situations,
 a client decides to use a forward proxy to access the resource:
 either because it is explicitly configured to do so ({{actualproxies}}),
-or because it has discovered a preferred proxy ({{hasproxy}}).
+or because it has discovered a recommended proxy ({{hasproxy}})
 In that case, it
 finds the endpoint of the configured proxy (using {{processing-scheme-authority}}, if not given explicitly).
-The proxy then decides on an endpoint to which to forward the request for its own,
+The proxy then decides on an endpoint to which to forward the request on its own,
 (again using the tools described in this section).
 Otherwise, it uses the information of scheme and authority,
 often through a resolution service ({{processing-scheme-authority}}).
 
 No matter how the endpoint (and thus transport) was discovered and whether a proxy is involved,
 it does not alter the URI of the resource being requested.
-The Proxy-Scheme, Uri-Host and Uri-Port options are set as needed
+The Proxy-Scheme, Uri-Host, and Uri-Port options are set as needed
 to ensure that the request keeps targeting the requested resource.
 This happens, respectively,
-if the URI scheme associated with the selected transport differs from the request URI's scheme
+
+- If the URI scheme associated with the selected transport differs from the scheme of the request URI
 (or a proxy is used),
-when the host name is not the default one for the transport
-(e.g. if it is not an IP literal in the UDP or TCP cases, or a proxy is used;
-DNS CNAME entries or SVCB target do not alter the URI's host name at all)
-or a different port is used (as possible through SVCB).
-(Outside proxy cases,
+- If the hostname is not the default one for the transport
+(e.g., if it is not an IP literal in the UDP or TCP cases, or a proxy is used;
+DNS CNAME entries or SVCB target do not alter the hostname of the URI), or
+- If a different port than the default one is used (as possible through SVCB record information).
+
+Outside proxy cases,
 {{Section 6.4 of RFC7252}} only talks of setting the Uri-Host to preserve the URI, and not of setting Proxy-Scheme or Uri-Port.
-That is because at the time of writing, no mechanisms were available to select a different transport or port).
+That is because at the time of writing of {{RFC7252}}, no mechanisms were available to select a different transport or port.
 
 Note that there is no meaningful difference in a client's behavior between
 when it is configured with a proxy,
-has discovered a proxy through links
+has discovered a proxy through links,
 or has discovered a completely different transport:
-this is the essence of "transport endpoints are proxies" {{endpoints-are-proxies}}.
+this is the essence of "transport endpoints are proxies", see {{endpoints-are-proxies}}.
 
 [^moveme]
 
@@ -274,17 +280,17 @@ and that do not act as proxies for other systems,
 the presence of the Proxy-Scheme option introduced by using alternative transports has little practical consequence:
 such servers become same-host proxies,
 and can ignore the Proxy-Scheme option as long as they recognize the Uri-Host value
-(which they already have been required to process).
+(which they are already required to process).
 
 While a server is at liberty to create aliases,
-clients can not infer from the presence of a transport for a host
-that URIs created from addressing that transport are present.
+clients cannot infer from the presence of a transport for a host
+that URIs created from addressing that transport exist.
 For example, if `coap://h.example.net/sensors/temp` is a known resource,
-and CoAP-over-TCP on [2001:db8::1] is indicated as a transport endpoint,
+and CoAP over TCP on `[2001:db8::1]` is indicated as a transport endpoint,
 there is no reason for the client to assume that `coap+tcp://[2001:db8::1]/sensors/temp` exists,
 let alone is the same resource:
 Clients that access the known resource by establishing a TCP connection
-need to send the options Proxy-Scheme value "coap", the Uri-Host value "h.example.net"
+need to send the options Proxy-Scheme value "coap", the Uri-Host value "h.example.net",
 and the Uri-Path values "sensors" and "temp".
 
 ## Processing scheme and authority {#processing-scheme-authority}
@@ -298,28 +304,28 @@ It may be partially sorted, and may arrive piece by piece.
 
 In addition to the list of transport candidates,
 a resolution service may also provide general metadata of the endpoint
-(e.g. necessary or sufficient requirements on the endpoint's credentials,
-such as they are present in TLSA records).
+(e.g., necessary or sufficient requirements on the endpoint's credentials,
+such as those present in TLSA records).
 
 Conceptually, each entry contains:
 
-* Which CoAP transport is used (e.g. CoAP-over-TCP; typically expressed as an ALPN).
-* The transport's address details (e.g. an IP address and port number).
-* Any additional metadata that facilitates communication (e.g. public keys for {{?I-D.ietf-tls-esni}}).
+* Which CoAP transport is used, e.g., CoAP over TCP; typically expressed as a TLS Application Layer Protocol Negotiation (ALPN) ID.
+* The transport's address details (e.g., an IP address and port number).
+* Any additional metadata that facilitates communication (e.g., public keys for {{?RFC9849}}).
 
-While it is generally preferable for the lookup result to be complete, it might manage only partial information.
+While it is generally preferable for the lookup result to be complete, the resolution service might manage only partial information.
 From that partial information,
 further resolution may be performed,
 or the information may already suffice to send a request based on other known proxy information.
 
 Resolution services may have more structure in that list,
-may provide multiple choices in a single result
+may provide multiple choices in a single result,
 or may branch out in multiple layers.
 At a conceptual level, those are reduced to an expanded list of individual candidates.
 
 ### Transport-unaware resolution
 
-The IP based transports specified so far (CoAP over UDP, DTLS, TCP, TLS and WebSockets)
+The IP based transports specified so far (CoAP over UDP, DTLS, TCP, TLS, and WebSockets)
 all indicate the transport in their scheme,
 and either use their default port or indicate the port explicitly.
 The only remaining details of multiplexing information required are the IP version(s) and IP address(es) of the server.
@@ -331,15 +337,15 @@ If the host component of the URI is a registered name,
 a name resolution service is used for a simple name lookup:
 When DNS is used as a resolution service,
 AAAA (or A) records of the name are looked up.
-The /etc/hosts file and nsswitch "host" database can provide that same information.
+The /etc/hosts file and nsswitch "hosts" database can provide that same information.
 
 Additional metadata provided by this resolution service
 are the zone identifier (implied in DNS by using the zone the DNS response was obtained through)
-or additional records (such as khe aforementionened TLSA records).
+or additional records (such as the aforementioned TLSA records).
 
 Simple resolution services do not indicate which transports are available on the address.
 Servers reached that way can resort to {{hasproxy}} to indicate alternative transports while exchanging initial data through the original transport,
-or to store information in link format / web-link based information systems (such as a Resource Directory {{?RFC9176}}).
+or to store information in link-format- / web-link-based information systems (such as a Resource Directory {{RFC9176}}).
 
 ### Transport-aware resolution mechanisms
 
@@ -359,12 +365,12 @@ by publishing a Web Link with the "has-proxy" relation, defined in this document
 In particular (and that is a typical case),
 it can indicate its own network address on an alternative transport when implementing same-host proxy functionality.
 
-The semantics of a link from S to P with relations has-proxy ("S has-proxy P", `<P>;rel=has-proxy;anchor="S"`)
+The semantics of a link from S to P with relation "has-proxy" ("S has-proxy P", `<P>;rel=has-proxy;anchor="S"`)
 are that for any resource that has the same origin as S, the transport address indicated by P can be used to obtain that resource.
 
 ### Example
 
-A constrained device at the address 2001:db8::1 that supports CoAP over TCP in addition to CoAP can self-describe like this:
+A constrained device at the address 2001:db8::1 that supports CoAP over TCP in addition to CoAP over UDP can self-describe like this:
 
 ~~~~~
 Req: to [ff02::fd]:5683 on UDP
@@ -390,7 +396,7 @@ Observe: 0
 Payload:
 39.1°C
 ~~~~~
-{: #fig-has-proxy title='Discovery and follow-up request through a has-proxy relation'}
+{: #fig-has-proxy title='Discovery and follow-up request through a "has-proxy" relation'}
 
 The discovery process yields two links:
 The first describes the resource,
@@ -405,7 +411,7 @@ only if queried using a link-local source address, the server may also respond w
 
 Any security requirements posed by a server or client application on a CoAP request
 MUST be applied independently of the transport that is used to perform the request.
-If a transport can not be used to satisfy the requirements,
+If a transport cannot be used to satisfy the requirements,
 it is ineligible for use with the request (from a client's point of view),
 and unauthorized (from a server's point of view).
 
@@ -418,24 +424,24 @@ Some applications have requirements
 exceeding the requirements of a secure connection,
 e.g., (explicitly or implicitly) requiring that
 name resolution happen through a secure process
-and packets are only routed into networks where it trusts that they will not be intercepted on the path to the server.
-Such applications need to extend their requirements to the the sources used to obtain the endpoints
-(i.e., the source of any `has-proxy` statement or the SVCB data);
-a sufficient (but maybe needlessly strict) requirement for `has-proxy` statements is to only follow those
+and packets are only routed into networks where the application trusts that they will not be intercepted on the path to the server.
+Such applications need to extend their requirements to the sources used to obtain the endpoints
+(i.e., the source of any "has-proxy" statement or the SVCB data);
+a sufficient (but maybe needlessly strict) requirement for "has-proxy" statements is to only follow those
 that are part of the same resource that advertises the link currently being followed.
-Section {{proxy-foreign-advertisement}} adds further considerations.
+{{proxy-foreign-advertisement}} adds further considerations.
 
 ### Exception: Narrowing security requirements
 
 If a concrete application starts with a minimal set of security requirements,
-has no means of discovering security properties of the endpoint
-and can only discovery security properties of a transport,
+has no means of discovering security properties of the endpoint,
+and can only discovers security properties of a transport,
 it MAY describe how a first step of transport discovery narrows the security requirements.
 
-An example of this is {{Section 3.2 of ?I-D.ietf-core-dns-over-coap}}
+An example of this is {{Section 3.2 of ?RFC9953}}
 where the target name of the SVCB record is used to set the hostname component of a URI and thus set security requirements.
 
-Before making use of this option,
+Before making use of this mechanism,
 alternatives such as using TLSA records should be exhausted.
 
 ## Choice of endpoints
@@ -448,9 +454,9 @@ defining such metadata is out of scope for this document.
 
 Clients MAY switch between endpoints as long as the source describing them is fresh;
 they may even do so per request.
-(For example, they may perform individual requests using CoAP-over-UDP,
-but choose CoAP-over-TCP for requests with large expected responses).
-When the information about endpoints is obtained through CoAP (e.g. as a `has-proxy` link),
+(For example, they may perform individual requests using CoAP over UDP,
+but choose CoAP over TCP for requests with large expected responses).
+When the information about endpoints is obtained through CoAP (e.g., as a "has-proxy" link),
 the client can use the describing representation's ETag to efficiently renew its justification for using the alternative transport.
 
 ## Selection of a canonical origin
@@ -471,35 +477,35 @@ and the most stable usable name the host has.
 ### Unreachable canonical origin addresses
 
 For devices that are not generally reachable at a stable address,
-it may make sense to use a scheme and authority as the canonical address that can not actually be dereferenced.
+it may make sense to use a scheme and authority as the canonical address that cannot actually be dereferenced.
 
 The registered names available for that purpose depend on the resolution mechanisms in use.
 When the Domain Name System (DNS) is used,
 such names would not be associated with any A or AAAA records
 (but may still use, for example, TLSA records).
 
-Such URIs are *only* usable to clients that discover a suitable proxy along with the URI,
-and which can place sufficient trust in that proxy.
+Such URIs are *only* usable by clients that discover a suitable proxy along with the URI,
+and that can place sufficient trust in that proxy.
 
 
 ## Advertisement through a Resource Directory
 
-In the Resource Directory specification {{?rfc9176}},
+In the Resource Directory (RD) specification {{?RFC9176}},
 protocol negotiation was anticipated to use multiple base values.
-This approach was abandoned since then,
+This approach has since been abandoned,
 as it would incur heavy URI aliasing.
 
-Instead, devices can submit their has-proxy links to the Resource Directory like all their other metadata.
+Instead, devices can submit their "has-proxy" links to the Resource Directory like all their other metadata.
 
 A client performing resource lookup can ask the RD to provide available (same-host-)proxies in a follow-up request
 by asking for `?anchor=<the-discovered-host>&rel=has-proxy`.
-<!-- We don't say that the RD can not do that, right? -->
-The RD may also volunteer that information during resource lookups even though the has-proxy link itself does not match the search criteria.
+<!-- We don't say that the RD cannot do that, right? -->
+The RD may also volunteer that information during resource lookups even though the "has-proxy" link itself does not match the search criteria.
 
 \[
 
-It may be useful to define RD parameters for use with lookup here, which'd guide which available proxies to include.
-For example, asking `?if=tag:example.com,sensor&proxy-links=tcp` could give as a result:
+It may be useful to define RD parameters for use with lookup here, which would guide which available proxies to include.
+For example, asking `?rt=tag:example.com,sensor&proxy-links=tcp` could give as a result:
 
 `<coap://[2001:db8::1]/s>;rt=tag:example.com,sensor,<coap+tcp://[2001:db8::1]/>;rel=has-proxy;anchor="coap://[2001:db8::1]/"`
 
@@ -514,26 +520,26 @@ for example when it accepts requests on different IP addresses that do not carry
 or when it accepts requests both with and without the Uri-Host option carrying a registered name.
 Likewise, the server may serve the same resources on different transports.
 This makes for efficient requests (with no Proxy-Scheme or Uri-Host option),
-but in general is discouraged {{aliases}}.
+but is generally discouraged {{aliases}}.
 
 To make efficient requests possible without creating URI aliases that propagate,
-the "has-unique-proxy" specialization of the has-proxy relation
+the "has-unique-proxy" specialization of the "has-proxy" relation
 and the "is-unique-proxy" SVCB parameter are defined.
 
-If a proxy is unique,
-it means that requests arriving at the proxy are treated the same
-no matter whether the scheme, authority and port of the link context are set in the Proxy-Scheme, Uri-Host and Uri-Port options, respectively,
-or whether all of them are absent.
+A proxy is unique,
+if requests arriving at the proxy are treated the same
+no matter whether the scheme, authority, and port of the link context are set in the Proxy-Scheme, Uri-Host, and Uri-Port options, respectively,
+or all of them are absent.
 
 \[ The following two paragraphs are both true but follow different approaches to explaining the observable and implementable behavior;
    it may later be decided to focus on one or the other in this document. \]
 
 While this creates URI aliasing in the requests as they are sent over the network,
 applications that discover a proxy this way should not "think" in terms of these URIs,
-but retain the originally discovered URIs (which, because Cool URIs Don't Change{{cooluris}}, should be long-term usable).
-They use the proxy for as long as they have fresh knowledge of the has-(unique-)proxy statement.
+but retain the originally discovered URIs (which, because "cool URIs don't change" {{cooluris}}, should be long-term usable).
+They use the proxy for as long as they have fresh knowledge of the "has-(unique-)proxy" statement.
 
-In a way, advertising `has-unique-proxy` can be viewed as a description of the link target in terms of SCHC {{?I-D.ietf-lpwan-coap-static-context-hc}}:
+In a way, advertising "has-unique-proxy" can be viewed as a description of the link target in terms of SCHC {{?RFC8824}}:
 In requests to that target, the link source's scheme and host are implicitly present.
 
 While applications retain knowledge of the originally requested URI
@@ -543,9 +549,9 @@ the original URI is not accessible to caches both within the host and on the net
 Thus, cached responses to the canonical and any aliased URI are mutually interchangeable
 as long as both the response and the proxy statement are fresh.
 
-A client MAY use a unique-proxy like a proxy and still send the Proxy-Scheme and Uri-Host option;
-such a client needs to recognize both relation types, as relations of the has-unique-proxy type
-are a specialization of has-proxy and typically don't carry the latter (redundant) annotation.
+A client MAY use a unique proxy like a proxy and still send the Proxy-Scheme and Uri-Host options;
+such a client needs to recognize both relation types, as relations of the "has-unique-proxy" type
+are a specialization of "has-proxy" and typically do not carry the latter (redundant) annotation.
 \[ To be evaluated -- on one hand, supporting it this way means that the server needs to identify all of its addresses and reject others.
    Then again, is a server that (like many now do) fully ignore any set Uri-Host correct at all? \]
 
@@ -573,17 +579,19 @@ Content-Format: application/link-format
 Payload:
 </sensors/temperature>;if="tag:example.com,sensor"
 ~~~~~
-{: #fig-has-unique-proxy title='Follow-up request through a has-unique-proxy relation. Compared to the last example, 5 bytes of scheme indication are saved during the follow-up request.'}
+{: #fig-has-unique-proxy title='Follow-up request through a "has-unique-proxy" relation. Compared to the last example, 5 bytes of scheme indication are saved during the follow-up request.'}
 
 It is noteworthy that when the URI reference `/sensors/temperature` is resolved,
-the base URI is `coap://device0815.example.com` and not its coaps+ws counterpart --
+the base URI is `coap://device0815.example.com` [^device0815] and not its coaps+ws counterpart --
 as the request is still for that URI, which both the client and the server are aware of.
 However, this detail is of little practical importance:
 A simplistic client that uses `coaps+ws://device0815.proxy.rd.example.com` as a base URI will still arrive at an identical follow-up request with no ill effect,
 as long as it only uses the wrongly assembled URI for dereferencing resources,
 the security context is the same,
-the state is kept no longer than the has-unique-proxy statement is fresh,
+the state is kept no longer than the "has-unique-proxy" statement is fresh,
 and it does not (for example) pass the URI on to other devices.
+
+[^device0815]: `device0815` does not show up in {{fig-has-unique-proxy}}. Also should Uri-Query be for `[...],sensor` but the response be `[...],collection`? -- ML
 
 ## Impact on caches
 
@@ -595,22 +603,22 @@ It is also slightly duplicating, but also more detailed than,
 the brief note on the topic in {{actualproxies}}
 \]
 
-When a node that performs caching learns of a `has-unique-proxy` statement,
+When a node that performs caching learns of a "has-unique-proxy" statement,
 it can utilize the information about the implied URI aliasing:
-As long as the `has-unique-proxy` statement is fresh and trusted,
+As long as the "has-unique-proxy" statement is fresh and trusted,
 requests for either of the origins can be served from the cache of the other origin.
 
 ## Using unique proxies securely {#unique-security}
 
-The elision of the host name afforded by the `unique-proxy` relation
+The elision of the hostname afforded by the "has-unique-proxy" relation
 is only possible if the required security mechanisms verify the scheme and host of the server.
 
-This is given for OSCORE based mechanisms,
-where "unprotected message fields (including Uri-Host \[...]) MUST not lead to an OSCORE message becoming verified".
+This is given for mechanisms based on Object Security for Constrained RESTful Environments (OSCORE) {{!RFC8613}},
+where "unprotected message fields (including Uri-Host \[...]) MUST NOT lead to an OSCORE message becoming verified".
 
-With TLS based security mechanisms,
-name and scheme can not be completely elided in general.
-While the use of the SNI HostName field sets the default Uri-Host already,
+With TLS-based security mechanisms,
+name and scheme cannot be completely elided in general.
+While the use of the Server Name Indication (SNI) HostName field sets the default Uri-Host already,
 the scheme still needs to be sent in a Proxy-Scheme option
 to satisfy the requirement of {{secctx-propagation}}.
 
@@ -628,25 +636,25 @@ has been a controversial topic.
 \[ Should we dig up old conversations, link to https://github.com/core-wg/wiki/wiki/CoAP-FAQ#q4,
 or just let the weight of a WG consensus-document-to-be do its work? \]
 
-The `has-unique-proxy` relation provides an easy way for a server
+The "has-unique-proxy" relation provides an easy way for a server
 to indicate that this is in fact allowed:
-A server can publish a statement such as `</>;rel=has-unique-proxy` in its `/.well-known/core` file.
+A server can publish a statement such as `</>;rel=has-unique-proxy` in its `/.well-known/core` resource.
 A client that receives and understands it can thus elide the Uri-Host option in requests to the server
 as per the definition of the relation.
 
-# Third party proxy services {#thirdparty}
+# Third-party proxy services {#thirdparty}
 
-A server that is aware of a suitable cross proxy may use the has-proxy relation to advertise that proxy.
+A server that is aware of a suitable cross proxy may use the "has-proxy" relation to advertise that proxy.
 If the transport used towards the proxy provides name indication (as CoAP over TLS or WebSockets does),
-or by using a large number of addresses or ports,
-it can even advertise a (more efficient) has-unique-proxy relation.
+or uses a large number of addresses or ports,
+it can even advertise a (more efficient) "has-unique-proxy" relation.
 This is particularly interesting when the advertisements are made available across transports,
 for example in a Resource Directory.
 
 How the server can discover and trust such a proxy
 is out of scope for this document,
 but generally involves the same kind of links.
-In particular, a server may obtain a link to a third party proxy from an administrator as part of its configuration.
+For instance, a server may obtain a link to a third-party proxy from an administrator as part of its configuration.
 
 The proxy may advertise itself without the origin server's involvement;
 in that case, the client needs to take additional care (see {{proxy-foreign-advertisement}}).
@@ -658,7 +666,7 @@ Res:
 Content-Format: application/link-format
 Payload:
 <coap://device0815.example.com/sensors/>;if="tag:example.com,collection",
-<coap+wss://device0815.proxy.rd.example.com>;rel=has-unique-proxy;anchor="coap://device0815.example.com/"
+<coaps+ws://device0815.proxy.rd.example.com>;rel=has-unique-proxy;anchor="coap://device0815.example.com/"
 
 
 Req: to device0815.proxy.rd.example.com on WebSocket
@@ -671,11 +679,15 @@ Content-Format: application/link-format
 Payload:
 </sensors/temperature>;if="tag:example.com,sensor"
 ~~~~~
-{: #fig-external-proxy title='HTTP based discovery and CoAP-over-WS request to a CoAP resource through a has-unique-proxy relation'}
+{: #fig-external-proxy title='HTTP based discovery and CoAP over WS request to a CoAP resource through a "has-unique-proxy" relation'}
+
+[^sensor-collection]
+
+[^sensor-collection]: Should Uri-Query be for `[...],sensor` but the response be `[...],collection`? -- ML
 
 ## Generic proxy advertisements {#generic-advertisements}
 
-A third party proxy may advertise its availability to act as a proxy for arbitrary CoAP requests.
+A third-party proxy may advertise its availability to act as a proxy for arbitrary CoAP requests.
 This use is not directly related to the transport indication in other parts of this document,
 but sufficiently similar to warrant being described in the same document.
 
@@ -706,10 +718,10 @@ On Monday, October 25th 2021, there is no special message of the day.
 The considerations of {{proxy-foreign-advertisement}} apply here.
 
 A generic advertised proxy is always a forward proxy,
-and can not be advertised as a "unique" proxy as it would lack information about where to forward.
+and cannot be advertised as a "unique" proxy as it would lack information about where to forward.
 
 A proxy may be limited in the URIs it can service,
-for technical reasons (e.g. when none of the URI's transports are supported by the server)
+for technical reasons (e.g., when none of the URI's transports are supported by the proxy)
 or for policy reasons (only accessing servers inside an organizational structure).
 Future documents (or versions of this document) may add target attributes
 that allow specifying the capabilities of a proxy.
@@ -742,8 +754,8 @@ to correct the URI associated with a cached response,
 and to use responses obtained through one transport to satisfy requests on another.
 
 For example, if a host at coap://h1.example.com has advertised `</res>,<coap+tcp://h1.example.com>;rel=has-proxy;anchor="/"`,
-then a proxy that has an active CoAP-over-TCP connection to h1.example.com
-can forward an incoming request for coap://h1.example.com/res through that CoAP-over-TCP connection
+then a proxy that has an active CoAP over TCP connection to h1.example.com
+can forward an incoming request for coap://h1.example.com/res through that CoAP over TCP connection
 with a suitable Proxy-Scheme and Uri-Host on that connection.
 
 If the host had marked the proxy point as `<coap+tcp://h1.example.com>;rel=has-unique-proxy` instead,
@@ -761,9 +773,9 @@ it can be practical for the client to use the advertised proxy instead.
 
 # Service Binding Parameters for CoAP transports
 
-Discovery mechanisms that exist in DNS {{?RFC9460}}, DHCP, Router Advertisements {{?RFC9463}} or other mechanisms
-can provide details already that would otherwise only be discovered later through proxy links.
-For when those details are provided in the shape of Service Binding Parameters,
+Discovery mechanisms that exist in DNS {{?RFC9460}}, DHCP, Router Advertisements {{?RFC9463}}, or other mechanisms
+can already provide details that would otherwise only be discovered later through proxy links.
+When those details are provided as Service Binding Parameters,
 this section describes their interpretation in the context of CoAP transport indication.
 
 This document is an SVCB mapping document as described in {{!RFC9460}}.
@@ -774,31 +786,32 @@ is as follows:
 | ---------------------------------------- | ---------------------------------------- |
 | **Mapped schemes**                       | "coap", "coaps", "coap+tcp", "coaps+tcp", "coap+ws", "coaps+ws" |
 | **RR type**                              | SVCB (64)                                |
-| **Name prefix**                          | `_coap` for the scheme's default port, else `_$PORT._coap`    |
+| **Name prefix**                          | `_coap` for the default port of the scheme, else `_$PORT._coap`    |
 | **Automatically Mandatory Keys**         | `port`, `no-default-alpn`                |
 | **SvcParam defaults**                    | `alpn`: according to scheme (or empty)   |
 | **Special behaviors**                    | Multiple mapped schemes; `alpn` default influenced by initial URI. |
 | **Keys that records must include**       | None                                     |
+{: #tab-mapping summary title='CoAP SVCB Mapping Summary'}
 
 \[ The following paragraph is outdated, but its replacement will depend on the outcome of IETF122 discussions. \]
 
-The subsections in this section are arranged to describe a consistent sequential full picture.
+The subsections in this section are arranged to describe a sequential, consistent picture.
 The capabilities of this big picture are not exercised by any application known at the time of draft publication.
 It is instead backed by many small-scope use cases
-(such as bootstrapping issues of proxy-link based CoAP scheme unification, {{?I-D.lenders-core-dnr}}, {{?I-D.amsuess-t2trg-onion-coap}} and also applications outside CoAP such as {{SUIB}})
+(such as bootstrapping issues of proxy-link based CoAP scheme unification, {{?I-D.amsuess-t2trg-onion-coap}} and also applications outside CoAP such as {{SUIB}})
 and presents a unified solution framework.
 
 ## Discovering transport indication details from name resolution {#svcb-discovery}
 
 This document registers the `_coap` attrleaf label
 in {{iana-underscored}}
-using the pattern described as described in {{Section 10.4.5 of !RFC9460}},
-and thus enables the use of SVCB records.
-This path is chosen over the creation of a new SVCB RR "COAP"
+using the pattern described in {{Section 10.4.5 of !RFC9460}}.
+The label enables the use of SVCB records.
+This path is chosen over the creation of a new SVCB-based RR type "COAP"
 because it is considered unlikely that DNS implementations would update their code bases to apply SVCB behavior;
 this assumption will be revisited before registration.
 
-These can be used during the resolution of URIs that use any CoAP scheme.
+The `_coap` label can be used during the resolution of URIs that use any CoAP scheme.
 The presence of an SVCB record for a registered name
 implies that any transport advertised in the record is suitable for proxying to
 resources of any CoAP scheme and that registered name,
@@ -807,14 +820,14 @@ This does not create URI aliasing:
 Any resource is still accessed at its original URI through the advertised proxy endpoints.
 
 It is possible through this to advertise transports without transport layer security
-for URIs with the schemes "coaps", "coaps+tcp" and "coaps+ws".
+for URIs with the schemes "coaps", "coaps+tcp", and "coaps+ws".
 Unless the application explicitly regards an object layer security mechanism as a sufficient replacement for transport layer security,
-those transports can not be selected for operations on such URIs as per {{secctx-propagation}}.
+those transports cannot be selected for operations on such URIs as per {{secctx-propagation}}.
 
-Some SVCB parameters have defaults; for "_coap", these are:
+Some SVCB parameters have defaults; for `_coap`, these are:
 
-* port: 5683
-* ALPN: empty
+* `port`: 5683
+* `alpn`: empty
 
 As SVCB records were not specified for the existing CoAP transports originally,
 generic CoAP clients are not required to use the SVCB lookup mechanism,
@@ -829,8 +842,8 @@ that mechanism might have been used in the first place instead of additional sch
 \[ The following paragraph may need to be revisited depending on the outcome of IETF122 discussions. \]
 
 The effects on a client of seeing SVCB parameters are similar
-to those of seeing a "has-proxy" link from the origin to the URI built using {#svcblit}.
-The precise implications of any DNSSec-backed applicable credentials expressed in SVCB parameters
+to those of seeing a "has-proxy" link from the origin to the URI built using {{svcblit}}.
+The precise implications of any DNSSEC-backed applicable credentials expressed in SVCB parameters
 are subject to ongoing discussion (especially with regard to whether they apply to the proxy or the origin server).
 
 ## Service Parameters {#svcparams}
@@ -844,26 +857,26 @@ and independently of whether they apply to the `_coap` service or another servic
 
   This document does not limit which ports can be used with CoAP.
 
-* `alpn`: The ALPN "coap" has been defined for CoAP-over-TLS {{?RFC8323}}, and "co" for CoAP-over-DTLS in {{?I-D.ietf-core-coap-dtls-alpn}}.
+* `alpn`: The ALPN "coap" has been defined for CoAP over TLS {{!RFC8323}}, and "co" for CoAP-over-DTLS in {{?RFC9952}}.
 
   If an ALPN service parameter is found, this indicates that the ALPN(s) and thus the CoAP transport that can be used on this address / port.
   For example, "co" indicates that DTLS (and thus UDP) is used.
 
-  ALPN IDs are defined in this document and in {{I-D.ietf-core-coap-dtls-alpn}} for the CoAP transports that had no such identifier when they were specified.
+  ALPN IDs are defined in this document and in {{RFC9952}} for the CoAP transports that had no such identifier when they were specified.
 
   The default value of `alpn` when processing a URI (as in {{processing-scheme-authority}}) is the ALPN corresponding to the used scheme.
-  The default value when not processing a URI (e.g. when processing service parameters from DNR {{?RFC9463}}) is empty.
+  The default value when not processing a URI (e.g., when processing service parameters from DNR {{?RFC9463}}) is empty.
 
 * `no-default-alpn`, `mandatory`, `ipv4hint`, `ipv6hint`:
   Used as described in {{Section 7 of RFC9460}}.
 
 * `is-unique-proxy`: This is a new parameter defined in this document,
-  and equivalent to the `has-unique-proxy` in its semantics.
+  and equivalent to the "has-unique-proxy" link format parameter in its semantics.
 
   Its value is empty.
 
 * Applications may extend the supported parameters.
-  In particular, {{?I-D.ietf-core-dns-over-coap}} has already introduced the `docpath` parameter
+  In particular, {{?RFC9953}} has already introduced the `docpath` parameter
   which indicates a path at which DNS-over-CoAP is available at the given address.
 
 The following parameters are under consideration for inclusion in this list,
@@ -871,7 +884,7 @@ but it is unsure whether they are suitable.
 Those parameters would describe the origin server
 and not the individual (proxy) transport through which it can be reached.
 
-* `cred`: This is a new parameter defined in this document, and describes COSE credentials that can authenticate the server, e.g. when used with EDHOC.
+* `cred`: This is a new parameter defined in this document, and describes Concise Binary Object Representation (CBOR) Object Signing and Encryption (COSE) credentials that can authenticate the server, e.g., when used with Ephemeral Diffie-Hellman Over COSE (EDHOC).
 
   The `cred` parameter's value is a CBOR sequence of COSE Header maps as defined in {{!RFC9052}}.
   If the parameter is present, it indicates that
@@ -885,10 +898,10 @@ and not the individual (proxy) transport through which it can be reached.
 
   For example, a header map with a `kccs` entry can be used to indicate a public key including a Key ID (`kid`),
   and that public key does not need to be sent during the EDHOC exchange.
-  Alternatively, a header map with an `x5t` identifies the end entity certificate the server presents by a thumbprint (hash).
+  Alternatively, a header map with an `x5t` entry identifies the end entity certificate the server presents by a thumbprint (hash).
 
   It is up to the application to define requirements for the provenance of the `cred` parameter,
-  whether it needs to be provided through secure mechanism,
+  whether it needs to be provided through a secure mechanism,
   or whether the server is strictly required to present that credential.
 
   This is unlike TLSA, which needs to be transported through DNSSEC,
@@ -896,10 +909,10 @@ and not the individual (proxy) transport through which it can be reached.
   (for example in DHCPv6 responses or Router Advertisements).
 
 * `edhoc-app-prof` and `edhocpath`: The parameters describe how EDHOC can be used on the server;
-  they are specified in {{?I-D.-ietf-lake-app-profiles}}.
+  they are specified in {{?I-D.ietf-lake-app-profiles}}.
 
 * `oauth-hints`: This is a new parameter defined in this document,
-  describing how ACE-OAuth {{?RFC9200}} can be used with this service.
+  describing how Authentication and Authorization for Constrained Enviroments (ACE) using the OAuth 2.0 framework (ACE-OAuth) {{?RFC9200}} can be used with this service.
 
   Its value is a CBOR map containing AS Request Creation Hints as described in {{Section 5.3 of RFC9200}}.
   While an empty map can be useful (hinting that the client should use its configured ACE-OAuth setup),
@@ -907,26 +920,28 @@ and not the individual (proxy) transport through which it can be reached.
   1 (AS, indicating the URI of the Authorization Server),
   5 (audience, indicating the name under which the service is known to the Authorization Server),
   and 9 (scope, when discovering a particular service rather than just getting transport information for a host).
-  That data is using the same shape the server might use when responding to an attempt at an unencrypted connection,
-  and can not only speed up the discovery of the right AS,
-  but can also protect that information (e.g. when DNSSEC is used),
-  and avoids the need for an unprotected first request.
+  That data has the same shape as the server might use when responding to an attempt at an unencrypted connection.
+  This can not only speed up the discovery of the right AS,
+  but can also protect that information (e.g., when DNSSEC is used),
+  and avoid the need for an unprotected first request.
 
   It is up to the application to define requirements for the use of such data.
   For example,
-  it may require that the audience matches the requested host name,
+  it may require that the audience matches the requested hostname,
   or may require that the scope matches the kind of service being discovered.
 
-  When expressed in text format, e.g. in DNS zone files,
+  When expressed in text format, e.g., in DNS zone files,
   the CBOR diagnostic notation {{?I-D.ietf-cbor-edn-literals}} can be used.
 
 ### Examples of using name resolution discovery and parameters
 
 #### Generic client discovering transport options
 
-A generic client is directed to obtain `coap://dev1.example.com/log`
-requests the name to be resolved using the system's resolution mechanisms,
-resulting in a DNS query for these records:
+A generic client is directed to obtain `coap://dev1.example.com/log`.
+The hostname is resolved using the system's resolution mechanisms,
+resulting in DNS queries[^multiple-questions] for these records:
+
+[^multiple-questions]: , see {{?RFC9619}} -- ML
 
 ~~~
 _coap.dev1.example.com IN SVCB
@@ -942,32 +957,33 @@ _coap.dev1.example.com IN SVCB 1 . alpn=CO port=61616
 dev1.example.com       IN AAAA 2001:db8:1::1
 ~~~
 
-Exceeding the single option it had with just the IP address,
+In addition to the single option it had with just the IP address,
 it may now also choose to establish a TCP connection on the default port,
 to use port 61616 for UDP (which results in more compact frames on a 6LoWPAN link),
 or to use either of the TLS based options.
 
 #### Application mandating SVCB
 
-An example application's policy is to mandate client support for SVCB records,
+An example policy of an application is to mandate client support for SVCB records,
 and to require that a security mechanism must be used where credentials are backed either by DNSSEC or by the Web PKI.
 
 A server operator is running in a legacy network that only provides an IPv4 address behind NAT with a dynamic public address,
-but has PCP {{?RFC7291}} available.
+but has PCP {{?RFC6887}} available.
 After running PCP to open a UDP port,
-it learns that 1.2.3.4:5678 will be available for some time.
+it learns that 192.0.2.4:5678 will be available for some time.
 
-It therefore updates its DNS record like this:
+It therefore updates its DNS record like this, and sets an accompanying record:
 
 ~~~
 _coap.host.example.net 600 IN SVCB 1 publicudp.host.example.net       \
                        port=5678                                      \
                        cred={14:{... /KCCS with its public key/}}
+publicudp.host.example.net 600 IN A 192.0.2.4
 ~~~
 
 When a client starts using `coap://host.example.net/interactive`,
 it looks up that record and verifies it using DNSSEC.
-It then proceeds to send EDHOC requests over CoAP to 1.2.3.4 port 5678,
+It then proceeds to send EDHOC requests over CoAP to 192.0.2.4 port 5678,
 setting the Uri-Host option to "host.example.net".
 
 The client could also have initiated an EDHOC session if no cred parameter had been present,
@@ -978,14 +994,14 @@ for example an x5chain containing a Let's Encrypt certificate.
 
 ## Producing requests for a discovered service {#svcb2uri}
 
-If a service's discovery process does not produce a URI but an address, host name and/or Service Binding Parameters,
+If a discovery process of a service does not produce a URI but any combination of an address, hostname, or Service Binding Parameters,
 those can be converted to a CoAP URI,
 for which transport hints are already encoded in the parameters the URI is constructed from.
-An example of this is DNS server discovery {{?I-D.ietf-core-coap-dtls-alpn}}.
+An example of this is DNS server discovery {{?RFC9953}}.
 
 While it is up to the service to define the service's semantics,
 this section applies to any service
-whose use with CoAP is defined by a normative referencing this section:
+whose use with CoAP is defined by a normative reference to this section:
 
 * The client tries the available services with their ALPNs and CoAP transports
   according to its capabilities
@@ -998,14 +1014,14 @@ whose use with CoAP is defined by a normative referencing this section:
 
   The value is a CBOR sequence {{!RFC8742}} of text strings,
   which represent Uri-Path options in a CoAP request,
-  or (equivalently) the path of a CRI reference
+  or (equivalently) the path of a Constrained Resource Identifier (CRI) reference
   {{I-D.ietf-core-href}}.
 
-  A parameter value that is not a well-formed CBOR sequence,
-  or any item is not a text string,
-  is considerd malformed.
+  A parameter value that is not a well-formed CBOR sequence
+  or in which any item is not a text string,
+  is considered malformed.
 
-  When expressed in text format, e.g. in DNS zone files,
+  When expressed in text format, e.g., in DNS zone files,
   the CBOR diagnostic notation {{?I-D.ietf-cbor-edn-literals}} can be used.
 
   To access the service,
@@ -1018,7 +1034,7 @@ whose use with CoAP is defined by a normative referencing this section:
   (if such a property exists in the discovery method).
 
   An example of such an option is `docpath`
-  as defined in {{?I-D.ietf-core-dns-over-coap}}.
+  as defined in {{?RFC9953}}.
   (As that document precedes this one,
   it repeats the same rules explicitly rather than reusing these rules).
 
@@ -1026,15 +1042,15 @@ whose use with CoAP is defined by a normative referencing this section:
   For example,
   this is the hostname of the Encrypted DNS Resolver or the Special-Use Domain Name
   in the case of {{?RFC9462}} lookups,
-  or the authentication-domain-name in case of {{?RFC9463}} DHCP options or Router Advertisements.
+  or the authentication-domain-name in the case of {{?RFC9463}} DHCP options or Router Advertisements.
 
   Unless its value is identical to the default value for Uri-Host
-  (which is the case on transports with Server Name Indication (SNI)),
-  the that name is added in the Uri-Host option.
+  (which is the case on transports with SNI),
+  that name is added in the Uri-Host option.
 
 * If the `port` Service Binding Parameter is set,
-  the Uri-Port option is set to the port that set in the port prefix of the query
-  (or the used CoAP transport's default port),
+  the Uri-Port option is set to the port that is set in the port prefix of the query
+  (or the default port of the CoAP transport used),
   unless that is its default value anyway.
 
 * No Proxy-Scheme option is set.
@@ -1047,7 +1063,7 @@ This implies URI aliasing between the composed URIs of all transports
 if any of the transports use different schemes.
 
 The rules for setting Uri-Host and Uri-Port result in the authority component of the URI
-being equal to the Binding Authority defined in {{?RFC9461}}.
+being equal to the Binding Authority defined in {{!RFC9461}}.
 
 Note that since different security policies may apply to service discovery
 and other application components that dereference URIs,
@@ -1067,37 +1083,37 @@ instead of just the one choice taken.
 It is also required if different CoAP transports are using the same scheme
 (as is recommended in {{upcomingtransports}})
 with IP address literals in URIs,
-for which unlike for resolved names no service parameters are available.
+for which, unlike for resolved names, no service parameters are available.
 
 # Guidance to upcoming transports {#upcomingtransports}
 
 When new transports are defined for CoAP,
 it is recommended to use the "coap" scheme
-(or "coaps" for TLS based transports).
+(or "coaps" for (D)TLS-based transports).
 
 {:ml: source="Martine"}
 
-If the transport's identifiers are IP based and have identifiers typically resolved through DNS,
+If the identifiers of the transport are IP-based and are typically resolved through DNS,
 authors of new transports are encouraged to specify how they are expressed in Service Binding records ({{?RFC9460}}),
-e.g., using an `alpn` parameter (which does not necessarily indicate the use of a TLS based transport),
+e.g., using an `alpn` parameter (which does not necessarily indicate the use of a (D)TLS-based transport),
 and if IP literals are relevant to the transport, to follow up on {{newlit}}.
 
-If the transport's native identifiers are compatible with the structure of the authority component of a URI,
+If the native identifiers of the transport are compatible with the structure of the authority component of a URI,
 those identifiers can be used as an authority as-is.
-To help the host decide the resolution mechanism,
-it may be helpful to register a subdomain of .arpa as described in {{?rfc3172}}.
-The guidence for users is to never attempt to resolve such a name,
-and for the zone's implementation is to return NXDOMAIN unconditionally.
+To help the client decide on the resolution mechanism,
+it may be helpful to register a subdomain of .arpa as described in {{?RFC3172}}.
+The guidance for users is to never attempt to resolve such a name,
+and for the implementation of the zone to return NXDOMAIN unconditionally.
 
 If the transport's native identifiers are incompatible with that structure
-(e.g. because they contain colons),
+(e.g., because they contain colons),
 the document may define some transformation.
 
 If a transport's native identifiers are only local,
-the zone .alt {{?rfc9476}} may be used instead.
+the .alt special-use TLD {{?RFC9476}} may be used instead.
 
 For example,
-CoAP over GATT {{?I-D.amsuess-core-coap-over-gatt}}
+CoAP over GATT {{?I-D.ietf-core-coap-over-gatt}}
 removes the colons from Bluetooth Low Energy MAC addresses like 00:11:22:33:44:55
 and combines them into authority components such as `001122334455.ble.arpa`.
 Slipmux {{?I-D.bormann-t2trg-slipmux}}
@@ -1107,7 +1123,7 @@ as `coap://ttyUSB0.dev.alt/`.
 URIs created from such names may not indicate the protocol uniquely:
 Additional transports specified later may also provide CoAP services for the same name.
 In the sense of {{identifying}},
-both transport would be identified by that URI.
+both transports would be identified by that URI.
 That is not an issue as long as the protocols underneath the CoAP transport
 provide a means of advertising the precise protocol used.
 For example,
@@ -1120,11 +1136,11 @@ can be selected for the same scheme and authority based on data in the BLE adver
 
 Clients need to strictly enforce the rules of {{secctx-propagation}}.
 Failure to do so,
-in particular using a thusly announced proxy based on a certificate that attests the proxy's name,
+in particular using a proxy announced in this way based on a certificate that attests the proxy's name,
 would allow attackers to circumvent the client's security expectation.
 
-When security is terminated at proxies (as is in DTLS and TLS),
-a third party proxy can usually not satisfy this requirement;
+When security is terminated at proxies (as is the case with DTLS and TLS),
+a third-party proxy can usually not satisfy this requirement;
 these transports are limited to same-host proxies.
 
 ## Traffic misdirection {#proxy-foreign-advertisement}
@@ -1136,18 +1152,18 @@ Not only does that impact availability,
 it also allows an attacker to observe traffic patterns.
 
 This affects both OSCORE and (D)TLS,
-as neither protect the participants' network addresses.
+as neither protects the participants' network addresses.
 
 Other than the security context propagation rules,
 there are no hard and general rules about when an advertised proxy is a suitable candidate.
 Aspects for consideration are:
 
 * When no direct connection is possible
-  (e.g. because the resource to be accessed is served as coap+tcp and TCP is not implemented in the client,
+  (e.g., because the resource to be accessed is served as coap+tcp and TCP is not implemented in the client,
   or because the resource's host is available on IPv6 while the client has no default IPv6 route),
   using a proxy is necessary if complete service disruption is to be avoided.
 
-  While an adversary can cause such a situation (e.g. by manipulating routing or DNS entries),
+  While an adversary can cause such a situation (e.g., by manipulating routing or DNS entries),
   such an adversary is usually already in a position to observe traffic patterns.
 
 * A proxy advertised by the device hosting the resource to be accessed is less risky to use than one advertised by a third party.
@@ -1161,13 +1177,13 @@ Aspects for consideration are:
 When the advertisement was obtained from the target host,
 that needs to be reachable. -->
 
-{{ead}} describes an extension to {{I-D.ietf-lake-edhoc}} by which the client can verify that the proxy used by the client is recognized by the server.
+{{ead}} describes an extension to {{RFC9528}} by which the client can verify that the server recognizes the proxy in use.
 This is similar to querying `/.well-known/core` for any proxies advertised there,
 but happens earlier in the connection establishment,
 and leaves the decision whether the proxy is legitimate to the server.
 
-It only conveys information about the URI of the proxy.
-The mapping of any host name inside it to an IP address,
+This only conveys information about the URI of the proxy.
+The mapping of any hostname inside it to an IP address,
 or of an IP address to a routing decision,
 is left to the security mechanisms of the respective layers.
 
@@ -1178,16 +1194,16 @@ A widely published statement about a host's availability as a proxy can cause ma
 This is mitigated in well-behaved clients by observing the rate limits of {{RFC7252}},
 and by ceasing attempts to reach a proxy for the Max-Age of received errors.
 
-Operators can further limit ill-effects
+Operators can further limit ill effects
 by ensuring that their client systems do not needlessly use proxies advertised in an unsecured way,
-and by providing own proxies when their clients need them<!-- in a sense, avoid having starving clients that grab any straw at connectivity -->.
+and by providing their own proxies when their clients need them<!-- in a sense, avoid having starving clients that grab any straw at connectivity -->.
 
 
 # IANA considerations
 
 ## Link Relation Types
 
-IANA is asked to add two entries into the Link Relation Type Registry last updated in {{!RFC8288}}:
+IANA is requested to add two entries into the Link Relation Type Registry last updated in {{!RFC8288}}:
 
 | Relation Name     | Description                                                                                  | Reference   |
 | has-proxy         | The link target can be used as a proxy to reach URIs inside the origin of the link context.  | RFCthis     |
@@ -1196,9 +1212,9 @@ IANA is asked to add two entries into the Link Relation Type Registry last updat
 
 ## Resource Types
 
-IANA is asked to add an entry into the "Resource Type (rt=) Link Target Attribute Values" registry under the Constrained RESTful Environments (CoRE) Parameters:
+IANA is requested to add an entry into the "Resource Type (rt=) Link Target Attribute Values" registry under the Constrained RESTful Environments (CoRE) Parameters:
 
-\[ The RFC Editor is asked to replace any occurrence of CPA-core.proxy with the actually registered attribute value. \]
+\[ The RFC Editor is requested to replace any occurrence of CPA-core.proxy with the actually registered attribute value. \]
 
 Attribute Value: core.proxy
 
@@ -1209,40 +1225,40 @@ Reference: \[ this document \]
 ## TLS Application-Layer Protocol Negotiation (ALPN) Protocol IDs
 
 IANA is requested to add the following entries to the TLS Application-Layer Protocol Negotiation (ALPN) Protocol IDs
-registry ({{?RFC7301}}).
+registry ({{!RFC7301}}).
 
-The identification sequences are suggestions to be approvded by the reviewers
+The identification sequences are suggestions to be approved by the designated experts.
 
 | Protocol  | Identification sequence  | Reference |
 | --- | --- | --- |
-| CoAP (over UDP) | 0x43 0x4f ("CO") | {{RFC7252}} |
-| CoAP (over TCP) | 0x43 0x4f 0x41 0x50 ("COAP") | {{RFC8323}} |
+| CoAP (over UDP) | 0x43 0x4f ("CO") | {{RFC7252}}, RFCthis |
+| CoAP (over TCP) | 0x43 0x4f 0x41 0x50 ("COAP") | {{RFC8323}}, RFCthis |
 
 ## Service Parameter Key (SvcParamKey)
 
 IANA is NOT YET requested to add the following entries to the SVCB Service Parameters
-registry ({{?RFC9460}}). The definition of this parameter can be found in {{upcomingtransports}}.
+registry ({{?RFC9460}}). The definition of this parameter can be found in {{svcparams}}.
 
 | Number  | Name           | Meaning                            |
 | ------- | -------------- | ---------------------------------- |
 | to be assigned      | cred                 | COSE credentials identifying the server |
 | to be assigned      | oauth-hints          | Describes how to obtain a token at an ACE Authorization Server |
 
-All entries have in common that their Reference is this this document, {{svcparams}}},
+All entries have in common that their Reference is this document, {{svcparams}}},
 and that their change controller is IETF.
 
 ## Underscored and Globally Scoped DNS Node Names {#iana-underscored}
 
 IANA is NOT YET requested to add the following entry to the Underscored and Globally Scoped DNS Node Names registry
 (in the DNS Parameters group)
-established in {{?RFC8552}}
-and thus enables its use with SVCB records:
+established in {{!RFC8552}}
+thereby enabling its use with SVCB records:
 
 * SVCB, `_coap`, {{svcb-discovery}} of this document
 
 The request for registration is deliberately not expressed at this point
-because it is yet to be revisited whether the creation of a "COAP" RR
-similar to the "HTTPS" RR would be preferable.
+because it is yet to be revisited whether the creation of a "COAP" RR type
+similar to the "HTTPS" RR type would be preferable.
 
 --- back
 
@@ -1261,7 +1277,7 @@ Since draft-ietf-core-transport-indication-08:
 * Explicitly become an SVCB mapping document for the CoAP schemes.
 * Remove coaptransport parameter; instead, request ALPNs for remaining protocols.
 * Point out issue about some metadata pertaining to transport choices and some metadata pertaining to the server itself.
-* Acknowledge that there is structure (eg. in SVCB lookups) that is conceptually flattened.
+* Acknowledge that there is structure (e.g., in SVCB lookups) that is conceptually flattened.
 * Sulkily accept DNS-over-CoAP reaching into target names as an exception in security requirements.
 * Editorial updates.
 
@@ -1307,7 +1323,7 @@ Since draft-ietf-core-transport-indication-05:
 
 * Material from the DNS and DNR for CoAP documents was moved in (and overhauled in the process):
 
-  * Constructing CoAP requests from Service Parameters that did not result from a host name lookup is described.
+  * Constructing CoAP requests from Service Parameters that did not result from a hostname lookup is described.
   * The coaptransport SVCB parameter is defined.
   * SVCB hints for ACE/OAuth are defined.
 
@@ -1327,13 +1343,13 @@ Since draft-ietf-core-transport-indication-04:
 
 * Not just the scheme, but also the authority value influences the transport selection.
   - Add guidance section for new transports.
-  - Point out that registerd names already can fan out to different addresses.
+  - Point out that registered names already can fan out to different addresses.
 * Rephrase and simplify security considerations, especially by limiting unique proxying for TLS.
 * Add recommendation to new scheme authors to use "coap"/"coaps" and let the resolution process guide the selection.
   - Remove proxy-schemes attribute from core.proxy because of its greatly reduced value.
 * Update "Related work" appendix to cover SVCB instead of SRV records
 * Rename to "Transport Indication", using "protocol" only for other protocols, in established phrases, or when referring to CoAP as a general protocol.
-* Add note linking CoAP-over-WS's .well-known/coap to dohpath
+* Add note linking CoAP over WS's .well-known/coap to dohpath
 * Remove OSCORE vs. unique-proxy open point
 * EDHOC EAD: Describe response option content
 * Editorial updates
@@ -1364,7 +1380,7 @@ Since draft-amsuess-core-transport-indication-03:
 
 Since -02 (mainly processing reviews from Marco and Klaus):
 
-* Acknowledge that 'coap://hostname/' is not the proxy but a URI that (in a particular phrasing) is used to stand in for the proxy's address (while it regularly identifies a resurce on the server)
+* Acknowledge that 'coap://hostname/' is not the proxy but a URI that (in a particular phrasing) is used to stand in for the proxy's address (while it regularly identifies a resource on the server)
 * Security: Referencing traffic misdirection already in the first security block.
 * Security: Add (incomplete) considerations for unique-proxy case.
 * Narrow down "unique" proxy semantics to those properties used by the client, allowing unique proxies to be co-hosted with forward proxies.
@@ -1403,7 +1419,7 @@ Since -00:
 
 [^remove-relatedwork]
 
-[^remove-relatedwork]: This section is to be removed before submission to the IESG, with at least the MP-TCP section worked into corr-clar.
+[^remove-relatedwork]: This section is to be removed before submission to the IESG, with at least the MP-TCP section worked into corr-clar {{?I-D.ietf-core-corr-clar}}.
 
 ## On HTTP
 
@@ -1415,13 +1431,13 @@ In HTTP, different versions of the protocol (i.e., different transports)
 are distinguished using a protocol identifier equivalent to an ALPN.
 This works well because all relevant transports use transport layer security and thus can use ALPNs.
 In contrast, the currently specified CoAP transports predate ALPNs,
-and specified per-transport schemes, which enable the use of URIs that indicate transports.
+and specify per-transport schemes, which enable the use of URIs that indicate transports.
 
 To accommodate the message size constraints typical of CoRE environments,
 and accounting for the differences between HTTP headers and CoAP options,
 information is delivered once at discovery time.
 
-Using the has-proxy and has-unique-proxy with HTTP URIs as the context is NOT RECOMMENDED;
+Using the "has-proxy" and "has-unique-proxy" relations with HTTP URIs as the context is NOT RECOMMENDED;
 the HTTP provisions of the Alt-Svc header and ALPN are preferred.
 
 ## Using DNS
@@ -1434,8 +1450,8 @@ SVCB records were not specified when CoAP was specified for TCP.
 
 If at any point SVCB records for CoAP are defined,
 name resolution produces a set of transport details that can be used immediately
-without the need for a `has-proxy` link.
-Explicit `has-proxy` links would still be relevant for third party advertised proxies.
+without the need for a "has-proxy" link.
+Explicit "has-proxy" links would still be relevant for third-party-advertised proxies.
 
 ## Using names outside regular DNS
 
@@ -1475,7 +1491,7 @@ Payload:
 
 ## Multipath TCP
 
-When CoAP-over-TCP is used over Multipath TCP
+When CoAP over TCP is used over Multipath TCP
 and no Uri-Host option is sent,
 the implicit assumption is that there is aliasing between URIs containing any of the endpoints' addresses.
 
@@ -1487,13 +1503,13 @@ When advertisements are long-lived and there is no single more stable address,
 several available addresses can be advertised (independently of whether MPTCP is involved or not).
 If a client uses an address that is merely a proxy address (and not a unique proxy address),
 but during MPTCP finds out that the network location being accessed is actually an MPTCP alternative address of the used one,
-the client MAY forego sending of the Proxy-Scheme and Uri-Path option.
+the client MAY forgo sending of the Proxy-Scheme and Uri-Host option.
 
 \[ This follows from multiple addresses being valid for that TCP connection;
 at some point we may want to say something about what that means for the default value of the Uri-Host option --
 maybe something like "has the default value of any of the associated addresses, but the server may only enable MPTCP if there is implicit aliasing between all of them" (similar to OSCORE's statement)?  \]
 
-\[ TBD: Do we need a section analog to this that deals with (D)TLS session resumption in absence of SNI? \]
+\[ TBD: Do we need a section analogous to this that deals with (D)TLS session resumption in absence of SNI? \]
 
 # Open Questions / further ideas
 
@@ -1503,7 +1519,7 @@ maybe something like "has the default value of any of the associated addresses, 
 
 * Advertising under a stable name:
 
-  If a host wants to advertise its host name rather than its IP address during multicast, how does it best do that?
+  If a host wants to advertise its hostname rather than its IP address during multicast, how does it best do that?
 
   Options, when answering from 2001:db8::1 to a request to ff02::fd are:
 
@@ -1526,10 +1542,10 @@ maybe something like "has the default value of any of the associated addresses, 
   * understanding that the request that went to 2001:db8::1 was really a Proxy-Scheme/Uri-Host-elided version of a request to coap://myhostname, and then
   * processing any relative reference with this new base in mind.
 
-  (Not that it'd need to happen in software in that sequence,
-  but that's the sequence needed to understand how the `/foo` here is really `coap://myhostname/foo`).
+  (Not that it would need to happen in software in that sequence,
+  but that is the sequence needed to understand how the `/foo` here is really `coap://myhostname/foo`).
 
-  If CoRAL is used during discovery, a base directive or reverse relation to has-unique-proxy would make this easier.
+  If the he Constrained RESTful Application Language (CoRAL) {{?I-D.ietf-core-coral}} is used during discovery, a base directive or reverse relation to has-unique-proxy would make this easier.
 
 # EDHOC EAD for verifying legitimate proxies {#ead}
 
@@ -1537,18 +1553,18 @@ maybe something like "has the default value of any of the associated addresses, 
 
 [^remove-edhocead]: This section is to be moved into another document, possibly `groupcomm-proxy`.
 
-This document sketches an extension to {{I-D.ietf-lake-edhoc}} that informs the server of the public address the client is using,
+This document sketches an extension to {{RFC9528}} that informs the server of the public address the client is using,
 allowing it to detect undesired reverse proxies.
 
 \[ This section is immature, and written up as a discussion starting point. Further research into prior art is still necessary. ]
 
 The External Authorization Data (EAD) item with name "Proxy CRI", label 24-CPA, is defined for use with messages 1, 2 and 3.
 
-A client can set this label in uncritical form, followed by a CRI ({{!I-D.ietf-core-href}}) that is CBOR-encoded in a byte string as a CBOR sequence.
-The transport indicated by the URI is the proxy the client chose from information advertised about the server.
+A client can set this label in non-critical form, followed by a CRI ({{!I-D.ietf-core-href}}) that is CBOR-encoded in a byte string as a CBOR sequence.
+The transport address indicated by the URI is the proxy the client chose from information advertised about the server.
 
-If a server can not determine its set of legitimate proxies,
-it ignores the option (as does any EDHOC implementation that is unaware of it).
+If a server cannot determine its set of legitimate proxies,
+it ignores the EAD item (as does any EDHOC implementation that is unaware of it).
 
 If it recognizes the CRI as belonging to a legitimate proxy,
 it places the empty label in its non-critical form in the next message to confirm the proxy choice.
@@ -1559,9 +1575,9 @@ Both the client and the server may alert their administrators of a possible traf
 
 \[ While using an EDHOC EAD is suitable for connection setup,
    such a mechanism may also be useful at a later time,
-   e.g. to re-check a server's address after a name change;
+   e.g., to re-check a server's address after a name change;
    establishing an equivalent CoAP option is being considered,
-   also oin light of the discussion around https://github.com/core-wg/corrclar/pull/40 and https://github.com/core-wg/groupcomm-proxy/issues/3.
+   also in light of the discussion around https://github.com/core-wg/corrclar/pull/40 and https://github.com/core-wg/groupcomm-proxy/issues/3.
    \]
 
 # Literals beyond IP addresses {#newlit}
@@ -1574,34 +1590,36 @@ After initial review in CoRE, this may be better moved into a separate document 
 ## Motivation for new literal-ish names
 
 IP literals were part of URIs from the start {{w3address}}.
-Initially, they were equivalent to host names in their expressiveness,
+Initially, they were equivalent to hostnames in their expressiveness,
 save for their inherent difference that the former can be used without a shared resolver,
 and the latter can be switched to a different network address.
 
 This equivalence got lost gradually:
 Certificates for TLS (its precursor SSL has been available since 1995 {{evossl}})
 <!-- TBD cite - https://en.wikipedia.org/wiki/HTTPS or  ? -->
-have only practically been available to host names.
-The Host header introduced in HTTP 1.1 {{Section 14.23 of ?RFC2616}}
+have only been available practically to hostnames.
+The Host header established in HTTP 1.1 {{Section 14.23 of ?RFC9110}}
 introduced name based virtual hosting in 1999.
-DANE {{?RFC6698}}, which provides TLS public keys augmenting the or outside of the public key infrastructure,
-is only available for host names resolved through DNSSEC.
+DNS-Based Authentication of Named Entries (DANE) {{?RFC6698}}, which provides TLS public keys augmenting (or even replacing) the public key infrastructure,
+is only available for hostnames resolved through DNSSEC.
 SVCB records {{?RFC9460}} introduced in 2023
 allow starting newer HTTP transports without going through HTTP/1.1 first,
-enables load balancing, fail-over,
-and enable Encrypted Client Hello --
-again, only for host names resolved through DNS.
+enable load balancing, fail-over,
+and allow for Encrypted Client Hello --
+again, only for hostnames resolved through DNS.
 
 This document proposes an expression for the host component of a URI
 that fills that gap.
-Note that no attempt is yet made to register `service.arpa` in the .ARPA Zone Management;
+Note that no attempt is yet made to register `service.arpa` in the .ARPA Zone Management [^dnssd];
 that name is used only for the purpose of discussion.
+
+[^dnssd]: Since this document was started, RFC9665 was published with a different use of "service.arpa"; this document will be updated in a later revision to use a different proposed identifier.
 
 [^prelim]
 
 [^prelim]:
     The structure and even more the syntax used here is highly preliminary.
-    They serves to illustrate that the desired properties can be obtained,
+    They serve to illustrate that the desired properties can be obtained,
     and do not claim to be optimal.
     As one of many aspects, they are missing considerations for normalization
     and for internationalization.
@@ -1614,12 +1632,12 @@ and the common suffix `service.arpa`.
 
 These pairs represent the very items also produced by {{processing-scheme-authority}}.
 In the current version, they can *not* express multiple entries with different structures.
-They can express different entries, but any repeated items (e.g. different ALPNs and IP addresses)
-only produce their product
+They can express different entries, but any repeated items (e.g., different ALPNs and IP addresses)
+only yield their Cartisian product
 (i.e., no "TCP on this or that address, TLS on another").
 
 Keeping with the style of DNS (least significant component first),
-pairs are expressed with their data a first label, followed by the key in a separate label.
+pairs are expressed with their data as the first label, followed by the key in a separate label.
 Data items ending with a "-" character are concatenated with their previous label to avoid overflowing the 63-octet limit of DNS
 (even though those do not wind up in DNS serialization).
 
@@ -1629,7 +1647,7 @@ information about port 8080 and the label "helloworld".
 
 Initial component types are:
 
-* "6": The value encodes an IPv6 address
+* `6`: The value encodes an IPv6 address
   in {{?RFC5952}} format, with the colon character (":") replaced with a dash ("-").
 
   It indicates an address of a host providing the service.
@@ -1637,12 +1655,12 @@ Initial component types are:
   If any address information is present,
   a client SHOULD use that information to access the service.
 
-* "4": The value encodes an IPv4 address
+* `4`: The value encodes an IPv4 address
   in dotted decimal format {{?RFC1123}}, with the dot character (".") replaced with a dash ("-").
 
   It indicates an address of a host providing the service.
 
-* "tlsa": The data of a DNS TLSA record {{?RFC6698}} encoded in base32 {{?RFC4648}}.
+* `tlsa`: The data of a DNS TLSA record {{?RFC6698}} encoded in base32 {{?RFC4648}}.
 
   Depending on the usage, this describes TLS credentials through which the service can be authenticated.
 
@@ -1650,11 +1668,11 @@ Initial component types are:
   a client MUST establish a secure connection,
   and MUST fail the connection if the TLSA record's requirements are not met.
 
-* "cred", "edhoc-app-prof", "edhocpath", "oauth-info": SvcbParams in base32 encoding of their wire format.
+* `cred`, `edhoc-app-prof`, `edhocpath`, `oauth-hints`: SvcParams in base32 encoding of their wire format.
 
-* "alpn": The ALPN(s) in hexadecimal encoding, separated by dashes.
+* `alpn`: The ALPN(s) in hexadecimal encoding, separated by dashes.
 
-Due to {{?RFC3986}}'s rules,
+Due to the rules of {{?RFC3986}},
 all components are case insensitive and canonically lowercase.
 
 Note that while using the IPvFuture mechanism of {{?RFC3986}} would avoid compatibility issues around the 63 character limit
@@ -1684,13 +1702,13 @@ they serve to explore the possible alternatives.
 
 * coap://434f4150.alpn.2001-db8--1.6.rai3ouj4a.ueekcandaeasabbblaqlxq2jmbjg5jgtf2kazljkenaurxocc6i2ckx3zowjgy-.cred.service.arpa/ -- The server is reachable using CoAP over TCP with any security mechanism at 2001:db8::1, and the service is identifiable by the use of a KCCS credential describing an X25519 public key (which is currently only usable with EDHOC).
 
-* coap://rai3ouj4a.ueekcandaeasabbblaqlxq2jmbjg5jgtf2kazljkenaurxocc6i2ckx3zowjgyr-.cred.service.arpa/ -- The same server without any discoverability hints; it is up to the client to discover a (possibly short-lived) connection opportunities to the server identified by that key.
+* coap://rai3ouj4a.ueekcandaeasabbblaqlxq2jmbjg5jgtf2kazljkenaurxocc6i2ckx3zowjgy-.cred.service.arpa/ -- The same server without any discoverability hints; it is up to the client to discover (possibly short-lived) connection opportunities to the server identified by that key.
 
 # Acknowledgements
 
-This document heavily builds on concepts
+This document builds heavily on concepts
 explored by Bill Silverajan and Mert Ocak in {{?I-D.silverajan-core-coap-protocol-negotiation}},
-and together with Ines Robles and Klaus Hartke inside T2TRG.
+together with the work by Ines Robles and Klaus Hartke inside T2TRG.
 
 \[ TBD: reviewers
 Marco
