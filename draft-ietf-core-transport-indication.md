@@ -922,7 +922,7 @@ and not the individual (proxy) transport through which it can be reached.
   5 (audience, indicating the name under which the service is known to the Authorization Server),
   and 9 (scope, when discovering a particular service rather than just getting transport information for a host).
   That data has the same shape as the server might use when responding to an attempt at an unencrypted connection.
-  This cannot only speed up the discovery of the right AS,
+  This can not only speed up the discovery of the right AS,
   but can also protect that information (e.g., when DNSSEC is used),
   and avoid the need for an unprotected first request.
 
