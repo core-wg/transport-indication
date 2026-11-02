@@ -1603,7 +1603,7 @@ Certificates for TLS (its precursor SSL has been available since 1995 {{evossl}}
 have only been available practically to hostnames.
 The Host header established in HTTP 1.1 {{Section 14.23 of ?RFC9110}}
 introduced name based virtual hosting in 1999.
-DNS-Based Authentication of Named Entries (DANE) {{?RFC6698}}, which provides TLS public keys augmenting the public key infrastructure,
+DNS-Based Authentication of Named Entries (DANE) {{?RFC6698}}, which provides TLS public keys augmenting (or even replacing) the public key infrastructure,
 is only available for hostnames resolved through DNSSEC.
 SVCB records {{?RFC9460}} introduced in 2023
 allow starting newer HTTP transports without going through HTTP/1.1 first,
