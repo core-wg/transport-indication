@@ -1268,6 +1268,11 @@ similar to the "HTTPS" RR type would be preferable.
 
 [^remove-changelog]: This section is to be removed before publication.
 
+Since draft-ietf-core-transport-indication-10:
+
+* Use 'recommended proxy' as a defined term consistently.
+* Editorial updates.
+
 Since draft-ietf-core-transport-indication-09:
 
 * edhoc-info replaced with app-profiles' edhoc-app-prof.
