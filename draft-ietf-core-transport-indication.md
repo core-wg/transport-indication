@@ -135,7 +135,7 @@ to mean the transport and any multiplexing information particular to that transp
 This document introduces provisions for the seamless use of different transport mechanisms for CoAP.
 Combined, these provide:
 
-1. Enablement: Inform clients of the availability of other transports used by servers.
+1. Enablement: Inform clients of the availability of other transports offered by servers.
 
 2. No Aliasing: Any URI aliasing must be opt-in by the server. Any defined mechanisms must allow applications to keep working on the canonical URIs given by the server.
 
