@@ -128,7 +128,7 @@ to mean the transport and any multiplexing information particular to that transp
 
 [^missing-terminology]
 
-[^missing-terminology]: Missing terminology \[(?) might just be unclear from context or defined insuffiently in this document\]: "origin", "link context", "anchor", "resolution service" (?), "preferred proxy" (?), "unique proxy" (?), "cross proxy", "canonical URI", "URI aliasing", "attrleaf", ... --ML
+[^missing-terminology]: TBD List with source: "origin", "link context" "anchor" {{RFC6698}}, "resolution service", "cross proxy" {{RFC7252}}, "unique proxy" (this document), "canonical URI", "URI aliasing", ... --ML
 
 ## Goals
 
