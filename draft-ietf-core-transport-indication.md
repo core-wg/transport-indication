@@ -493,7 +493,7 @@ and that can place sufficient trust in that proxy.
 
 In the Resource Directory (RD) specification {{?RFC9176}},
 protocol negotiation was anticipated to use multiple base values.
-This approach was since been abandoned,
+This approach has since been abandoned,
 as it would incur heavy URI aliasing.
 
 Instead, devices can submit their "has-proxy" links to the Resource Directory like all their other metadata.
