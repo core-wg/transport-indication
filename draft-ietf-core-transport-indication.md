@@ -180,11 +180,9 @@ Examples of such resources are those whose URIs include the loopback addresses o
 
 ## Registered names and transport setup
 
-The CoAP specification is intentionally open about the resolution services [^resolutionservices]
+The CoAP specification is intentionally open about the resolution services
 by which indirect identifiers in the host portion of a CoAP URI are resolved,
 giving DNS as one example without going into details ({{Section 6.1 of RFC7252}}).
-
-[^resolutionservices]: "resolution services" is used like a standing term throughout the document. However, it is unclear t me, what exactly is meant by that --ML
 
 This document does not change any of that,
 but it does point out in {{findendpoint}} the breadth of information that such a service can provide
@@ -203,6 +201,10 @@ Same-host proxy:
   this specification does not use the distinction in normative requirements,
   and clients need not make the distinction at all.
 
+Recommended proxy:
+
+: A proxy indicated by a server to be useful for accessing that server.
+
 When talking of proxy requests,
 this document only talks of the Proxy-Scheme option.
 Given that all URIs this is usable with can be expressed in decomposed CoAP URIs,
@@ -217,10 +219,9 @@ It is, colloquially, also used to identify the combination
 of a CoAP transport and the transport specific details.
 
 For precision, this document uses the term
-"the transport address indicated by (a URI)" to refer to the transport and its details,
-but otherwise no big deal is made of it.[^bigdeal]
-
-[^bigdeal]: How does this relate to the paragraph before? What do you mean by "no big deal"? --ML
+"the transport address indicated by (a URI)" to refer to the transport and its details that can be inferred by the scheme and origin of a URI;
+URIs that have empty and absent paths, queries and fragment identifiers are used in places where a URI is used for the transport address indicated by it.
+For many practical purposes, the distinction between a URI and the transport address indicated by it is irrelevant.
 
 Note that as such a URI may contain a registered name.
 As with any CoAP URI, resolution services apply.
@@ -239,15 +240,13 @@ This section lists how one or more such endpoints can be discovered.
 In some situations,
 a client decides to use a forward proxy to access the resource:
 either because it is explicitly configured to do so ({{actualproxies}}),
-or because it has discovered a preferred proxy ({{hasproxy}}) [^preferredproxy].
+or because it has discovered a recommended proxy ({{hasproxy}})
 In that case, it
 finds the endpoint of the configured proxy (using {{processing-scheme-authority}}, if not given explicitly).
 The proxy then decides on an endpoint to which to forward the request on its own,
 (again using the tools described in this section).
 Otherwise, it uses the information of scheme and authority,
 often through a resolution service ({{processing-scheme-authority}}).
-
-[^preferredproxy]: is "preferred proxy" a standing term? Otherwise, it should be defined somewhere. --ML
 
 No matter how the endpoint (and thus transport) was discovered and whether a proxy is involved,
 it does not alter the URI of the resource being requested.
@@ -938,8 +937,8 @@ and not the individual (proxy) transport through which it can be reached.
 
 #### Generic client discovering transport options
 
-A generic client is directed to obtain `coap://dev1.example.com/log`
-requests. The hostname is resolved using the system's resolution mechanisms,
+A generic client is directed to obtain `coap://dev1.example.com/log`.
+The hostname is resolved using the system's resolution mechanisms,
 resulting in DNS queries[^multiple-questions] for these records:
 
 [^multiple-questions]: , see {{?RFC9619}} -- ML
@@ -979,6 +978,7 @@ It therefore updates its DNS record like this, and sets an accompanying record:
 _coap.host.example.net 600 IN SVCB 1 publicudp.host.example.net       \
                        port=5678                                      \
                        cred={14:{... /KCCS with its public key/}}
+publicudp.host.example.net 600 IN A 192.0.2.4
 ~~~
 
 When a client starts using `coap://host.example.net/interactive`,
@@ -1088,13 +1088,13 @@ for which, unlike for resolved names, no service parameters are available.
 # Guidance to upcoming transports {#upcomingtransports}
 
 When new transports are defined for CoAP,
-it is RECOMMENDED to use the "coap" scheme
+it is recommended to use the "coap" scheme
 (or "coaps" for (D)TLS-based transports).
 
 {:ml: source="Martine"}
 
 If the identifiers of the transport are IP-based and are typically resolved through DNS,
-authors of new transports SHOULD specify how they are expressed in Service Binding records ({{?RFC9460}}),
+authors of new transports are encouraged to specify how they are expressed in Service Binding records ({{?RFC9460}}),
 e.g., using an `alpn` parameter (which does not necessarily indicate the use of a (D)TLS-based transport),
 and if IP literals are relevant to the transport, to follow up on {{newlit}}.
 
@@ -1241,14 +1241,11 @@ registry ({{?RFC9460}}). The definition of this parameter can be found in {{svcp
 
 | Number  | Name           | Meaning                            |
 | ------- | -------------- | ---------------------------------- |
-| to be assigned      | is-unique-proxy      | The service can be used as a proxy, it implies scheme and host of the target [^is-unique-proxy] |
 | to be assigned      | cred                 | COSE credentials identifying the server |
 | to be assigned      | oauth-hints          | Describes how to obtain a token at an ACE Authorization Server |
 
 All entries have in common that their Reference is this document, {{svcparams}}},
 and that their change controller is IETF.
-
-[^is-unique-proxy]: Please check, if correct. -- ML
 
 ## Underscored and Globally Scoped DNS Node Names {#iana-underscored}
 
