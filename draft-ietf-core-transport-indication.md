@@ -973,9 +973,7 @@ but has PCP {{?RFC6887}} available.
 After running PCP to open a UDP port,
 it learns that 192.0.2.4:5678 will be available for some time.
 
-It therefore updates its DNS record like this [^A-record-missing]:
-
-[^A-record-missing]: Isn't there an A record or ipv4hint missing in the example? -- ML
+It therefore updates its DNS record like this, and sets an accompanying record:
 
 ~~~
 _coap.host.example.net 600 IN SVCB 1 publicudp.host.example.net       \
