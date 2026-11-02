@@ -506,7 +506,7 @@ The RD may also volunteer that information during resource lookups even though t
 \[
 
 It may be useful to define RD parameters for use with lookup here, which would guide which available proxies to include.
-For example, asking `?if=tag:example.com,sensor&proxy-links=tcp` could give as a result (`if=tag` or `rt=tag`? --ML):
+For example, asking `?rt=tag:example.com,sensor&proxy-links=tcp` could give as a result:
 
 `<coap://[2001:db8::1]/s>;rt=tag:example.com,sensor,<coap+tcp://[2001:db8::1]/>;rel=has-proxy;anchor="coap://[2001:db8::1]/"`
 
