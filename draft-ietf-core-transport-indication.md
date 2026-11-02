@@ -260,7 +260,7 @@ This happens, respectively,
 - If the hostname is not the default one for the transport
 (e.g., if it is not an IP literal in the UDP or TCP cases, or a proxy is used;
 DNS CNAME entries or SVCB target do not alter the hostname of the URI), or
-- If a different port is used (as possible through SVCB record information).
+- If a different port than the default one is used (as possible through SVCB record information).
 
 Outside proxy cases,
 {{Section 6.4 of RFC7252}} only talks of setting the Uri-Host to preserve the URI, and not of setting Proxy-Scheme or Uri-Port.
