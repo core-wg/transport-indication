@@ -1616,7 +1616,7 @@ that fills that gap.
 Note that no attempt is yet made to register `service.arpa` in the .ARPA Zone Management [^dnssd];
 that name is used only for the purpose of discussion.
 
-[^dnssd]: (that changed, see {{Section 10.2 of ?RFC9665}} -- ML)
+[^dnssd]: Since this document was started, RFC9665 was published with a different use of "service.arpa"; this document will be updated in a later revision to use a different proposed identifier.
 
 [^prelim]
 
